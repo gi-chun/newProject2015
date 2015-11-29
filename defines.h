@@ -13,6 +13,11 @@
 //NSString *url = @"https://vntst.shinhanglobal.com/sunny/faq_test2.jsp";
 //NSString *url = @"https://vntst.shinhanglobal.com/sunny/faq_test.jsp";
 
+static NSString *API_VERSION_INOF_URL            = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+#define REAL_SERVER_URL @"https://sbk.shinhan.com";
+#define DEV_SERVER_URL @"https://dev-sbank2013.shinhan.com";
+
+
 static NSString * const kUUID              = @"currentUUID";        // UUID
 static NSString * const kUserDeviceToken   = @"userDeviceToken";    // 디바이스 토큰
 static NSString * const klang       = @"currentLang";         // language
@@ -31,6 +36,10 @@ static NSString * const kGNBHide       = @"kGNBHide";
 static NSString * const kCurrentVersion       = @"kCurrentVersion";
 static NSString * const kUpdateVersion       = @"kUpdateVersion";
 static NSString * const kTutoY       = @"kTutoY";
+
+static NSString * const kForceUpdateY       = @"kForceUpdateY"; //강제업데이트 여부
+static NSString * const kUpdateY       = @"kForceUpdateY"; //업데이트 여부
+
 
 
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?%@";  //클럽메인

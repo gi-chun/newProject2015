@@ -24,6 +24,7 @@
     __weak IBOutlet UILabel *yyyymmddLabel;
     __weak IBOutlet UILabel *label_id;
     __weak IBOutlet UILabel *label_name;
+    __weak IBOutlet UILabel *labelView_yyyymmdd;
 }
 
 @end
@@ -183,6 +184,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+
+    
     [self resetNavigationBarView:1];
     [self setDelegateText];
     
@@ -321,7 +326,7 @@
     
     [label_id setText:PW_SEARCH_ID_KO];
     [label_name setText:PW_SEARCH_NAME_KO];
-    [yyyymmddLabel setText:PW_SEARCH_YYYY_KO];
+    [labelView_yyyymmdd setText:PW_SEARCH_YYYY_KO];
     [searchBtnClick setTitle:PW_SEARCH_KO forState:UIControlStateNormal];
     
 }
@@ -332,7 +337,7 @@
     
     [label_id setText:PW_SEARCH_ID_VI];
     [label_name setText:PW_SEARCH_NAME_VI];
-    [yyyymmddLabel setText:PW_SEARCH_YYYY_VI];
+    [labelView_yyyymmdd setText:PW_SEARCH_YYYY_VI];
     [searchBtnClick setTitle:PW_SEARCH_VI forState:UIControlStateNormal];
 }
 

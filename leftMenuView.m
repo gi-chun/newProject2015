@@ -17,7 +17,7 @@
 const static CGFloat LOGO_HEIGHT   =      43;
 const static CGFloat LOGIN_HEIGHT  =      180; //360/2
 const static CGFloat MENU_HEIGHT   =      45;
-const static CGFloat AD_HEIGHT     =      50;
+//const static CGFloat AD_HEIGHT     =      50;
 
 @interface leftMenuView ()
 {
@@ -220,12 +220,13 @@ const static CGFloat AD_HEIGHT     =      50;
     [menuItemView4 setDelegate:self];
     
     //ADView
-    UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(-40-marginX/2,kScreenBoundsHeight-AD_HEIGHT, kScreenBoundsWidth+40-marginX/2, AD_HEIGHT)];
-    [ADView setBackgroundColor:UIColorFromRGB(0x2881C0)]; //[self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
+//    UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(-40-marginX/2,kScreenBoundsHeight-kAD_HEIGHT, kScreenBoundsWidth+40-marginX/2, kAD_HEIGHT)];
+    UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenBoundsHeight-kAD_HEIGHT-kAD_MarginH, kScreenBoundsWidth-kAD_MarginW, kAD_HEIGHT)];
+    //[ADView setBackgroundColor:UIColorFromRGB(0x2881C0)]; //[self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
     
     UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
      [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
-    adImageView.contentMode = UIViewContentModeScaleAspectFit;
+    adImageView.contentMode = UIViewContentModeScaleAspectFill;
     [ADView addSubview:adImageView];
     
     //AD emptybutton

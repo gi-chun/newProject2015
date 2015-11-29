@@ -33,7 +33,7 @@
         
         return;
     }
-
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"intro_img.png"]];
@@ -59,7 +59,7 @@
             [likeImageView removeFromSuperview];
         }];
     }
-
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //manager.requestSerializer = [AFJSONRequestSerializer serializer];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -82,7 +82,7 @@
     }
     
     [indiv_infoDic setObject:pwdTxt.text forKey:@"pinno"];
-
+    
     [sendDic setObject:rootDic forKey:@"root_info"];
     [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];//////
     
@@ -142,6 +142,9 @@
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
+            [leftViewController setViewLogout];
+            
             [self.navigationController popToRootViewControllerAnimated:YES];
             
             
@@ -161,18 +164,16 @@
     }];
     
     //
-//    if(myLoginType == LoginTypeConfig){
-//        [self.navigationController popViewControllerAnimated:YES];
-//        if ([self.delegate respondsToSelector:@selector(didLoginAfter)]) {
-//            [self.delegate didLoginAfter];
-//        }
-//        
-//    }else{
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//    }
-    leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
-    [leftViewController setViewLogin];
-
+    //    if(myLoginType == LoginTypeConfig){
+    //        [self.navigationController popViewControllerAnimated:YES];
+    //        if ([self.delegate respondsToSelector:@selector(didLoginAfter)]) {
+    //            [self.delegate didLoginAfter];
+    //        }
+    //
+    //    }else{
+    //        [self.navigationController popToRootViewControllerAnimated:YES];
+    //    }
+    
 }
 
 - (void)viewDidLoad {
@@ -218,7 +219,7 @@
 -(void)dateSave:(id)sender
 {
     self.navigationItem.rightBarButtonItem=nil;
-   
+    
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -254,14 +255,14 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     
-        if (pwdTxt.text.length >= PWD_MAX_LENGTH && range.length == 0)
-        {
-            return NO; // return NO to not change text
-        }
-        else if(textField.text.length >= PWD_MAX_LENGTH && range.length == 0){
-            
-            return NO; // return NO to not change text
-        }
+    if (pwdTxt.text.length >= PWD_MAX_LENGTH && range.length == 0)
+    {
+        return NO; // return NO to not change text
+    }
+    else if(textField.text.length >= PWD_MAX_LENGTH && range.length == 0){
+        
+        return NO; // return NO to not change text
+    }
     
     return YES;
     
@@ -305,13 +306,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

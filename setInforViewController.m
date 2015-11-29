@@ -272,6 +272,9 @@
         
     }];
     
+    [btnSummit setEnabled:true];
+
+    
 //    completeViewController *completeCtl = [[completeViewController alloc] init];
 //    //[setInforCtl setDelegate:self];
 //    [self.navigationController pushViewController:completeCtl animated:YES];
@@ -608,6 +611,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+
     
     isTwoChk = 0;
     [pwdText setKeyboardType:UIKeyboardTypeNumberPad ];

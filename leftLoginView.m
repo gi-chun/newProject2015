@@ -524,14 +524,14 @@
      const static CGFloat ICON_WIDTH      =    50;
      const static CGFloat LABEL_WIDTH     =    100;
      */
-    
-    CGFloat marginX = (kScreenBoundsWidth > 320)?30:0;
+    CGFloat titleLabelMarginX = (kScreenBoundsWidth > 320)?50:0;
+    CGFloat loginBtnMarginX = (kScreenBoundsWidth > 320)?50:0;
     CGFloat labelMarginX = (kScreenBoundsWidth > 320)?2:0;
     CGFloat logoutMarginX = (kScreenBoundsWidth > 320)?60:0;
     
     //label
     // 100, 26
-    labelMenu = [[UILabel alloc] initWithFrame:CGRectMake(10, 24, meWidth-(35+30), 60)]; //94/2
+    labelMenu = [[UILabel alloc] initWithFrame:CGRectMake(10, 24, meWidth-65-titleLabelMarginX, 60)]; //94/2
     [labelMenu setBackgroundColor:[UIColor clearColor]];
     [labelMenu setTextColor:UIColorFromRGB(0xffffff)];
     [labelMenu setFont:[UIFont systemFontOfSize:15]];
@@ -547,7 +547,7 @@
     
     //login button
     loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginButton setFrame:CGRectMake(20, CGRectGetMaxY(labelMenu.frame)+20, meWidth-(45+40), 50)];
+    [loginButton setFrame:CGRectMake(20, CGRectGetMaxY(labelMenu.frame)+20, meWidth-85-loginBtnMarginX, 50)];
     [loginButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
