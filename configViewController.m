@@ -11,6 +11,8 @@
 #import "personModifyViewController.h"
 #import "myPickerViewController.h"
 #import "LoginViewController.h"
+#import "leftViewController.h"
+#import "Appdelegate.h"
 
 @interface configViewController () <NavigationBarViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -131,11 +133,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    for (UIView *subView in [self.view subviews]) {
-        [subView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    }
+    [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     
-    [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
+    
+//    for (UIView *subView in [self.view subviews]) {
+//        [subView setBackgroundColor:UIColorFromRGB(0xffffff)];
+//    }
+//    
+//    [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
     
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -179,38 +184,44 @@
     
     [super viewDidAppear:animated];
     
-    CGFloat marginX = (kScreenBoundsWidth > 320)?25:0;
-    CGFloat marginY = (kScreenBoundsWidth > 320)?70:0;
+    CGFloat marginX = (kScreenBoundsWidth > 320)?60:0;
+    CGFloat marginY = (kScreenBoundsWidth > 320)?70:150;
     
-    if(kScreenBoundsWidth > 320){
-        
-        [self.realScrollView addSubview:self.contentView];
-        self.realScrollView.contentSize = self.contentView.frame.size;
-        self.realScrollView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
-        
-        [self.realMainView addSubview:self.realScrollView];
-        
-        [self.mainView addSubview:self.realMainView];
-        [self.realMainView setFrame:CGRectMake(0+marginX, 0+marginY, kScreenBoundsWidth, kScreenBoundsHeight-marginY)];
-        
-        for (UIView *subView in [self.view subviews]) {
-            [subView setBackgroundColor:UIColorFromRGB(0xffffff)];
-        }
-        
-        [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
-
-    }else{
-        
+//    if(kScreenBoundsWidth > 320){
+//        
+//        [self.realScrollView addSubview:self.contentView];
+//        self.realScrollView.contentSize = self.contentView.frame.size;
+//        self.realScrollView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
+//        
+//        [self.realMainView addSubview:self.realScrollView];
+//        
+//        [self.mainView addSubview:self.realMainView];
+//        [self.realMainView setFrame:CGRectMake(0+marginX, 0+marginY, kScreenBoundsWidth, kScreenBoundsHeight-marginY)];
+//        
+//        for (UIView *subView in [self.view subviews]) {
+//            [subView setBackgroundColor:UIColorFromRGB(0xffffff)];
+//        }
+//        
+//        [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
+//
+//    }else{
+    
         //CGFloat marginY = (kScreenBoundsWidth > 320)?100:0;
         //[self.mainView setFrame:CGRectMake(0+marginY, 0+marginY, kScreenBoundsWidth, kScreenBoundsHeight-marginY)];
         //    [self.myScrollView setFrame:CGRectMake(0,0+marginY,kScreenBoundsWidth, kScreenBoundsHeight-marginY)];
-        [self.myScrollView setBounces:false];
-        [self.myScrollView addSubview:self.contentView];
-        self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth, self.contentView.frame.size.height+150);
+//        [self.myScrollView setBounces:false];
+//        [self.myScrollView addSubview:self.contentView];
+//        self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth, self.contentView.frame.size.height+150);
 //        self.myScrollView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height+150);
         //((UIScrollView *)self.view).contentSize = self.contentView.frame.size;
         
-    }
+//    }
+    
+    [self.myScrollView setBounces:false];
+    [self.myScrollView addSubview:self.contentView];
+    self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth-marginX, self.contentView.frame.size.height+marginY);
+    
+    
     
     [self resetNavigationBarView:1];
 }
@@ -480,6 +491,8 @@
     }
     _preLang = temp;
     
+    leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
+    [leftViewController setViewLogin];
     
     
 }

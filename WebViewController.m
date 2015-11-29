@@ -602,10 +602,18 @@
         gShowNavigation = 3;
         [self initNavigation:3];
     }else{
-        [self.navigationController setNavigationBarHidden:YES];
-        showNavigation = 4;
-        gShowNavigation = 4;
-        [self initNavigation:4];
+        
+        //sunny없는 URL은 외부 사파리 호출
+        if (([url rangeOfString:@"sunny"].location == NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }else{
+            
+            [self.navigationController setNavigationBarHidden:YES];
+            showNavigation = 4;
+            gShowNavigation = 4;
+            [self initNavigation:4];
+        }
     }
     
     [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
