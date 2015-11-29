@@ -527,7 +527,7 @@
     
     CGFloat marginX = (kScreenBoundsWidth > 320)?30:0;
     CGFloat labelMarginX = (kScreenBoundsWidth > 320)?2:0;
-    CGFloat logoutMarginX = (kScreenBoundsWidth > 320)?0:0;
+    CGFloat logoutMarginX = (kScreenBoundsWidth > 320)?60:0;
     
     //label
     // 100, 26
@@ -602,7 +602,7 @@
     [self addSubview:logoutButton];
     
     // card image
-    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0-marginX, 36, meWidth-40, 135)];
+    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 36, meWidth-40, 135)];
     //[cardImageView setBackgroundColor:UIColorFromRGB(0x105921)];
     cardImageView.contentMode = UIViewContentModeScaleAspectFit;
     [cardImageView setImage:[UIImage imageNamed:@"total_menu_card_img.png"]];
