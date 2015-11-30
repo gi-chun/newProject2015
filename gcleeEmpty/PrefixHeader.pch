@@ -29,8 +29,8 @@
 #define    kWebViewTopMarginY (kScreenBoundsWidth > 320 ? 12.0f : 6.0f)
 #define    kToolBarHeight (kScreenBoundsWidth > 320 ? 35.0f : 30.0f)
 #define    kAD_HEIGHT (kScreenBoundsWidth > 320 ? 35.0f : 30.0f)
-#define    kAD_MarginH (kScreenBoundsWidth > 320 ? 10.0f : 5.0f)
-#define    kAD_MarginW (kScreenBoundsWidth > 320 ? 95.f : 60.0f)
+#define    kAD_MarginH (kScreenBoundsWidth > 320 ? 10.0f : 10.0f)
+#define    kAD_MarginW (kScreenBoundsWidth > 320 ? 95.f : 40.0f)
 #define    kPopWindowMarginW 25.0f
 
 

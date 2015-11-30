@@ -9,9 +9,11 @@
 #import "AppDelegate.h"
 #import "MMExampleDrawerVisualStateManager.h"
 #import "defines.h"
-//#import "amsLibrary.h"
-//#import "AFHTTPRequestOperationManager.h"
-//#import "BTWCodeguard.h"
+#import "amsLibrary.h"
+#import "AFHTTPRequestOperationManager.h"
+#import "BTWCodeguard.h"
+#import "AFHTTPRequestOperation.h"
+#import "KTBiOS.h"
 
 
 @interface AppDelegate ()
@@ -118,173 +120,175 @@
     
     ////////////////////////////////
     // 버전정보
-//    NSString* strVerion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString* strVerion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString* strBundle = [[NSBundle mainBundle]bundleIdentifier];
+    [[Codeguard sharedInstance]setAppName:strBundle];
+    [[Codeguard sharedInstance]setAppVer:strVerion];
+    
+    NSString *serverURL=nil;
+    
+    serverURL = REAL_SERVER_URL;
+    serverURL = DEV_SERVER_URL;
+    
+    [[Codeguard sharedInstance]setChallengeRequestUrl:[NSString stringWithFormat:@"%@/CodeGuard/check.jsp", serverURL]];
+    [[Codeguard sharedInstance]setEtcData:@"버전업데이트및공지"];
+    [[Codeguard sharedInstance]setTimeOut:60.0f];
+    NSString* token=[[Codeguard sharedInstance]requestAndGetToken];
+    
+    token = [token stringByAddingPercentEscapesUsingEncoding:-2147482590];
+    token = [token stringByReplacingOccurrencesOfString:@"=" withString:@"%3D"];
+    token = [token stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+    token = [token stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    
+    NSLog(@"token : %@", token);
+ 
+    // 버전정보
+    NSMutableString *XMLString = [[NSMutableString alloc] init];
+    [XMLString appendString:@"plainXML="];
+    [XMLString appendString:@"<REQEUST task=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\">"];
+    [XMLString appendString:@"<서비스구분 value=\"SUNNYCLUBVN\" />"];
+    [XMLString appendString:@"<채널구분코드 value=\"92\" />\""];
+    [XMLString appendString:@"<QORTLS value=\"V3\" />"];
+    [XMLString appendString:@"<Client버전 value=\""];
+    [XMLString appendString:strVerion];
+    [XMLString appendString:@"\" />"];
+    [XMLString appendString:@"<배경구분 value=\"\" />"];
+    [XMLString appendString:@"<codeGuardName value=\"버전업데이트및공지\" />"];
+    [XMLString appendString:@"<COM_SUBCHN_KBN value=\"92\" />"];
+    [XMLString appendString:@"<VERSION value=\""];
+    [XMLString appendString:strVerion];
+    [XMLString appendString:@"\" />"];
+    [XMLString appendString:@"</REQEUST>"];
+    [XMLString appendString:@"&CODE_RESPONSE_TOKEN="];
+    [XMLString appendString:token];
+    //[XMLString appendString:@""];
+    
+    //XML 만들기
+////    NSString *strXML = [NSString stringWithFormat:@"plainXML=<REQUEST task=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\"><채널구분코드 value=\"%@\"/><서비스구분 value=\"%@\"/><Client버젼 value=\"%@\"/><배경구분 value=\"%@\"/><VERSION value=\"%@\"/><COM_SUBCHN_KBN value=\"%@\"/></REQUEST>", @"92", @"SUNNYCLUBVN", strVerion, @"", strVerion, @"92"];
+////    
+//    //전문조합
+//    NSString *postStr = [NSString stringWithFormat:@"%@&%@", strXML, token];
+//    NSLog(@"postStr:%@",postStr);
+    
+    NSData* postData = [XMLString dataUsingEncoding:-2147481280];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_VERSION_INOF_URL]];
+    [request setHTTPBody:postData];
+    [request setHTTPMethod:@"POST"];
+    
+    NSURLResponse *resp = nil;
+    NSError *error = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
+    
+    //<errorCode value="1999" 종료처리
+    //정식승인된 앱이 아닙니다
+    //앱버전정보
+    //현재 버전정보 --
+    //다운받는 URI
+    
+    //강제업뎅트
+    //강제업데이트
+    //업데이트 있느닞?
+    
+    
+    NSString *rtnStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"return lowdata:%@",rtnStr);
+
+    //
+    
+    ////////////////////////////////////////////////
+    //KTB 프록시 체크
+    NSString *tmp = checkProxy();
+    if([tmp isEqualToString:@"y"])
+    {
+        NSLog(@"프록시 서버 접속!!");
+        
+        //wifi 인지 확인
+        NSLog(@"checkProxy=(%@)", checkProxy());
+        NSLog(@"getProxyInfo=(%@)", getProxyInfo());
+        
+//        SWReachability* curReach=[[SWReachability reachabilityForInternetConnection] retain];
+//        int netStaus=[curReach currentReachabilityStatus];
+//        [curReach release];
+        
+//        if(netStaus == ReachableViaWiFi)
+//        {
+//            NSString *msg=@"비정상적인 접속(프록시)으로 인해 서비스를\n종료합니다. ";
+////            [UIAlertView showAlert:self type:OneButton tag:18398 title:nil buttonTitle:nil message:msg];
+////            return;
+//        }
+        
+    }
+    
+    
+    
+    ////////////////////////////////////////////////
+    
+    
+
+//    NSUInteger encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingEUC_KR);
+//    const char * eucKRString = [XMLString cStringUsingEncoding:encoding];
+
+//    NSString* strTemp = [XMLString stringByAddingPercentEscapesUsingEncoding:-2147482590];
+//    //    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    //manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //    
-//    [[Codeguard sharedInstance]setAppName:[[NSBundle mainBundle]bundleIdentifier]];
-//    [[Codeguard sharedInstance]setAppVer:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+////    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+////    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+////    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
 //    
-//    NSString *serverURL=nil;
+//    //NSLog(@"request date: %@", strTemp);
 //    
-//    serverURL = REAL_SERVER_URL;
-//    serverURL = DEV_SERVER_URL;
-//    
-//    [[Codeguard sharedInstance]setChallengeRequestUrl:[NSString stringWithFormat:@"%@/CodeGuard/check.jsp", serverURL]];
-//    [[Codeguard sharedInstance]setEtcData:@"버전업데이트및공지"];
-//    [[Codeguard sharedInstance]setTimeOut:60.0f];
-//    NSString* token=[[Codeguard sharedInstance]requestAndGetToken];
-//    
-//    token = [token stringByAddingPercentEscapesUsingEncoding:-2147482590];
-//    token = [token stringByReplacingOccurrencesOfString:@"=" withString:@"%3D"];
-//    token = [token stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-//    token = [token stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-//    
-//    NSString *param = [[NSString alloc] initWithFormat:@"CODE_RESPONSE_TOKEN=%@", token];
-//    
-//    NSMutableString *XMLString = [[NSMutableString alloc] init];
-//    [XMLString appendString:API_VERSION_INOF_URL];
-//    [XMLString appendString:@"plainXML="];
-//    [XMLString appendString:@"<REQEUSTtask=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\">"];
-//    [XMLString appendString:@"<서비스구분 value=\"SCLUB\" />"];
-//    [XMLString appendString:@"<채널구분코드 value=\"02\" />\""];
-//    [XMLString appendString:@"<QORTLS value=\"V3\" />"];
-//    [XMLString appendString:@"<Client버전 value=\""];
-//    [XMLString appendString:strVerion];
-//    [XMLString appendString:@"\" />"];
-//    [XMLString appendString:@"<배경구분 value=\"\" />"];
-//    [XMLString appendString:@"<codeGuardName value=\"버전업데이트및공지\" />"];
-//    [XMLString appendString:@"<COM_SUBCHN_KBN value=\"02\" />"];
-//    [XMLString appendString:@"<VERSION value=\""];
-//    [XMLString appendString:strVerion];
-//    [XMLString appendString:@"\" />"];
-//    [XMLString appendString:@"</REQUEST>"];
-//    [XMLString appendString:@"&CODE_RESPONSE_TOKEN={\""];
-//    [XMLString appendString:token];
-//    [XMLString appendString:@"\"}"];
-//    
-//    ////////////////
-//    //    NSUInteger encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingEUC_KR);
-//    //    const char* eucKRString = [XMLString cStringUsingEncoding:encoding];
-//    //    NSData *data = [NSData dataWithBytes: eucKRString   length:strlen(eucKRString)];
-//    //    NSString* aStr= [[NSString alloc] initWithData:data encoding:encoding];
-//    //    //XMLString = [[NSString alloc] initWithData:data encoding:encoding];
-//    //    NSURL *url=[NSURL URLWithString:aStr];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[XMLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] ];
-//    
-//    //[request set]
-//    //[request setValuesForKeysWithDictionary:[filter filteringDictionary]];
-//    AFHTTPRequestOperation *operation =
-//    [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//    //operation.responseSerializer = [AFXMLParserResponseSerializer serializer];
-//    [operation setCompletionBlockWithSuccess:
-//     ^(AFHTTPRequestOperation *operation, id responseObject) {
-//         NSLog(@"responseObject %@", responseObject);
-//         
-//         NSString *responseData = (NSString*) responseObject;
-//         //             NSUInteger encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingEUC_KR);
-//         //             const char* eucKRString = [responseData cStringUsingEncoding:encoding];
-//         //             NSData *data = [NSData dataWithBytes: eucKRString   length:strlen(eucKRString)];
-//         //NSString* aStr= [[NSString alloc] initWithData:data encoding:encoding];
-//         NSString* aStr= [responseData stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//         
-//         NSLog(@"response data: %@", aStr);
-//         NSLog(@"response data: %@", aStr);
-//         
-//         
-//         //         NSData *xmlData = [responseObject dataUsingEncoding:NSASCIIStringEncoding];
-//         //
-//         //         NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:xmlData];
-//         //
-//         //
-//         //
-//         //         NSString *str2 = [responseData stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//         //
-//         //         NSArray *jsonArray = (NSArray *)responseData;
-//         //         NSDictionary * dicResponse = (NSDictionary *)responseData;
-//         //
-//         //         //warning
-//         //         NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
-//         
-//         
-//         
-//     } failure:
-//     ^(AFHTTPRequestOperation *operation, NSError *error) {
-//         NSLog(@"Error: %@", [error localizedDescription]);
-//         [[[UIAlertView alloc]
-//           initWithTitle:@"Error fetching players!"
-//           message:@"Please try again later"
-//           delegate:nil
-//           cancelButtonTitle:@"OK"
-//           otherButtonTitles:nil] show];
-//     }];
-//    
-//    [operation start];
+//    //NSDictionary *parameters = @{@"plainXML": XMLString};
+//    NSDictionary *parameters = XMLString;
 //    
 //    
-//    
-//    ////////////////////////////////////////////////////////////////////////////
-//    
-//    //     //get version infor
-//    //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    //    //manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    //    //manager.requestSerializer = [AFXMLParserResponseSerializer serializer];
-//    //    //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    //
-//    //    NSDictionary *parameters = @{@"plainXML": XMLString};
-//    //
-//    //     NSLog(@"parameters: %@", parameters);
-//    //
-//    //
-//    //    [manager GET:API_VERSION_INOF_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    //
-//    //        NSLog(@"JSON: %@", responseObject);
-//    //
-//    //        NSString *responseData = (NSString*) responseObject;
-//    //        NSArray *jsonArray = (NSArray *)responseData;
-//    //        NSDictionary * dicResponse = (NSDictionary *)responseData;
-//    //
-//    //        //warning
-//    //        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
-//    //
-//    //        if(dicItems){
-//    //            NSString* sError = dicItems[@"msg"];
-//    //
-//    //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-//    //            [alert show];
-//    //            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
-//    //            [[NSUserDefaults standardUserDefaults] synchronize];
-//    //
-//    //        }else{
-//    //
-//    //            dicItems = nil;
-//    //            dicItems = [dicResponse objectForKey:@"indiv_info"];
-//    //            NSString* sCardNm = dicItems[@"user_seq"];
-//    //
-//    //            //set kCardCode
-//    ////            [[NSUserDefaults standardUserDefaults] setObject:sCardNm forKey:kCardCode];
-//    ////            [[NSUserDefaults standardUserDefaults] synchronize];
-//    //
-//    //
-//    //            NSLog(@"Response ==> %@", responseData);
-//    //
-//    //            //to json
-//    ////            SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
-//    ////            NSString *jsonString = [jsonWriter stringWithObject:jsonArray];
-//    ////            NSLog(@"jsonString ==> %@", jsonString);
-//    //            
-//    //        }
-//    //        
-//    //        
-//    //        
-//    //    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//    //        
-//    //       NSLog(@"error ==> %@", error);
-//    //        NSLog(@"error ==> %@", error);
-//    //        
-//    //    }];
-//    
+//    [manager POST:API_VERSION_INOF_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSLog(@"RESULT: %@", responseObject);
+//        
+//        
+//        NSString *responseData = (NSString*) responseObject;
+//        //NSString *strResponse = [NSString stringWithUTF8String:responseData];
+//        //NSXMLParser* parser = null;
+//        //NSString *yourXMLString = [[GDataXMLDocument rootElement] xmlString];
+//        NSString * YOURSTRING = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//        NSLog(@"%@",YOURSTRING);
 //
-//    
-    ////////////////////////////////
+//        
+//        NSLog(@"RESULT: %@", responseObject);
+////        NSArray *jsonArray = (NSArray *)responseData;
+////        NSDictionary * dicResponse = (NSDictionary *)responseData;
+////        
+////        //warning
+////        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+////        
+////        if(dicItems){
+////            NSString* sError = dicItems[@"msg"];
+////            NSLog(@"ERR ==> %@", sError );
+////             NSLog(@"ERR ==> %@", sError );
+////            
+////        }else{
+////            
+////            dicItems = nil;
+////            dicItems = [dicResponse objectForKey:@"indiv_info"];
+////            NSString* sCardNm = dicItems[@"user_seq"];
+////            
+////            
+////            
+////            NSLog(@"getCookie end ==>" );
+////        }
+////        
+//        
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//        NSLog(@"Error: %@", error);
+//        NSLog(@"Error: %@", error);
+//        
+//    }];
+
     
     //loginY init
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
