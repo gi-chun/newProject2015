@@ -467,8 +467,15 @@
             
             [self setDataAfterlogout];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Logout Success" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
+//            NSString* temp;
+//            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//            if([temp isEqualToString:@"ko"]){
+//                
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Logout Success" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
+//            }else{
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Logout Success" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            }
 
             
         }
@@ -822,18 +829,34 @@
     }
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        //delete it
+        [loginButton setEnabled:false];
+        //log out
+        [self logoutProcess];
+        
+        //    if ([self.delegate respondsToSelector:@selector(didTouchLogOutBtn)]) {
+        //        [self.delegate didTouchLogOutBtn];
+        //    }
+    }
+}
+
 #pragma mark - Selectors
 - (void)didTouchLogOutBtn
 {
-    [loginButton setEnabled:false];
-    //log out
-    [self logoutProcess];
-    
-//    if ([self.delegate respondsToSelector:@selector(didTouchLogOutBtn)]) {
-//        [self.delegate didTouchLogOutBtn];
-//    }
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOGIN_KO message:LOGIN_OUT_ASK_KO delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+        [alert show];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOGIN_VI message:LOGIN_OUT_ASK_VI delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+        [alert show];
+    }
     
 }
+
 - (void)didTouchLogInBtn
 {
     if ([self.delegate respondsToSelector:@selector(didTouchLogInBtn)]) {

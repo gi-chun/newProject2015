@@ -14,6 +14,7 @@
     __weak IBOutlet UIPickerView *myPicker;
     __weak IBOutlet UILabel *langLabel;
     NSArray *pickerData;
+    __weak IBOutlet UIButton *btnSave;
 }
 @end
 
@@ -22,6 +23,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        
+        [btnSave setTitle:SAVE_KO forState:UIControlStateNormal];
+    }else{
+        [btnSave setTitle:SAVE_VI forState:UIControlStateNormal];
+    }
     
 //    [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     

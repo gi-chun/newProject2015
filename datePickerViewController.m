@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *dataPickerMe;
 @property (weak, nonatomic) IBOutlet UILabel *dayLable;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSave;
 @end
 
 @implementation datePickerViewController
@@ -20,6 +21,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        
+        [_btnSave setTitle:SAVE_KO forState:UIControlStateNormal];
+    }else{
+        [_btnSave setTitle:SAVE_VI forState:UIControlStateNormal];
+    }
     
     [_dataPickerMe addTarget:self
                action:@selector(datePickerValueChanged:)

@@ -20,13 +20,24 @@
     __weak IBOutlet UILabel *resultTailLabel;
     __weak IBOutlet UILabel *emailLabel;
     __weak IBOutlet UILabel *resultDesc;
+    __weak IBOutlet UIButton *btnLogin;
+    __weak IBOutlet UIButton *btnPwdSearch;
+    
 }
 @end
 
 @implementation idResultViewController
+
+- (void)setId:(NSString*)email{
+    
+    [emailLabel setText:email];
+}
+
 - (IBAction)loginClick:(id)sender {
+    
 }
 - (IBAction)pwdSearchClick:(id)sender {
+    
 }
 
 - (void)viewDidLoad {

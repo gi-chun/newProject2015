@@ -12,6 +12,7 @@
 #import "SBJson.h"
 #import "NavigationBarView.h"
 #import "datePickerViewController.h"
+#import "idResultViewController.h"
 
 @interface idSearchViewController () <NavigationBarViewDelegate>
 {
@@ -52,8 +53,32 @@
 - (IBAction)saveBtnClick:(id)sender {
     
     if([idTxt.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check ID please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
+        
+        NSString* temp;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NAME_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NAME_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        [idTxt becomeFirstResponder];
+        
+        return;
+    }
+    
+    if([yyyyLabel.text isEqualToString:@"yyyymmdd"]){
+        
+        NSString* temp;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }
         [idTxt becomeFirstResponder];
         
         return;
@@ -163,6 +188,11 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:stSearch delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
+            idResultViewController *idResultController = [[idResultViewController alloc] init];
+            [idResultController setDelegate:self];
+            [idResultController setId:sEmail];
+            [self.navigationController pushViewController:idResultController animated:YES];
+            
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
@@ -176,8 +206,16 @@
         
         NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
+//        NSString* temp;
+//        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//        if([temp isEqualToString:@"ko"]){
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
+//            
+//        }else{
+//            
+//        }
+        
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -336,9 +374,9 @@
 -(void)initScreenView_ko{
     
     [self resetNavigationBarView:1];
-    [label_name setText:IDSEARCH_NAME_VI];
-    [label_yyyy setText:IDSEARCH_YYYY_VI];
-    [btnSearh setTitle:IDSEARCH_SEARCH_VI forState:UIControlStateNormal];
+    [label_name setText:IDSEARCH_NAME_KO];
+    [label_yyyy setText:IDSEARCH_YYYY_KO];
+    [btnSearh setTitle:IDSEARCH_SEARCH_KO forState:UIControlStateNormal];
     
 }
 

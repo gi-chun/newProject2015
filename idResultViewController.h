@@ -13,6 +13,7 @@
 @interface idResultViewController : UIViewController
 
 @property (nonatomic, weak) id<idResultViewControllerDelegate> delegate;
+- (void)setId:(NSString*)email;
 
 @end
 

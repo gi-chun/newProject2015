@@ -331,25 +331,93 @@
 
     
 }
+
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
 - (IBAction)loginBtnClick:(id)sender {
     
 //    [spinner setHidden:false];
 //    [spinner startAnimating];
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        if([txtID.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtID becomeFirstResponder];
+            
+            return;
+        }
+        if([txtPwd.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtPwd becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([self NSStringIsValidEmail:txtID.text] == false){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtID becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([txtPwd.text length] < 4){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtPwd becomeFirstResponder];
+            
+            return;
+        }
+        
+    }else if([temp isEqualToString:@"vi"]){
+        if([txtID.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtID becomeFirstResponder];
+            
+            return;
+        }
+        if([txtPwd.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtPwd becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([self NSStringIsValidEmail:txtID.text] == false){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtID becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([txtPwd.text length] < 4){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [txtPwd becomeFirstResponder];
+            
+            return;
+        }
+        
+    }else{
+        
+        temp = @"EN";
+    }
     
-    if([txtID.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check ID please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [txtID becomeFirstResponder];
-        
-        return;
-    }
-    if([txtPwd.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check PWD please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [txtPwd becomeFirstResponder];
-        
-        return;
-    }
+    
     
     
     //set auto login
@@ -508,9 +576,14 @@
             [spinner setHidden:true];
             [spinner stopAnimating];
             
+            if([temp isEqualToString:@"ko"]){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Login Success" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -561,8 +634,14 @@
         
         NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Login Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
+        if([temp isEqualToString:@"ko"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_KO, error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_VI, error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];

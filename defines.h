@@ -54,7 +54,6 @@ static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/js
 
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
-
 //korea
 static NSString *COMPLETE_TITLE_KO     = @"회원가입 완료";
 
@@ -127,6 +126,17 @@ static NSString *LOGIN_PWD_FIND_KO     = @"비밀번호 찾기";
 static NSString *LOGIN_BTN_KO     = @"로그인";
 static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요? 지금 가입하고 다양한 서비스를 자유롭게 이용하세요.";
 static NSString *LOGIN_SUMMIT_KO     = @"회원가입";
+static NSString *EMAIL_CHECK_KO      = @"이메일 형식의 아이디를 입력하세요.";
+static NSString *ID_CHECK_KO         = @"아이디를 입력하세요.";
+static NSString *PWD_CHECK_KO = @"비밀번호를 입력하세요.";
+static NSString *PWD_LENGTH_CHECK_KO = @"비밀번호가 너무 짧습니다.";
+static NSString *LOGIN_SUCCESS_KO = @"로그인 성공";
+static NSString *LOGIN_FAIL_KO = @"로그인 실패";
+static NSString *LOGIN_OUT_SUCCESS_KO = @"로그아웃 성공";
+static NSString *LOGIN_OUT_ASK_KO = @"로그아웃 하시겠습니까?";
+static NSString *SAVE_KO = @"저장하기";
+static NSString *NAME_CHECK_KO = @"이름을 입력하세요.";
+static NSString *BIRTH_CHECK_KO = @"생년월일을 입력하세요.";
 
 //vi
 static NSString *LOGIN_TITLE_VI     = @"Đăng nhập";
@@ -139,6 +149,17 @@ static NSString *LOGIN_PWD_FIND_VI     = @"Tìm mật khẩu của bạn";
 static NSString *LOGIN_BTN_VI     = @"Đăng nhập";
 static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên? Hãy đăng nhập và sử dụng dịch vụ của chúng tôi.";
 static NSString *LOGIN_SUMMIT_VI     = @"Đăng ký thành viên";
+static NSString *EMAIL_CHECK_VI      = @"Đăng nhập ID  theo hình thức email.";
+static NSString *ID_CHECK_VI         = @"Xin vui lòng nhập ID";
+static NSString *PWD_CHECK_VI = @"Vui lòng nhập mật khẩu";
+static NSString *PWD_LENGTH_CHECK_VI = @"Mật khẩu quá ngắn";
+static NSString *LOGIN_SUCCESS_VI = @"Đăng nhập";
+static NSString *LOGIN_FAIL_VI = @"Đăng nhập FAIL";
+static NSString *LOGIN_OUT_SUCCESS_VI = @"Đăng nhập Success";
+static NSString *LOGIN_OUT_ASK_VI = @"Bạn có muốn thoát?";
+static NSString *SAVE_VI = @"Lưu lại";
+static NSString *NAME_CHECK_VI = @"Xin vui lòng nhập tên";
+static NSString *BIRTH_CHECK_VI = @"Xin vui lòng nhập ngày tháng năm sinh";
 
 //korea
 static NSString *CONFIG_KO     = @"설정";

@@ -522,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/png/LoginViewController.m"
-            timestampString = "470587126.972066"
+            timestampString = "470597045.974841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "617"
-            endingLineNumber = "617"
+            startingLineNumber = "696"
+            endingLineNumber = "696"
             landmarkName = "-didTouchBackButton"
             landmarkType = "5">
          </BreakpointContent>
