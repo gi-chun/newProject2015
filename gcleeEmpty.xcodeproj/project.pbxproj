@@ -386,6 +386,7 @@
 		28D6F7FA1C0BDE53009B697D /* libBTWCryptoLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */; };
 		28D6F7FB1C0BDE53009B697D /* libCodeguard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F81C0BDE53009B697D /* libCodeguard.a */; };
 		28D6F8011C0C643E009B697D /* libKTBiOS_v1_17.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F8001C0C643E009B697D /* libKTBiOS_v1_17.a */; };
+		28D6F8031C0C6979009B697D /* 번역_5.java in Sources */ = {isa = PBXBuildFile; fileRef = 28D6F8021C0C6979009B697D /* 번역_5.java */; };
 		28D85B3E1C05F0CA006CBBE7 /* idResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D85B3C1C05F0CA006CBBE7 /* idResultViewController.m */; };
 		28D85B3F1C05F0CA006CBBE7 /* idResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28D85B3D1C05F0CA006CBBE7 /* idResultViewController.xib */; };
 		28D85B431C05F1CE006CBBE7 /* login_window_back@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D85B401C05F1CE006CBBE7 /* login_window_back@1x.png */; };
@@ -877,6 +878,7 @@
 		28D6F7F81C0BDE53009B697D /* libCodeguard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCodeguard.a; sourceTree = "<group>"; };
 		28D6F7FF1C0C643E009B697D /* KTBiOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTBiOS.h; sourceTree = "<group>"; };
 		28D6F8001C0C643E009B697D /* libKTBiOS_v1_17.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKTBiOS_v1_17.a; sourceTree = "<group>"; };
+		28D6F8021C0C6979009B697D /* 번역_5.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_5.java"; sourceTree = "<group>"; };
 		28D85B3B1C05F0CA006CBBE7 /* idResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idResultViewController.h; sourceTree = "<group>"; };
 		28D85B3C1C05F0CA006CBBE7 /* idResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = idResultViewController.m; sourceTree = "<group>"; };
 		28D85B3D1C05F0CA006CBBE7 /* idResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = idResultViewController.xib; sourceTree = "<group>"; };
@@ -1635,6 +1637,7 @@
 				28D6F7F41C0BDE53009B697D /* amsLibrary.h */,
 				28D6F7FF1C0C643E009B697D /* KTBiOS.h */,
 				28D6F8001C0C643E009B697D /* libKTBiOS_v1_17.a */,
+				28D6F8021C0C6979009B697D /* 번역_5.java */,
 				28D6F7F51C0BDE53009B697D /* BTWCodeguard.h */,
 				28D6F7F61C0BDE53009B697D /* libamsLibrary.a */,
 				28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */,
@@ -2140,6 +2143,7 @@
 				287F92E61BE748EF007E82AD /* UIViewController+MMDrawerController.m in Sources */,
 				28351D2E1BF43096009145E6 /* SBJsonStreamWriterState.m in Sources */,
 				287F92F31BE76166007E82AD /* MMExampleDrawerVisualStateManager.m in Sources */,
+				28D6F8031C0C6979009B697D /* 번역_5.java in Sources */,
 				28351D261BF43096009145E6 /* NSObject+SBJson.m in Sources */,
 				287F92E41BE748EF007E82AD /* MMDrawerController.m in Sources */,
 				28D11E981BE86B3A005B3024 /* MYBlurIntroductionView.m in Sources */,
