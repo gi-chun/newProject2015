@@ -392,7 +392,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
             }
         }
         
-        reloadUrl = url;
+        //reloadUrl = url;
     }
     return YES;
 }

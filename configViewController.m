@@ -133,8 +133,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-    
+    if(kScreenBoundsWidth > 320){
+        [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    }
     
 //    for (UIView *subView in [self.view subviews]) {
 //        [subView setBackgroundColor:UIColorFromRGB(0xffffff)];
@@ -285,9 +286,9 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
     
-    if ([self.delegate respondsToSelector:@selector(didTouchBackButton)]) {
-        [self.delegate didTouchBackButton];
-    }
+//    if ([self.delegate respondsToSelector:@selector(didTouchBackButton)]) {
+//        [self.delegate didTouchBackButton];
+//    }
 }
 
 #pragma mark - delegate button

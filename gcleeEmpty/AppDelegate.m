@@ -13,7 +13,7 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "BTWCodeguard.h"
 #import "AFHTTPRequestOperation.h"
-#import "KTBiOS.h"
+//#import "KTBiOS.h"
 
 
 @interface AppDelegate ()
@@ -197,28 +197,28 @@
     
     ////////////////////////////////////////////////
     //KTB 프록시 체크
-    NSString *tmp = checkProxy();
-    if([tmp isEqualToString:@"y"])
-    {
-        NSLog(@"프록시 서버 접속!!");
-        
-        //wifi 인지 확인
-        NSLog(@"checkProxy=(%@)", checkProxy());
-        NSLog(@"getProxyInfo=(%@)", getProxyInfo());
-        
-//        SWReachability* curReach=[[SWReachability reachabilityForInternetConnection] retain];
-//        int netStaus=[curReach currentReachabilityStatus];
-//        [curReach release];
-        
-//        if(netStaus == ReachableViaWiFi)
-//        {
-//            NSString *msg=@"비정상적인 접속(프록시)으로 인해 서비스를\n종료합니다. ";
-////            [UIAlertView showAlert:self type:OneButton tag:18398 title:nil buttonTitle:nil message:msg];
-////            return;
-//        }
-        
-    }
-    
+//    NSString *tmp = checkProxy();
+//    if([tmp isEqualToString:@"y"])
+//    {
+//        NSLog(@"프록시 서버 접속!!");
+//        
+//        //wifi 인지 확인
+//        NSLog(@"checkProxy=(%@)", checkProxy());
+//        NSLog(@"getProxyInfo=(%@)", getProxyInfo());
+//        
+////        SWReachability* curReach=[[SWReachability reachabilityForInternetConnection] retain];
+////        int netStaus=[curReach currentReachabilityStatus];
+////        [curReach release];
+//        
+////        if(netStaus == ReachableViaWiFi)
+////        {
+////            NSString *msg=@"비정상적인 접속(프록시)으로 인해 서비스를\n종료합니다. ";
+//////            [UIAlertView showAlert:self type:OneButton tag:18398 title:nil buttonTitle:nil message:msg];
+//////            return;
+////        }
+//        
+//    }
+//    
     
     
     ////////////////////////////////////////////////
