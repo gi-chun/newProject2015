@@ -53,6 +53,12 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    // handler code here
+    
+    return YES;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
@@ -165,8 +171,7 @@
     
     NSString *serverURL=nil;
     
-    serverURL = REAL_SERVER_URL;
-    serverURL = DEV_SERVER_URL;
+    serverURL = CODEGUARD_SERVER_URL;
     
     [[Codeguard sharedInstance]setChallengeRequestUrl:[NSString stringWithFormat:@"%@/CodeGuard/check.jsp", serverURL]];
     [[Codeguard sharedInstance]setEtcData:@"버전업데이트및공지"];

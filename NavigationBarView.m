@@ -132,9 +132,12 @@
     if (self) {
         
         CGFloat screenWidth  = [[UIScreen mainScreen] bounds].size.width;
-        CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+        //CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
         
         CGFloat marginX = (screenWidth > 320)?0:10;
+        CGFloat marginPlusX = (screenWidth > 400)?40:0;
+        CGFloat marginPlusY = (screenWidth > 400)?3:0;
+        CGFloat marginPlusH = (screenWidth > 400)?0:0;
         
         if(type == 1){ //back
             
@@ -167,8 +170,8 @@
             
             UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
             [backgroundImageView setImage:[UIImage imageNamed:@"bank_gnb_back.png"]];
-            [backgroundImageView setFrame:CGRectMake(0, -5, screenWidth, 60)];
-            backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
+            [backgroundImageView setFrame:CGRectMake(0, -5+marginPlusY, screenWidth, 60-marginPlusH)];
+            backgroundImageView.contentMode = (marginPlusX>0)?UIViewContentModeScaleToFill:UIViewContentModeScaleAspectFit;
             [self addSubview:backgroundImageView];
             
             // left button

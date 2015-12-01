@@ -222,24 +222,44 @@ const static CGFloat MENU_HEIGHT   =      45;
     [self addSubview:menuItemView4];
     [menuItemView4 setDelegate:self];
     
-    //ADView
-//    UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(-40-marginX/2,kScreenBoundsHeight-kAD_HEIGHT, kScreenBoundsWidth+40-marginX/2, kAD_HEIGHT)];
-    UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenBoundsHeight-kAD_HEIGHT-kAD_MarginH, kScreenBoundsWidth-kAD_MarginW, kAD_HEIGHT)];
-    //[ADView setBackgroundColor:UIColorFromRGB(0x2881C0)]; //[self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
     
-    UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
-     [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
-    adImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [ADView addSubview:adImageView];
+    if(kScreenBoundsWidth > 400){
+        UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenBoundsHeight-kAD_HEIGHT-25, kScreenBoundsWidth-kAD_MarginW-37, kAD_HEIGHT+25)];
+        
+        UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
+        [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
+        adImageView.contentMode = UIViewContentModeScaleToFill;
+        [ADView addSubview:adImageView];
+        
+        //AD emptybutton
+        UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [emptyButton setFrame:ADView.bounds];
+        //[emptyButton setBackgroundColor:[UIColor clearColor]];
+        [emptyButton setBackgroundImage:[UIImage imageNamed:@"ad_press_test.png"] forState:UIControlStateHighlighted];
+        [emptyButton addTarget:self action:@selector(didTouchAD) forControlEvents:UIControlEventTouchUpInside];
+        [ADView addSubview:emptyButton];
+        [self addSubview:ADView];
+    }else{
+        //ADView
+        //    UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(-40-marginX/2,kScreenBoundsHeight-kAD_HEIGHT, kScreenBoundsWidth+40-marginX/2, kAD_HEIGHT)];
+        UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenBoundsHeight-kAD_HEIGHT-kAD_MarginH, kScreenBoundsWidth-kAD_MarginW, kAD_HEIGHT)];
+        //[ADView setBackgroundColor:UIColorFromRGB(0x2881C0)]; //[self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
+        
+        UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
+        [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
+        adImageView.contentMode = UIViewContentModeScaleAspectFill;
+        [ADView addSubview:adImageView];
+        
+        //AD emptybutton
+        UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [emptyButton setFrame:ADView.bounds];
+        //[emptyButton setBackgroundColor:[UIColor clearColor]];
+        [emptyButton setBackgroundImage:[UIImage imageNamed:@"ad_press_test.png"] forState:UIControlStateHighlighted];
+        [emptyButton addTarget:self action:@selector(didTouchAD) forControlEvents:UIControlEventTouchUpInside];
+        [ADView addSubview:emptyButton];
+        [self addSubview:ADView];
+    }
     
-    //AD emptybutton
-    UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [emptyButton setFrame:ADView.bounds];
-    //[emptyButton setBackgroundColor:[UIColor clearColor]];
-    [emptyButton setBackgroundImage:[UIImage imageNamed:@"ad_press_test.png"] forState:UIControlStateHighlighted];
-    [emptyButton addTarget:self action:@selector(didTouchAD) forControlEvents:UIControlEventTouchUpInside];
-    [ADView addSubview:emptyButton];
-    [self addSubview:ADView];
     
   
     

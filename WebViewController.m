@@ -596,6 +596,27 @@
 {
     NSString *url = request ? request.URL.absoluteString : nil;
     
+    if ([url hasPrefix:@"APP"]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    
+    if ([url hasPrefix:@"App"]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    
+    if ([url hasPrefix:@"app"]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    
     NSLog(@"url:%@", url);
     webViewUrl = url;
     
