@@ -383,6 +383,12 @@
 		28D63FF01BF9D7AF00C1982A /* total_menu_logout_btn@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D63FED1BF9D7AF00C1982A /* total_menu_logout_btn@1x.png */; };
 		28D63FF11BF9D7AF00C1982A /* total_menu_logout_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D63FEE1BF9D7AF00C1982A /* total_menu_logout_btn@2x.png */; };
 		28D63FF21BF9D7AF00C1982A /* total_menu_logout_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D63FEF1BF9D7AF00C1982A /* total_menu_logout_btn@3x.png */; };
+		28D6E9501C0D76A5000B39BA /* tuto_01_viet@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E94A1C0D76A5000B39BA /* tuto_01_viet@1x.png */; };
+		28D6E9511C0D76A5000B39BA /* tuto_01_viet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E94B1C0D76A5000B39BA /* tuto_01_viet@2x.png */; };
+		28D6E9521C0D76A5000B39BA /* tuto_01_viet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E94C1C0D76A5000B39BA /* tuto_01_viet@3x.png */; };
+		28D6E9531C0D76A5000B39BA /* tuto_01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E94D1C0D76A5000B39BA /* tuto_01@1x.png */; };
+		28D6E9541C0D76A5000B39BA /* tuto_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E94E1C0D76A5000B39BA /* tuto_01@2x.png */; };
+		28D6E9551C0D76A5000B39BA /* tuto_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E94F1C0D76A5000B39BA /* tuto_01@3x.png */; };
 		28D6F7F91C0BDE53009B697D /* libamsLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F61C0BDE53009B697D /* libamsLibrary.a */; };
 		28D6F7FA1C0BDE53009B697D /* libBTWCryptoLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */; };
 		28D6F7FB1C0BDE53009B697D /* libCodeguard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F81C0BDE53009B697D /* libCodeguard.a */; };
@@ -872,6 +878,12 @@
 		28D63FED1BF9D7AF00C1982A /* total_menu_logout_btn@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_logout_btn@1x.png"; sourceTree = "<group>"; };
 		28D63FEE1BF9D7AF00C1982A /* total_menu_logout_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_logout_btn@2x.png"; sourceTree = "<group>"; };
 		28D63FEF1BF9D7AF00C1982A /* total_menu_logout_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_logout_btn@3x.png"; sourceTree = "<group>"; };
+		28D6E94A1C0D76A5000B39BA /* tuto_01_viet@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuto_01_viet@1x.png"; sourceTree = "<group>"; };
+		28D6E94B1C0D76A5000B39BA /* tuto_01_viet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuto_01_viet@2x.png"; sourceTree = "<group>"; };
+		28D6E94C1C0D76A5000B39BA /* tuto_01_viet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuto_01_viet@3x.png"; sourceTree = "<group>"; };
+		28D6E94D1C0D76A5000B39BA /* tuto_01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuto_01@1x.png"; sourceTree = "<group>"; };
+		28D6E94E1C0D76A5000B39BA /* tuto_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuto_01@2x.png"; sourceTree = "<group>"; };
+		28D6E94F1C0D76A5000B39BA /* tuto_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuto_01@3x.png"; sourceTree = "<group>"; };
 		28D6F7F41C0BDE53009B697D /* amsLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amsLibrary.h; sourceTree = "<group>"; };
 		28D6F7F51C0BDE53009B697D /* BTWCodeguard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTWCodeguard.h; sourceTree = "<group>"; };
 		28D6F7F61C0BDE53009B697D /* libamsLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libamsLibrary.a; sourceTree = "<group>"; };
@@ -1508,6 +1520,12 @@
 				28D85B401C05F1CE006CBBE7 /* login_window_back@1x.png */,
 				28D85B411C05F1CE006CBBE7 /* login_window_back@2x.png */,
 				28D85B421C05F1CE006CBBE7 /* login_window_back@3x.png */,
+				28D6E94A1C0D76A5000B39BA /* tuto_01_viet@1x.png */,
+				28D6E94B1C0D76A5000B39BA /* tuto_01_viet@2x.png */,
+				28D6E94C1C0D76A5000B39BA /* tuto_01_viet@3x.png */,
+				28D6E94D1C0D76A5000B39BA /* tuto_01@1x.png */,
+				28D6E94E1C0D76A5000B39BA /* tuto_01@2x.png */,
+				28D6E94F1C0D76A5000B39BA /* tuto_01@3x.png */,
 				28B889851C02AFFB0093BC67 /* bank_top_tap_logo_press@1x.png */,
 				28B889861C02AFFB0093BC67 /* bank_top_tap_logo_press@2x.png */,
 				28B889871C02AFFB0093BC67 /* bank_top_tap_logo_press@3x.png */,
@@ -1750,6 +1768,7 @@
 				28D25A681BFEF5AD0022E0CF /* intro_img@2x.png in Resources */,
 				2852D0E21BF9DD4200C1B1B5 /* total_menu_back_test@3x.png in Resources */,
 				28D5370F1BF970E5004257DA /* total_menu_02@2x.png in Resources */,
+				28D6E9551C0D76A5000B39BA /* tuto_01@3x.png in Resources */,
 				28B889A01C02AFFB0093BC67 /* bank_total_menu_btn_press@1x.png in Resources */,
 				283148F41BFB0E6A0083DA3F /* pw_change_btn@3x.png in Resources */,
 				28CF888F1BFD62060033B635 /* icon-Small@2x.png in Resources */,
@@ -1812,6 +1831,7 @@
 				283148351BFB0AE70083DA3F /* find_pw_btn@1x.png in Resources */,
 				28351DA51BF47F6B009145E6 /* top_list_icon_btn@2x.png in Resources */,
 				28351DAF1BF47F6B009145E6 /* total_menu_btn@3x.png in Resources */,
+				28D6E9531C0D76A5000B39BA /* tuto_01@1x.png in Resources */,
 				28D537181BF970E5004257DA /* total_menu_03_press@2x.png in Resources */,
 				28D5372F1BF970E5004257DA /* total_menu_email_icon@1x.png in Resources */,
 				283148BB1BFB0E6A0083DA3F /* apply_btn_press@3x.png in Resources */,
@@ -1885,6 +1905,7 @@
 				2886A8D51BE082C8001B7657 /* Config.plist in Resources */,
 				28351D821BF47F6B009145E6 /* bottom_back_btn@3x.png in Resources */,
 				28D5371F1BF970E5004257DA /* total_menu_04_new@3x.png in Resources */,
+				28D6E9511C0D76A5000B39BA /* tuto_01_viet@2x.png in Resources */,
 				28351D841BF47F6B009145E6 /* bottom_back_btn_press@2x.png in Resources */,
 				28F7C0501BDE18BF00C53B86 /* btn_setting_menu.png in Resources */,
 				28D537361BF970E5004257DA /* total_menu_login_btn_press@2x.png in Resources */,
@@ -1904,6 +1925,7 @@
 				28D5370E1BF970E5004257DA /* total_menu_02@1x.png in Resources */,
 				28B8899D1C02AFFB0093BC67 /* bank_top_tap_logo@1x.png in Resources */,
 				28351D831BF47F6B009145E6 /* bottom_back_btn_press@1x.png in Resources */,
+				28D6E9541C0D76A5000B39BA /* tuto_01@2x.png in Resources */,
 				284B74211C05B391006D9295 /* menu00_back_press@3x.png in Resources */,
 				28D537061BF970E5004257DA /* total_menu_02_new@2x.png in Resources */,
 				28CF88771BFD55CD0033B635 /* right_allow@1x.png in Resources */,
@@ -1970,6 +1992,7 @@
 				28D537071BF970E5004257DA /* total_menu_02_new@3x.png in Resources */,
 				28CF88731BFD55C00033B635 /* gray_back@3x.png in Resources */,
 				283148F21BFB0E6A0083DA3F /* pw_change_btn@1x.png in Resources */,
+				28D6E9521C0D76A5000B39BA /* tuto_01_viet@3x.png in Resources */,
 				28CF88981BFD62180033B635 /* snb_back@3x.png in Resources */,
 				28B889A71C02AFFB0093BC67 /* location_icon_press@2x.png in Resources */,
 				283148FA1BFB0E6A0083DA3F /* pw_change_menu03_back@3x.png in Resources */,
@@ -2054,6 +2077,7 @@
 				28EDFB711BFC960600B3B647 /* configViewController.xib in Resources */,
 				28D537161BF970E5004257DA /* total_menu_03_press_new@3x.png in Resources */,
 				28D537231BF970E5004257DA /* total_menu_04_press@1x.png in Resources */,
+				28D6E9501C0D76A5000B39BA /* tuto_01_viet@1x.png in Resources */,
 				283148F91BFB0E6A0083DA3F /* pw_change_menu03_back@2x.png in Resources */,
 				2831483C1BFB0AE70083DA3F /* home_btn_press@2x.png in Resources */,
 				28D537221BF970E5004257DA /* total_menu_04_press_new@3x.png in Resources */,
@@ -2265,8 +2289,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinhan Bank CO.,LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinhan Bank CO.,LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2293,7 +2317,7 @@
 					"$(PROJECT_DIR)/sts_old/external/OtpSDK/lib",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclubEnz;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -2305,8 +2329,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinhan Bank CO.,LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinhan Bank CO.,LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2333,7 +2357,7 @@
 					"$(PROJECT_DIR)/sts_old/external/OtpSDK/lib",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclubEnz;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
