@@ -153,12 +153,20 @@
     
     //Add panels to an array
     //NSArray *panels = @[panel1, panel2, panel3, panel4];
-    NSArray *panels = @[panel1, panel2];
+    NSArray *panels = @[panel1, panel2, panel3, panel4];
     
     //Create the introduction view and set its delegate
     MYBlurIntroductionView *introductionView = [[MYBlurIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     introductionView.delegate = self;
-    introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_test01.png"];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01.png"];
+    }else{
+        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01_viet.png"];
+    }
+    
     
     CGSize imageSize = introductionView.BackgroundImageView.image.size;
     
