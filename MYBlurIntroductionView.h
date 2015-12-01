@@ -74,7 +74,7 @@ typedef enum {
 /**
  *  Handles the event that the skip button was tapped.
  */
-- (IBAction)didPressSkipButton;
+- (IBAction)didPressSkipButton:(NSInteger) nType;
 
 /**
  *  Changes the panel to a desired index. The index is relative to the array of panels passed in to the @em buildIntroductionWithPanels

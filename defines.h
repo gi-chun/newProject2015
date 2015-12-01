@@ -40,6 +40,8 @@ static NSString * const kTutoY       = @"kTutoY";
 static NSString * const kForceUpdateY       = @"kForceUpdateY"; //강제업데이트 여부
 static NSString * const kUpdateY       = @"kForceUpdateY"; //업데이트 여부
 
+static NSString * const kForceMemberViewY       = @"kForceMemberViewY"; //member force view
+
 
 
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
@@ -98,11 +100,15 @@ static NSString *LEFT_LOGIN_KO     = @"로그인";
 static NSString *LEFT_LOGIN_NOTI_KO     = @"Event / 공지";
 static NSString *LEFT_CONFIG_KO     = @"설정";
 
+static NSString *BOTTOM_BANNER_KO = @"bottom_banner.png";
+
 //vi
 static NSString *LEFT_DES_VI     = @"Bạn có thể sử dụng các dịch vụ khác nhau trong Sunny Club sau khi đăng nhập.";
 static NSString *LEFT_LOGIN_VI     = @"LOGIN";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
+
+static NSString *BOTTOM_BANNER_VI = @"bottom_banner_viet.png";
 
 //korea
 static NSString *PW_SEARCH_TITLE_KO     = @"비밀번호 찾기";

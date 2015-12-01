@@ -7,6 +7,15 @@
 //
 
 #import "MYBlurIntroductionView.h"
+#import "memberOutViewController.h"
+
+@interface MYBlurIntroductionView ()
+{
+    NSInteger btnType;
+}
+
+@end
+
 
 @implementation MYBlurIntroductionView
 @synthesize delegate;
@@ -52,8 +61,8 @@
     self.PageControl.enabled = NO;
     [self addSubview:self.PageControl];
     
-    //Get skipString dimensions
-    NSString *skipString = NSLocalizedString(@"Skip", nil);
+    //Get skipString dimensions  skip test
+    NSString *skipString = NSLocalizedString(@"", nil);
     CGFloat skipStringWidth = 0;
     kSkipButtonFont = [UIFont systemFontOfSize:16];
     
@@ -68,18 +77,21 @@
     
     //Left Skip Button
     self.LeftSkipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.LeftSkipButton.frame = CGRectMake(10, self.frame.size.height - 48, 46, 37);
+    self.LeftSkipButton.frame = CGRectMake(self.frame.size.width/4, self.frame.size.height - (20+80), self.frame.size.width/4, 80);
     [self.LeftSkipButton setTitle:skipString forState:UIControlStateNormal];
     [self.LeftSkipButton.titleLabel setFont:kSkipButtonFont];
-    [self.LeftSkipButton addTarget:self action:@selector(didPressSkipButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.LeftSkipButton setTag:0];
+    [self.LeftSkipButton addTarget:self action:@selector(didPressMemberButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.LeftSkipButton];
     
     //Right Skip Button
     self.RightSkipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.RightSkipButton.frame = CGRectMake(self.frame.size.width - skipStringWidth - kLeftRightSkipPadding, self.frame.size.height - 48, skipStringWidth, 37);
+//    self.RightSkipButton.frame = CGRectMake(self.frame.size.width - skipStringWidth - kLeftRightSkipPadding, self.frame.size.height - 48, skipStringWidth, 37);
+    self.RightSkipButton.frame = CGRectMake(self.frame.size.width - 80, self.frame.size.height - (10+60), 80, 60);
     [self.RightSkipButton.titleLabel setFont:kSkipButtonFont];
     [self.RightSkipButton setTitle:skipString forState:UIControlStateNormal];
-    [self.RightSkipButton addTarget:self action:@selector(didPressSkipButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.RightSkipButton setTag:1];
+    [self.RightSkipButton addTarget:self action:@selector(didPressSkipButton:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.RightSkipButton];
 }
 
@@ -116,11 +128,11 @@
             
             //Set items specific to text direction
             if (self.LanguageDirection == MYLanguageDirectionLeftToRight) {
-                self.LeftSkipButton.hidden = YES;
+                self.LeftSkipButton.hidden = NO;
                 [self buildScrollViewLeftToRight];
             }
             else {
-                self.RightSkipButton.hidden = YES;
+                self.RightSkipButton.hidden = NO;
                 [self buildScrollViewRightToLeft];
             }
         }
@@ -307,7 +319,14 @@
 
 #pragma mark - Interaction Methods
 
-- (void)didPressSkipButton {
+- (void)didPressSkipButton:(NSInteger) nType {
+    
+    [self skipIntroduction];
+}
+
+- (void)didPressMemberButton{
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kForceMemberViewY];
     [self skipIntroduction];
 }
 

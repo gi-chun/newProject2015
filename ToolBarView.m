@@ -36,9 +36,16 @@
         [self setBackgroundColor:[UIColor clearColor]];
         //[self setBackgroundColor:UIColorFromRGB(0xffffff)];
         
+        NSString* strImage;
+        NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:@"bottom_banner.png"]];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
         
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self addSubview:backgroundImageView];

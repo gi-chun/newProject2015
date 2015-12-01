@@ -190,17 +190,20 @@ const static CGFloat MENU_HEIGHT   =      45;
     
     NSString* strNotiTitle;
     NSString* strConfigTitle;
+    NSString* strImage;
     
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){
         
-        strNotiTitle = LEFT_LOGIN_NOTI_KO;
+        strNotiTitle = NEWS_KO;
         strConfigTitle = LEFT_CONFIG_KO;
+        strImage = LEFT_CONFIG_KO;
         
     }else if([temp isEqualToString:@"vi"]){
         
-        strNotiTitle = LEFT_LOGIN_NOTI_VI;
+        strNotiTitle = NEWS_VI;
         strConfigTitle = LEFT_CONFIG_VI;
+        strImage = LEFT_CONFIG_KO;
     }
     
     leftMenuItemView *menuItemView1 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginView.frame)+5, meWidth, MENU_HEIGHT) title:@"Sunny CLUB" viewType:1];

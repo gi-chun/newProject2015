@@ -12,6 +12,7 @@
 #import "leftMenuView.h"
 #import "LoginViewController.h"
 #import "configViewController.h"
+#import "setInforViewController.h"
 
 @interface leftViewController ()
 

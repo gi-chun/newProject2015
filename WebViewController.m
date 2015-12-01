@@ -12,6 +12,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "LoginViewController.h"
 #import "ToolBarView.h"
+#import "setInforViewController.h"
 
 @interface WebViewController () <WebViewDelegate, ToolBarViewDelegate>
 {
@@ -101,6 +102,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    BOOL isForceMember = [[NSUserDefaults standardUserDefaults] boolForKey:kForceMemberViewY];
+    if(isForceMember == YES){
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kForceMemberViewY];
+        
+        setInforViewController *SetInforViewController = [[setInforViewController alloc] init];
+        //[SetInforViewController setDelegate:self];
+        [self.navigationController pushViewController:SetInforViewController animated:YES];
+    }
+
     
     [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
 
