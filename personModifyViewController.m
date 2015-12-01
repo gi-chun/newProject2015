@@ -18,16 +18,17 @@
 {
     NavigationBarView *navigationBarView;
     UITextField* currentEditingTextField;
-    __weak IBOutlet UILabel *cardNmLabel;
-    __weak IBOutlet UITextField *emailTxt;
-    __weak IBOutlet UILabel *idLabel;
+    
     __weak IBOutlet UILabel *label_id;
+    __weak IBOutlet UILabel *idLabel;
     __weak IBOutlet UILabel *label_mail;
-    __weak IBOutlet UIButton *btn_change;
+    __weak IBOutlet UITextField *emailTxt;
     __weak IBOutlet UILabel *label_pwd;
     __weak IBOutlet UILabel *label_member;
     __weak IBOutlet UILabel *label_membership;
     __weak IBOutlet UILabel *label_nomal;
+    __weak IBOutlet UILabel *cardNmLabel;
+    __weak IBOutlet UIButton *btn_change;
 }
 @end
 
@@ -81,15 +82,47 @@
     [self resetNavigationBarView:1];
 }
 
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
 - (IBAction)emailSummit:(id)sender {
     
-    if([emailTxt.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Mail please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [emailTxt becomeFirstResponder];
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+    
+        if([emailTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [emailTxt becomeFirstResponder];
+            
+            return;
+        }
         
-        return;
+        if([self NSStringIsValidEmail:emailTxt.text] == false){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            [emailTxt becomeFirstResponder];
+            
+            return;
+        }
+        
+    }else{
+        
     }
+    
+    
    
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];

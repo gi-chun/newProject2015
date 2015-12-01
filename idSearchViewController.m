@@ -183,21 +183,20 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            NSString * stSearch = [NSString stringWithFormat:@"조회된 아이디는 [%@] 입니다. ", sEmail];
+//            NSString * stSearch = [NSString stringWithFormat:@"조회된 아이디는 [%@] 입니다. ", sEmail];
+//            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:stSearch delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:stSearch delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             idResultViewController *idResultController = [[idResultViewController alloc] init];
             [idResultController setDelegate:self];
             [idResultController setId:sEmail];
             [self.navigationController pushViewController:idResultController animated:YES];
             
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
+            //[self.navigationController popToRootViewControllerAnimated:YES];
             
         }
         

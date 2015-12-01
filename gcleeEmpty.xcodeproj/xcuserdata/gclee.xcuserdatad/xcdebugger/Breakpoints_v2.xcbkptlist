@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "pwdSearchViewController.m"
-            timestampString = "470509760.688599"
+            timestampString = "470628911.699191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "-SearchClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "pwdSearchViewController.m"
-            timestampString = "470509760.688599"
+            timestampString = "470628911.699191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-SearchClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "pwdSearchViewController.m"
-            timestampString = "470509760.688599"
+            timestampString = "470628911.699191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "-SearchClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "pwdSearchViewController.m"
-            timestampString = "470509760.688599"
+            timestampString = "470628911.699191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "-SearchClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -617,22 +617,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "pwdChangeViewController.m"
-            timestampString = "470280114.084217"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "-saveClick:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "WebViewController.m"
             timestampString = "470592145.696208"
             startingColumnNumber = "9223372036854775807"
@@ -650,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "setInforViewController.m"
-            timestampString = "470509760.688599"
+            timestampString = "470637583.922978"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
             landmarkName = "-confirmID:"
             landmarkType = "5">
          </BreakpointContent>

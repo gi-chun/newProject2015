@@ -16,10 +16,15 @@
 
 @interface memberOutViewController () <NavigationBarViewDelegate>{
     
-    __weak IBOutlet UITextField *pwdTxt;
     NavigationBarView *navigationBarView;
     UITextField* currentEditingTextField;
     
+    __weak IBOutlet UILabel *labe_outTitle;
+    __weak IBOutlet UILabel *label_outDesc;
+    __weak IBOutlet UITextField *pwdTxt;
+    __weak IBOutlet UILabel *lable_pwd;
+    __weak IBOutlet UILabel *lable_pwdDesc;
+    __weak IBOutlet UIButton *btn_Out;
 }
 @end
 
@@ -182,6 +187,14 @@
     [self resetNavigationBarView:1];
     [self setDelegateText];
     [pwdTxt setKeyboardType:UIKeyboardTypeNumberPad ];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        [self initScreenView_ko];
+    }else{
+        [self initScreenView_vi];
+    }
 }
 /////
 - (void)viewDidAppear:(BOOL)animated
@@ -192,12 +205,39 @@
     //[self.navigationItem setHidesBackButton:YES];
     [self resetNavigationBarView:1];
     
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark -initScreenView
+-(void)initScreenView_ko{
+    
+    [self resetNavigationBarView:1];
+    [labe_outTitle setText:MEM_OUT_TITLE_KO];
+    [label_outDesc setText:MEM_OUT_DESC_KO];
+    [lable_pwd setText:MEM_PWD_TITLE_KO];
+    [lable_pwdDesc setText:MEM_PWD_DESC_KO];
+    [btn_Out setTitle:MEM_OUT_KO forState:UIControlStateNormal];
+}
+
+-(void)initScreenView_vi{
+    
+    [self resetNavigationBarView:1];
+    [labe_outTitle setText:MEM_OUT_TITLE_VI];
+    [label_outDesc setText:MEM_OUT_DESC_VI];
+    [lable_pwd setText:MEM_PWD_TITLE_VI];
+    [lable_pwdDesc setText:MEM_PWD_DESC_VI];
+    [btn_Out setTitle:MEM_OUT_VI forState:UIControlStateNormal];
+    
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - text delegate
@@ -288,8 +328,16 @@
 
 - (NavigationBarView *)navigationBarView:(NSInteger)navigationType
 {
-    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:@"회원탈퇴"];
-    [navigationBarView setDelegate:self];
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:PERSON_MEMBER_OUT_KO];
+        [navigationBarView setDelegate:self];
+    }else{
+        navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:PERSON_MEMBER_OUT_VI];
+        [navigationBarView setDelegate:self];
+    }
+    
     
     return navigationBarView;
 }

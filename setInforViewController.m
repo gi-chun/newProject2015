@@ -67,46 +67,103 @@
 
 - (IBAction)btnSummitClick:(id)sender {
     
-    if([idText.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check ID please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [idText becomeFirstResponder];
+    NSString* temp;
+    
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        if([idText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([nameText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NAME_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([yearText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([pwdText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([pwdCnfirmText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([pwdText.text length] < 4){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [pwdText becomeFirstResponder];
+            return;
+        }
+        if([pwdCnfirmText.text length] < 4){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [pwdCnfirmText becomeFirstResponder];
+            return;
+        }
+
         
-        return;
+    }else{
+        if([idText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([nameText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NAME_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([yearText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([pwdText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([pwdCnfirmText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            return;
+        }
+        if([pwdText.text length] < 4){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [pwdText becomeFirstResponder];
+            return;
+        }
+        if([pwdCnfirmText.text length] < 4){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [pwdCnfirmText becomeFirstResponder];
+            return;
+        }
+        
     }
     
-    if([nameText.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Name please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [idText becomeFirstResponder];
-        
-        return;
-    }
-    
-    if([yearText.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check input data please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [idText becomeFirstResponder];
-        
-        return;
-    }
-    
-    if([pwdText.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [idText becomeFirstResponder];
-        
-        return;
-    }
-    
-    if([pwdCnfirmText.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [idText becomeFirstResponder];
-        
-        return;
-    }
-   
 //    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 //    [self startLoadingAnimation];
 
@@ -283,15 +340,67 @@
     
 }
 
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
 - (IBAction)confirmID:(id)sender {
     
-    if([idText.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check ID please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [idText becomeFirstResponder];
+    NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
         
-        return;
+        if([idText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([self NSStringIsValidEmail:idText.text] == false){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            [idText becomeFirstResponder];
+            
+            return;
+            
+        }
+        
+
+    }else{
+        
+        if([idText.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [idText becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([self NSStringIsValidEmail:idText.text] == false){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            [idText becomeFirstResponder];
+            
+            return;
+            
+        }
+        
     }
+    
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
@@ -699,8 +808,9 @@
 
 - (void)initSetItem
 {
+    [okSwitch setOn:false];
     [inforText setContentOffset:CGPointZero animated:YES];
-    [[self view]endEditing:YES];
+    [[self view]endEditing:NO];
     
 }
 

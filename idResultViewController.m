@@ -12,16 +12,21 @@
 
 #import "idResultViewController.h"
 #import "NavigationBarView.h"
+#import "LoginViewController.h"
+#import "pwdSearchViewController.h"
 
 @interface idResultViewController ()
 {
      NavigationBarView *navigationBarView;
     
-    __weak IBOutlet UILabel *resultTailLabel;
-    __weak IBOutlet UILabel *emailLabel;
     __weak IBOutlet UILabel *resultDesc;
+    __weak IBOutlet UILabel *emailLabel;
+    __weak IBOutlet UILabel *resultTailLabel;
+    
     __weak IBOutlet UIButton *btnLogin;
     __weak IBOutlet UIButton *btnPwdSearch;
+    
+    NSString* emailResult;
     
 }
 @end
@@ -31,13 +36,21 @@
 - (void)setId:(NSString*)email{
     
     [emailLabel setText:email];
+    emailResult = email;
 }
 
 - (IBAction)loginClick:(id)sender {
     
+    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    [loginViewController setDelegate:self];
+    [self.navigationController pushViewController:loginViewController animated:YES];
 }
+
 - (IBAction)pwdSearchClick:(id)sender {
     
+    pwdSearchViewController *PwdSearchWiewController = [[pwdSearchViewController alloc] init];
+    [PwdSearchWiewController setDelegate:self];
+    [self.navigationController pushViewController:PwdSearchWiewController animated:YES];
 }
 
 - (void)viewDidLoad {
@@ -48,6 +61,21 @@
     }
     // Do any additional setup after loading the view from its nib.
     [self resetNavigationBarView:1];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        
+        NSString* temp;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            [self initScreenView_ko];
+        }else if([temp isEqualToString:@"vi"]){
+            [self initScreenView_vi];
+        }else{
+            temp = @"EN";
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,8 +102,18 @@
 
 - (NavigationBarView *)navigationBarView:(NSInteger)navigationType
 {
-    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:@"비밀번호 찾기"];
-    [navigationBarView setDelegate:self];
+    NSString* temp;
+    
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:IDSEARCH_TITLE_KO];
+        [navigationBarView setDelegate:self];
+    }else{
+        navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:IDSEARCH_TITLE_VI];
+        [navigationBarView setDelegate:self];
+    }
+    
     
     return navigationBarView;
 }
@@ -88,6 +126,32 @@
     //        [self.delegate didTouchBackButton];
     //    }
 }
+
+#pragma mark -initScreenView
+-(void)initScreenView_ko{
+    
+    [self resetNavigationBarView:1];
+    [resultDesc setText:ID_RESULT_HEAD_KO];
+    [emailLabel setText:emailResult];
+    [resultTailLabel setText:ID_RESULT_TAIL_KO];
+    
+    [btnLogin setTitle:LOGIN_TITLE_KO forState:UIControlStateNormal];
+    [btnPwdSearch setTitle:PW_SEARCH_TITLE_KO forState:UIControlStateNormal];
+}
+
+-(void)initScreenView_vi{
+    
+    [self resetNavigationBarView:1];
+    [resultDesc setText:ID_RESULT_HEAD_VI];
+    [emailLabel setText:emailResult];
+    [resultTailLabel setText:ID_RESULT_TAIL_VI];
+    
+    [btnLogin setTitle:LOGIN_TITLE_VI forState:UIControlStateNormal];
+    [btnPwdSearch setTitle:PW_SEARCH_TITLE_VI forState:UIControlStateNormal];
+
+}
+
+
 
 /*
 #pragma mark - Navigation

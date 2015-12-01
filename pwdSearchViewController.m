@@ -31,7 +31,93 @@
 
 @implementation pwdSearchViewController
 
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
 - (IBAction)SearchClick:(id)sender {
+    
+    /////////
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        if([mailTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [mailTxt becomeFirstResponder];
+            
+            return;
+        }
+        if([self NSStringIsValidEmail:mailTxt.text] == false){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [mailTxt becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([nameTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [nameTxt becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([yyyymmddLabel.text isEqualToString:@"yyyymmdd"]){
+            
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [yyyymmddLabel becomeFirstResponder];
+            
+            return;
+        }
+        
+    }else if([temp isEqualToString:@"vi"]){
+        if([mailTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [mailTxt becomeFirstResponder];
+            
+            return;
+        }
+        if([self NSStringIsValidEmail:mailTxt.text] == false){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [mailTxt becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([nameTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [nameTxt becomeFirstResponder];
+            
+            return;
+        }
+        
+        if([yyyymmddLabel.text isEqualToString:@"yyyymmdd"]){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [yyyymmddLabel becomeFirstResponder];
+            
+            return;
+        }
+        
+    }else{
+        
+        temp = @"EN";
+    }
+    /////////
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];

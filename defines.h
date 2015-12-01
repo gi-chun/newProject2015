@@ -67,6 +67,21 @@ static NSString *PERSON_MEMBER_OUT_KO     = @"회원탈퇴";
 static NSString *PERSON_MEMBER_LEVEL_KO     = @"멤버십 등금";
 static NSString *PERSON_NOMAL_KO     = @"일반";
 
+//korea
+static NSString *MEM_OUT_TITLE_KO     = @"회원탈퇴 안내사항";
+static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n 2.멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
+static NSString *MEM_PWD_TITLE_KO     = @"비밀번호 입력";
+static NSString *MEM_PWD_DESC_KO     = @"회원탈퇴 처리를 위해 다시한번 비밀번호를 입력하시기 바랍니다.";
+static NSString *MEM_OUT_KO = @"탈퇴하기";
+
+//vi
+static NSString *MEM_OUT_TITLE_VI     = @"Hướng dẫn về hủy thành viên";
+static NSString *MEM_OUT_DESC_VI     = @"1.Thông tin thành viên bị hủy, không thể phục hồi \n 2.Thứ hạng và điểm của thành viên bị hủy, không thể phục hồi";
+static NSString *MEM_PWD_TITLE_VI     = @"Nhập mật khẩu";
+static NSString *MEM_PWD_DESC_VI     = @"Vui lòng nhập mật khẩu lại để hủy thành viên";
+static NSString *MEM_OUT_VI = @"Hủy thành viên";
+
+
 //vi
 static NSString *PERSON_TITLE_VI     = @"Thay đổi thông tin cá nhân";
 static NSString *PERSON_ID_VI     = @"ID";
@@ -95,6 +110,8 @@ static NSString *PW_SEARCH_ID_KO     = @"아이디";
 static NSString *PW_SEARCH_NAME_KO     = @"이름";
 static NSString *PW_SEARCH_YYYY_KO     = @"생년월일";
 static NSString *PW_SEARCH_KO     = @"조회하기";
+static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는";
+static NSString *ID_RESULT_TAIL_KO     = @"입니다.";
 
 //vi
 static NSString *PW_SEARCH_TITLE_VI     = @"Tìm mật khẩu của bạn";
@@ -102,6 +119,8 @@ static NSString *PW_SEARCH_ID_VI     = @"ID";
 static NSString *PW_SEARCH_NAME_VI     = @"Tên";
 static NSString *PW_SEARCH_YYYY_VI     = @"Sinh nhật";
 static NSString *PW_SEARCH_VI     = @"Tìm ID của bạn";
+static NSString *ID_RESULT_HEAD_VI     = @"ID bạn đang truy vấn là:";
+static NSString *ID_RESULT_TAIL_VI     = @"này.";
 
 //korea
 static NSString *IDSEARCH_TITLE_KO     = @"아이디 찾기";
@@ -109,11 +128,23 @@ static NSString *IDSEARCH_NAME_KO     = @"이름";
 static NSString *IDSEARCH_YYYY_KO     = @"생년월일";
 static NSString *IDSEARCH_SEARCH_KO     = @"조회하기";
 
+//korea
+static NSString *PW_CURRENT_KO = @"현재 비밀번호";
+static NSString *PW_NEW_KO = @"새 비밀번호";
+static NSString *PW_CONFIRM_KO = @"새 비밀번호 확인";
+static NSString *PW_NO_EQUAL_KO = @"새 비밀번호가 맞지 않습니다.";
+
+//vi
+static NSString *PW_CURRENT_VI = @"Mật khẩu hiện tại";
+static NSString *PW_NEW_VI = @"Mật khẩu mới";
+static NSString *PW_CONFIRM_VI = @"Xác nhận mật khẩu";
+
 //vi
 static NSString *IDSEARCH_TITLE_VI     = @"Tìm ID của bạn";
 static NSString *IDSEARCH_NAME_VI     = @"Tên";
 static NSString *IDSEARCH_YYYY_VI     = @"Sinh nhật";
 static NSString *IDSEARCH_SEARCH_VI     = @"Tìm ID của bạn";
+static NSString *PW_NO_EQUAL_VI = @"Mật khẩu mới nhập không đúng";
 
 //korea
 static NSString *LOGIN_TITLE_KO     = @"로그인";
@@ -129,6 +160,7 @@ static NSString *LOGIN_SUMMIT_KO     = @"회원가입";
 static NSString *EMAIL_CHECK_KO      = @"이메일 형식의 아이디를 입력하세요.";
 static NSString *ID_CHECK_KO         = @"아이디를 입력하세요.";
 static NSString *PWD_CHECK_KO = @"비밀번호를 입력하세요.";
+static NSString *NEW_PWD_CHECK_KO = @"새 비밀번호를 입력하세요.";
 static NSString *PWD_LENGTH_CHECK_KO = @"비밀번호가 너무 짧습니다.";
 static NSString *LOGIN_SUCCESS_KO = @"로그인 성공";
 static NSString *LOGIN_FAIL_KO = @"로그인 실패";
@@ -139,6 +171,7 @@ static NSString *NAME_CHECK_KO = @"이름을 입력하세요.";
 static NSString *BIRTH_CHECK_KO = @"생년월일을 입력하세요.";
 
 //vi
+static NSString *NEW_PWD_CHECK_VI = @"Mật khẩu mới";
 static NSString *LOGIN_TITLE_VI     = @"Đăng nhập";
 static NSString *LOGIN_VI     = @"Đăng nhập";
 static NSString *LOGIN_ID_VI     = @"ID";

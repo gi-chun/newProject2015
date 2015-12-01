@@ -16,9 +16,17 @@
 {
     NavigationBarView *navigationBarView;
     UITextField* currentEditingTextField;
-    __weak IBOutlet UITextField *confirmTxt;
-    __weak IBOutlet UITextField *newPwdTxt;
+    
     __weak IBOutlet UITextField *oldPwdTxt;
+    __weak IBOutlet UITextField *newPwdTxt;
+    __weak IBOutlet UITextField *confirmTxt;
+    
+    __weak IBOutlet UILabel *label_oldPwd;
+    __weak IBOutlet UILabel *label_newPwd;
+    __weak IBOutlet UILabel *label_confirmPwd;
+    
+    __weak IBOutlet UIButton *btn_save;
+    
 }
 @end
 
@@ -26,35 +34,64 @@
 
 - (IBAction)saveClick:(id)sender {
     
-    if([confirmTxt.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [confirmTxt becomeFirstResponder];
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
         
-        return;
-    }
-    if([newPwdTxt.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [newPwdTxt becomeFirstResponder];
+        if([oldPwdTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [oldPwdTxt becomeFirstResponder];
+            return;
+        }
+        if([newPwdTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [newPwdTxt becomeFirstResponder];
+            return;
+        }
+        if([confirmTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [confirmTxt becomeFirstResponder];
+            return;
+        }
+        if( ![newPwdTxt.text isEqualToString:confirmTxt.text] ){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PW_NO_EQUAL_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [newPwdTxt becomeFirstResponder];
+            return;
+        }
+
+    }else{
+        if([oldPwdTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [oldPwdTxt becomeFirstResponder];
+            return;
+        }
+        if([newPwdTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [newPwdTxt becomeFirstResponder];
+            return;
+        }
+        if([confirmTxt.text length] == 0){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [confirmTxt becomeFirstResponder];
+            return;
+        }
+        if( ![newPwdTxt.text isEqualToString:confirmTxt.text] ){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PW_NO_EQUAL_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [newPwdTxt becomeFirstResponder];
+            return;
+        }
+
         
-        return;
-    }
-    if([oldPwdTxt.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [oldPwdTxt becomeFirstResponder];
-        
-        return;
     }
     
-    if( ![newPwdTxt.text isEqualToString:confirmTxt.text] ){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Password ! input value different" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-        [newPwdTxt becomeFirstResponder];
-        
-        return;
-    }
     
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
@@ -204,6 +241,18 @@
         [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     };
     
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        [self initScreenView_ko];
+    }else if([temp isEqualToString:@"vi"]){
+        [self initScreenView_vi];
+    }else{
+        temp = @"EN";
+    }
+    
+    [oldPwdTxt becomeFirstResponder];
+    
     [self resetNavigationBarView:1];
     [self setDelegateText];
     
@@ -341,32 +390,22 @@
 #pragma mark -initScreenView
 -(void)initScreenView_ko{
     
-//    [self resetNavigationBarView:1];
-//    [idLabel setText:LOGIN_ID_KO];
-//    [pwdLabel setText:LOGIN_PWD_KO];
-//    [labelAuto setText:LOGIN_AUTO_KO];
-//    [loginBtn setTitle:LOGIN_BTN_KO forState:UIControlStateNormal];
-//    [labelNoti setText:LOGIN_NOTI_KO];
-//    [btnSummit setTitle:LOGIN_SUMMIT_KO forState:UIControlStateNormal];
-//    [idSearchLabel setText:LOGIN_ID_FIND_KO];
-//    [pwdSearchLabel setText:LOGIN_PWD_FIND_KO];
-    
+    [self resetNavigationBarView:1];
+    [label_oldPwd setText:PW_CURRENT_KO];
+    [label_newPwd setText:PW_NEW_KO];
+    [label_confirmPwd setText:PW_CONFIRM_KO];
+    [btn_save setTitle:SAVE_KO forState:UIControlStateNormal];
 }
 
 -(void)initScreenView_vi{
     
-//    [self resetNavigationBarView:1];
-//    [idLabel setText:LOGIN_ID_VI];
-//    [pwdLabel setText:LOGIN_PWD_VI];
-//    [labelAuto setText:LOGIN_AUTO_VI];
-//    [loginBtn setTitle:LOGIN_BTN_VI forState:UIControlStateNormal];
-//    [labelNoti setText:LOGIN_NOTI_VI];
-//    [btnSummit setTitle:LOGIN_SUMMIT_VI forState:UIControlStateNormal];
-//    [idSearchLabel setText:LOGIN_ID_FIND_VI];
-//    [pwdSearchLabel setText:LOGIN_PWD_FIND_VI];
+    [self resetNavigationBarView:1];
+    [label_oldPwd setText:PW_CURRENT_VI];
+    [label_newPwd setText:PW_NEW_VI];
+    [label_confirmPwd setText:PW_CONFIRM_VI];
+    [btn_save setTitle:SAVE_VI forState:UIControlStateNormal];
+
 }
-
-
 
 /*
 #pragma mark - Navigation
