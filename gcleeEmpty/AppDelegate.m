@@ -14,6 +14,7 @@
 #import "BTWCodeguard.h"
 #import "AFHTTPRequestOperation.h"
 //#import "KTBiOS.h"
+#import "XMLDictionary.h"
 
 
 @interface AppDelegate ()
@@ -27,7 +28,6 @@
 -(BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
     ///////////////////////////////////////////////////////////////////////////////////////////
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [_window makeKeyAndVisible];
@@ -56,6 +56,38 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    //lang
+    
+    //loginY init
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    // uuid
+    NSString* uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSLog(@"UDID:: %@", uniqueIdentifier);
+    [[NSUserDefaults standardUserDefaults] setObject:uniqueIdentifier forKey:kUUID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *versionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+    [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:kCurrentVersion];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //set language
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray* languages = [userDefaults objectForKey:@"AppleLanguages"];
+    NSString* localLang = languages[0];
+    NSString* currentLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    NSRange range = {0,2};
+    localLang = [localLang substringWithRange:range];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        NSLog(@"klang:: %@", currentLang);
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
+
     //////////////////////////////////////////////////////////////////////////////
     // 앱의 푸쉬 수신여부 설정
 //    if (IsAtLeastiOSVersion(@"8.0")) {
@@ -93,35 +125,41 @@
     //    self.window.rootViewController = self.mainViewController;
     
     ////////////////////////////////
-    // 탈옥체크
-//    amsLibrary *ams = [[amsLibrary alloc] init];
-//    NSInteger result = [ams a3142:@"AHN_3379024345_TK"]; //AHN_3379024345_TK, 201 크면 안되면
-//    NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
-//    NSInteger roundedValue = round(interval);
-//    
-//    NSLog(@"Jailbreak Result : %ld" , (long)result);
-//    NSLog(@"time interval  : %ld" , (long)roundedValue);
-//    NSLog(@"checking Result : %ld" , (long)(result - roundedValue));
-//    NSInteger lastResult = (result - roundedValue);
-//    
-//    if(lastResult > 200)
-//    {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"This App Jailbreak phone NO Service. App Stop" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-//        [alert show];
-//        
-//        UIApplication *app = [UIApplication sharedApplication];
-//        [app performSelector:@selector(suspend)];
-//        
-//        //wait 2 seconds while app is going background
-//        [NSThread sleepForTimeInterval:2.0];
-//        //exit app when app is in background
-//        exit(0);
-//    }
+    
+    amsLibrary *ams = [[amsLibrary alloc] init];
+    NSInteger result = [ams a3142:@"AHN_3379024345_TK"]; //AHN_3379024345_TK, 201 크면 안되면
+    NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
+    NSInteger roundedValue = round(interval);
+    
+    NSLog(@"Jailbreak Result : %ld" , (long)result);
+    NSLog(@"time interval  : %ld" , (long)roundedValue);
+    NSLog(@"checking Result : %ld" , (long)(result - roundedValue));
+    NSInteger lastResult = (result - roundedValue);
+    
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        strDesc = JAILBREAK_CHK_KO;
+    }else if([temp isEqualToString:@"vi"]){
+        strDesc = JAILBREAK_CHK_VI;
+    }
+    
+    if(lastResult > 200)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:JAILBREAK_CHK_VI delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [alert show];
+        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+    }
     
     ////////////////////////////////
     // 버전정보
     NSString* strVerion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString* strBundle = [[NSBundle mainBundle]bundleIdentifier];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:strVerion forKey:kCurrentVersion];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [[Codeguard sharedInstance]setAppName:strBundle];
     [[Codeguard sharedInstance]setAppVer:strVerion];
     
@@ -192,6 +230,13 @@
     
     NSString *rtnStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"return lowdata:%@",rtnStr);
+    
+    //////////////////////////////////////////////
+    NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLString:rtnStr];
+    NSLog(@"dictionary: %@", xmlDoc);
+    
+    
+    //////////////////////////////////////////////
 
     //
     
@@ -290,35 +335,7 @@
 //    }];
 
     
-    //loginY init
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    // uuid
-    NSString* uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSLog(@"UDID:: %@", uniqueIdentifier);
-    [[NSUserDefaults standardUserDefaults] setObject:uniqueIdentifier forKey:kUUID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    NSString *versionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
-    [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:kCurrentVersion];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //set language
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray* languages = [userDefaults objectForKey:@"AppleLanguages"];
-    NSString* localLang = languages[0];
-    NSString* currentLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-    
-    NSRange range = {0,2};
-    localLang = [localLang substringWithRange:range];
-    
-    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
-        NSLog(@"klang:: %@", currentLang);
-    }else{
-        [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-
     //ko  set language
     //[languages insertObject:@"de" atIndex:0]; // ISO639-1
     //[[NSUserDefaults standardUserDefaults] synchronize];
@@ -360,6 +377,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

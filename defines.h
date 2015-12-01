@@ -60,6 +60,10 @@ static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 static NSString *COMPLETE_TITLE_KO     = @"회원가입 완료";
 
 //korea
+static NSString *JAILBREAK_CHK_KO  = @"루팅된 단말입니다. 개인정보 유출의 위험성이 있으므로 써니클럽을 종료합니다.";
+static NSString *JAILBREAK_CHK_VI  = @"Jsơ đồ Liên kết  tới hệ thống. Sunny club  sẽ ngừng ngay lập tức khi thấy  nguy hiểm là bị  mất thông tin cá nhân của quý khách .";
+
+//korea
 static NSString *PERSON_TITLE_KO     = @"개인정보 변경";
 static NSString *PERSON_ID_KO     = @"ID";
 static NSString *PERSON_MAIL_KO     = @"메일변경";

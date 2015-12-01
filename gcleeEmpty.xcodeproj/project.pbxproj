@@ -410,6 +410,7 @@
 		28D6E9831C0D8C7C000B39BA /* bottom_banner@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E97D1C0D8C7C000B39BA /* bottom_banner@1x.png */; };
 		28D6E9841C0D8C7C000B39BA /* bottom_banner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E97E1C0D8C7C000B39BA /* bottom_banner@2x.png */; };
 		28D6E9851C0D8C7C000B39BA /* bottom_banner@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D6E97F1C0D8C7C000B39BA /* bottom_banner@3x.png */; };
+		28D6E9881C0D9577000B39BA /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D6E9871C0D9577000B39BA /* XMLDictionary.m */; };
 		28D6F7F91C0BDE53009B697D /* libamsLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F61C0BDE53009B697D /* libamsLibrary.a */; };
 		28D6F7FA1C0BDE53009B697D /* libBTWCryptoLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */; };
 		28D6F7FB1C0BDE53009B697D /* libCodeguard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F81C0BDE53009B697D /* libCodeguard.a */; };
@@ -926,6 +927,8 @@
 		28D6E97D1C0D8C7C000B39BA /* bottom_banner@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner@1x.png"; sourceTree = "<group>"; };
 		28D6E97E1C0D8C7C000B39BA /* bottom_banner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner@2x.png"; sourceTree = "<group>"; };
 		28D6E97F1C0D8C7C000B39BA /* bottom_banner@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner@3x.png"; sourceTree = "<group>"; };
+		28D6E9861C0D9577000B39BA /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		28D6E9871C0D9577000B39BA /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		28D6F7F41C0BDE53009B697D /* amsLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amsLibrary.h; sourceTree = "<group>"; };
 		28D6F7F51C0BDE53009B697D /* BTWCodeguard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTWCodeguard.h; sourceTree = "<group>"; };
 		28D6F7F61C0BDE53009B697D /* libamsLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libamsLibrary.a; sourceTree = "<group>"; };
@@ -1496,6 +1499,8 @@
 				280B23DD1C007EE8004F80FB /* personModifyViewController.xib */,
 				280B24061C00CD99004F80FB /* datePickerViewController.h */,
 				28D85B521C05F811006CBBE7 /* setAlramViewController.h */,
+				28D6E9861C0D9577000B39BA /* XMLDictionary.h */,
+				28D6E9871C0D9577000B39BA /* XMLDictionary.m */,
 				28D85B531C05F811006CBBE7 /* setAlramViewController.m */,
 				28D85B541C05F811006CBBE7 /* setAlramViewController.xib */,
 				280B24071C00CD99004F80FB /* datePickerViewController.m */,
@@ -2240,6 +2245,7 @@
 				28351D301BF43096009145E6 /* SBJsonUTF8Stream.m in Sources */,
 				28351D2A1BF43096009145E6 /* SBJsonStreamParserAdapter.m in Sources */,
 				28F7C0451BDE0FB000C53B86 /* NavigationBarView.m in Sources */,
+				28D6E9881C0D9577000B39BA /* XMLDictionary.m in Sources */,
 				288E45E51BD776D60041AE50 /* mainViewController.m in Sources */,
 				2834C1F91BFC5C6A002379E6 /* completeViewController.m in Sources */,
 				28EDAC201BDF694100024EF9 /* WebView.m in Sources */,
@@ -2373,8 +2379,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinhan Bank CO.,LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinhan Bank CO.,LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2401,7 +2407,7 @@
 					"$(PROJECT_DIR)/sts_old/external/OtpSDK/lib",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclubEnz;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -2413,8 +2419,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinhan Bank CO.,LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinhan Bank CO.,LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2441,7 +2447,7 @@
 					"$(PROJECT_DIR)/sts_old/external/OtpSDK/lib",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclubEnz;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;

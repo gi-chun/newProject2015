@@ -746,6 +746,7 @@
 - (BOOL)webView:(WebView *)webView openUrlScheme:(NSString *)urlScheme
 {
 //    return [[CPSchemeManager sharedManager] openUrlScheme:urlScheme sender:nil changeAnimated:YES];
+    NSLog(@"test test test");
     return false;
 }
 

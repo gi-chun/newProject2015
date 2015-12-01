@@ -14,6 +14,10 @@
 #import "configViewController.h"
 #import "setInforViewController.h"
 
+#import "amsLibrary.h"
+//#import "KTBiOS.h"
+#import "XMLDictionary.h"
+
 @interface leftViewController ()
 
 @end
@@ -24,7 +28,39 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    
     [self loadContentsView];
+    
+//    ////////////////////////////////
+//    // 탈옥체크
+//    amsLibrary *ams = [[amsLibrary alloc] init];
+//    NSInteger result = [ams a3142:@"AHN_3379024345_TK"]; //AHN_3379024345_TK, 201 크면 안되면
+//    NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
+//    NSInteger roundedValue = round(interval);
+//    
+//    NSLog(@"Jailbreak Result : %ld" , (long)result);
+//    NSLog(@"time interval  : %ld" , (long)roundedValue);
+//    NSLog(@"checking Result : %ld" , (long)(result - roundedValue));
+//    NSInteger lastResult = (result - roundedValue);
+//    
+//    //if(lastResult > 200)
+//    if(lastResult > 20)
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"This App Jailbreak phone NO Service. App Stop" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert show];
+//        
+//        [NSThread sleepForTimeInterval:5000.0];
+//        
+//        UIApplication *app = [UIApplication sharedApplication];
+//        [app performSelector:@selector(suspend)];
+//        
+//        //wait 2 seconds while app is going background
+//        [NSThread sleepForTimeInterval:10.0];
+//        //exit app when app is in background
+//        exit(0);
+//    }
+
     
 }
 
