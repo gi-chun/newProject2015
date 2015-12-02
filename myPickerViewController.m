@@ -24,6 +24,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    //[langLabel setText:pickerData[row]];
+    
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){

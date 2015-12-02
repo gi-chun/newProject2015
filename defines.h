@@ -68,10 +68,12 @@ static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         // language
 static NSString * const kGNBHide       = @"kGNBHide";
 static NSString * const kCurrentVersion       = @"kCurrentVersion";
 static NSString * const kUpdateVersion       = @"kUpdateVersion";
+static NSString * const kUpdateUri       = @"kUpdateUri";
 static NSString * const kTutoY       = @"kTutoY";
 
+static NSString * const kLoginData       = @"kLoginData";
 static NSString * const kForceUpdateY       = @"kForceUpdateY"; //강제업데이트 여부
-static NSString * const kUpdateY       = @"kForceUpdateY"; //업데이트 여부
+static NSString * const kUpdateY       = @"kUpdateY"; //업데이트 여부
 
 static NSString * const kForceMemberViewY       = @"kForceMemberViewY"; //member force view
 
@@ -84,6 +86,10 @@ static NSString *COMPLETE_TITLE_KO     = @"회원가입 완료";
 //korea
 static NSString *JAILBREAK_CHK_KO  = @"루팅된 단말입니다. 개인정보 유출의 위험성이 있으므로 써니클럽을 종료합니다.";
 static NSString *JAILBREAK_CHK_VI  = @"Jsơ đồ Liên kết  tới hệ thống. Sunny club  sẽ ngừng ngay lập tức khi thấy  nguy hiểm là bị  mất thông tin cá nhân của quý khách .";
+static NSString *NOT_NOMAL_APP_KO = @"정식등록된 앱이 아닙니다. 앱을 새로 다운로드 받아 설치하신 후 다시 이용해주십시요.";
+static NSString *NOT_NOMAL_APP_VI = @"Không phải là app chính . Chỉ cần tải app về là sử dụng đựợc.";
+static NSString *USE_PROXY_KO = @"비정상적인 접속(프록시)으로 인해 서비스를 종료합니다. 고객센터로 문의하여 주시기 바랍니다. (문의:고객센터 1800-1560)";
+static NSString *USE_PROXY_VI = @"Dừng sử dụng dịch vụ khi thấy đăng nhập có vấn đề bất thường . Hãy gọi điện ngay đến trung tâm  chăm sóc khách hàng để được hỗ trợ.(  trung tâm chăm sóc khách hàng 1800-1560)";
 
 //korea
 static NSString *PERSON_TITLE_KO     = @"개인정보 변경";
@@ -130,7 +136,7 @@ static NSString *BOTTOM_BANNER_KO = @"bottom_banner.png";
 
 //vi
 static NSString *LEFT_DES_VI     = @"Bạn có thể sử dụng các dịch vụ khác nhau trong Sunny Club sau khi đăng nhập.";
-static NSString *LEFT_LOGIN_VI     = @"LOGIN";
+static NSString *LEFT_LOGIN_VI     = @"Đăng nhập";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
 

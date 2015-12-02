@@ -24,8 +24,15 @@
     // Do any additional setup after loading the view from its nib.
     
     if(kScreenBoundsWidth > 320){
-        [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+        
     }
+
+    
     [self resetNavigationBarView:1];
 }
 

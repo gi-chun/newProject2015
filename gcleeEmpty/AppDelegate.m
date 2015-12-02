@@ -13,8 +13,12 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "BTWCodeguard.h"
 #import "AFHTTPRequestOperation.h"
-//#import "KTBiOS.h"
+#import "KTBiOS.h"
 #import "XMLDictionary.h"
+#include <netdb.h>
+#import <SystemConfiguration/SCNetworkReachability.h>
+
+
 
 
 @interface AppDelegate ()
@@ -32,21 +36,28 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [_window makeKeyAndVisible];
     
-    //MYViewController *introductionView = [[MYViewController alloc] init];
-    self.introductionView = [[MYViewController alloc] init];
-    self.introductionView.delegate = self;
     
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    UIColor * tintColor = [UIColor colorWithRed:29.0/255.0
-//                                          green:173.0/255.0
-//                                           blue:234.0/255.0
-//                                          alpha:1.0];
-//    [self.window setTintColor:tintColor];
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+    if(isTuto == YES){
+        
+        //MYViewController *introductionView = [[MYViewController alloc] init];
+        self.introductionView = [[MYViewController alloc] init];
+        self.introductionView.delegate = self;
+        
+        //    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        //    UIColor * tintColor = [UIColor colorWithRed:29.0/255.0
+        //                                          green:173.0/255.0
+        //                                           blue:234.0/255.0
+        //                                          alpha:1.0];
+        //    [self.window setTintColor:tintColor];
+        
+        //[self.window addSubview:_introductionView.view];
+        
+        [self.window setRootViewController:self.introductionView];
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        
+    }
     
-    //[self.window addSubview:_introductionView.view];
-    
-    [self.window setRootViewController:self.introductionView];
-    ///////////////////////////////////////////////////////////////////////////////////////////
     
     
     
@@ -153,7 +164,7 @@
     
     if(lastResult > 200)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:JAILBREAK_CHK_VI delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
         [alert show];
         [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
     }
@@ -232,7 +243,6 @@
     //강제업데이트
     //업데이트 있느닞?
     
-    
     NSString *rtnStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"return lowdata:%@",rtnStr);
     
@@ -240,36 +250,60 @@
     NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLString:rtnStr];
     NSLog(@"dictionary: %@", xmlDoc);
     
+    //1999 에러처리
+    NSString* strTemp = xmlDoc[@"errorCode"];
+    if([strTemp isEqualToString:@"1999"]){
+        
+        if([temp isEqualToString:@"ko"]){
+            strDesc = NOT_NOMAL_APP_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            strDesc = NOT_NOMAL_APP_VI;
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [alert show];
+        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+    }
     
-    //////////////////////////////////////////////
+    //최신버전 -
+    strTemp = xmlDoc[@"최신버전"];
+    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateVersion];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //업데이트 URI
+    strTemp = xmlDoc[@"updateUri"];
+    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateUri];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //강제업데이트
+    if(TRUE){
+        NSString *iTunesLink = @"https://itunes.apple.com/us/app/apple-store/id375380948?mt=8";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    }
+    /////////////////////////////////////////////
 
-    //
-    
     ////////////////////////////////////////////////
     //KTB 프록시 체크
-//    NSString *tmp = checkProxy();
-//    if([tmp isEqualToString:@"y"])
-//    {
-//        NSLog(@"프록시 서버 접속!!");
-//        
-//        //wifi 인지 확인
-//        NSLog(@"checkProxy=(%@)", checkProxy());
-//        NSLog(@"getProxyInfo=(%@)", getProxyInfo());
-//        
-////        SWReachability* curReach=[[SWReachability reachabilityForInternetConnection] retain];
-////        int netStaus=[curReach currentReachabilityStatus];
-////        [curReach release];
-//        
-////        if(netStaus == ReachableViaWiFi)
-////        {
-////            NSString *msg=@"비정상적인 접속(프록시)으로 인해 서비스를\n종료합니다. ";
-//////            [UIAlertView showAlert:self type:OneButton tag:18398 title:nil buttonTitle:nil message:msg];
-//////            return;
-////        }
-//        
-//    }
-//    
     
+    if([self isCellNetwork] == NO){
+        
+        NSString * returnStr = checkProxy();
+        if([returnStr isEqualToString:@"proxy"]){
+            
+            if([temp isEqualToString:@"ko"]){
+                strDesc = USE_PROXY_KO;
+            }else if([temp isEqualToString:@"vi"]){
+                strDesc = USE_PROXY_VI;
+            }
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            [alert show];
+            [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+            
+        }
+//        NSString* checkProxy(void);
+//        NSString* getProxyInfo(void);
+    }
     
     ////////////////////////////////////////////////
     
@@ -361,6 +395,11 @@
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieDictionary1];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         
+    }
+    
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+    if(isTuto == NO){
+        [self didFinishIntro];
     }
     
     return YES;
@@ -516,6 +555,45 @@
     
     [self.window setRootViewController:self.drawerController];
 }
+
+/*
+ isNetworkReachable() 메소드는 wifi든 3G든 네트워크의 연결여부를 알려준다. (YES일경우 네트워크 연결 됨. NO 일경우 네트워크 연결안됨.)
+ 
+ isCellNetwork() 메소드는 3G냐 wifi냐를 알려준다. (YES 일경우 3G망으로 접속, NO 일경우 WIFI로 접속 한경우)
+
+ 
+ */
+//-(BOOL) isNetworkReachable
+//{
+//    struct sockaddr_in zeroAddr;
+//    bzero(&zeroAddr, sizeof(zeroAddr));
+//    zeroAddr.sin_len = sizeof(zeroAddr);
+//    zeroAddr.sin_family = AF_INET;
+//    SCNetworkReachabilityRef target = SCNetworkReachabilityCreateWithAddress(NULL, (structsockaddr *)&zeroAddr);
+//    SCNetworkReachabilityFlags flag;
+//    SCNetworkReachabilityGetFlags(target, &flag);
+//    if(flag & kSCNetworkFlagsReachable){
+//        return YES;
+//    }else {
+//        return NO;
+//    }
+//}
+
+-(BOOL)isCellNetwork{
+    struct sockaddr_in zeroAddr;
+    bzero(&zeroAddr, sizeof(zeroAddr));
+    zeroAddr.sin_len = sizeof(zeroAddr);
+    zeroAddr.sin_family = AF_INET;
+    SCNetworkReachabilityRef target = SCNetworkReachabilityCreateWithAddress(NULL, (struct sockaddr *)&zeroAddr);
+    SCNetworkReachabilityFlags flag;
+    SCNetworkReachabilityGetFlags(target, &flag);
+    if(flag & kSCNetworkReachabilityFlagsIsWWAN){
+        return YES;
+    }else {
+        return NO;
+    }
+}
+
 
 
 

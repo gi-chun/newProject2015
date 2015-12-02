@@ -96,7 +96,7 @@
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"intro_img.png"]];
+    [likeImageView setImage:[UIImage imageNamed:@"loding.png"]];
     [self.view addSubview:likeImageView];
     [self.view bringSubviewToFront:likeImageView];
     
@@ -238,8 +238,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     if(kScreenBoundsWidth > 320){
-        [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-    };
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+        
+    }
     
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];

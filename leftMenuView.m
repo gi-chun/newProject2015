@@ -429,7 +429,7 @@ const static CGFloat MENU_HEIGHT   =      45;
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"intro_img.png"]];
+    [likeImageView setImage:[UIImage imageNamed:@"loding.png"]];
     [self addSubview:likeImageView];
     [self bringSubviewToFront:likeImageView];
     

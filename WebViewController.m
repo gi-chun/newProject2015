@@ -596,26 +596,38 @@
 {
     NSString *url = request ? request.URL.absoluteString : nil;
     
-    if ([url hasPrefix:@"APP"]) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return NO;
-    }
+    //openLoginPage
+    //getMemberInfo
+    //app://openLoginPage
     
-    if ([url hasPrefix:@"App"]) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return NO;
-    }
     
-    if ([url hasPrefix:@"app"]) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return NO;
-    }
+//    if ([url hasPrefix:@"app"]) {
+//        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alert show];
+//        
+//        if(!([url rangeOfString:@"openLoginPage"].location == NSNotFound)){
+//            //login
+//            LoginViewController *loginController = [[LoginViewController alloc] init];
+//            [loginController setLoginType];
+//            [loginController setDelegate:self];
+//            [self.navigationController pushViewController:loginController animated:YES];
+//            
+//        }else if(!([url rangeOfString:@"getMemberInfo"].location == NSNotFound)){
+//            //send to server memberinfo
+//            if([[NSUserDefaults standardUserDefaults] stringForKey:kLoginData]){
+//               
+//                NSString *functionCall = [NSString stringWithFormat:@"getMemberInfo(%@)", [[NSUserDefaults standardUserDefaults] stringForKey:kLoginData]];
+//                
+//                [webView execute:functionCall];
+//                
+//            }
+//        }
+//        
+//        //return NO;
+//    }
+    
+    
     
     NSLog(@"url:%@", url);
     webViewUrl = url;
@@ -1366,13 +1378,50 @@
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
     
-    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
-    NSHTTPCookie *cookie;
+   
     
-    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
-        NSLog(@"%@=%@", cookie.name, cookie.value);
-        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
-    }
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    NSHTTPCookie *cookie;
+    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+    
+//    [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
+//    [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
+    
+    [cookieProperties setObject:@"user_seq_80" forKey:NSHTTPCookieName];
+    [cookieProperties setObject:@"5555" forKey:NSHTTPCookieValue];
+    
+//    [cookieProperties setObject:@"mb_grade_80" forKey:NSHTTPCookieName];
+//    [cookieProperties setObject:@"2222222" forKey:NSHTTPCookieValue];
+//    
+//    [cookieProperties setObject:@"mb_point_80" forKey:NSHTTPCookieName];
+//    [cookieProperties setObject:@"33333333" forKey:NSHTTPCookieValue];
+    
+    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+    
+    
+    // set expiration to one month from now
+    [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2222] forKey:NSHTTPCookieExpires];
+    
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+//    NSDate* date = [NSDate date];
+//    [[NSHTTPCookieStorage sharedHTTPCookieStorage] removeCookiesSinceDate:date];
+    
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    //NSHTTPCookie *cookie;
+    
+//    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+//        NSLog(@"%@=%@", cookie.name, cookie.value);
+//        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+//    }
+    
+    [cookieStringToSet appendFormat:@"%@=%@;",@"user_seq_80", @"55555"];
+    [cookieStringToSet appendFormat:@"%@=%@;",@"mb_grade_80", @"44444"];
                         
     if (cookieStringToSet.length) {
         [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];

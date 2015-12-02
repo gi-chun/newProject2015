@@ -130,11 +130,30 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+        
+    }
+
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if(kScreenBoundsWidth > 320){
-        [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+        
     }
     
 //    for (UIView *subView in [self.view subviews]) {
@@ -153,12 +172,12 @@
         temp = @"EN";
     }
 
-    
-    
-    
     [self resetNavigationBarView:1];
     
-    _emailLabel.text = [[NSUserDefaults standardUserDefaults] stringForKey:kEmail];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        _emailLabel.text = [[NSUserDefaults standardUserDefaults] stringForKey:kEmail];
+    }
     // Do any additional setup after loading the view from its nib.
 //    self.
 //    for (UIView *subView in self.view) {
@@ -218,9 +237,16 @@
         
 //    }
     
-    [self.myScrollView setBounces:false];
-    [self.myScrollView addSubview:self.contentView];
-    self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth-marginX, self.contentView.frame.size.height+marginY);
+    if(kScreenBoundsWidth > 400){
+        [self.myScrollView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height+40)];
+        [self.myScrollView setBounces:false];
+        [self.myScrollView addSubview:self.contentView];
+        self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth-marginX*2, self.contentView.frame.size.height+marginY);
+    }else{
+        [self.myScrollView setBounces:false];
+        [self.myScrollView addSubview:self.contentView];
+        self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth-marginX, self.contentView.frame.size.height+marginY);
+    }
     
     
     
@@ -466,6 +492,19 @@
 
 #pragma mark -picker
 - (void)didTouchPicker{
+    
+    leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
+    [leftViewController setViewLogin];
+    
+//    if(kScreenBoundsWidth > 320){
+//        if(kScreenBoundsWidth > 400){
+//            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+//        }else{
+//            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+//        }
+//        
+//    }
+    
     NSInteger nKind;
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -491,10 +530,6 @@
         }
     }
     _preLang = temp;
-    
-    leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
-    [leftViewController setViewLogin];
-    
     
 }
 

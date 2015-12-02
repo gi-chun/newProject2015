@@ -22,6 +22,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    UIDatePicker *picker = _dataPickerMe;
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    df.dateStyle = NSDateFormatterMediumStyle;
+    
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *date = [dateFormat stringFromDate:picker.date];
+    NSLog(@"date is >>> , %@",date);
+    
+    NSLog(@"%@",[NSString stringWithFormat:@"%@",[df stringFromDate:picker.date]]);
+    
+    [_dayLable setText:date];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:date forKey:kYYYYMMDD];
+    
+    
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){

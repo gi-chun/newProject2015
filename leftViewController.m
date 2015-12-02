@@ -154,6 +154,9 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kTutoY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLoginData];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 
