@@ -13,43 +13,34 @@
 //NSString *url = @"https://vntst.shinhanglobal.com/sunny/faq_test2.jsp";
 //NSString *url = @"https://vntst.shinhanglobal.com/sunny/faq_test.jsp";
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define TEST_SERVER_DEFINE
 
 #ifdef TEST_SERVER_DEFINE
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
-
-static NSString *API_VERSION_INOF_URL            = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/helpl_ist.jsp?locale=%@";    //도움말
-
 static NSString *SHINHAN_ZONE_URL   = @"https://vntst.shinhanglobal.com/sunny/bank/shinhanzone.jsp";    //신한존
-static NSString *SETTING_URL        = @"https://vntst.shinhanglobal.com/sunny/faq_test.jsp";
-
 static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/jsp/callSunnyJsonTaskService.jsp";
-
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
 #else     //REAL SERVER
 
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
-static NSString *API_VERSION_INOF_URL            = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
-//Codeguard
+static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/helpl_ist.jsp?locale=%@";    //도움말
-
 static NSString *SHINHAN_ZONE_URL   = @"https://vntst.shinhanglobal.com/sunny/bank/shinhanzone.jsp";    //신한존
-static NSString *SETTING_URL        = @"https://vntst.shinhanglobal.com/sunny/faq_test.jsp";
-
 static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/jsp/callSunnyJsonTaskService.jsp";
-
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
-
 #endif
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static NSString * const kUUID              = @"currentUUID";        // UUID
 static NSString * const kUserDeviceToken   = @"userDeviceToken";    // 디바이스 토큰

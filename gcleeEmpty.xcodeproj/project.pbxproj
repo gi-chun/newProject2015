@@ -242,7 +242,6 @@
 		288E45CB1BD719640041AE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288E45CA1BD719640041AE50 /* Assets.xcassets */; };
 		288E45D91BD719640041AE50 /* gcleeEmptyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 288E45D81BD719640041AE50 /* gcleeEmptyTests.m */; };
 		288E45E51BD776D60041AE50 /* mainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 288E45E41BD776D60041AE50 /* mainViewController.m */; };
-		28A175EC1C0C908B00A25D1F /* libKTBiOS_v1_17.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28A175EB1C0C908B00A25D1F /* libKTBiOS_v1_17.a */; };
 		28B889971C02AFFB0093BC67 /* bank_gnb_back@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B889821C02AFFB0093BC67 /* bank_gnb_back@1x.png */; };
 		28B889981C02AFFB0093BC67 /* bank_gnb_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B889831C02AFFB0093BC67 /* bank_gnb_back@2x.png */; };
 		28B8899A1C02AFFB0093BC67 /* bank_top_tap_logo_press@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28B889851C02AFFB0093BC67 /* bank_top_tap_logo_press@1x.png */; };
@@ -759,7 +758,6 @@
 		288E45DA1BD719640041AE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		288E45E31BD776D60041AE50 /* mainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mainViewController.h; sourceTree = "<group>"; };
 		288E45E41BD776D60041AE50 /* mainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mainViewController.m; sourceTree = "<group>"; };
-		28A175EB1C0C908B00A25D1F /* libKTBiOS_v1_17.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKTBiOS_v1_17.a; sourceTree = "<group>"; };
 		28B889821C02AFFB0093BC67 /* bank_gnb_back@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bank_gnb_back@1x.png"; sourceTree = "<group>"; };
 		28B889831C02AFFB0093BC67 /* bank_gnb_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bank_gnb_back@2x.png"; sourceTree = "<group>"; };
 		28B889851C02AFFB0093BC67 /* bank_top_tap_logo_press@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bank_top_tap_logo_press@1x.png"; sourceTree = "<group>"; };
@@ -1016,7 +1014,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				283363C11C0F1980000CA558 /* SystemConfiguration.framework in Frameworks */,
-				28A175EC1C0C908B00A25D1F /* libKTBiOS_v1_17.a in Frameworks */,
 				28D6F7FA1C0BDE53009B697D /* libBTWCryptoLib.a in Frameworks */,
 				287F92F01BE74E48007E82AD /* CoreGraphics.framework in Frameworks */,
 				287F92EE1BE74E32007E82AD /* Foundation.framework in Frameworks */,
@@ -1737,7 +1734,6 @@
 				28D6F7FF1C0C643E009B697D /* KTBiOS.h */,
 				28D6F8021C0C6979009B697D /* 번역_5.java */,
 				28D6F7F51C0BDE53009B697D /* BTWCodeguard.h */,
-				28A175EB1C0C908B00A25D1F /* libKTBiOS_v1_17.a */,
 				28D6F7F61C0BDE53009B697D /* libamsLibrary.a */,
 				28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */,
 				28D6F7F81C0BDE53009B697D /* libCodeguard.a */,
@@ -2394,6 +2390,7 @@
 		288E45DE1BD719640041AE50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sunwuk Jung (PVWUMX994X)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sunwuk Jung (PVWUMX994X)";
@@ -2423,9 +2420,11 @@
 					"$(PROJECT_DIR)/sts_old/external/OtpSDK/lib",
 					"$(PROJECT_DIR)",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gclee.empty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "arm64 armv7s armv7";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
@@ -2465,6 +2464,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gclee.empty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "arm64 armv7s armv7";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;

@@ -130,6 +130,17 @@
     }
 }
 
+- (IBAction)updateBtnClick:(id)sender {
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUpdateVersion] == nil){
+        
+        NSString *strUpdateUri = [[NSUserDefaults standardUserDefaults] stringForKey:kUpdateUri];
+        //NSString *iTunesLink = @"https://itunes.apple.com/us/app/apple-store/id375380948?mt=8";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUpdateUri]];
+    }
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated{
 
     if(kScreenBoundsWidth > 320){
@@ -380,17 +391,22 @@
     [_LCURR_VER_KO setText:CURR_VER_KO];
     [_LNEW_VER_KO setText:NEW_VER_KO];
     
-    temp = [[NSUserDefaults standardUserDefaults] stringForKey:kCurrentVersion];
-    [_curVerLabel setText:temp];
-    temp = [temp stringByReplacingOccurrencesOfString:@"." withString:@""];
+    NSString* curVertemp = [[NSUserDefaults standardUserDefaults] stringForKey:kCurrentVersion];
+    [_curVerLabel setText:curVertemp];
+    curVertemp = [curVertemp stringByReplacingOccurrencesOfString:@"." withString:@""];
     int nCurVer, nUpVer;
-    nCurVer = [temp intValue];
+    nCurVer = [curVertemp intValue];
     
-    temp = [[NSUserDefaults standardUserDefaults] stringForKey:kUpdateVersion];
-    [_lastVerLabel setText:temp];
-    temp = [temp stringByReplacingOccurrencesOfString:@"." withString:@""];
+    NSString* updateVertemp = [[NSUserDefaults standardUserDefaults] stringForKey:kUpdateVersion];
+    if([updateVertemp isEqualToString:@""]){
+        [_lastVerLabel setText:curVertemp];
+    }else{
+        [_lastVerLabel setText:updateVertemp];
+    }
     
-    nUpVer = [temp intValue];
+    updateVertemp = [updateVertemp stringByReplacingOccurrencesOfString:@"." withString:@""];
+    
+    nUpVer = [updateVertemp intValue];
    
     if(nCurVer >= nUpVer){
         [_updateBtn setEnabled:false];

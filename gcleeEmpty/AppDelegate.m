@@ -13,7 +13,7 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "BTWCodeguard.h"
 #import "AFHTTPRequestOperation.h"
-#import "KTBiOS.h"
+//#import "KTBiOS.h"
 #import "XMLDictionary.h"
 #include <netdb.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
@@ -251,7 +251,8 @@
     NSLog(@"dictionary: %@", xmlDoc);
     
     //1999 에러처리
-    NSString* strTemp = xmlDoc[@"errorCode"];
+     NSDictionary *subDoc = xmlDoc[@"errorCode"];
+    NSString* strTemp = subDoc[@"_value"];
     if([strTemp isEqualToString:@"1999"]){
         
         if([temp isEqualToString:@"ko"]){
@@ -260,9 +261,11 @@
             strDesc = NOT_NOMAL_APP_VI;
         }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alert show];
-        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//        [alert show];
+        
+        //잠시 죽이는것 주석
+        //[self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
     }
     
     //최신버전 -
@@ -276,36 +279,36 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //강제업데이트
-    if(TRUE){
+    if(FALSE){
         NSString *iTunesLink = @"https://itunes.apple.com/us/app/apple-store/id375380948?mt=8";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
     }
     /////////////////////////////////////////////
 
-    ////////////////////////////////////////////////
-    //KTB 프록시 체크
-    
-    if([self isCellNetwork] == NO){
-        
-        NSString * returnStr = checkProxy();
-        if([returnStr isEqualToString:@"proxy"]){
-            
-            if([temp isEqualToString:@"ko"]){
-                strDesc = USE_PROXY_KO;
-            }else if([temp isEqualToString:@"vi"]){
-                strDesc = USE_PROXY_VI;
-            }
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-            [alert show];
-            [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
-            
-        }
-//        NSString* checkProxy(void);
-//        NSString* getProxyInfo(void);
-    }
-    
-    ////////////////////////////////////////////////
+//    ////////////////////////////////////////////////
+//    //KTB 프록시 체크
+//    
+//    if([self isCellNetwork] == NO){
+//        
+//        NSString * returnStr = checkProxy();
+//        if([returnStr isEqualToString:@"proxy"]){
+//            
+//            if([temp isEqualToString:@"ko"]){
+//                strDesc = USE_PROXY_KO;
+//            }else if([temp isEqualToString:@"vi"]){
+//                strDesc = USE_PROXY_VI;
+//            }
+//            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//            [alert show];
+//            [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+//            
+//        }
+////        NSString* checkProxy(void);
+////        NSString* getProxyInfo(void);
+//    }
+//    
+//    ////////////////////////////////////////////////
     
     
 

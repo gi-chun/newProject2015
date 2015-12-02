@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49" : 0,
+    "6342230F6DC956809DE1650F0B00261BC7BDB8B1" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1C6773C2-CC6E-454E-988A-0F885ED1A29A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49" : "real\/",
+    "6342230F6DC956809DE1650F0B00261BC7BDB8B1" : "back_up\/emptyPrj\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "gcleeEmpty",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "gcleeEmpty.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gi-chun\/newProject2015.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gi-chun\/ios_empty.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6342230F6DC956809DE1650F0B00261BC7BDB8B1"
+    }
+  ]
+}
