@@ -24,6 +24,22 @@
 
 @implementation ToolBarView
 
+- (void)redrawADImage{
+    NSString* strImage;
+    NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        strImage = BOTTOM_BANNER_KO;
+    }else{
+        strImage = BOTTOM_BANNER_VI;
+    }
+    
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kToolBarHeight)];
+    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+    
+    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+    [self addSubview:backgroundImageView];
+}
+
 - (id)initWithFrame:(CGRect)frame toolbarType:(NSInteger)toolbarType
 {
     self = [super initWithFrame:frame];

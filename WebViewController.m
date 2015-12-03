@@ -1604,5 +1604,10 @@
     [self openWebView:callUrl mutableRequest:mutableRequest];
 }
 
+- (void)resetADImage{
+    
+    [self.webView redrawADImage];
+    
+}
 
 @end

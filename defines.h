@@ -14,7 +14,7 @@
 //NSString *url = @"https://vntst.shinhanglobal.com/sunny/faq_test.jsp";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define TEST_SERVER_DEFINE
+//#define TEST_SERVER_DEFINE
 
 #ifdef TEST_SERVER_DEFINE
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
@@ -127,8 +127,8 @@ static NSString *MEM_OUT_VI = @"Hủy thành viên";
 //vi
 static NSString *PERSON_TITLE_VI     = @"Thay đổi thông tin cá nhân";
 static NSString *PERSON_ID_VI     = @"ID";
-static NSString *PERSON_MAIL_VI     = @"change Mail";
-static NSString *PERSON_CHANGE_VI     = @"Summit";
+static NSString *PERSON_MAIL_VI     = @"Thay đổi địa chỉ email";
+static NSString *PERSON_CHANGE_VI     = @"Áp dụng";
 static NSString *PERSON_PWD_CHANGE_VI     = @"Thay đổi mật khẩu";
 static NSString *PERSON_MEMBER_OUT_VI     = @"Hủy thành viên";
 static NSString *PERSON_MEMBER_LEVEL_VI     = @"Thứ hạng hội viên";
@@ -268,7 +268,7 @@ static NSString *SUNNY_DES_KO     = @"테마별 다양한 콘텐츠로 구성된
 ////vi
 static NSString *CONFIG_VI     = @"Cài đặt";
 static NSString *NEED_VI     = @"Thay đổi thông tin cá nhân";
-static NSString *NEED_LOGIN_VI     = @"Cần đăng nhập";
+static NSString *NEED_LOGIN_VI     = @"Cài đặt";
 static NSString *HELP_VI     = @"Hỗ trợ";
 static NSString *TUTO_VI     = @"Xem hướng dẫn";
 static NSString *NEWS_VI     = @"Sự kiện mới";
@@ -276,13 +276,13 @@ static NSString *ALRAM_SET_VI     = @"Dịch vụ Cài đặt thông báo";
 static NSString *ALRAM_ALLOW_VI     = @"Dịch vụ cho phép nhận thông báo";
 static NSString *ALRAM_DES_VI     = @"Nếu bạn cài đặt Thông báo Push sang chế độ ON, bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
 static NSString *PROGRAM_INFO_VI     = @"Thông tin chương trình";
-static NSString *LANG_INFO_VI     = @"Thông tin ngôn ngữ";
+static NSString *LANG_INFO_VI     = @"Ngôn ngữ";
 static NSString *APP_INFO_VI     = @"Thông tin ứng dụng";
-static NSString *CURR_VER_VI     = @"Phiên bản hiện tại";
-static NSString *NEW_VER_VI     = @"Phiên bản cập nhật";
-static NSString *LAST_VER_VI     = @"Cập nhật các phiên bản mới nhất";
+static NSString *CURR_VER_VI     = @"version";
+static NSString *NEW_VER_VI     = @"new";
+static NSString *LAST_VER_VI     = @"Đây là phiên bản mới nhất";
 static NSString *LAST_VER_UP_VI     = @"Cập nhật các phiên bản mới nhất";
-static NSString *SUNNY_DES_VI     = @"Sunny Club được thiết kế với nội dung đa dạng theo từng chủ đề..";
+static NSString *SUNNY_DES_VI     = @"Sunny Club được thiết kế với nội dung đa dạng theo từng chủ đề\nHãy trải nghiệm những nội dung độc đáo của Sunny Club dưới dạng tạp chí thông minh.";
 
 //korea
 static NSString* NEED_AGREE_KO = @"이용약관에 동의해 주세요.";

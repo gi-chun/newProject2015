@@ -283,9 +283,16 @@
 //            [spinner setHidden:true];
 //            [spinner stopAnimating];
             
+            NSString* temp;
+            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            if([temp isEqualToString:@"ko"]){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Login Success" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];

@@ -260,6 +260,7 @@
     //1999 에러처리
      NSDictionary *subDoc = xmlDoc[@"errorCode"];
     NSString* strTemp = subDoc[@"_value"];
+    //* k
     if([strTemp isEqualToString:@"1999"]){
         
         if([temp isEqualToString:@"ko"]){

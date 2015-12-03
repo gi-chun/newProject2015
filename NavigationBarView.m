@@ -49,7 +49,7 @@
             UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) ];
             [titleLabel setBackgroundColor:[UIColor clearColor]];
             [titleLabel setTextColor:UIColorFromRGB(0xffffff)];
-            [titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
+            [titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
             [titleLabel setTextAlignment:NSTextAlignmentCenter];
             [titleLabel setNumberOfLines:0];
             [titleLabel setText:title];

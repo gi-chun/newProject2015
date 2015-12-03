@@ -19,6 +19,7 @@
 - (void)setReloadButtonProperties:(UIButton *)button isReload:(BOOL)isReload;
 - (void)touchToggleButton;
 - (void)setHiddenPopover:(BOOL)hidden;
+- (void)redrawADImage;
 
 @end
 

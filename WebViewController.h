@@ -28,6 +28,7 @@ typedef enum {
 - (id)initWithUrl:(NSString *)url isPop:(BOOL)isPop isIgnore:(BOOL)ignore isProduct:(BOOL)product;
 - (id)initWithRequest:(NSURLRequest *)request;
 - (void)setUrl:(NSString *)url;
+- (void)resetADImage;
 
 @end
 

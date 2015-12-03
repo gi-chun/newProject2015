@@ -394,7 +394,17 @@
 
 - (NavigationBarView *)navigationBarView:(NSInteger)navigationType
 {
-    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:@"비밀번호 변경"];
+    
+    NSString* temp;
+    NSString* sTitle;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        sTitle = PERSON_PWD_CHANGE_KO;
+        
+    }else{
+        sTitle = PERSON_PWD_CHANGE_VI;
+    }
+    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:sTitle];
     [navigationBarView setDelegate:self];
     
     return navigationBarView;

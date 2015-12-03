@@ -550,6 +550,10 @@
     leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
     [leftViewController setViewLogin];
     
+    WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
+    [homeViewController resetADImage];
+    
+    
 }
 
 

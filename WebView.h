@@ -27,6 +27,7 @@
 - (void)destroyWebView;
 - (void)didReceiveMemoryWarning;
 
+- (void)redrawADImage;
 - (void)updateFrame;
 - (void)updateFrameSunny;
 - (void)updateFrameSunnyForStatusHide;

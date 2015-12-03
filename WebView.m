@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_webView setClipsToBounds:YES];
         [_webView setAllowsInlineMediaPlayback:YES];
         [_webView setMediaPlaybackRequiresUserAction:NO];
-        [_webView.scrollView setScrollsToTop:NO];
+        [_webView.scrollView setScrollsToTop:YES];
         [_webView.scrollView setDelegate:self];
         [_webView.scrollView setDecelerationRate:UIScrollViewDecelerationRateNormal];
         [_webView.scrollView setBounces:NO];
@@ -263,7 +263,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 	[_refusedPushAgreeView addSubview:bgView];
 	
 	UILabel *textLabel = [[UILabel alloc] initWithFrame:_refusedPushAgreeView.bounds];
-	textLabel.text = @"  알리미수신거부(무료)";
+	//textLabel.text = @"  알리미수신거부(무료)";
 	textLabel.backgroundColor = [UIColor clearColor];
 	textLabel.textColor = UIColorFromRGB(0xffffff);
 	textLabel.font = [UIFont systemFontOfSize:9.f];
@@ -1199,6 +1199,12 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 	}
 	
 	return enable;
+}
+
+- (void)redrawADImage{
+    
+    [toolBarView redrawADImage];
+    
 }
 
 
