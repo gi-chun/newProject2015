@@ -173,7 +173,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
             dicItems = [dicResponse objectForKey:@"root_info"];

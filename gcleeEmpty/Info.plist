@@ -87,7 +87,7 @@
 		</dict>
 	</dict>
 	<key>UILaunchStoryboardName</key>
-	<string>Launch Screen.storyboard</string>
+	<string>introView</string>
 	<key>UIMainStoryboardFile</key>
 	<string></string>
 	<key>UIRequiredDeviceCapabilities</key>

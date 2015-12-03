@@ -41,6 +41,7 @@
     
     __weak IBOutlet UIButton *confirmBtn;
     NSInteger isTwoChk;
+    NSInteger canUseId;
     
     CPLoadingView *loadingView;
     
@@ -110,7 +111,7 @@
             return;
         }
         if([pwdText.text length] < 4){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [pwdText becomeFirstResponder];
             [btnSummit setEnabled:true ];
@@ -118,12 +119,21 @@
         }
         if([pwdCnfirmText.text length] < 4){
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [pwdCnfirmText becomeFirstResponder];
             [btnSummit setEnabled:true ];
             return;
         }
+        if(![pwdCnfirmText.text isEqualToString:pwdText.text]){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NO_SAME_PWD_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [pwdCnfirmText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
+            return;
+        }
+
 
         
     }else{
@@ -177,6 +187,16 @@
             [btnSummit setEnabled:true ];
             return;
         }
+        
+        if(![pwdCnfirmText.text isEqualToString:pwdText.text]){
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NO_SAME_PWD_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [pwdCnfirmText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
+            return;
+        }
+
         
     }
     
@@ -260,6 +280,21 @@
         return;
     }
     
+    if( canUseId == 0){
+        
+        if([temp isEqualToString:@"ko"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_USE_EMAIL_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_USE_EMAIL_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+        [btnSummit setEnabled:true ];
+        return;
+    }
+
+    
      [btnSummit setEnabled:false];
     
     //회원가입
@@ -342,16 +377,20 @@
 //            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 //            [self stopLoadingAnimation];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"가입 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            completeViewController *completeController = [[completeViewController alloc] init];
+            //[completeController setDelegate:self];
+            [self.navigationController pushViewController:completeController animated:YES];
             
-            [alert show];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"가입 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            
+//            [alert show];
             
              [btnSummit setEnabled:true];
             
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.navigationController setNavigationBarHidden:NO];
-            
-            [btnSummit setEnabled:true ];
+//            [self.navigationController popViewControllerAnimated:YES];
+//            [self.navigationController setNavigationBarHidden:NO];
+//            
+//            [btnSummit setEnabled:true ];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -518,6 +557,37 @@
             
         }else{
             
+            NSDictionary *dicItems = [dicResponse objectForKey:@"indiv_info"];
+            NSString* sResult = dicItems[@"user_yn"];
+            
+             NSString* temp;
+            if([sResult isEqualToString:@"Y"]){ //이미가입
+               
+                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                if([temp isEqualToString:@"ko"]){
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:DIABLE_EMAIL_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                    [alert show];
+                }else{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:DIABLE_EMAIL_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+                
+                canUseId = 0;
+
+            }else{
+                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                if([temp isEqualToString:@"ko"]){
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ENABLE_EMAIL_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                    [alert show];
+                }else{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ENABLE_EMAIL_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+                
+                canUseId = 1;
+            }
+            
+            
             //to json
             SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
             
@@ -536,8 +606,7 @@
             NSLog(@"getCookie end ==>" );
             isTwoChk = 1;
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"ID 등록가능" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
+            
             
             [confirmBtn setEnabled:true];
             
@@ -771,7 +840,11 @@
         
     }
     
+    
+    [idText setKeyboardType: UIKeyboardTypeEmailAddress ];
+    
     isTwoChk = 0;
+    canUseId = 0;
     [pwdText setKeyboardType:UIKeyboardTypeNumberPad ];
     [pwdCnfirmText setKeyboardType:UIKeyboardTypeNumberPad ];
     

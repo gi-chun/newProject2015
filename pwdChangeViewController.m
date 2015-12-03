@@ -219,14 +219,23 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"비밀번호변경 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
+            NSString* temp;
+            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            if([temp isEqualToString:@"ko"]){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHANGE_COMPLEATE_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHANGE_COMPLEATE_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }
             
             //set kCardCode
             [[NSUserDefaults standardUserDefaults] setObject:newPwdTxt.text forKey:kPwd];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             [btn_save setEnabled:true ];
+            
+            [self.navigationController popViewControllerAnimated:YES];
             
             //emailTxt.text = strEmail;
             
@@ -281,7 +290,7 @@
     [newPwdTxt setKeyboardType:UIKeyboardTypeNumberPad ];
     [oldPwdTxt setKeyboardType:UIKeyboardTypeNumberPad ];
     
-    [oldPwdTxt setText:[[NSUserDefaults standardUserDefaults] stringForKey:kPwd]];
+    //[oldPwdTxt setText:[[NSUserDefaults standardUserDefaults] stringForKey:kPwd]];
 }
 /////
 - (void)viewDidAppear:(BOOL)animated

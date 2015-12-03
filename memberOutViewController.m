@@ -34,14 +34,42 @@
     
     [btn_Out setEnabled:false ];
     
+    NSString *strPassLenMsg = nil;
+    NSString *strOutMsg = nil;
+
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        strPassLenMsg = NO_SAME_PWD_KO;
+        strOutMsg = PERSON_MEMBER_OUT_KO;
+    }else{
+        strPassLenMsg = NO_SAME_PWD_VI;
+         strOutMsg = PERSON_MEMBER_OUT_VI;
+    }
+    
+    
     if([pwdTxt.text length] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:strPassLenMsg delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         [pwdTxt becomeFirstResponder];
         [btn_Out setEnabled:true ];
 
         return;
     }
+    
+    NSString *strPwd = [[NSUserDefaults standardUserDefaults] stringForKey:kPwd];
+    if(![pwdTxt.text isEqualToString:strPwd]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:strPassLenMsg delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        [alert show];
+        [pwdTxt becomeFirstResponder];
+        [btn_Out setEnabled:true ];
+        
+        return;
+    }
+
+    
+    
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
@@ -145,7 +173,7 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"회원탈퇴 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:strOutMsg delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];

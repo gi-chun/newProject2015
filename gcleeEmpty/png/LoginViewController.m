@@ -74,6 +74,7 @@
     //myLoginType = LoginTypeDefault;
     
     [txtPwd setKeyboardType:UIKeyboardTypeNumberPad ];
+    [txtID setKeyboardType:UIKeyboardTypeEmailAddress ];
     
     txtID.text = [[NSUserDefaults standardUserDefaults] stringForKey:kId] ;
     txtPwd.text = [[NSUserDefaults standardUserDefaults] stringForKey:kPwd] ;
@@ -227,7 +228,7 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
             [leftViewController setViewLogin];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
             dicItems = nil;
@@ -519,7 +520,7 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
             [leftViewController setViewLogin];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
         
             dicItems = nil;

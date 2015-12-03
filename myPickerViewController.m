@@ -24,8 +24,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    //[langLabel setText:pickerData[row]];
-    
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){
@@ -43,6 +41,12 @@
     
     myPicker.dataSource = self;
     myPicker.delegate = self;
+    
+     if([temp isEqualToString:@"ko"]){
+         [myPicker selectRow:1 inComponent:0 animated:YES];
+     }else{
+         [myPicker selectRow:0 inComponent:0 animated:YES];
+     }
     
 }
 
@@ -69,6 +73,13 @@
 {
     [langLabel setText:pickerData[row]];
     
+    //    userDefaults = [NSUserDefaults standardUserDefaults];
+    //    languages = [userDefaults objectForKey:@"AppleLanguages"];
+    //    localLang = languages[0];
+    NSString* localLang = (row == 0)?@"vi":@"ko";
+    [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     
     return pickerData[row];
 }
@@ -76,37 +87,37 @@
 
 - (IBAction)okClick:(id)sender {
     
-    //set language
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray* languages = [userDefaults objectForKey:@"AppleLanguages"];
-        NSString* localLang = languages[0];
-        [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+//    //set language
+//    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSMutableArray* languages = [userDefaults objectForKey:@"AppleLanguages"];
+//        NSString* localLang = languages[0];
+//    
+//        [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+//    // set language
+////    [languages insertObject:@"vi" atIndex:0]; // ISO639-1
+////    [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+//    if([localLang isEqualToString:@"ko"]){
+//        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"vi", @"ko", @"en", nil] forKey:@"AppleLanguages"];
+//        [[NSUserDefaults standardUserDefaults] synchronize]; //to make the change immediate
+//    }else{
+//        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"ko", @"vi", @"en", nil] forKey:@"AppleLanguages"];
+//        [[NSUserDefaults standardUserDefaults] synchronize]; //to make the change immediate
+//        
+//    }
+//    
+//    userDefaults = [NSUserDefaults standardUserDefaults];
+//    languages = [userDefaults objectForKey:@"AppleLanguages"];
+//    localLang = languages[0];
     
-    // set language
-//    [languages insertObject:@"vi" atIndex:0]; // ISO639-1
+//    [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    if([localLang isEqualToString:@"ko"]){
-        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"vi", @"ko", @"en", nil] forKey:@"AppleLanguages"];
-        [[NSUserDefaults standardUserDefaults] synchronize]; //to make the change immediate
-    }else{
-        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"ko", @"vi", @"en", nil] forKey:@"AppleLanguages"];
-        [[NSUserDefaults standardUserDefaults] synchronize]; //to make the change immediate
-        
-    }
-    
-    userDefaults = [NSUserDefaults standardUserDefaults];
-    languages = [userDefaults objectForKey:@"AppleLanguages"];
-    localLang = languages[0];
-    [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
     if ([self.delegate respondsToSelector:@selector(didTouchPicker)]) {
         [self.delegate didTouchPicker];
     }
-    
-    NSLog(@"change language %@",localLang);
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

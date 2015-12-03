@@ -38,6 +38,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [emailTxt setKeyboardType: UIKeyboardTypeEmailAddress ];
+    
     if(kScreenBoundsWidth > 320){
         if(kScreenBoundsWidth > 400){
             [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
@@ -218,7 +220,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
        
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
             //to json

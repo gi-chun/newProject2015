@@ -191,7 +191,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
             dicItems = [dicResponse objectForKey:@"indiv_info"];
@@ -221,7 +221,13 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            NSString * stSearch = [NSString stringWithFormat:@"조회된 비밀번호가 메일로 전송되었습니다. "];
+            NSString * stSearch = nil;
+            NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            if([temp isEqualToString:@"ko"]){
+                stSearch = [NSString stringWithFormat:SEND_PWD_MAIL_KO];
+            }else{
+                stSearch = [NSString stringWithFormat:SEND_PWD_MAIL_VI];
+            }
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:stSearch delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
@@ -285,6 +291,7 @@
         
     }
 
+    [mailTxt setKeyboardType: UIKeyboardTypeEmailAddress ];
     
     [self resetNavigationBarView:1];
     [self setDelegateText];

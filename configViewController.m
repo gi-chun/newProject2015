@@ -512,9 +512,6 @@
 #pragma mark -picker
 - (void)didTouchPicker{
     
-    leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
-    [leftViewController setViewLogin];
-    
 //    if(kScreenBoundsWidth > 320){
 //        if(kScreenBoundsWidth > 400){
 //            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
@@ -549,6 +546,9 @@
         }
     }
     _preLang = temp;
+    
+    leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
+    [leftViewController setViewLogin];
     
 }
 

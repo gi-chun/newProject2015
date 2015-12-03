@@ -188,20 +188,20 @@ const static CGFloat LABEL_WIDTH     =    100;
     NSString* highLightFile;
     NSString* nomalFile;
     if(_viewType == 1){
-        highLightFile = @"total_menu_01.png";
-        nomalFile = @"total_menu_01_press.png";
+        highLightFile = @"total_menu_01_press.png";
+        nomalFile = @"total_menu_01.png";
     }
     if(_viewType == 2){
-        highLightFile = @"total_menu_02.png";
-        nomalFile = @"total_menu_02_press.png";
+        highLightFile = @"total_menu_02_press.png";
+        nomalFile = @"total_menu_02.png";
     }
     if(_viewType == 3){
-        highLightFile = @"total_menu_03.png";
-        nomalFile = @"total_menu_03_press.png";
+        highLightFile = @"total_menu_03_press.png";
+        nomalFile = @"total_menu_03.png";
     }
     if(_viewType == 4){
-        highLightFile = @"total_menu_04.png";
-        nomalFile = @"total_menu_04_press.png";
+        highLightFile = @"total_menu_04_press.png";
+        nomalFile = @"total_menu_04.png";
     }
 
     UIImage *scaledImg = [self getScaledImage:[UIImage imageNamed:highLightFile] insideButton:emptyButton];

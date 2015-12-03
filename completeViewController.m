@@ -13,6 +13,7 @@
 {
      NavigationBarView *navigationBarView;
     __weak IBOutlet UIButton *goBtn;
+    __weak IBOutlet UILabel *labelWelcom;
 }
 
 @end
@@ -30,6 +31,14 @@
             [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         }
         
+    }
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        [self initScreenView_ko];
+    }else{
+        [self initScreenView_vi];
     }
 
     
@@ -54,6 +63,7 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
+
 #pragma mark - CPNavigationBarViewDelegate
 
 - (void)resetNavigationBarView:(NSInteger) type
@@ -74,8 +84,17 @@
 
 - (NavigationBarView *)navigationBarView:(NSInteger)navigationType
 {
-    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:COMPLETE_TITLE_KO];
-    [navigationBarView setDelegate:self];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:COMPLETE_TITLE_KO];
+        [navigationBarView setDelegate:self];
+    }else{
+        navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:COMPLETE_TITLE_VI];
+        [navigationBarView setDelegate:self];
+    }
+   
     
     return navigationBarView;
 }
@@ -88,6 +107,25 @@
     //        [self.delegate didTouchBackButton];
     //    }
 }
+
+
+#pragma mark -initScreenView
+-(void)initScreenView_ko{
+    
+    [self resetNavigationBarView:1];
+    [labelWelcom setText:WELCOM_DESC_KO];
+    [goBtn setTitle:SERVICE_GO_KO forState:UIControlStateNormal];
+    
+}
+
+-(void)initScreenView_vi{
+    
+    [self resetNavigationBarView:1];
+    [labelWelcom setText:WELCOM_DESC_VI];
+    [goBtn setTitle:SERVICE_GO_KO forState:UIControlStateNormal];
+
+}
+
 /*
 #pragma mark - Navigation
 

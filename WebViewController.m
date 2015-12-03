@@ -160,10 +160,18 @@
     else {
         if (webViewUrl.length > 0) {
             
+            NSString *replaced = [webViewUrl stringByReplacingOccurrencesOfString:@"locale=ko"
+                                                                withString:@"locale=%@"];
+            
+            replaced = [replaced stringByReplacingOccurrencesOfString:@"locale=vi"
+                                                                       withString:@"locale=%@"];
+            
+            webViewUrl = replaced;
+            
             NSString* gLocalLang = @"";
             NSString *callUrl = @"";
             
-            gLocalLang = @"ko";
+            gLocalLang =[[NSUserDefaults standardUserDefaults] stringForKey:klang];
             callUrl = [NSString stringWithFormat:webViewUrl, gLocalLang];
             
             NSURL *Nurl = [NSURL URLWithString:callUrl];
@@ -605,37 +613,43 @@
     //app://openLoginPage
     
     
-//    if ([url hasPrefix:@"app"]) {
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alert show];
-//        
-//        if(!([url rangeOfString:@"openLoginPage"].location == NSNotFound)){
-//            //login
-//            LoginViewController *loginController = [[LoginViewController alloc] init];
-//            [loginController setLoginType];
-//            [loginController setDelegate:self];
-//            [self.navigationController pushViewController:loginController animated:YES];
-//            
-//        }else if(!([url rangeOfString:@"getMemberInfo"].location == NSNotFound)){
-//            //send to server memberinfo
-//            if([[NSUserDefaults standardUserDefaults] stringForKey:kLoginData]){
-//               
-//                NSString *functionCall = [NSString stringWithFormat:@"getMemberInfo(%@)", [[NSUserDefaults standardUserDefaults] stringForKey:kLoginData]];
-//                
-//                [webView execute:functionCall];
-//                
-//            }
-//        }
-//        
-//        //return NO;
-//    }
+    if ([url hasPrefix:@"app"]) {
+        
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        //        [alert show];
+        
+        if(!([url rangeOfString:@"openLoginPage"].location == NSNotFound)){
+            //login
+            LoginViewController *loginController = [[LoginViewController alloc] init];
+            [loginController setLoginType];
+            [loginController setDelegate:self];
+            [self.navigationController pushViewController:loginController animated:YES];
+            
+            //        }else if(!([url rangeOfString:@"getMemberInfo"].location == NSNotFound)){
+            //            //send to server memberinfo
+            //            if([[NSUserDefaults standardUserDefaults] stringForKey:kLoginData]){
+            //
+            //                NSString *functionCall = [NSString stringWithFormat:@"getMemberInfo(%@)", [[NSUserDefaults standardUserDefaults] stringForKey:kLoginData]];
+            //
+            //                [webView execute:functionCall];
+            //                
+            //            }
+        }
+        
+        return NO;
+    }
     
     
     
     NSLog(@"url:%@", url);
     webViewUrl = url;
     
+    //common/message/processMsg.html?
+    if(!([url rangeOfString:@"common/message/processMsg.html?"].location == NSNotFound)){
+        return false;
+    }
+    
+#ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
     if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
@@ -647,6 +661,13 @@
         [self initNavigation:0];
         
     }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
+        //TODO
+        NSLog(@"문자열이 포함됨");
+        [self.navigationController setNavigationBarHidden:NO];
+        showNavigation = 3;
+        gShowNavigation = 3;
+        [self initNavigation:3];
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/set/helpl_ist.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -667,6 +688,49 @@
             [self initNavigation:4];
         }
     }
+#else
+    //0: club 1:previous 2:   3:bank 4:hide
+    NSInteger showNavigation = 1; //1: show, 2: hidden
+    if(!([url rangeOfString:@"online.shinhan.com.vin/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+        //TODO
+        NSLog(@"문자열이 포함됨");
+        [self.navigationController setNavigationBarHidden:NO];
+        showNavigation = 0;
+        gShowNavigation = 0;
+        [self initNavigation:0];
+        
+    }else if (!([url rangeOfString:@"online.shinhan.com.vin/sunny/bank/main.jsp?"].location == NSNotFound)){
+        //TODO
+        NSLog(@"문자열이 포함됨");
+        [self.navigationController setNavigationBarHidden:NO];
+        showNavigation = 3;
+        gShowNavigation = 3;
+        [self initNavigation:3];
+    }else if (!([url rangeOfString:@"online.shinhan.com.vin/sunny/set/helpl_ist.jsp?"].location == NSNotFound)){
+        //TODO
+        NSLog(@"문자열이 포함됨");
+        [self.navigationController setNavigationBarHidden:NO];
+        showNavigation = 3;
+        gShowNavigation = 3;
+        [self initNavigation:3];
+    }else{
+        
+        //sunny없는 URL은 외부 사파리 호출
+        if (([url rangeOfString:@"sunny"].location == NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }else{
+            
+            [self.navigationController setNavigationBarHidden:YES];
+            showNavigation = 4;
+            gShowNavigation = 4;
+            [self initNavigation:4];
+        }
+    }
+
+    
+#endif
+    
     
     [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
     
