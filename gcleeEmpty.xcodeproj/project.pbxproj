@@ -404,6 +404,7 @@
 		28D86D251C10033E004C9521 /* loding_cha_02@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D86D1C1C10033E004C9521 /* loding_cha_02@1x.png */; };
 		28D86D261C10033E004C9521 /* loding_cha_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D86D1D1C10033E004C9521 /* loding_cha_02@2x.png */; };
 		28D86D271C10033E004C9521 /* loding_cha_02@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D86D1E1C10033E004C9521 /* loding_cha_02@3x.png */; };
+		28D86D291C101206004C9521 /* Launch_iphone5.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28D86D281C101206004C9521 /* Launch_iphone5.storyboard */; };
 		28D8EA421BF310B0002E98C0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D8EA301BF310B0002E98C0 /* AFHTTPRequestOperation.m */; };
 		28D8EA431BF310B0002E98C0 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D8EA321BF310B0002E98C0 /* AFHTTPRequestOperationManager.m */; };
 		28D8EA441BF310B0002E98C0 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D8EA341BF310B0002E98C0 /* AFHTTPSessionManager.m */; };
@@ -940,6 +941,7 @@
 		28D86D1C1C10033E004C9521 /* loding_cha_02@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loding_cha_02@1x.png"; sourceTree = "<group>"; };
 		28D86D1D1C10033E004C9521 /* loding_cha_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loding_cha_02@2x.png"; sourceTree = "<group>"; };
 		28D86D1E1C10033E004C9521 /* loding_cha_02@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loding_cha_02@3x.png"; sourceTree = "<group>"; };
+		28D86D281C101206004C9521 /* Launch_iphone5.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch_iphone5.storyboard; sourceTree = "<group>"; };
 		28D8EA2F1BF310B0002E98C0 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		28D8EA301BF310B0002E98C0 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		28D8EA311BF310B0002E98C0 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -1570,6 +1572,7 @@
 				288E45C21BD719640041AE50 /* AppDelegate.m */,
 				288E45CA1BD719640041AE50 /* Assets.xcassets */,
 				28D25A621BFEF16B0022E0CF /* Launch Screen.storyboard */,
+				28D86D281C101206004C9521 /* Launch_iphone5.storyboard */,
 				2886A8D61BE09119001B7657 /* PrefixHeader.pch */,
 				288E45CF1BD719640041AE50 /* Info.plist */,
 				288E45BE1BD719640041AE50 /* Supporting Files */,
@@ -1890,6 +1893,7 @@
 				28DD7DD41C0EEE9900BE7C4D /* loding@2x.png in Resources */,
 				28B889A61C02AFFB0093BC67 /* location_icon_press@1x.png in Resources */,
 				28D5370D1BF970E5004257DA /* total_menu_02_press@3x.png in Resources */,
+				28D86D291C101206004C9521 /* Launch_iphone5.storyboard in Resources */,
 				28351D9C1BF47F6B009145E6 /* top_back_btn@2x.png in Resources */,
 				28DD7DFE1C0EEF6F00BE7C4D /* tuto_02@2x.png in Resources */,
 				283148331BFB0AE70083DA3F /* find_pw_btn_press@2x.png in Resources */,

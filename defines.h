@@ -61,6 +61,7 @@ static NSString * const kCurrentVersion       = @"kCurrentVersion";
 static NSString * const kUpdateVersion       = @"kUpdateVersion";
 static NSString * const kUpdateUri       = @"kUpdateUri";
 static NSString * const kTutoY       = @"kTutoY";
+static NSString * const kFirstExecY       = @"kFirstExecY";
 
 static NSString * const kLoginData       = @"kLoginData";
 static NSString * const kForceUpdateY       = @"kForceUpdateY"; //강제업데이트 여부
@@ -134,7 +135,7 @@ static NSString *LEFT_CONFIG_KO     = @"설정";
 static NSString *BOTTOM_BANNER_KO = @"bottom_banner.png";
 
 //vi
-static NSString *LEFT_DES_VI     = @"Bạn có thể sử dụng các dịch vụ khác nhau trong Sunny Club sau khi đăng nhập.";
+static NSString *LEFT_DES_VI     = @"Vui lòng đăng nhập để sử dụng các dịch vụ của Sunny Club.";
 static NSString *LEFT_LOGIN_VI     = @"Đăng nhập";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
@@ -151,11 +152,11 @@ static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는";
 static NSString *ID_RESULT_TAIL_KO     = @"입니다.";
 
 //vi
-static NSString *PW_SEARCH_TITLE_VI     = @"Tìm mật khẩu của bạn";
+static NSString *PW_SEARCH_TITLE_VI     = @"Tìm mật khẩu";
 static NSString *PW_SEARCH_ID_VI     = @"ID";
 static NSString *PW_SEARCH_NAME_VI     = @"Tên";
 static NSString *PW_SEARCH_YYYY_VI     = @"Sinh nhật";
-static NSString *PW_SEARCH_VI     = @"Tìm ID của bạn";
+static NSString *PW_SEARCH_VI     = @"Tìm ID";
 static NSString *ID_RESULT_HEAD_VI     = @"ID bạn đang truy vấn là:";
 static NSString *ID_RESULT_TAIL_VI     = @"này.";
 
@@ -177,10 +178,10 @@ static NSString *PW_NEW_VI = @"Mật khẩu mới";
 static NSString *PW_CONFIRM_VI = @"Xác nhận mật khẩu";
 
 //vi
-static NSString *IDSEARCH_TITLE_VI     = @"Tìm ID của bạn";
+static NSString *IDSEARCH_TITLE_VI     = @"Tìm ID";
 static NSString *IDSEARCH_NAME_VI     = @"Tên";
 static NSString *IDSEARCH_YYYY_VI     = @"Sinh nhật";
-static NSString *IDSEARCH_SEARCH_VI     = @"Tìm ID của bạn";
+static NSString *IDSEARCH_SEARCH_VI     = @"Truy vấn";
 static NSString *PW_NO_EQUAL_VI = @"Mật khẩu mới nhập không đúng";
 
 //korea

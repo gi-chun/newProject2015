@@ -158,6 +158,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     if(kScreenBoundsWidth > 320){
         if(kScreenBoundsWidth > 400){
             [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];

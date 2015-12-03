@@ -67,10 +67,6 @@
     // Do any additional setup after loading the view from its nib.
     [self resetNavigationBarView:1];
     
-    NSString* temp;
-    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-    if([temp isEqualToString:@"ko"]){
-        
         NSString* temp;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
         if([temp isEqualToString:@"ko"]){
@@ -80,7 +76,6 @@
         }else{
             temp = @"EN";
         }
-    }
 }
 
 - (void)didReceiveMemoryWarning {

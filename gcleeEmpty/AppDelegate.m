@@ -24,6 +24,7 @@
 @interface AppDelegate ()
 {
     UINavigationController  *_navigation;
+    BOOL isTutoShow;
 }
 @end
 
@@ -37,37 +38,35 @@
     [_window makeKeyAndVisible];
     
     
-    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-    if(isTuto == YES){
-        
+    
+    NSString *strFirst = [[NSUserDefaults standardUserDefaults] stringForKey:kFirstExecY];
+    
+    if(strFirst == nil){
+        isTutoShow = YES;
         //MYViewController *introductionView = [[MYViewController alloc] init];
         self.introductionView = [[MYViewController alloc] init];
         self.introductionView.delegate = self;
-        
-        //    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        //    UIColor * tintColor = [UIColor colorWithRed:29.0/255.0
-        //                                          green:173.0/255.0
-        //                                           blue:234.0/255.0
-        //                                          alpha:1.0];
-        //    [self.window setTintColor:tintColor];
-        
-        //[self.window addSubview:_introductionView.view];
-        
         [self.window setRootViewController:self.introductionView];
         ///////////////////////////////////////////////////////////////////////////////////////////
-        
-    }else if(isTuto == NO){
-        NSLog(@"istotu view no");
-        
     }else{
-        self.introductionView = [[MYViewController alloc] init];
-        self.introductionView.delegate = self;
-        
-        [self.window setRootViewController:self.introductionView];
+        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+        if(isTuto == YES){
+            isTutoShow = YES;
+            self.introductionView = [[MYViewController alloc] init];
+            self.introductionView.delegate = self;
+            [self.window setRootViewController:self.introductionView];
+            
+        }else if(isTuto == NO){
+            NSLog(@"istotu view no");
+            
+        }else{
+            isTutoShow = YES;
+            self.introductionView = [[MYViewController alloc] init];
+            self.introductionView.delegate = self;
+            
+            [self.window setRootViewController:self.introductionView];
+        }
     }
-    
-    
-    
     
     return YES;
 }
@@ -421,8 +420,7 @@
         
     }
     
-    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-    if(isTuto == NO){
+    if(isTutoShow == NO){
         [self didFinishIntro];
     }
     

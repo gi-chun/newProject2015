@@ -439,9 +439,11 @@
 - (void)didTouchBankButton
 {
     NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
     NSString *callUrl = @"";
     
-    gLocalLang = @"ko";
     callUrl = [NSString stringWithFormat:SUNNY_BANK_URL, gLocalLang];
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
@@ -467,9 +469,11 @@
 - (void)didTouchSunnyButton
 {
     NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
     NSString *callUrl = @"";
-    
-    gLocalLang = @"ko";
+
     callUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
