@@ -129,9 +129,9 @@
     
     
     //Add small line in between title and description
-    self.PanelSeparatorLine = [[UIView alloc] initWithFrame:CGRectMake(kLeftRightMargins, runningYOffset - 0.5*kTitleDescriptionPadding, frame.size.width - 2*kLeftRightMargins, 1)];
-    self.PanelSeparatorLine.backgroundColor = kSeparatorLineColor;
-     [self addSubview:self.PanelSeparatorLine];
+//    self.PanelSeparatorLine = [[UIView alloc] initWithFrame:CGRectMake(kLeftRightMargins, runningYOffset - 0.5*kTitleDescriptionPadding, frame.size.width - 2*kLeftRightMargins, 1)];
+//    self.PanelSeparatorLine.backgroundColor = kSeparatorLineColor;
+//     [self addSubview:self.PanelSeparatorLine];
     
     //Create description label
     self.PanelDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLeftRightMargins, runningYOffset, frame.size.width - 2*kLeftRightMargins, panelDescriptionHeight)];

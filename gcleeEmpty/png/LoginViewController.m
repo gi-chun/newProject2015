@@ -14,6 +14,7 @@
 #import "leftViewController.h"
 #import "idSearchViewController.h"
 #import "pwdSearchViewController.h"
+#import "sys/utsname.h"
 
 @interface LoginViewController () <NavigationBarViewDelegate>
 {
@@ -220,7 +221,7 @@
             
 //            [spinner setHidden:true];
 //            [spinner stopAnimating];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -282,7 +283,7 @@
 //            [spinner stopAnimating];
             
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Login Success" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Login Success" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kLoginY];
@@ -325,7 +326,7 @@
         
         NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Login Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Login Fail %@", error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
@@ -350,6 +351,8 @@
     
 //    [spinner setHidden:false];
 //    [spinner startAnimating];
+    [loginBtn setEnabled:false];
+    
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){
@@ -358,13 +361,14 @@
             [alert show];
             [txtID becomeFirstResponder];
             
+            [loginBtn setEnabled:true];
             return;
         }
         if([txtPwd.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtPwd becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         
@@ -372,7 +376,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtID becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         
@@ -380,7 +384,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtPwd becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         
@@ -389,14 +393,14 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtID becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         if([txtPwd.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtPwd becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         
@@ -404,7 +408,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtID becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         
@@ -412,7 +416,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [txtPwd becomeFirstResponder];
-            
+            [loginBtn setEnabled:true];
             return;
         }
         
@@ -509,7 +513,7 @@
             
             [spinner setHidden:true];
             [spinner stopAnimating];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -580,17 +584,10 @@
             //        NSInteger success = [(NSNumber *) [jsonData objectForKey:@"result"] integerValue];
             //        NSLog(@"%d",success);
             
-            [spinner setHidden:true];
-            [spinner stopAnimating];
+//            [spinner setHidden:true];
+//            [spinner stopAnimating];
             
-            if([temp isEqualToString:@"ko"]){
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                [alert show];
-            }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-            
+            ////////////////////////////////////////////////////////////////////////////
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -608,6 +605,30 @@
             }else{
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
+            
+        
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+                if ([[UIScreen mainScreen] respondsToSelector: @selector(scale)]) {
+                    CGSize result = [[UIScreen mainScreen] bounds].size;
+                    CGFloat scale = [UIScreen mainScreen].scale;
+                    result = CGSizeMake(result.width * scale, result.height * scale);
+                    
+                    if(result.height== 960){
+                        
+                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
+                        
+                        NSLog(@"iphone 4, 4s retina resolution");
+                    }else{
+                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
+                    }
+                    
+                }else{
+                    
+                    NSLog(@"iphone standard resolution");
+                }
+            }
+            
+            ////////////////////////////////////////////////////////////////////////////
             
             //
             //        [cookie setValue:@"KO" forKey:@"locale_"];
@@ -632,7 +653,8 @@
             NSLog(@"getCookie end ==>" );
         }
         
-        
+        [loginBtn setEnabled:true];
+
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -642,10 +664,10 @@
         NSLog(@"Error: %@", error);
         
         if([temp isEqualToString:@"ko"]){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_KO, error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_KO, error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
         }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_VI, error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_VI, error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
         }
         
@@ -653,7 +675,25 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        [loginBtn setEnabled:true];
+        
     }];
+    
+}
+
+
+- (void)viewSuceeAlert{
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        [alert show];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        [alert show];
+    }
     
 }
 

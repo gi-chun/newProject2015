@@ -132,7 +132,7 @@
 
 - (IBAction)updateBtnClick:(id)sender {
     
-    if([[NSUserDefaults standardUserDefaults] stringForKey:kUpdateVersion] == nil){
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUpdateVersion] != nil){
         
         NSString *strUpdateUri = [[NSUserDefaults standardUserDefaults] stringForKey:kUpdateUri];
         //NSString *iTunesLink = @"https://itunes.apple.com/us/app/apple-store/id375380948?mt=8";

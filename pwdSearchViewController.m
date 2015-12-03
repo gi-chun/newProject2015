@@ -43,6 +43,8 @@
 
 - (IBAction)SearchClick:(id)sender {
     
+    [searchBtnClick setEnabled:false ];
+    
     /////////
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -51,14 +53,14 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [mailTxt becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         if([self NSStringIsValidEmail:mailTxt.text] == false){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [mailTxt becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         
@@ -66,7 +68,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [nameTxt becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         
@@ -76,7 +78,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [yyyymmddLabel becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         
@@ -85,14 +87,14 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [mailTxt becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         if([self NSStringIsValidEmail:mailTxt.text] == false){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [mailTxt becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         
@@ -100,7 +102,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [nameTxt becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         
@@ -109,7 +111,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [yyyymmddLabel becomeFirstResponder];
-            
+            [searchBtnClick setEnabled:true ];
             return;
         }
         
@@ -186,7 +188,7 @@
             NSString* sError = dicItems[@"msg"];
             
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -221,7 +223,7 @@
             
             NSString * stSearch = [NSString stringWithFormat:@"조회된 비밀번호가 메일로 전송되었습니다. "];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:stSearch delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:stSearch delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
@@ -232,17 +234,20 @@
             
         }
         
+        [searchBtnClick setEnabled:true ];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        [searchBtnClick setEnabled:true ];
     }];
 
     

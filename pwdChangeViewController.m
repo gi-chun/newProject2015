@@ -34,6 +34,8 @@
 
 - (IBAction)saveClick:(id)sender {
     
+    [btn_save setEnabled:false ];
+    
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){
@@ -42,24 +44,28 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [oldPwdTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
         if([newPwdTxt.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [newPwdTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
         if([confirmTxt.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [confirmTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
         if( ![newPwdTxt.text isEqualToString:confirmTxt.text] ){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PW_NO_EQUAL_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [newPwdTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
 
@@ -68,24 +74,28 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [oldPwdTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
         if([newPwdTxt.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [newPwdTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
         if([confirmTxt.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [confirmTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
         if( ![newPwdTxt.text isEqualToString:confirmTxt.text] ){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PW_NO_EQUAL_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [newPwdTxt becomeFirstResponder];
+            [btn_save setEnabled:true ];
             return;
         }
 
@@ -177,10 +187,13 @@
             NSString* sError = dicItems[@"msg"];
             
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
+             [btn_save setEnabled:true ];
+            return ;
+            
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
             //to json
@@ -206,12 +219,14 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"비밀번호변경 완료" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"비밀번호변경 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             //set kCardCode
             [[NSUserDefaults standardUserDefaults] setObject:newPwdTxt.text forKey:kPwd];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [btn_save setEnabled:true ];
             
             //emailTxt.text = strEmail;
             
@@ -222,11 +237,12 @@
         
         NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [btn_save setEnabled:true ];
         
     }];
 

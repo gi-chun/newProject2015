@@ -210,7 +210,7 @@
                 
                 UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
                 [backgroundImageView setImage:[UIImage imageNamed:@"bank_gnb_back.png"]];
-                [backgroundImageView setFrame:CGRectMake(0, 0, screenWidth, 60)];
+                [backgroundImageView setFrame:CGRectMake(0, -5, screenWidth, 60)];
                 backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
                 [self addSubview:backgroundImageView];
                 
@@ -233,15 +233,6 @@
                 [myInfoButton addTarget:self action:@selector(touchSunnyButton) forControlEvents:UIControlEventTouchUpInside];
                 //[myInfoButton setAccessibilityLabel:@"내정보" Hint:@"내정보로 이동합니다"];
                 [self addSubview:myInfoButton];
-                
-                //            //location
-                //            UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                //            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 13, 31, 28)];
-                //            [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon.png"] forState:UIControlStateNormal];
-                //            [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon_press.png"] forState:UIControlStateHighlighted];
-                //            [searchButton addTarget:self action:@selector(touchLocationButton) forControlEvents:UIControlEventTouchUpInside];
-                //            //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
-                //            [self addSubview:searchButton];
 
                 
             }
@@ -319,15 +310,7 @@
             [myInfoButton addTarget:self action:@selector(touchBankButton) forControlEvents:UIControlEventTouchUpInside];
             //[myInfoButton setAccessibilityLabel:@"내정보" Hint:@"내정보로 이동합니다"];
             [self addSubview:myInfoButton];
-            
-            //        //search
-            //        UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            //        [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 13, 31, 28)];
-            //        [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon.png"] forState:UIControlStateNormal];
-            //        [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon_press.png"] forState:UIControlStateHighlighted];
-            //        [searchButton addTarget:self action:@selector(touchSearchButton) forControlEvents:UIControlEventTouchUpInside];
-            //        //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
-            //        [self addSubview:searchButton];
+
         }
         
         

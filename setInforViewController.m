@@ -67,6 +67,8 @@
 
 - (IBAction)btnSummitClick:(id)sender {
     
+    [btnSummit setEnabled:false ];
+    
     NSString* temp;
     
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -76,36 +78,42 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([nameText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NAME_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([yearText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdCnfirmText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdText.text length] < 4){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [pwdText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdCnfirmText.text length] < 4){
@@ -113,6 +121,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [pwdCnfirmText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
 
@@ -122,36 +131,42 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([nameText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NAME_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([yearText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdCnfirmText.text length] == 0){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEW_PWD_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdText.text length] < 4){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [pwdText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         if([pwdCnfirmText.text length] < 4){
@@ -159,6 +174,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:PWD_LENGTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [pwdCnfirmText becomeFirstResponder];
+            [btnSummit setEnabled:true ];
             return;
         }
         
@@ -214,16 +230,33 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         strAgree = @"N";
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"동의 필요" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
         
+        if([temp isEqualToString:@"ko"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEED_AGREE_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEED_AGREE_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+
+        }
+        
+        
+        [btnSummit setEnabled:true ];
         return;
     }
     
     if( isTwoChk == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"아이디 중복 확인필요" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
         
+        if([temp isEqualToString:@"ko"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEED_ID_CHECK_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NEED_ID_CHECK_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+        [btnSummit setEnabled:true ];
         return;
     }
     
@@ -281,7 +314,7 @@
         if(dicItems){
             NSString* sError = dicItems[@"msg"];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -309,7 +342,7 @@
 //            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 //            [self stopLoadingAnimation];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"가입 완료" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"가입 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             
             [alert show];
             
@@ -317,6 +350,8 @@
             
             [self.navigationController popViewControllerAnimated:YES];
             [self.navigationController setNavigationBarHidden:NO];
+            
+            [btnSummit setEnabled:true ];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -326,6 +361,8 @@
 //        
 //        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 //        [self stopLoadingAnimation];
+        
+        [btnSummit setEnabled:true ];
         
     }];
     
@@ -352,6 +389,8 @@
 
 - (IBAction)confirmID:(id)sender {
     
+    [confirmBtn setEnabled:false ];
+    
     NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
     if([temp isEqualToString:@"ko"]){
@@ -360,7 +399,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
-            
+             [confirmBtn setEnabled:true];
             return;
         }
         
@@ -371,7 +410,7 @@
             [alert show];
             
             [idText becomeFirstResponder];
-            
+             [confirmBtn setEnabled:true];
             return;
             
         }
@@ -383,7 +422,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:ID_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [idText becomeFirstResponder];
-            
+             [confirmBtn setEnabled:true];
             return;
         }
         
@@ -394,6 +433,8 @@
             [alert show];
             
             [idText becomeFirstResponder];
+            
+            [confirmBtn setEnabled:true];
             
             return;
             
@@ -470,7 +511,7 @@
         if(dicItems){
             NSString* sError = dicItems[@"msg"];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -495,7 +536,7 @@
             NSLog(@"getCookie end ==>" );
             isTwoChk = 1;
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"ID 등록가능" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"ID 등록가능" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [confirmBtn setEnabled:true];
@@ -813,7 +854,7 @@
 
 - (void)initSetItem
 {
-    [okSwitch setOn:false];
+    //[okSwitch setOn:false];
     [inforText setContentOffset:CGPointZero animated:YES];
     [[self view]endEditing:NO];
     

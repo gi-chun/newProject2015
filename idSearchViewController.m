@@ -52,6 +52,8 @@
 
 - (IBAction)saveBtnClick:(id)sender {
     
+    [btnSearh setEnabled:false];
+    
     if([idTxt.text length] == 0){
         
         NSString* temp;
@@ -65,6 +67,7 @@
         }
         [idTxt becomeFirstResponder];
         
+        [btnSearh setEnabled:true];
         return;
     }
     
@@ -80,7 +83,7 @@
             [alert show];
         }
         [idTxt becomeFirstResponder];
-        
+        [btnSearh setEnabled:true];
         return;
     }
     
@@ -96,7 +99,7 @@
             [alert show];
         }
         [idTxt becomeFirstResponder];
-        
+        [btnSearh setEnabled:true];
         return;
     }
 
@@ -167,11 +170,32 @@
             NSString* sError = dicItems[@"msg"];
             
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
+            
+            dicItems = [dicResponse objectForKey:@"root_info"];
+            NSString* sCount = dicItems[@"result"];
+            
+            if([sCount isEqualToString:@"0"]){
+                [btnSearh setEnabled:true];
+                
+                NSString* temp;
+                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                if([temp isEqualToString:@"ko"]){
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                    [alert show];
+                }else{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+                
+                [idTxt becomeFirstResponder];
+                
+                return;
+            }
             
             dicItems = [dicResponse objectForKey:@"indiv_info"];
             NSString* sEmail = dicItems[@"email_id"];
@@ -217,6 +241,7 @@
             
         }
         
+        [btnSearh setEnabled:true];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -235,6 +260,8 @@
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [btnSearh setEnabled:true];
         
     }];
 

@@ -29,13 +29,17 @@
 @end
 
 @implementation memberOutViewController
+
 - (IBAction)OutBtnClick:(id)sender {
+    
+    [btn_Out setEnabled:false ];
     
     if([pwdTxt.text length] == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Check Password please" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         [pwdTxt becomeFirstResponder];
-        
+        [btn_Out setEnabled:true ];
+
         return;
     }
     
@@ -112,10 +116,10 @@
             NSString* sError = dicItems[@"msg"];
             
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [btn_Out setEnabled:true ];
+            //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
             //to json
@@ -141,7 +145,7 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"회원탈퇴 완료" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"회원탈퇴 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
@@ -152,6 +156,8 @@
             
             [self.navigationController popToRootViewControllerAnimated:YES];
             
+            [btn_Out setEnabled:true ];
+            
             
         }
         
@@ -160,11 +166,13 @@
         
         NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [btn_Out setEnabled:true ];
         
     }];
     

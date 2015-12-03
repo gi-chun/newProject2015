@@ -13,7 +13,7 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "BTWCodeguard.h"
 #import "AFHTTPRequestOperation.h"
-//#import "KTBiOS.h"
+#import "KTBiOS.h"
 #import "XMLDictionary.h"
 #include <netdb.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
@@ -56,6 +56,14 @@
         [self.window setRootViewController:self.introductionView];
         ///////////////////////////////////////////////////////////////////////////////////////////
         
+    }else if(isTuto == NO){
+        NSLog(@"istotu view no");
+        
+    }else{
+        self.introductionView = [[MYViewController alloc] init];
+        self.introductionView.delegate = self;
+        
+        [self.window setRootViewController:self.introductionView];
     }
     
     
@@ -261,54 +269,67 @@
             strDesc = NOT_NOMAL_APP_VI;
         }
         
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-//        [alert show];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [alert show];
         
         //잠시 죽이는것 주석
-        //[self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
     }
     
     //최신버전 -
-    strTemp = xmlDoc[@"최신버전"];
+    subDoc = xmlDoc[@"최신버전"];
+    strTemp = subDoc[@"_value"];
+    //strTemp = @"1.0.1";
     [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateVersion];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //업데이트 URI
-    strTemp = xmlDoc[@"updateUri"];
+    subDoc = xmlDoc[@"최신신버전_URL"];
+    strTemp = subDoc[@"_value"];
+    
+    NSString* strLastVersionUrl = strTemp;
     [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateUri];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //강제업데이트
-    if(FALSE){
-        NSString *iTunesLink = @"https://itunes.apple.com/us/app/apple-store/id375380948?mt=8";
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    //업데이트 ---
+    //강제업데이트  ---
+    subDoc = xmlDoc[@"강제업데이트여부"];
+    strTemp = subDoc[@"_value"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kForceUpdateY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if([strTemp isEqualToString:@"Y"]){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strLastVersionUrl]];
     }
+    
     /////////////////////////////////////////////
 
-//    ////////////////////////////////////////////////
-//    //KTB 프록시 체크
-//    
-//    if([self isCellNetwork] == NO){
-//        
-//        NSString * returnStr = checkProxy();
-//        if([returnStr isEqualToString:@"proxy"]){
-//            
-//            if([temp isEqualToString:@"ko"]){
-//                strDesc = USE_PROXY_KO;
-//            }else if([temp isEqualToString:@"vi"]){
-//                strDesc = USE_PROXY_VI;
-//            }
-//            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-//            [alert show];
-//            [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
-//            
-//        }
-////        NSString* checkProxy(void);
-////        NSString* getProxyInfo(void);
-//    }
-//    
-//    ////////////////////////////////////////////////
+    ////////////////////////////////////////////////
+    //KTB 프록시 체크
+    
+    if([self isCellNetwork] == NO){
+        
+        NSString * returnStr = checkProxy();
+        
+        if([returnStr isEqualToString:@"y"]){
+            
+            if([temp isEqualToString:@"ko"]){
+                strDesc = USE_PROXY_KO;
+            }else if([temp isEqualToString:@"vi"]){
+                strDesc = USE_PROXY_VI;
+            }
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            [alert show];
+            [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+            
+        }
+//        NSString* checkProxy(void);
+//        NSString* getProxyInfo(void);
+    }
+    
+    ////////////////////////////////////////////////
     
     
 

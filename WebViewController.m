@@ -1378,50 +1378,13 @@
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
     
-   
-    
-    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
-    NSHTTPCookie *cookie;
-    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
-    
-//    [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
-//    [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-    
-    [cookieProperties setObject:@"user_seq_80" forKey:NSHTTPCookieName];
-    [cookieProperties setObject:@"5555" forKey:NSHTTPCookieValue];
-    
-//    [cookieProperties setObject:@"mb_grade_80" forKey:NSHTTPCookieName];
-//    [cookieProperties setObject:@"2222222" forKey:NSHTTPCookieValue];
-//    
-//    [cookieProperties setObject:@"mb_point_80" forKey:NSHTTPCookieName];
-//    [cookieProperties setObject:@"33333333" forKey:NSHTTPCookieValue];
-    
-    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
-    [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
-    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
-    
-    
-    // set expiration to one month from now
-    [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2222] forKey:NSHTTPCookieExpires];
-    
-    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
-    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    
-//    NSDate* date = [NSDate date];
-//    [[NSHTTPCookieStorage sharedHTTPCookieStorage] removeCookiesSinceDate:date];
-    
-    
     NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
-    //NSHTTPCookie *cookie;
+    NSHTTPCookie *cookie;
     
-//    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
-//        NSLog(@"%@=%@", cookie.name, cookie.value);
-//        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
-//    }
-    
-    [cookieStringToSet appendFormat:@"%@=%@;",@"user_seq_80", @"55555"];
-    [cookieStringToSet appendFormat:@"%@=%@;",@"mb_grade_80", @"44444"];
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
                         
     if (cookieStringToSet.length) {
         [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];

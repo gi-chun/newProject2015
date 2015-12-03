@@ -16,7 +16,7 @@
                 <outlet property="label_member" destination="3ho-nE-Aj9" id="Nlt-zh-reD"/>
                 <outlet property="label_membership" destination="nq6-13-Wpe" id="pQj-7X-qGB"/>
                 <outlet property="label_nomal" destination="ywG-ex-EeX" id="bog-ss-y23"/>
-                <outlet property="label_pwd" destination="D2F-or-r84" id="BHq-GW-A9D"/>
+                <outlet property="label_pwd" destination="fiq-T3-Jxy" id="qE0-17-pwH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,12 +28,6 @@
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-o0-FoK">
                     <rect key="frame" x="0.0" y="201" width="320" height="43"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="비밀번호 변경" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2F-or-r84">
-                            <rect key="frame" x="8" y="14" width="270" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="noG-RP-Os8">
                             <rect key="frame" x="0.0" y="2" width="320" height="40"/>
                             <state key="normal" image="personaldata_menu01_back.png" backgroundImage="personaldata_menu01_back.png"/>
@@ -41,6 +35,12 @@
                                 <action selector="pwdChange:" destination="-1" eventType="touchUpInside" id="8Bc-lZ-dC1"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="비밀번호변경" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiq-T3-Jxy">
+                            <rect key="frame" x="10" y="15" width="295" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>

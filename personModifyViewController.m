@@ -99,6 +99,8 @@
 
 - (IBAction)emailSummit:(id)sender {
     
+    [btn_change setEnabled:false];
+     
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
@@ -108,7 +110,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [emailTxt becomeFirstResponder];
-            
+             [btn_change setEnabled:true];
             return;
         }
         
@@ -119,7 +121,7 @@
             [alert show];
             
             [emailTxt becomeFirstResponder];
-            
+            [btn_change setEnabled:true];
             return;
         }
         
@@ -213,7 +215,7 @@
             NSString* sError = dicItems[@"msg"];
             
          
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
        
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -242,15 +244,22 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"메일변경 완료" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-            [alert show];
+            NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            
+            if([temp isEqualToString:@"ko"]){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:CHANGE_MAIL_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:CHANGE_MAIL_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+            }
             
             //set kCardCode
             [[NSUserDefaults standardUserDefaults] setObject:emailTxt.text forKey:kEmail];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             //emailTxt.text = strEmail;
-            
+            [btn_change setEnabled:true];
         }
         
         
@@ -258,11 +267,13 @@
         
          NSLog(@"Error: %@", error);
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Fail %@", error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
         [alert show];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [btn_change setEnabled:true];
         
     }];
 

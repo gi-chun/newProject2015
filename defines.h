@@ -30,13 +30,13 @@ static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 #else     //REAL SERVER
 
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
-static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+static NSString *API_VERSION_INOF_URL = @"https://sbk.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/helpl_ist.jsp?locale=%@";    //도움말
 static NSString *SHINHAN_ZONE_URL   = @"https://vntst.shinhanglobal.com/sunny/bank/shinhanzone.jsp";    //신한존
-static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/jsp/callSunnyJsonTaskService.jsp";
+static NSString *API_URL            = @"https://online.shinhan.com.vn/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
 #endif
@@ -69,6 +69,14 @@ static NSString * const kUpdateY       = @"kUpdateY"; //업데이트 여부
 static NSString * const kForceMemberViewY       = @"kForceMemberViewY"; //member force view
 
 
+
+
+//korea
+static NSString *NOT_EXIT_ID_KO = @"계정정보가 존재하지 않습니다.";
+static NSString *CHANGE_MAIL_KO = @"이메일 변경이 완료 되었습니다.";
+//vi
+static NSString *NOT_EXIT_ID_VI = @"Thông tin tài khoản này không tồn tại";
+static NSString *CHANGE_MAIL_VI = @"Hoàn tất thay đổi email";
 
 
 //korea
@@ -260,6 +268,13 @@ static NSString *NEW_VER_VI     = @"Phiên bản cập nhật";
 static NSString *LAST_VER_VI     = @"Cập nhật các phiên bản mới nhất";
 static NSString *LAST_VER_UP_VI     = @"Cập nhật các phiên bản mới nhất";
 static NSString *SUNNY_DES_VI     = @"Sunny Club được thiết kế với nội dung đa dạng theo từng chủ đề..";
+
+//korea
+static NSString* NEED_AGREE_KO = @"이용약관에 동의해 주세요.";
+static NSString* NEED_ID_CHECK_KO = @"ID 중복 확인을 해주세요.";
+//vi
+static NSString* NEED_AGREE_VI = @"Xin hãy đồng ý điều khoản sử dụng";
+static NSString* NEED_ID_CHECK_VI = @"Xin vui lòng kiểm tra trùng lặp ID.";
 
 //korea
 static NSString *SETINFO_TITLE_KO    = @"정보입력";
