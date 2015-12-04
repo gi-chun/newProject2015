@@ -667,13 +667,6 @@
         showNavigation = 3;
         gShowNavigation = 3;
         [self initNavigation:3];
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/set/helpl_ist.jsp?"].location == NSNotFound)){
-        //TODO
-        NSLog(@"문자열이 포함됨");
-        [self.navigationController setNavigationBarHidden:NO];
-        showNavigation = 3;
-        gShowNavigation = 3;
-        [self initNavigation:3];
     }else{
         
         //sunny없는 URL은 외부 사파리 호출
@@ -688,10 +681,11 @@
             [self initNavigation:4];
         }
     }
+    
 #else
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"online.shinhan.com.vin/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -699,14 +693,7 @@
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vin/sunny/bank/main.jsp?"].location == NSNotFound)){
-        //TODO
-        NSLog(@"문자열이 포함됨");
-        [self.navigationController setNavigationBarHidden:NO];
-        showNavigation = 3;
-        gShowNavigation = 3;
-        [self initNavigation:3];
-    }else if (!([url rangeOfString:@"online.shinhan.com.vin/sunny/set/helpl_ist.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -915,7 +902,8 @@
 //    [alert show];
     //new
     //광고 열기
-    [self didTouchAD];
+    //[self didTouchAD];
+    [self didTouchMainAD];
 }
 
 - (void)didTouchSnapshotPopOverButton:(UIButton *)button buttonInfo:(NSDictionary *)buttonInfo
@@ -1603,6 +1591,41 @@
     
     [self openWebView:callUrl mutableRequest:mutableRequest];
 }
+
+- (void)didTouchMainAD
+{
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+    //    [alert show];
+    
+    NSString* gLocalLang = @"";
+    NSString *callUrl = @"";
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    
+    //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+    callUrl = SHINHAN_EVENT_URL;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+}
+
 
 - (void)resetADImage{
     
