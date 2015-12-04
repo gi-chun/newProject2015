@@ -322,6 +322,7 @@
     strParma = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     [indiv_infoDic setObject:strParma forKey:@"lang_c"];
     [indiv_infoDic setObject:@"" forKey:@"push_tmn_refno"]; //APNS
+    
     strParma = ([[NSUserDefaults standardUserDefaults] stringForKey:kPushY])?[[NSUserDefaults standardUserDefaults] stringForKey:kPushY]:@"N";
     [indiv_infoDic setObject:@"N" forKey:@"push_rec_yn"];
     

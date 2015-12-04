@@ -176,134 +176,134 @@
         [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
     }
     
-//    ////////////////////////////////
-//    // 버전정보
-//    NSString* strVerion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-//    NSString* strBundle = [[NSBundle mainBundle]bundleIdentifier];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:strVerion forKey:kCurrentVersion];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//    
-//    [[Codeguard sharedInstance]setAppName:strBundle];
-//    [[Codeguard sharedInstance]setAppVer:strVerion];
-//    
-//    NSString *serverURL=nil;
-//    
-//    serverURL = CODEGUARD_SERVER_URL;
-//    
-//    [[Codeguard sharedInstance]setChallengeRequestUrl:[NSString stringWithFormat:@"%@/CodeGuard/check.jsp", serverURL]];
-//    [[Codeguard sharedInstance]setEtcData:@"버전업데이트및공지"];
-//    [[Codeguard sharedInstance]setTimeOut:60.0f];
-//    NSString* token=[[Codeguard sharedInstance]requestAndGetToken];
-//    
-//    token = [token stringByAddingPercentEscapesUsingEncoding:-2147482590];
-//    token = [token stringByReplacingOccurrencesOfString:@"=" withString:@"%3D"];
-//    token = [token stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-//    token = [token stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-//    
-//    NSLog(@"token : %@", token);
-// 
-//    // 버전정보
-//    NSMutableString *XMLString = [[NSMutableString alloc] init];
-//    [XMLString appendString:@"plainXML="];
-//    [XMLString appendString:@"<REQEUST task=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\">"];
-//    [XMLString appendString:@"<서비스구분 value=\"SUNNYCLUBVN\" />"];
-//    [XMLString appendString:@"<채널구분코드 value=\"92\" />\""];
-//    [XMLString appendString:@"<QORTLS value=\"V3\" />"];
-//    [XMLString appendString:@"<Client버전 value=\""];
-//    [XMLString appendString:strVerion];
-//    [XMLString appendString:@"\" />"];
-//    [XMLString appendString:@"<배경구분 value=\"\" />"];
-//    [XMLString appendString:@"<codeGuardName value=\"버전업데이트및공지\" />"];
-//    [XMLString appendString:@"<COM_SUBCHN_KBN value=\"92\" />"];
-//    [XMLString appendString:@"<VERSION value=\""];
-//    [XMLString appendString:strVerion];
-//    [XMLString appendString:@"\" />"];
-//    [XMLString appendString:@"</REQEUST>"];
-//    [XMLString appendString:@"&CODE_RESPONSE_TOKEN="];
-//    [XMLString appendString:token];
-//    //[XMLString appendString:@""];
-//    
-//    //XML 만들기
-//////    NSString *strXML = [NSString stringWithFormat:@"plainXML=<REQUEST task=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\"><채널구분코드 value=\"%@\"/><서비스구분 value=\"%@\"/><Client버젼 value=\"%@\"/><배경구분 value=\"%@\"/><VERSION value=\"%@\"/><COM_SUBCHN_KBN value=\"%@\"/></REQUEST>", @"92", @"SUNNYCLUBVN", strVerion, @"", strVerion, @"92"];
-//////    
-////    //전문조합
-////    NSString *postStr = [NSString stringWithFormat:@"%@&%@", strXML, token];
-////    NSLog(@"postStr:%@",postStr);
-//    
-//    NSData* postData = [XMLString dataUsingEncoding:-2147481280];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_VERSION_INOF_URL]];
-//    [request setHTTPBody:postData];
-//    [request setHTTPMethod:@"POST"];
-//    
-//    NSURLResponse *resp = nil;
-//    NSError *error = nil;
-//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
-//    
-//    //<errorCode value="1999" 종료처리
-//    //정식승인된 앱이 아닙니다
-//    //앱버전정보
-//    //현재 버전정보 --
-//    //다운받는 URI
-//    
-//    //강제업뎅트
-//    //강제업데이트
-//    //업데이트 있느닞?
-//    
-//    NSString *rtnStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSLog(@"return lowdata:%@",rtnStr);
-//    
-//    //////////////////////////////////////////////
-//    NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLString:rtnStr];
-//    NSLog(@"dictionary: %@", xmlDoc);
-//    
-//    //1999 에러처리
-//     NSDictionary *subDoc = xmlDoc[@"errorCode"];
-//    NSString* strTemp = subDoc[@"_value"];
-//    //* k
-//    if([strTemp isEqualToString:@"1999"]){
-//        
-//        if([temp isEqualToString:@"ko"]){
-//            strDesc = NOT_NOMAL_APP_KO;
-//        }else if([temp isEqualToString:@"vi"]){
-//            strDesc = NOT_NOMAL_APP_VI;
-//        }
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-//        [alert show];
-//        
-//        //잠시 죽이는것 주석
-//        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
-//    }
-//    
-//    //최신버전 -
-//    subDoc = xmlDoc[@"최신버전"];
-//    strTemp = subDoc[@"_value"];
-//    //strTemp = @"1.0.1";
-//    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateVersion];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//    
-//    //업데이트 URI
-//    subDoc = xmlDoc[@"최신신버전_URL"];
-//    strTemp = subDoc[@"_value"];
-//    
-//    NSString* strLastVersionUrl = strTemp;
-//    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateUri];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//    
-//    //업데이트 ---
-//    //강제업데이트  ---
-//    subDoc = xmlDoc[@"강제업데이트여부"];
-//    strTemp = subDoc[@"_value"];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kForceUpdateY];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//    
-//    if([strTemp isEqualToString:@"Y"]){
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strLastVersionUrl]];
-//    }
-//    
-//    /////////////////////////////////////////////
+    ////////////////////////////////
+    // 버전정보
+    NSString* strVerion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString* strBundle = [[NSBundle mainBundle]bundleIdentifier];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:strVerion forKey:kCurrentVersion];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[Codeguard sharedInstance]setAppName:strBundle];
+    [[Codeguard sharedInstance]setAppVer:strVerion];
+    
+    NSString *serverURL=nil;
+    
+    serverURL = CODEGUARD_SERVER_URL;
+    
+    [[Codeguard sharedInstance]setChallengeRequestUrl:[NSString stringWithFormat:@"%@/CodeGuard/check.jsp", serverURL]];
+    [[Codeguard sharedInstance]setEtcData:@"버전업데이트및공지"];
+    [[Codeguard sharedInstance]setTimeOut:60.0f];
+    NSString* token=[[Codeguard sharedInstance]requestAndGetToken];
+    
+    token = [token stringByAddingPercentEscapesUsingEncoding:-2147482590];
+    token = [token stringByReplacingOccurrencesOfString:@"=" withString:@"%3D"];
+    token = [token stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+    token = [token stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    
+    NSLog(@"token : %@", token);
+ 
+    // 버전정보
+    NSMutableString *XMLString = [[NSMutableString alloc] init];
+    [XMLString appendString:@"plainXML="];
+    [XMLString appendString:@"<REQEUST task=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\">"];
+    [XMLString appendString:@"<서비스구분 value=\"SUNNYCLUBVN\" />"];
+    [XMLString appendString:@"<채널구분코드 value=\"92\" />\""];
+    [XMLString appendString:@"<QORTLS value=\"V3\" />"];
+    [XMLString appendString:@"<Client버전 value=\""];
+    [XMLString appendString:strVerion];
+    [XMLString appendString:@"\" />"];
+    [XMLString appendString:@"<배경구분 value=\"\" />"];
+    [XMLString appendString:@"<codeGuardName value=\"버전업데이트및공지\" />"];
+    [XMLString appendString:@"<COM_SUBCHN_KBN value=\"92\" />"];
+    [XMLString appendString:@"<VERSION value=\""];
+    [XMLString appendString:strVerion];
+    [XMLString appendString:@"\" />"];
+    [XMLString appendString:@"</REQEUST>"];
+    [XMLString appendString:@"&CODE_RESPONSE_TOKEN="];
+    [XMLString appendString:token];
+    //[XMLString appendString:@""];
+    
+    //XML 만들기
+////    NSString *strXML = [NSString stringWithFormat:@"plainXML=<REQUEST task=\"sfg.sphone.task.sbank.Sbank_info\" action=\"doStart\"><채널구분코드 value=\"%@\"/><서비스구분 value=\"%@\"/><Client버젼 value=\"%@\"/><배경구분 value=\"%@\"/><VERSION value=\"%@\"/><COM_SUBCHN_KBN value=\"%@\"/></REQUEST>", @"92", @"SUNNYCLUBVN", strVerion, @"", strVerion, @"92"];
+////    
+//    //전문조합
+//    NSString *postStr = [NSString stringWithFormat:@"%@&%@", strXML, token];
+//    NSLog(@"postStr:%@",postStr);
+    
+    NSData* postData = [XMLString dataUsingEncoding:-2147481280];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_VERSION_INOF_URL]];
+    [request setHTTPBody:postData];
+    [request setHTTPMethod:@"POST"];
+    
+    NSURLResponse *resp = nil;
+    NSError *error = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
+    
+    //<errorCode value="1999" 종료처리
+    //정식승인된 앱이 아닙니다
+    //앱버전정보
+    //현재 버전정보 --
+    //다운받는 URI
+    
+    //강제업뎅트
+    //강제업데이트
+    //업데이트 있느닞?
+    
+    NSString *rtnStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"return lowdata:%@",rtnStr);
+    
+    //////////////////////////////////////////////
+    NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLString:rtnStr];
+    NSLog(@"dictionary: %@", xmlDoc);
+    
+    //1999 에러처리
+     NSDictionary *subDoc = xmlDoc[@"errorCode"];
+    NSString* strTemp = subDoc[@"_value"];
+    //* k
+    if([strTemp isEqualToString:@"1999"]){
+        
+        if([temp isEqualToString:@"ko"]){
+            strDesc = NOT_NOMAL_APP_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            strDesc = NOT_NOMAL_APP_VI;
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [alert show];
+        
+        //잠시 죽이는것 주석
+        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+    }
+    
+    //최신버전 -
+    subDoc = xmlDoc[@"최신버전"];
+    strTemp = subDoc[@"_value"];
+    //strTemp = @"1.0.1";
+    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateVersion];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //업데이트 URI
+    subDoc = xmlDoc[@"최신신버전_URL"];
+    strTemp = subDoc[@"_value"];
+    
+    NSString* strLastVersionUrl = strTemp;
+    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kUpdateUri];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //업데이트 ---
+    //강제업데이트  ---
+    subDoc = xmlDoc[@"강제업데이트여부"];
+    strTemp = subDoc[@"_value"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:strTemp forKey:kForceUpdateY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if([strTemp isEqualToString:@"Y"]){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strLastVersionUrl]];
+    }
+    
+    /////////////////////////////////////////////
 
     ////////////////////////////////////////////////
     //KTB 프록시 체크

@@ -822,6 +822,12 @@
 
 - (void)removeContents
 {
+    
+    if(labelCardNumber){
+        [labelCardNumber removeFromSuperview];
+        labelCardNumber = nil;
+    }
+    
     if(labelMenu){
         [labelMenu removeFromSuperview];
         labelMenu = nil;
@@ -831,6 +837,12 @@
         [labelMailId removeFromSuperview];
         labelMailId = nil;
     }
+    
+    if(labelId){
+        [labelId removeFromSuperview];
+        labelId = nil;
+    }
+    
     if(cardImageView){
         [cardImageView removeFromSuperview];
         cardImageView = nil;
@@ -842,6 +854,10 @@
     if(loginButton){
         [loginButton removeFromSuperview];
         loginButton = nil;
+    }
+    if(logoutButton){
+        [logoutButton removeFromSuperview];
+        logoutButton = nil;
     }
 }
 
