@@ -64,7 +64,7 @@
     myPickerViewController *myPickerController = [[myPickerViewController alloc] init];
     [myPickerController setDelegate:self];
     
-    [myPickerController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    //[myPickerController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:myPickerController animated:YES completion:nil];
     
 }
@@ -79,11 +79,11 @@
 - (IBAction)tutoBtn:(id)sender {
     
     if ([_tutoBtn isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kTutoY];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }else{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kTutoY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }
@@ -192,6 +192,12 @@
     if(isLogin == YES){
         _emailLabel.text = [[NSUserDefaults standardUserDefaults] stringForKey:kEmail];
     }
+    
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+    if(isTuto == NO){
+        [_tutoBtn setOn:true];
+    }
+    
     // Do any additional setup after loading the view from its nib.
 //    self.
 //    for (UIView *subView in self.view) {
@@ -359,9 +365,9 @@
     [_L_TUTO_KO setText:TUTO_KO];
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
     if(isTuto == YES){
-        [_tutoBtn setOn:true];
-    }else{
         [_tutoBtn setOn:false];
+    }else{
+        [_tutoBtn setOn:true];
     }
     
     [_L_NEW setText:NEWS_KO];
@@ -442,9 +448,9 @@
     [_L_TUTO_KO setText:TUTO_VI];
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
     if(isTuto == YES){
-        [_tutoBtn setOn:true];
-    }else{
         [_tutoBtn setOn:false];
+    }else{
+        [_tutoBtn setOn:true];
     }
     
     [_L_NEW setText:NEWS_VI];

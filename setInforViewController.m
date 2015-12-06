@@ -671,7 +671,7 @@
         datePickerViewController *myPickerController = [[datePickerViewController alloc] init];
         [myPickerController setDelegate:self];
         
-        [myPickerController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        //[myPickerController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
         [self presentViewController:myPickerController animated:YES completion:nil];
         
         return NO;

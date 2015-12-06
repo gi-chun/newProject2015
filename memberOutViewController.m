@@ -341,6 +341,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     
+    
     if (pwdTxt.text.length >= PWD_MAX_LENGTH && range.length == 0)
     {
         return NO; // return NO to not change text

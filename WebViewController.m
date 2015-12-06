@@ -186,6 +186,7 @@
             }
                                 
             if (cookieStringToSet.length) {
+                
                 [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
                 NSLog(@"Cookie : %@", cookieStringToSet);
             }
@@ -328,8 +329,10 @@
     BOOL isException = false;//중요 중요
     CGRect webViewFrame;
     
+
+NSInteger showNavigation = 1; //1: show, 2: hidden
     
-    NSInteger showNavigation = 1; //1: show, 2: hidden
+#ifdef TEST_SERVER_DEFINE
     if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
@@ -346,7 +349,24 @@
         gShowNavigation = 4;
         [self initNavigation:4];
     }
-
+#else
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+        //TODO
+        NSLog(@"문자열이 포함됨");
+        gShowNavigation = 0;
+        [self initNavigation:0];
+        
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
+        //TODO
+        NSLog(@"문자열이 포함됨");
+        gShowNavigation = 3;
+        [self initNavigation:3];
+    }else{
+        isException = true;
+        gShowNavigation = 4;
+        [self initNavigation:4];
+    }
+#endif
     
     //[self.webView stop];
     
@@ -1431,6 +1451,20 @@
         callUrl = [NSString stringWithFormat:NEW_NEWS_URL, gLocalLang];
     }
     
+    //setting
+    if(menuType == 4){
+        
+        [self.mm_drawerController closeDrawerAnimated:true completion:nil];
+        
+        configViewController *configController = [[configViewController alloc] init];
+        [configController setDelegate:self];
+        [self.navigationController pushViewController:configController animated:YES];
+        [self.navigationController setNavigationBarHidden:NO];
+        
+        return;
+        
+    }
+    
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
     
@@ -1449,17 +1483,7 @@
     
     [self openWebView:callUrl mutableRequest:mutableRequest];
     
-    //setting
-    if(menuType == 4){
-        
-        [self.mm_drawerController closeDrawerAnimated:true completion:nil];
-        
-        configViewController *configController = [[configViewController alloc] init];
-        [configController setDelegate:self];
-        [self.navigationController pushViewController:configController animated:YES];
-        [self.navigationController setNavigationBarHidden:NO];
-        
-    }
+    
 }
 
 - (void)didTouchNewButton

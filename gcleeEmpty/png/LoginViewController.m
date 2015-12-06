@@ -788,12 +788,17 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (txtPwd.text.length >= PWD_MAX_LENGTH && range.length == 0)
-    {
-        return NO; // return NO to not change text
+    
+    if(textField.tag == 1){
+        if (textField.text.length >= PWD_MAX_LENGTH && range.length == 0)
+        {
+            return NO; // return NO to not change text
+        }
+        
+    }else{
+        return YES;
     }
-    else
-    {return YES;}
+    return  YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

@@ -22,6 +22,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+    }
+    
     UIDatePicker *picker = _dataPickerMe;
     
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
