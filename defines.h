@@ -14,9 +14,20 @@
 //NSString *url = @"https://vntst.shinhanglobal.com/sunny/faq_test.jsp";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 //#define TEST_SERVER_DEFINE
 
+
+
 #ifdef TEST_SERVER_DEFINE
+
+#ifdef DEBUG
+#define NSLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define NSLog( s, ... )
+#endif
+
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
@@ -30,6 +41,13 @@ static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/js
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
 #else     //REAL SERVER
+
+#ifdef DEBUG
+#define NSLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define NSLog( s, ... )
+#endif
+
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://sbk.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";

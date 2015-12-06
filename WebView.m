@@ -351,6 +351,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     
+    [self.webView setHidden:false];
+    
     netTimeOutSecond = NET_TIME_OUT;
     [self startNetCheckTimer];
     
