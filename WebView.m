@@ -43,9 +43,13 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 	
 	//푸쉬 알림 거부
 	UIView *_refusedPushAgreeView;
+    
 	NSInteger _requestType;
     
     NSString *reloadUrl;
+    NSTimer         *netCheckTimer;
+    NSInteger               netTimeOutSecond;
+    UIView *checkNetTimoutView;
 }
 
 @end
@@ -346,6 +350,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    
+    netTimeOutSecond = NET_TIME_OUT;
+    [self startNetCheckTimer];
+    
     NSString *url = request ? request.URL.absoluteString : nil;
 //    NSLog(@"shouldStartLoadWithRequest %@", url);
     
@@ -502,6 +510,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self stopLoadingAnimation];
+    [self stopNetCheckTimer];
+    
     
     NSString *url = aWebView.request.URL.absoluteString;
 //    NSLog(@"webViewDidFinishLoad:%@", url);
@@ -678,6 +688,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (void)goBack
 {
+//    [self.webView stopLoading];
+//    [self.webView reload];
+    
+    
     if ([self.webView canGoBack]) {
         [self.webView goBack];
     }
@@ -1206,6 +1220,136 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [toolBarView redrawADImage];
     
 }
+
+- (void)initNetCheckView
+{
+    
+    [self.webView setHidden:YES];
+
+    
+    CGRect viewFrame = [self frame];
+    
+    if(checkNetTimoutView)
+    {
+        [checkNetTimoutView removeFromSuperview];
+    }
+    
+    checkNetTimoutView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height)];
+    [self addSubview:checkNetTimoutView];
+    
+//    UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
+//    bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
+//    [checkNetTimoutView addSubview:bgView];
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewFrame.size.width/4,viewFrame.size.height/3 , viewFrame.size.width/4*3, viewFrame.size.height/3)];
+    NSString* temp;
+    NSString* labelText;
+    NSString* btnText;
+    
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        labelText = NET_WORK_CHECK_KO;
+        btnText = NET_WORK_RELOAD_KO;
+    }else{
+        labelText = NET_WORK_CHECK_VI;
+        btnText = NET_WORK_RELOAD_VI;
+    }
+    textLabel.text = labelText;
+    textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    textLabel.numberOfLines = 0;
+    textLabel.backgroundColor = [UIColor clearColor];
+    textLabel.textColor = UIColorFromRGB(0x000000);
+    textLabel.font = [UIFont systemFontOfSize:15.f];
+    textLabel.textAlignment = NSTextAlignmentLeft;
+    [checkNetTimoutView addSubview:textLabel];
+    
+    UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*3, 50)];
+    
+    btnLabel.text = btnText;
+    btnLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    btnLabel.numberOfLines = 0;
+    btnLabel.backgroundColor = [UIColor clearColor];
+    btnLabel.textColor = UIColorFromRGB(0x000000);
+    btnLabel.font = [UIFont systemFontOfSize:15.f];
+    btnLabel.textAlignment = NSTextAlignmentLeft;
+    [checkNetTimoutView addSubview:btnLabel];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*3, 50);
+    [btn setBackgroundColor:[UIColor clearColor]];
+    [btn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(0xf68a13) size:btn.frame.size] forState:UIControlStateHighlighted];
+    [btn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(0xf68a1e) size:btn.frame.size] forState:UIControlStateNormal];
+    //[btn setTitle:btnText forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(onClickReloadButton) forControlEvents:UIControlEventTouchUpInside];
+    [checkNetTimoutView addSubview:btn];
+    
+    [checkNetTimoutView setHidden:NO];
+    [checkNetTimoutView setAlpha:1.f];
+}
+
+- (void)onClickReloadButton{
+    
+    [self.webView setHidden:NO];
+    [self.webView reload];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self startLoadingAnimation];
+    
+}
+
+- (void)startNetCheckTimer    // 타이머 시작
+{
+    
+    if(checkNetTimoutView)
+        [checkNetTimoutView setHidden:YES];
+    
+    if (netCheckTimer) {
+        [netCheckTimer invalidate];
+        netCheckTimer = nil;
+    }
+    
+    //scheduledTimerWithTimeInterval:3
+    //timerWithTimeInterval:timerInterval
+    netCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTick) userInfo:nil repeats:YES];
+    
+    
+}
+
+- (void)stopNetCheckTimer    // 타이머 시작
+{
+    
+    if(checkNetTimoutView)
+        [checkNetTimoutView setHidden:YES];
+    
+    if (netCheckTimer) {
+        [netCheckTimer invalidate];
+        netCheckTimer = nil;
+    }
+    
+}
+
+
+- (void)onTick{
+    
+    NSLog(@"Tick...");
+    
+    if(netTimeOutSecond > 0){
+        netTimeOutSecond--;
+        NSLog(@"timer time %ld ", (long)netTimeOutSecond);
+        if(netTimeOutSecond == 0){
+            NSLog(@"web contents load 30 second Time Out ! ");
+            
+            [self.webView stopLoading];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [self stopLoadingAnimation];
+            
+            [self initNetCheckView];
+            
+            
+        }
+    }
+    
+}
+
 
 
 @end
