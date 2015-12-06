@@ -1263,23 +1263,16 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     textLabel.textAlignment = NSTextAlignmentLeft;
     [checkNetTimoutView addSubview:textLabel];
     
-    UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*3, 50)];
-    
-    btnLabel.text = btnText;
-    btnLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    btnLabel.numberOfLines = 0;
-    btnLabel.backgroundColor = [UIColor clearColor];
-    btnLabel.textColor = UIColorFromRGB(0x000000);
-    btnLabel.font = [UIFont systemFontOfSize:15.f];
-    btnLabel.textAlignment = NSTextAlignmentLeft;
-    [checkNetTimoutView addSubview:btnLabel];
-    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*3, 50);
-    [btn setBackgroundColor:[UIColor clearColor]];
-    [btn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(0xf68a13) size:btn.frame.size] forState:UIControlStateHighlighted];
-    [btn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(0xf68a1e) size:btn.frame.size] forState:UIControlStateNormal];
-    //[btn setTitle:btnText forState:UIControlStateNormal];
+    btn.frame = CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*2, 50);
+    //[btn setBackgroundColor:[UIColor clearColor]];
+    
+    [btn setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
+    [btn setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
+    [btn setTitle:btnText forState:UIControlStateNormal];
+    [btn setTitle:btnText forState:UIControlStateHighlighted];
+    [btn setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateHighlighted];
     [btn addTarget:self action:@selector(onClickReloadButton) forControlEvents:UIControlEventTouchUpInside];
     [checkNetTimoutView addSubview:btn];
     
@@ -1289,10 +1282,14 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (void)onClickReloadButton{
     
+    netTimeOutSecond = NET_TIME_OUT;
+    [self startNetCheckTimer];
     [self.webView setHidden:NO];
+    [checkNetTimoutView setHidden:YES];
     [self.webView reload];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self startLoadingAnimation];
+    
     
 }
 
@@ -1338,6 +1335,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         if(netTimeOutSecond == 0){
             NSLog(@"web contents load 30 second Time Out ! ");
             
+            [self stopNetCheckTimer];
             [self.webView stopLoading];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [self stopLoadingAnimation];

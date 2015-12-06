@@ -32,7 +32,7 @@
 #define    kAD_MarginH (kScreenBoundsWidth > 320 ? 10.0f : 10.0f)
 #define    kAD_MarginW (kScreenBoundsWidth > 320 ? 95.f : 40.0f)
 #define    kPopWindowMarginW 25.0f
-#define    NET_TIME_OUT 7
+#define    NET_TIME_OUT 15
 
 
 
