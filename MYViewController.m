@@ -162,9 +162,9 @@
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     if([temp isEqualToString:@"ko"]){
-        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01.png"];
+        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01.jpg"];
     }else{
-        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01_viet.png"];
+        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01_viet.jpg"];
     }
     
     
@@ -198,20 +198,20 @@
         //You can edit introduction view properties right from the delegate method!
         //If it is the first panel, change the color to green!
         if (panelIndex == 0) {
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:90.0f/255.0f green:175.0f/255.0f blue:113.0f/255.0f alpha:0.65]];
         }
         //If it is the second panel, change the color to blue!
         else if (panelIndex == 1){
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_02.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_02.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
         }
         else if (panelIndex == 2){
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_03.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_03.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
         }
         else if (panelIndex == 3){
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_04.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_04.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
         }
 
@@ -219,20 +219,20 @@
         //You can edit introduction view properties right from the delegate method!
         //If it is the first panel, change the color to green!
         if (panelIndex == 0) {
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01_viet.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_01_viet.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:90.0f/255.0f green:175.0f/255.0f blue:113.0f/255.0f alpha:0.65]];
         }
         //If it is the second panel, change the color to blue!
         else if (panelIndex == 1){
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_02_viet.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_02_viet.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
         }
         else if (panelIndex == 2){
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_03_viet.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_03_viet.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
         }
         else if (panelIndex == 3){
-            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_04_viet.png"];
+            introductionView.BackgroundImageView.image = [UIImage imageNamed:@"tuto_04_viet.jpg"];
             //        [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
         }
     }

@@ -258,20 +258,20 @@
      NSDictionary *subDoc = xmlDoc[@"errorCode"];
     NSString* strTemp = subDoc[@"_value"];
     //* k
-//    if([strTemp isEqualToString:@"1999"]){
-//        
-//        if([temp isEqualToString:@"ko"]){
-//            strDesc = NOT_NOMAL_APP_KO;
-//        }else if([temp isEqualToString:@"vi"]){
-//            strDesc = NOT_NOMAL_APP_VI;
-//        }
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-//        [alert show];
-//        
-//        //잠시 죽이는것 주석
-//        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
-//    }
+    if([strTemp isEqualToString:@"1999"]){
+        
+        if([temp isEqualToString:@"ko"]){
+            strDesc = NOT_NOMAL_APP_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            strDesc = NOT_NOMAL_APP_VI;
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [alert show];
+        
+        //잠시 죽이는것 주석
+        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+    }
     
     //최신버전 -
     subDoc = xmlDoc[@"최신버전"];
