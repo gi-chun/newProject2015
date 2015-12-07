@@ -437,6 +437,35 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    
+    amsLibrary *ams = [[amsLibrary alloc] init];
+    NSInteger result = [ams a3142:@"AHN_3379024345_TK"]; //AHN_3379024345_TK, 201 크면 안되면
+    NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
+    NSInteger roundedValue = round(interval);
+    
+    NSLog(@"Jailbreak Result : %ld" , (long)result);
+    NSLog(@"time interval  : %ld" , (long)roundedValue);
+    NSLog(@"checking Result : %ld" , (long)(result - roundedValue));
+    NSInteger lastResult = (result - roundedValue);
+    
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        strDesc = JAILBREAK_CHK_KO;
+    }else if([temp isEqualToString:@"vi"]){
+        strDesc = JAILBREAK_CHK_VI;
+    }
+    
+    if(lastResult > 200)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:strDesc delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [alert show];
+        [self performSelector:@selector(appShutdown) withObject:nil afterDelay:6];
+    }
+    
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

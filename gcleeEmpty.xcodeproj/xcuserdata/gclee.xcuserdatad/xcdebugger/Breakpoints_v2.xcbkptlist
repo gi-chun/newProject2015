@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/png/LoginViewController.m"
-            timestampString = "470876822.707746"
+            timestampString = "471161756.911414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
             landmarkName = "-loginBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/png/LoginViewController.m"
-            timestampString = "470876822.707746"
+            timestampString = "471161756.911414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "624"
-            endingLineNumber = "624"
+            startingLineNumber = "618"
+            endingLineNumber = "618"
             landmarkName = "-loginBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/png/LoginViewController.m"
-            timestampString = "470899244.366247"
+            timestampString = "471161756.911414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "-loginBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/png/LoginViewController.m"
-            timestampString = "470899534.397142"
+            timestampString = "471161756.911414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "520"
-            endingLineNumber = "520"
+            startingLineNumber = "514"
+            endingLineNumber = "514"
             landmarkName = "-loginBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -390,15 +390,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/png/LoginViewController.m"
-            timestampString = "470899537.032911"
+            timestampString = "471161756.911414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "527"
+            endingLineNumber = "527"
             landmarkName = "-loginBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -474,7 +474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/AppDelegate.m"
-            timestampString = "471070987.655889"
+            timestampString = "471163386.173772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "281"
@@ -490,7 +490,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/AppDelegate.m"
-            timestampString = "471070987.655889"
+            timestampString = "471163386.173772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "287"
@@ -506,7 +506,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "gcleeEmpty/AppDelegate.m"
-            timestampString = "471070987.655889"
+            timestampString = "471163386.173772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "296"
@@ -736,6 +736,38 @@
             startingLineNumber = "1336"
             endingLineNumber = "1336"
             landmarkName = "-onTick"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gcleeEmpty/png/LoginViewController.m"
+            timestampString = "471163917.001787"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "496"
+            endingLineNumber = "496"
+            landmarkName = "-loginBtnClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gcleeEmpty/png/LoginViewController.m"
+            timestampString = "471164166.503673"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "516"
+            endingLineNumber = "516"
+            landmarkName = "-loginBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

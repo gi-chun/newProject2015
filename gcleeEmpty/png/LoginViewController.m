@@ -191,9 +191,6 @@
     [rootDic setObject:@"S_SNYM2010" forKey:@"requestMessage"];
     [rootDic setObject:@"R_SNYM2010" forKey:@"responseMessage"];
     
-    //    [indiv_infoDic setObject:@"springgclee@gmail.com" forKey:@"email_id"];
-    //    [indiv_infoDic setObject:@"1111" forKey:@"pinno"];
-    
     [indiv_infoDic setObject:txtID.text forKey:@"email_id"];
     [indiv_infoDic setObject:txtPwd.text forKey:@"pinno"];
     
@@ -486,9 +483,6 @@
     [rootDic setObject:@"M2010N" forKey:@"serviceCode"];
     [rootDic setObject:@"S_SNYM2010" forKey:@"requestMessage"];
     [rootDic setObject:@"R_SNYM2010" forKey:@"responseMessage"];
-    
-//    [indiv_infoDic setObject:@"springgclee@gmail.com" forKey:@"email_id"];
-//    [indiv_infoDic setObject:@"1111" forKey:@"pinno"];
     
     [indiv_infoDic setObject:txtID.text forKey:@"email_id"];
     [indiv_infoDic setObject:txtPwd.text forKey:@"pinno"];
