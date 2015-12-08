@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define TEST_SERVER_DEFINE
+//#define TEST_SERVER_DEFINE
 
 
 
@@ -27,7 +27,7 @@
 #define NSLog( s, ... )
 #endif
 
-#define    SESSION_CONTINUE_SEND 20 //second
+#define    SESSION_CONTINUE_SEND 60 //second
 
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";

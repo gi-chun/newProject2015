@@ -10,6 +10,8 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "SBJson.h"
 #import "CPLoadingView.h"
+#import "WebViewController.h"
+#import "AppDelegate.h"
 
 
 @interface leftLoginView ()
@@ -493,6 +495,10 @@
             
             [self setDataAfterlogout];
             [self showContents];
+            
+            //web view refresh
+             WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
+            [homeViewController webViewReload];
             
              [logoutButton setEnabled:true];
             

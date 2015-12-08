@@ -1657,4 +1657,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
 }
 
+- (void)webViewReload{
+    [self.webView reload];
+}
+
 @end

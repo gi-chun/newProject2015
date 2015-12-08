@@ -29,6 +29,8 @@ typedef enum {
 - (id)initWithRequest:(NSURLRequest *)request;
 - (void)setUrl:(NSString *)url;
 - (void)resetADImage;
+- (void)webViewReload;
+
 
 @end
 
