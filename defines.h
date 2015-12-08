@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#define TEST_SERVER_DEFINE
+#define TEST_SERVER_DEFINE
 
 
 
@@ -26,6 +26,8 @@
 #else
 #define NSLog( s, ... )
 #endif
+
+#define    SESSION_CONTINUE_SEND 20 //second
 
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
@@ -46,6 +48,8 @@ static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 #else
 #define NSLog( s, ... )
 #endif
+
+#define    SESSION_CONTINUE_SEND 60*9 //second - 9 minutes
 
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
@@ -242,11 +246,11 @@ static NSString *LOGIN_VI     = @"Đăng nhập";
 static NSString *LOGIN_ID_VI     = @"ID";
 static NSString *LOGIN_PWD_VI     = @"mật khẩu";
 static NSString *LOGIN_AUTO_VI     = @"Tự động đăng nhập";
-static NSString *LOGIN_ID_FIND_VI     = @"ID của bạn";
-static NSString *LOGIN_PWD_FIND_VI     = @"Tìm mật khẩu của bạn";
+static NSString *LOGIN_ID_FIND_VI     = @"Tìm ID";
+static NSString *LOGIN_PWD_FIND_VI     = @"Tìm mật khẩu";
 static NSString *LOGIN_BTN_VI     = @"Đăng nhập";
 static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên? Hãy đăng nhập và sử dụng dịch vụ của chúng tôi.";
-static NSString *LOGIN_SUMMIT_VI     = @"Đăng ký";
+static NSString *LOGIN_SUMMIT_VI     = @"đăng ký thành viên";
 static NSString *EMAIL_CHECK_VI      = @"Đăng nhập ID  theo hình thức email.";
 static NSString *ID_CHECK_VI         = @"Xin vui lòng nhập ID";
 static NSString *PWD_CHECK_VI = @"Vui lòng nhập mật khẩu";
@@ -394,10 +398,10 @@ static NSString *SETINFO_AGREE_VI    = @"Đồng ý với điều khoản sử d
 static NSString *SETINFO_ID_VI    = @"ID";
 static NSString *SETINFO_NAME_VI    = @"Tên";
 static NSString *SETINFO_YEAR_VI    = @"Sinh nhật";
-static NSString *SETINFO_PWD_VI    = @"Nhập mật khẩu";
-static NSString *SETINFO_PWDCON_VI    = @"Kiểm tra mật khẩu mới	";
-static NSString *SETINFO_SUMMIT_VI    = @"Bạn chưa có tài khoản của trang web này?";
-static NSString *SETINFO_CONFIRM_VI    = @"Kiểm tra\n trùng lặp";
+static NSString *SETINFO_PWD_VI    = @"Mật khẩu";
+static NSString *SETINFO_PWDCON_VI    = @"Kiểm tra\nmật khẩu\nmới";
+static NSString *SETINFO_SUMMIT_VI    = @"Đăng ký";
+static NSString *SETINFO_CONFIRM_VI    = @"Kiểm tra\ntrùng lặp";
 
 //korea
 static NSString *ENABLE_EMAIL_ID_KO = @"사용 가능한 이메일입니다.";

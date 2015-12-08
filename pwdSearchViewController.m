@@ -15,6 +15,10 @@
 
 @interface pwdSearchViewController () <NavigationBarViewDelegate>
 {
+    
+    NSString *strYYYY;
+    NSString *strInitYYY;
+    
     NavigationBarView *navigationBarView;
     UITextField* currentEditingTextField;
     __weak IBOutlet UITextField *mailTxt;
@@ -72,7 +76,7 @@
             return;
         }
         
-        if([yyyymmddLabel.text isEqualToString:@"yyyymmdd"]){
+        if([yyyymmddLabel.text isEqualToString:strInitYYY]){
             
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
@@ -106,7 +110,7 @@
             return;
         }
         
-        if([yyyymmddLabel.text isEqualToString:@"yyyymmdd"]){
+        if([yyyymmddLabel.text isEqualToString:strInitYYY]){
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:BIRTH_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
@@ -160,7 +164,7 @@
     [rootDic setObject:@"S_SNYM2030" forKey:@"requestMessage"];
     [rootDic setObject:@"R_SNYM2030" forKey:@"responseMessage"];
     
-    [indiv_infoDic setObject:yyyymmddLabel.text forKey:@"birth"];
+    [indiv_infoDic setObject:strYYYY forKey:@"birth"];
     [indiv_infoDic setObject:nameTxt.text forKey:@"user_nm"];
     [indiv_infoDic setObject:mailTxt.text forKey:@"email_id"];
     
@@ -265,7 +269,8 @@
     //    [[NSUserDefaults standardUserDefaults] synchronize];
     UITextField* currentEditingTextField;
     
-    [yyyymmddLabel setText:[[NSUserDefaults standardUserDefaults] stringForKey:kYYYYMMDD]];
+    strYYYY = [[NSUserDefaults standardUserDefaults] stringForKey:kYYYYMMDD];
+    [yyyymmddLabel setText:[self returnYYYYValuePerLan:strYYYY]];
     
 }
 
@@ -424,8 +429,38 @@
     //    }
 }
 
+
+- (NSString*)returnYYYYValuePerLan:(NSString*)pParam{
+    
+    NSString *result = nil;
+    NSString* yyyy;
+    NSString* mm;
+    NSString* dd;
+    
+    NSRange range = {0,4};
+    yyyy = [pParam substringWithRange:range];
+    NSRange range_ = {4,2};
+    mm = [pParam substringWithRange:range_];
+    NSRange range__ = {6,2};
+    dd = [pParam substringWithRange:range__];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        result = [NSString stringWithFormat:@"%@년 %@월 %@일", yyyy, mm, dd];
+    }else{
+        result = [NSString stringWithFormat:@"%@day %@month %@year", dd, mm, yyyy];
+    }
+    
+    return result;
+}
+
 #pragma mark -initScreenView
 -(void)initScreenView_ko{
+    
+    strInitYYY = @" 년 월 일";
+    yyyymmddLabel.text = strInitYYY;
     
     [self resetNavigationBarView:1];
     
@@ -437,6 +472,9 @@
 }
 
 -(void)initScreenView_vi{
+    
+    strInitYYY = @" day month year";
+    yyyymmddLabel.text = strInitYYY;
     
     [self resetNavigationBarView:1];
     

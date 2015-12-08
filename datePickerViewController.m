@@ -99,12 +99,42 @@
     
     NSLog(@"%@",[NSString stringWithFormat:@"%@",[df stringFromDate:picker.date]]);
     
-    [_dayLable setText:date];
+    NSString* strDate = nil;
+    strDate = [self returnYYYYValuePerLan:date];
+    
+    [_dayLable setText:strDate];
     
     [[NSUserDefaults standardUserDefaults] setObject:date forKey:kYYYYMMDD];
     
     
 }
+
+- (NSString*)returnYYYYValuePerLan:(NSString*)pParam{
+    
+    NSString *result = nil;
+    NSString* yyyy;
+    NSString* mm;
+    NSString* dd;
+    
+    NSRange range = {0,4};
+    yyyy = [pParam substringWithRange:range];
+    NSRange range_ = {4,2};
+    mm = [pParam substringWithRange:range_];
+    NSRange range__ = {6,2};
+    dd = [pParam substringWithRange:range__];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        result = [NSString stringWithFormat:@"%@년 %@월 %@일", yyyy, mm, dd];
+    }else{
+        result = [NSString stringWithFormat:@"%@day %@month %@year", dd, mm, yyyy];
+    }
+    
+    return result;
+}
+
 
 /*
 #pragma mark - Navigation

@@ -19,6 +19,8 @@
     
     
     NavigationBarView *navigationBarView;
+    NSString *strYYYY;
+    NSString *strInitYYY;
    
     UITextField* currentEditingTextField;
      __weak IBOutlet UITextField *idTxt;
@@ -37,8 +39,35 @@
 //    [[NSUserDefaults standardUserDefaults] synchronize];
     UITextField* currentEditingTextField;
    
-    [yyyyLabel setText:[[NSUserDefaults standardUserDefaults] stringForKey:kYYYYMMDD]];
+    strYYYY = [[NSUserDefaults standardUserDefaults] stringForKey:kYYYYMMDD];
+    [yyyyLabel setText:[self returnYYYYValuePerLan:strYYYY]];
 
+}
+
+- (NSString*)returnYYYYValuePerLan:(NSString*)pParam{
+    
+    NSString *result = nil;
+    NSString* yyyy;
+    NSString* mm;
+    NSString* dd;
+    
+    NSRange range = {0,4};
+    yyyy = [pParam substringWithRange:range];
+    NSRange range_ = {4,2};
+    mm = [pParam substringWithRange:range_];
+    NSRange range__ = {6,2};
+    dd = [pParam substringWithRange:range__];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        result = [NSString stringWithFormat:@"%@년 %@월 %@일", yyyy, mm, dd];
+    }else{
+        result = [NSString stringWithFormat:@"%@day %@month %@year", dd, mm, yyyy];
+    }
+    
+    return result;
 }
 
 - (IBAction)dayButtonClick:(id)sender {
@@ -71,7 +100,7 @@
         return;
     }
     
-    if([yyyyLabel.text isEqualToString:@"yyyymmdd"]){
+    if([yyyyLabel.text isEqualToString:strInitYYY]){
         
         NSString* temp;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -143,7 +172,7 @@
     [rootDic setObject:@"" forKey:@"requestMessage"];
     [rootDic setObject:@"" forKey:@"responseMessage"];
     
-    [indiv_infoDic setObject:yyyyLabel.text forKey:@"birth"];
+    [indiv_infoDic setObject:strYYYY forKey:@"birth"];
     [indiv_infoDic setObject:idTxt.text forKey:@"user_nm"];
     
     [sendDic setObject:rootDic forKey:@"root_info"];
@@ -421,6 +450,8 @@
 #pragma mark -initScreenView
 -(void)initScreenView_ko{
     
+    strInitYYY = @" 년 월 일";
+    [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_KO];
     [label_yyyy setText:IDSEARCH_YYYY_KO];
@@ -430,6 +461,8 @@
 
 -(void)initScreenView_vi{
     
+    strInitYYY = @" day monty year";
+    [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_VI];
     [label_yyyy setText:IDSEARCH_YYYY_VI];

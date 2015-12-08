@@ -19,6 +19,8 @@
 
 @interface setInforViewController () <NavigationBarViewDelegate>
 {
+    NSString *strYYYY;
+    
     NavigationBarView *navigationBarView;
     UIView *yourDatePickerView;
     
@@ -65,6 +67,33 @@
     [loadingView stopAnimation];
     [loadingView removeFromSuperview];
 }
+
+- (NSString*)returnYYYYValuePerLan:(NSString*)pParam{
+    
+    NSString *result = nil;
+    NSString* yyyy;
+    NSString* mm;
+    NSString* dd;
+    
+    NSRange range = {0,4};
+    yyyy = [pParam substringWithRange:range];
+    NSRange range_ = {4,2};
+    mm = [pParam substringWithRange:range_];
+    NSRange range__ = {6,2};
+    dd = [pParam substringWithRange:range__];
+    
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    if([temp isEqualToString:@"ko"]){
+        result = [NSString stringWithFormat:@"%@년 %@월 %@일", yyyy, mm, dd];
+    }else{
+        result = [NSString stringWithFormat:@"%@day %@month %@year", dd, mm, yyyy];
+    }
+    
+    return result;
+}
+
 
 - (IBAction)btnSummitClick:(id)sender {
     
@@ -309,7 +338,7 @@
     [indiv_infoDic setObject:pwdText.text forKey:@"pinno"];
     [indiv_infoDic setObject:nameText.text forKey:@"user_nm"];
     
-    NSString* strParma = [yearText.text stringByReplacingOccurrencesOfString:@"." withString:@""];
+    NSString* strParma = strYYYY;
     
     [indiv_infoDic setObject:strParma forKey:@"birth"];
     [indiv_infoDic setObject:@"I" forKey:@"os_d"]; // ios -> I
@@ -682,7 +711,8 @@
 
 - (void)didTouchPicker
 {
-    [yearText setText: [[NSUserDefaults standardUserDefaults] stringForKey:kYYYYMMDD]];
+    strYYYY = [[NSUserDefaults standardUserDefaults] stringForKey:kYYYYMMDD];
+    [yearText setText: [self returnYYYYValuePerLan:strYYYY ]];
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -958,7 +988,7 @@
     [labelPwdCheck setText:SETINFO_PWDCON_KO];
     [btnSummit setTitle:SETINFO_CONFIRM_KO forState:UIControlStateNormal];
     [confirmBtn setTitle:SETINFO_CONFIRM_KO forState:UIControlStateNormal];
-    [btnSummit setTitle:LOGIN_SUMMIT_KO forState:UIControlStateNormal];
+    [btnSummit setTitle:SETINFO_SUMMIT_KO forState:UIControlStateNormal];
     
 }
 
@@ -974,7 +1004,7 @@
     [labelPwdCheck setText:SETINFO_PWDCON_VI];
     [btnSummit setTitle:SETINFO_CONFIRM_VI forState:UIControlStateNormal];
     [confirmBtn setTitle:SETINFO_CONFIRM_VI forState:UIControlStateNormal];
-    [btnSummit setTitle:LOGIN_SUMMIT_VI forState:UIControlStateNormal];
+    [btnSummit setTitle:SETINFO_SUMMIT_VI forState:UIControlStateNormal];
 }
 
 
