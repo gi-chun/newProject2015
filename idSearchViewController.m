@@ -461,7 +461,7 @@
 
 -(void)initScreenView_vi{
     
-    strInitYYY = @" day monty year";
+    strInitYYY = @" day month year";
     [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_VI];
