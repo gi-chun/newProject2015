@@ -44,6 +44,7 @@
 @end
 
 @implementation configViewController
+
 - (IBAction)personalChange:(id)sender {
     
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
@@ -158,6 +159,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+//    NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:@"configViewController"
+//                                                    owner:self options:nil];
+//    Blah *blah;
+//    for (id object in bundle) {
+//        if ([object isKindOfClass:[Blah class]]) {
+//            blah = (Blah *)object;
+//            break;
+//        }
+//    }
+//    assert(blah != nil && "blah can't be nil");
+//    [self.view addSubview: blah];
+    
+    
     [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -257,6 +272,8 @@
         
 //    }
     
+    
+    /* last
     if(kScreenBoundsWidth > 400){
         [self.myScrollView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height+40)];
         [self.myScrollView setBounces:false];
@@ -267,6 +284,7 @@
         [self.myScrollView addSubview:self.contentView];
         self.myScrollView.contentSize = CGSizeMake(kScreenBoundsWidth-marginX, self.contentView.frame.size.height+marginY);
     }
+     */
     
     
     

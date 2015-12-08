@@ -329,10 +329,18 @@
 {
     currentEditingTextField = NULL;
 }
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+
+
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [self endEdit];
+//}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self endEdit];
+    
 }
+
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
