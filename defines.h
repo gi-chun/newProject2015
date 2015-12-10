@@ -158,7 +158,7 @@ static NSString *PERSON_MEMBER_LEVEL_VI     = @"Thứ hạng hội viên";
 static NSString *PERSON_NOMAL_VI      = @"Chung";
 
 //korea
-static NSString *LEFT_DES_KO     = @"로그인을 하시면 Sunny Club의 다양한 서비스를 이용하실 수 있습니다.";
+static NSString *LEFT_DES_KO     = @"로그인을 하시면 Sunny Club의 다양한\n서비스를 이용하실 수 있습니다.";
 static NSString *LEFT_LOGIN_KO     = @"로그인";
 static NSString *LEFT_LOGIN_NOTI_KO     = @"Event / 공지";
 static NSString *LEFT_CONFIG_KO     = @"설정";

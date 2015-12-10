@@ -1465,6 +1465,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         
     }
     
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
     

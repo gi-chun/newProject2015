@@ -28,8 +28,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    
     [self loadContentsView];
     
 //    ////////////////////////////////
@@ -174,10 +172,16 @@
     
     //[self.view setBackgroundColor:[UIColor blueColor]];
     
-    //150.0
-//    leftMenuView* menuView = [[leftMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth-150.0, kScreenBoundsHeight)];
+    leftMenuView* menuView = nil;
     
-    leftMenuView* menuView = [[leftMenuView alloc] initWithFrame:self.view.frame];
+    if(kScreenBoundsWidth > 400){
+        menuView = [[leftMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth-130.0, kScreenBoundsHeight)];
+    }else{
+        menuView = [[leftMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kScreenBoundsHeight)];
+    }
+    
+    //leftMenuView* menuView = [[leftMenuView alloc] initWithFrame:self.view.frame];
+    //leftMenuView* menuView = [[leftMenuView alloc] initWithFrame:self.view.bounds];
     [menuView setDelegate:self];
     [self.view addSubview:menuView];
     

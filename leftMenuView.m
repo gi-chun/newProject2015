@@ -115,13 +115,22 @@ const static CGFloat MENU_HEIGHT   =      45;
 //    }
     
     ////150
-    CGFloat meWidth = self.frame.size.width;
+    //CGFloat meWidth = self.frame.size.width;
+    CGFloat meWidth = self.bounds.size.width;
     CGFloat meHeight = self.frame.size.height;
     
     NSLog(@"left width %f", meWidth);
     NSLog(@"left heigth %f", meHeight);
     
-    CGFloat marginX = (kScreenBoundsWidth > 320)?60:0;
+    CGFloat marginX = 0.0f;
+    
+//    if(kScreenBoundsWidth > 400){
+//    
+//        marginX = 90;
+//        
+//    }else{
+//        marginX = (kScreenBoundsWidth > 320)?60:0;
+//    }
     
     //logoView
     logoView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, kScreenBoundsWidth, LOGO_HEIGHT)];
@@ -135,7 +144,7 @@ const static CGFloat MENU_HEIGHT   =      45;
     
     //close button
     UIButton* closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [closeBtn setFrame:CGRectMake(kScreenBoundsWidth - (70+marginX), 10, 15, 15)];
+    [closeBtn setFrame:CGRectMake(meWidth-(15+20), 15, 15, 15)];
     [closeBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"total_menu_close_btn.png"] forState:UIControlStateHighlighted];
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"total_menu_close_btn.png"] forState:UIControlStateNormal];

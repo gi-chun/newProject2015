@@ -794,8 +794,11 @@
             return NO; // return NO to not change text
         }
         
-    }else{
-        return YES;
+    }else if(textField.tag == 0){
+        if (textField.text.length >= PWD_MAX_LENGTH && range.length == 0)
+        {
+            return NO; // return NO to not change text
+        }
     }
     return  YES;
 }
