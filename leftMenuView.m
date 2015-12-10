@@ -117,6 +117,13 @@ const static CGFloat MENU_HEIGHT   =      45;
     ////150
     //CGFloat meWidth = self.frame.size.width;
     CGFloat meWidth = self.bounds.size.width;
+    CGFloat itemWidth = 0;
+    if( kScreenBoundsWidth == 320){
+        itemWidth = self.frame.size.width;
+    }else{
+        itemWidth = self.bounds.size.width;
+    }
+    
     CGFloat meHeight = self.frame.size.height;
     
     NSLog(@"left width %f", meWidth);
@@ -129,7 +136,7 @@ const static CGFloat MENU_HEIGHT   =      45;
         marginX = 20;
         
     }else{
-        marginX = (kScreenBoundsWidth > 320)?60:55;
+        marginX = (kScreenBoundsWidth > 320)?110:55;
     }
     
     //logoView
@@ -215,19 +222,19 @@ const static CGFloat MENU_HEIGHT   =      45;
         strImage = LEFT_CONFIG_KO;
     }
     
-    leftMenuItemView *menuItemView1 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginView.frame)+5, meWidth, MENU_HEIGHT) title:@"Sunny CLUB" viewType:1];
+    leftMenuItemView *menuItemView1 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginView.frame)+5, itemWidth, MENU_HEIGHT) title:@"Sunny CLUB" viewType:1];
     [self addSubview:menuItemView1];
     [menuItemView1 setDelegate:self];
     
-    leftMenuItemView *menuItemView2 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(menuItemView1.frame), meWidth, MENU_HEIGHT) title:@"Sunny BANK" viewType:2];
+    leftMenuItemView *menuItemView2 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(menuItemView1.frame), itemWidth, MENU_HEIGHT) title:@"Sunny BANK" viewType:2];
     [self addSubview:menuItemView2];
     [menuItemView2 setDelegate:self];
     
-    leftMenuItemView *menuItemView3 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(menuItemView2.frame), meWidth, MENU_HEIGHT) title:strNotiTitle viewType:3];
+    leftMenuItemView *menuItemView3 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(menuItemView2.frame), itemWidth, MENU_HEIGHT) title:strNotiTitle viewType:3];
     [self addSubview:menuItemView3];
     [menuItemView3 setDelegate:self];
     
-    leftMenuItemView *menuItemView4 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(menuItemView3.frame), meWidth, MENU_HEIGHT) title:strConfigTitle viewType:4];
+    leftMenuItemView *menuItemView4 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(menuItemView3.frame), itemWidth, MENU_HEIGHT) title:strConfigTitle viewType:4];
     [self addSubview:menuItemView4];
     [menuItemView4 setDelegate:self];
     

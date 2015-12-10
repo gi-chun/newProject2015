@@ -105,9 +105,9 @@
     NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
     NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
     
-    [rootDic setObject:TASK_USR forKey:@"task"];
-    [rootDic setObject:@"closeUser" forKey:@"action"];
-    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"task"];
+    [rootDic setObject:@"" forKey:@"action"];
+    [rootDic setObject:@"A7700U" forKey:@"serviceCode"];
     [rootDic setObject:@"" forKey:@"requestMessage"];
     [rootDic setObject:@"" forKey:@"responseMessage"];
     
@@ -353,11 +353,11 @@
     {
         return NO; // return NO to not change text
     }
-    else if(textField.text.length >= PWD_MAX_LENGTH && range.length == 0){
-        
-        return NO; // return NO to not change text
-    }
-    
+//    else if(textField.text.length >= PWD_MAX_LENGTH && range.length == 0){
+//        
+//        return NO; // return NO to not change text
+//    }
+//    
     return YES;
     
 }

@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#define TEST_SERVER_DEFINE
+#define TEST_SERVER_DEFINE
 
 
 
@@ -166,7 +166,7 @@ static NSString *LEFT_CONFIG_KO     = @"설정";
 static NSString *BOTTOM_BANNER_KO = @"bottom_banner.png";
 
 //vi
-static NSString *LEFT_DES_VI     = @"Vui lòng đăng nhập để sử dụng các dịch vụ của Sunny Club.";
+static NSString *LEFT_DES_VI     = @"Vui lòng đăng nhập để sử dụng\ncác dịch vụ của Sunny Club.";
 static NSString *LEFT_LOGIN_VI     = @"Đăng nhập";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
@@ -224,7 +224,7 @@ static NSString *LOGIN_AUTO_KO     = @"자동로그인";
 static NSString *LOGIN_ID_FIND_KO     = @"아이디 찾기";
 static NSString *LOGIN_PWD_FIND_KO     = @"비밀번호 찾기";
 static NSString *LOGIN_BTN_KO     = @"로그인";
-static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요? 지금 가입하고 다양한 서비스를 자유롭게 이용하세요.";
+static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요?\n지금 가입하고 다양한\n서비스를 자유롭게\n이용하세요.";
 static NSString *LOGIN_SUMMIT_KO     = @"회원가입";
 static NSString *EMAIL_CHECK_KO      = @"이메일 형식의 아이디를 입력하세요.";
 static NSString *ID_CHECK_KO         = @"아이디를 입력하세요.";
@@ -249,7 +249,7 @@ static NSString *LOGIN_AUTO_VI     = @"Tự động đăng nhập";
 static NSString *LOGIN_ID_FIND_VI     = @"Tìm ID";
 static NSString *LOGIN_PWD_FIND_VI     = @"Tìm mật khẩu";
 static NSString *LOGIN_BTN_VI     = @"Đăng nhập";
-static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên? Hãy đăng nhập và sử dụng dịch vụ của chúng tôi.";
+static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên?\nHãy đăng nhập\nvà sử dụng dịch vụ\ncủa chúng tôi.";
 static NSString *LOGIN_SUMMIT_VI     = @"đăng ký thành viên";
 static NSString *EMAIL_CHECK_VI      = @"Đăng nhập ID  theo hình thức email.";
 static NSString *ID_CHECK_VI         = @"Xin vui lòng nhập ID";
@@ -428,7 +428,9 @@ static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 
 
 #define PWD_MAX_LENGTH             4
-#define ID_MAX_LENGTH             30
+#define ID_MAX_LENGTH             50
+#define NAME_MAX_LENGTH           100
+
 
 
 #endif /* defines_h */

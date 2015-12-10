@@ -605,11 +605,10 @@
     
         }else{
             titleLabelMarginX = (kScreenBoundsWidth > 320)?10:0;
-    
-            loginBtnMarginX = (kScreenBoundsWidth > 320)?50:80;
+            loginBtnMarginX = (kScreenBoundsWidth > 320)?140:80;
             labelMarginX = (kScreenBoundsWidth > 320)?2:0;
-            logoutMarginX = (kScreenBoundsWidth > 320)?60:50;
-            cardMarginX = (kScreenBoundsWidth > 320)?0:20;
+            logoutMarginX = (kScreenBoundsWidth > 320)?100:50;
+            cardMarginX = (kScreenBoundsWidth > 320)?40:20;
             
         }
 
