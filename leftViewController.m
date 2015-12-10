@@ -143,11 +143,11 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kYYYYMMDD];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kCurrentVersion];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUpdateVersion];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kCurrentVersion];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUpdateVersion];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kTutoY];
     [[NSUserDefaults standardUserDefaults] synchronize];

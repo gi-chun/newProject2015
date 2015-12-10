@@ -333,11 +333,11 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kYYYYMMDD];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kCurrentVersion];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUpdateVersion];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kCurrentVersion];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUpdateVersion];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kTutoY];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -496,9 +496,11 @@
             [self setDataAfterlogout];
             [self showContents];
             
+            
             //web view refresh
              WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
             [homeViewController webViewReload];
+            [homeViewController.navigationController popToRootViewControllerAnimated:YES];
             
              [logoutButton setEnabled:true];
             
@@ -575,6 +577,7 @@
     CGFloat loginBtnMarginX = 0.f;
     CGFloat labelMarginX = 0.f;
     CGFloat logoutMarginX = 0.f;
+    CGFloat cardMarginX = 0.f;
     
 //    if(kScreenBoundsWidth > 400){
 //        titleLabelMarginX = 80;
@@ -591,6 +594,25 @@
 //        logoutMarginX = (kScreenBoundsWidth > 320)?60:0;
 //        
 //    }
+    
+        if(kScreenBoundsWidth > 400){
+            titleLabelMarginX = 80;
+    
+            loginBtnMarginX = 40;
+            labelMarginX = 2;
+            logoutMarginX =10;
+            cardMarginX = 0;
+    
+        }else{
+            titleLabelMarginX = (kScreenBoundsWidth > 320)?10:0;
+    
+            loginBtnMarginX = (kScreenBoundsWidth > 320)?50:80;
+            labelMarginX = (kScreenBoundsWidth > 320)?2:0;
+            logoutMarginX = (kScreenBoundsWidth > 320)?60:50;
+            cardMarginX = (kScreenBoundsWidth > 320)?0:20;
+            
+        }
+
     
     //label
     // 100, 26
@@ -618,7 +640,7 @@
     
     //login button
     loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginButton setFrame:CGRectMake(20, CGRectGetMaxY(labelMenu.frame)+20, meWidth-40, 50)];
+    [loginButton setFrame:CGRectMake(20, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
     [loginButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
@@ -672,7 +694,7 @@
     
     //logout button
     logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [logoutButton setFrame:CGRectMake(meWidth - (30+10), 5, 30, 30)];
+    [logoutButton setFrame:CGRectMake(meWidth - (30+logoutMarginX), 5, 30, 30)];
     [logoutButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [logoutButton setBackgroundImage:[UIImage imageNamed:@"total_menu_logout_btn.png"] forState:UIControlStateHighlighted];
     [logoutButton setBackgroundImage:[UIImage imageNamed:@"total_menu_logout_btn.png"] forState:UIControlStateNormal];
@@ -680,7 +702,7 @@
     [self addSubview:logoutButton];
     
     // card image
-    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 36, meWidth-40, 135)];
+    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20-cardMarginX, 36, meWidth-40, 135)];
     //[cardImageView setBackgroundColor:UIColorFromRGB(0x105921)];
     cardImageView.contentMode = UIViewContentModeScaleAspectFit;
     [cardImageView setImage:[UIImage imageNamed:@"total_menu_card_img.png"]];
@@ -688,7 +710,7 @@
     
     //card number label
     _cardNumber =  [[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] ;
-    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(100, 100+10, meWidth-65, 40) ];
+    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(100+cardMarginX, 100+10, meWidth-65, 40) ];
     [labelCardNumber setBackgroundColor:[UIColor clearColor]];
     [labelCardNumber setTextColor:UIColorFromRGB(0xffffff)];
     [labelCardNumber setFont:[UIFont systemFontOfSize:15]];

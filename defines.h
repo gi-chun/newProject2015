@@ -428,6 +428,7 @@ static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 
 
 #define PWD_MAX_LENGTH             4
+#define ID_MAX_LENGTH             30
 
 
 #endif /* defines_h */
