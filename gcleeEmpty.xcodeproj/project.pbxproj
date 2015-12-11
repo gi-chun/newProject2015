@@ -218,6 +218,7 @@
 		28D11E931BE86B04005B3024 /* MYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D11E921BE86B04005B3024 /* MYViewController.m */; };
 		28D11E981BE86B3A005B3024 /* MYBlurIntroductionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D11E951BE86B3A005B3024 /* MYBlurIntroductionView.m */; };
 		28D11E991BE86B3A005B3024 /* MYIntroductionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D11E971BE86B3A005B3024 /* MYIntroductionPanel.m */; };
+		28D3D06B1C1ABC37007817C3 /* provision_total.zip in Resources */ = {isa = PBXBuildFile; fileRef = 28D3D06A1C1ABC37007817C3 /* provision_total.zip */; };
 		28D517A01C194A6D00CE489C /* bottom_banner_viet@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D517971C194A6D00CE489C /* bottom_banner_viet@1x.png */; };
 		28D517A11C194A6D00CE489C /* bottom_banner_viet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D517981C194A6D00CE489C /* bottom_banner_viet@2x.png */; };
 		28D517A21C194A6D00CE489C /* bottom_banner_viet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D517991C194A6D00CE489C /* bottom_banner_viet@3x.png */; };
@@ -452,6 +453,7 @@
 		2831481D1BFB0AE70083DA3F /* success_img@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_img@1x.png"; sourceTree = "<group>"; };
 		2831481E1BFB0AE70083DA3F /* success_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_img@2x.png"; sourceTree = "<group>"; };
 		2831481F1BFB0AE70083DA3F /* success_img@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_img@3x.png"; sourceTree = "<group>"; };
+		2832D1B01C1ABA4200B34851 /* total.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = total.p12; sourceTree = "<group>"; };
 		283363C01C0F1980000CA558 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2834C1F31BFC3B5C002379E6 /* dataPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataPickerViewController.h; sourceTree = "<group>"; };
 		2834C1F41BFC3B5C002379E6 /* dataPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataPickerViewController.m; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 		28D11E951BE86B3A005B3024 /* MYBlurIntroductionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYBlurIntroductionView.m; sourceTree = "<group>"; };
 		28D11E961BE86B3A005B3024 /* MYIntroductionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYIntroductionPanel.h; sourceTree = "<group>"; };
 		28D11E971BE86B3A005B3024 /* MYIntroductionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYIntroductionPanel.m; sourceTree = "<group>"; };
+		28D3D06A1C1ABC37007817C3 /* provision_total.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = provision_total.zip; sourceTree = "<group>"; };
 		28D517971C194A6D00CE489C /* bottom_banner_viet@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@1x.png"; sourceTree = "<group>"; };
 		28D517981C194A6D00CE489C /* bottom_banner_viet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@2x.png"; sourceTree = "<group>"; };
 		28D517991C194A6D00CE489C /* bottom_banner_viet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@3x.png"; sourceTree = "<group>"; };
@@ -1458,6 +1461,8 @@
 				28D6F7F51C0BDE53009B697D /* BTWCodeguard.h */,
 				28D86D141C0FC88F004C9521 /* libKTBiOS_v1_17.a */,
 				28D6F7F61C0BDE53009B697D /* libamsLibrary.a */,
+				2832D1B01C1ABA4200B34851 /* total.p12 */,
+				28D3D06A1C1ABC37007817C3 /* provision_total.zip */,
 				28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */,
 				28D6F7F81C0BDE53009B697D /* libCodeguard.a */,
 			);
@@ -1590,6 +1595,7 @@
 				28351D9D1BF47F6B009145E6 /* top_back_btn@3x.png in Resources */,
 				28D5370C1BF970E5004257DA /* total_menu_02_press@2x.png in Resources */,
 				2831484F1BFB0AE70083DA3F /* login_btn_press@3x.png in Resources */,
+				28D3D06B1C1ABC37007817C3 /* provision_total.zip in Resources */,
 				28DD7DD31C0EEE9900BE7C4D /* loding@1x.png in Resources */,
 				28D5373F1BF970E5004257DA /* total_menu_logo_img@2x.png in Resources */,
 				28D537251BF970E5004257DA /* total_menu_04_press@3x.png in Resources */,
