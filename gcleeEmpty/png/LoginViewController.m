@@ -35,6 +35,7 @@
     __weak IBOutlet UILabel *pwdLabel;
     __weak IBOutlet UILabel *idSearchLabel;
     __weak IBOutlet UILabel *pwdSearchLabel;
+    IBOutlet UIScrollView *mainScrollView;
     
 }
 
@@ -49,11 +50,12 @@
     // Navigation : viewDidLoad에서 한번, viewDidAppear에서 한번 더 한다.
     //[self.navigationItem setHidesBackButton:YES];
     
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [spinner setCenter:CGPointMake(kScreenBoundsWidth/2.0, kScreenBoundsHeight/2.0)]; // I do this because I'm in landscape mode
-    [self.view addSubview:spinner]; // spinner is not visible until started
+//    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    [spinner setCenter:CGPointMake(kScreenBoundsWidth/2.0, kScreenBoundsHeight/2.0)]; // I do this because I'm in landscape mode
+//    [self.view addSubview:spinner]; // spinner is not visible until started
     
     //txtPwd set
+    
     
     [self resetNavigationBarView:1];
     
@@ -63,13 +65,35 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    if(kScreenBoundsWidth > 320){
-        if(kScreenBoundsWidth > 400){
-            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        }else{
-            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        }
-    }
+//    if(kScreenBoundsWidth > 320){
+//        if(kScreenBoundsWidth > 400){
+//            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+//        }else{
+//            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+//        }
+//    }
+    
+
+    
+    CGRect viewFrame;
+    viewFrame = CGRectMake(kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+
+//    for (UIView *subView in mainScrollView.subviews) {
+//        [subView setFrame:CGRectMake(subView.frame.origin.x+kPopWindowMarginW, subView.frame.origin.y, subView.frame.size.width, subView.frame.size.height)];
+//        
+//    }
+
+    
+    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    mainScrollView.pagingEnabled = NO;
+    //mainScrollView.delegate = self;
+    mainScrollView.showsHorizontalScrollIndicator = NO;
+    mainScrollView.showsVerticalScrollIndicator = YES;
+    
+    [mainScrollView setFrame:viewFrame];
+    
+    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 500);
+    
     
     //myLoginType = LoginTypeDefault;
     

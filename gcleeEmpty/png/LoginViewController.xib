@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
@@ -15,6 +15,7 @@
                 <outlet property="labelAuto" destination="iLC-Co-dcG" id="2yF-0j-Yse"/>
                 <outlet property="labelNoti" destination="2xP-G4-KaD" id="SWR-3S-KnG"/>
                 <outlet property="loginBtn" destination="ccE-KX-kOQ" id="dmP-1j-ZNB"/>
+                <outlet property="mainScrollView" destination="i5M-Pr-FkT" id="5Yk-kD-S71"/>
                 <outlet property="pwdLabel" destination="Hde-tt-WSD" id="f8B-10-G9f"/>
                 <outlet property="pwdSearchLabel" destination="kBi-zG-6Au" id="CG1-1U-SUP"/>
                 <outlet property="switchAuto" destination="Qc6-zf-8HG" id="e0J-Fz-Jen"/>
@@ -24,7 +25,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" userLabel="UIScrollView" customClass="UIScrollView">
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
