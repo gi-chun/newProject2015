@@ -21,4 +21,5 @@
 @protocol pwdSearchViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end

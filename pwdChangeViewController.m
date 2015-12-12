@@ -281,7 +281,7 @@
         temp = @"EN";
     }
     
-    [oldPwdTxt becomeFirstResponder];
+    //[oldPwdTxt becomeFirstResponder];
     
     [self resetNavigationBarView:1];
     [self setDelegateText];
@@ -291,7 +291,42 @@
     [oldPwdTxt setKeyboardType:UIKeyboardTypeNumberPad ];
     
     //[oldPwdTxt setText:[[NSUserDefaults standardUserDefaults] stringForKey:kPwd]];
+    
+    //
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight > 480){
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
+    }
+
 }
+
+- (void)touchToolbar:(id)sender
+{
+    //UIButton *button = (UIButton *)sender;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
+}
+
 /////
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -348,10 +383,11 @@
     if(textField.tag == 1 || textField.tag == 2 || textField.tag == 3){
         if (textField.text.length >= PWD_MAX_LENGTH && range.length == 0)
         {
+            [self endEdit];
             return NO; // return NO to not change text
         }
         else if(textField.text.length >= PWD_MAX_LENGTH && range.length == 0){
-            
+            [self endEdit];
             return NO; // return NO to not change text
         }
     }

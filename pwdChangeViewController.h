@@ -19,5 +19,6 @@
 @protocol pwdChangeViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end
 

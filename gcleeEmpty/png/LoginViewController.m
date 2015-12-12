@@ -15,6 +15,7 @@
 #import "idSearchViewController.h"
 #import "pwdSearchViewController.h"
 #import "sys/utsname.h"
+#import "UIView+FormScroll.h"
 
 @interface LoginViewController () <NavigationBarViewDelegate>
 {
@@ -35,6 +36,7 @@
     __weak IBOutlet UILabel *pwdLabel;
     __weak IBOutlet UILabel *idSearchLabel;
     __weak IBOutlet UILabel *pwdSearchLabel;
+    IBOutlet UIView *mainView;
     IBOutlet UIScrollView *mainScrollView;
     
 }
@@ -65,18 +67,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-//    if(kScreenBoundsWidth > 320){
-//        if(kScreenBoundsWidth > 400){
-//            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-//        }else{
-//            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-//        }
-//    }
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+    }
     
+    //////////////////////////////////////////////////////
+//    mainScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+//    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    mainScrollView.pagingEnabled = NO;
+//    mainScrollView.delegate = self;
+//    mainScrollView.showsHorizontalScrollIndicator = YES;
+//    mainScrollView.showsVerticalScrollIndicator = YES;
+//    //[mainScrollView addSubview:mainView];
+//    //[self.view addSubview:mainScrollView];
+//
+//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 1000);
 
     
-    CGRect viewFrame;
-    viewFrame = CGRectMake(kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    /////////////////////////////////////////////////////
+    
+//    CGRect viewFrame;
+//    viewFrame = CGRectMake(kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height);
 
 //    for (UIView *subView in mainScrollView.subviews) {
 //        [subView setFrame:CGRectMake(subView.frame.origin.x+kPopWindowMarginW, subView.frame.origin.y, subView.frame.size.width, subView.frame.size.height)];
@@ -84,15 +99,15 @@
 //    }
 
     
-    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    mainScrollView.pagingEnabled = NO;
-    //mainScrollView.delegate = self;
-    mainScrollView.showsHorizontalScrollIndicator = NO;
-    mainScrollView.showsVerticalScrollIndicator = YES;
-    
-    [mainScrollView setFrame:viewFrame];
-    
-    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 500);
+//    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    mainScrollView.pagingEnabled = NO;
+//    //mainScrollView.delegate = self;
+//    mainScrollView.showsHorizontalScrollIndicator = NO;
+//    mainScrollView.showsVerticalScrollIndicator = YES;
+//    
+//    [mainScrollView setFrame:self.view.bounds];
+//    
+//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 500);
     
     
     //myLoginType = LoginTypeDefault;
@@ -124,9 +139,49 @@
         temp = @"EN";
     }
 
-    [txtID becomeFirstResponder];
+    //[txtID becomeFirstResponder];
+    
+    //
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight > 480){
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
+    }
     
 }
+
+- (void)touchToolbar:(id)sender
+{
+    //UIButton *button = (UIButton *)sender;
+    [self.navigationController popViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
+}
+
+- (void)didTouchMainAD{
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
+}
+
 
 - (void)setLoginType{
     
@@ -137,7 +192,7 @@
 - (IBAction)pwdSearchClick:(id)sender {
     
     pwdSearchViewController *pwdSearchCtl = [[pwdSearchViewController alloc] init];
-    //[setInforCtl setDelegate:self];
+    [pwdSearchCtl setDelegate:self];
     [self.navigationController pushViewController:pwdSearchCtl animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
     
@@ -145,7 +200,7 @@
 - (IBAction)setInforClick:(id)sender {
     
     setInforViewController *setInforCtl = [[setInforViewController alloc] init];
-    //[setInforCtl setDelegate:self];
+    [setInforCtl setDelegate:self];
     [self.navigationController pushViewController:setInforCtl animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
 }
@@ -164,7 +219,7 @@
 - (IBAction)idSearchClick:(id)sender {
     
     idSearchViewController *idSearchController = [[idSearchViewController alloc] init];
-    //[pwdChangeController setDelegate:self];
+    [idSearchController setDelegate:self];
     [self.navigationController pushViewController:idSearchController animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
     
@@ -792,11 +847,15 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     currentEditingTextField = textField;
+    //[self.view scrollToView:textField];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentEditingTextField = NULL;
+    [self endEdit];
+    [self.view endEditing:YES];
+    //[self.view scrollToY:0];
 }
 
 //-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -806,6 +865,7 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self endEdit];
+    [self.view endEditing:YES];
     
 }
 
@@ -815,6 +875,8 @@
     if(textField.tag == 1){
         if (textField.text.length >= PWD_MAX_LENGTH && range.length == 0)
         {
+            [self endEdit];
+            [self.view endEditing:YES];
             return NO; // return NO to not change text
         }
         

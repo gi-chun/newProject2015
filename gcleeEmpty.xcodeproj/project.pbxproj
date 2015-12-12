@@ -218,6 +218,7 @@
 		28D11E931BE86B04005B3024 /* MYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D11E921BE86B04005B3024 /* MYViewController.m */; };
 		28D11E981BE86B3A005B3024 /* MYBlurIntroductionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D11E951BE86B3A005B3024 /* MYBlurIntroductionView.m */; };
 		28D11E991BE86B3A005B3024 /* MYIntroductionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D11E971BE86B3A005B3024 /* MYIntroductionPanel.m */; };
+		28D39F1A1C1C4D4600D566E9 /* UIView+FormScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D39F191C1C4D4600D566E9 /* UIView+FormScroll.m */; };
 		28D3D06B1C1ABC37007817C3 /* provision_total.zip in Resources */ = {isa = PBXBuildFile; fileRef = 28D3D06A1C1ABC37007817C3 /* provision_total.zip */; };
 		28D517A01C194A6D00CE489C /* bottom_banner_viet@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D517971C194A6D00CE489C /* bottom_banner_viet@1x.png */; };
 		28D517A11C194A6D00CE489C /* bottom_banner_viet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D517981C194A6D00CE489C /* bottom_banner_viet@2x.png */; };
@@ -647,6 +648,8 @@
 		28D11E951BE86B3A005B3024 /* MYBlurIntroductionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYBlurIntroductionView.m; sourceTree = "<group>"; };
 		28D11E961BE86B3A005B3024 /* MYIntroductionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYIntroductionPanel.h; sourceTree = "<group>"; };
 		28D11E971BE86B3A005B3024 /* MYIntroductionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYIntroductionPanel.m; sourceTree = "<group>"; };
+		28D39F181C1C4CE400D566E9 /* UIView+FormScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+FormScroll.h"; sourceTree = "<group>"; };
+		28D39F191C1C4D4600D566E9 /* UIView+FormScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FormScroll.m"; sourceTree = "<group>"; };
 		28D3D06A1C1ABC37007817C3 /* provision_total.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = provision_total.zip; sourceTree = "<group>"; };
 		28D517971C194A6D00CE489C /* bottom_banner_viet@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@1x.png"; sourceTree = "<group>"; };
 		28D517981C194A6D00CE489C /* bottom_banner_viet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@2x.png"; sourceTree = "<group>"; };
@@ -1419,6 +1422,8 @@
 				2853A1DF1BF1779800B8F70E /* leftLoginView.h */,
 				283147D31BFAB1B60083DA3F /* LoginViewController.h */,
 				283147D41BFAB1B60083DA3F /* LoginViewController.m */,
+				28D39F181C1C4CE400D566E9 /* UIView+FormScroll.h */,
+				28D39F191C1C4D4600D566E9 /* UIView+FormScroll.m */,
 				2853A1E01BF1779800B8F70E /* leftLoginView.m */,
 				28EDFB6D1BFC960600B3B647 /* configViewController.h */,
 				28EDFB6E1BFC960600B3B647 /* configViewController.m */,
@@ -1904,6 +1909,7 @@
 				287F92E41BE748EF007E82AD /* MMDrawerController.m in Sources */,
 				28D11E981BE86B3A005B3024 /* MYBlurIntroductionView.m in Sources */,
 				2886A8E21BE0B8DF001B7657 /* CPThumbnailView.m in Sources */,
+				28D39F1A1C1C4D4600D566E9 /* UIView+FormScroll.m in Sources */,
 				287F92E31BE748EF007E82AD /* MMDrawerBarButtonItem.m in Sources */,
 				2886A8EE1BE0BBDC001B7657 /* UIImage_Extensions.m in Sources */,
 				280B23FA1C00AE49004F80FB /* memberOutViewController.m in Sources */,

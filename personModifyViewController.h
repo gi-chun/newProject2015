@@ -22,4 +22,5 @@
 @protocol personModifyViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end

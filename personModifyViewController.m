@@ -76,8 +76,46 @@
         temp = @"EN";
     }
     
-    [emailTxt becomeFirstResponder];
+    //[emailTxt becomeFirstResponder];
+    //
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight > 480){
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
+    }
 
+}
+
+- (void)touchToolbar:(id)sender
+{
+    //UIButton *button = (UIButton *)sender;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
+}
+
+- (void)didTouchMainAD{
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -282,7 +320,7 @@
 - (IBAction)pwdChange:(id)sender {
     
     pwdChangeViewController *pwdChangeController = [[pwdChangeViewController alloc] init];
-    //[configController setDelegate:self];
+    [pwdChangeController setDelegate:self];
     [self.navigationController pushViewController:pwdChangeController animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
     
@@ -309,7 +347,7 @@
 - (IBAction)memberOutClick:(id)sender {
     
     memberOutViewController *pwdChangeController = [[memberOutViewController alloc] init];
-    //[pwdChangeController setDelegate:self];
+    [pwdChangeController setDelegate:self];
     [self.navigationController pushViewController:pwdChangeController animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
 }

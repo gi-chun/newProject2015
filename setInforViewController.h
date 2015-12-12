@@ -8,12 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol setInforViewControllerDelegate;
+
 @interface setInforViewController : UIViewController <UITextFieldDelegate>
 
 //@property (nonatomic,retain) UIPopoverController *popoverController;
 @property (nonatomic,retain) UIDatePicker *datepicker;
+@property (nonatomic, weak) id<setInforViewControllerDelegate> delegate;
 
 -(BOOL)textFieldValueIsValid:(UITextField*)textField;
 -(void)endEdit;
 
 @end
+
+@protocol setInforViewControllerDelegate <NSObject>
+@optional
+- (void)didTouchBackButton;
+- (void)didLoginAfter;
+- (void)didTouchMainAD;
+@end
+

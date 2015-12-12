@@ -231,7 +231,45 @@
 //    self.myScrollView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height+100);
 //    //((UIScrollView *)self.view).contentSize = self.contentView.frame.size;
     
+    //
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight > 480){
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
+    }
     
+}
+
+- (void)touchToolbar:(id)sender
+{
+    //UIButton *button = (UIButton *)sender;
+    [self.navigationController popViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
+}
+
+- (void)didTouchMainAD{
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

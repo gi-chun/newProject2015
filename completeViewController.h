@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol completeViewControllerDelegate;
+
 @interface completeViewController : UIViewController
 
+@property (nonatomic, weak) id<completeViewControllerDelegate> delegate;
+
+@end
+
+@protocol completeViewControllerDelegate <NSObject>
+@optional
+- (void)didTouchBackButton;
+- (void)didLoginAfter;
+- (void)didTouchMainAD;
 @end

@@ -109,7 +109,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kForceMemberViewY];
         
         setInforViewController *SetInforViewController = [[setInforViewController alloc] init];
-        //[SetInforViewController setDelegate:self];
+        [SetInforViewController setDelegate:self];
         [self.navigationController pushViewController:SetInforViewController animated:YES];
     }
 
@@ -475,6 +475,10 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     callUrl = [NSString stringWithFormat:SUNNY_BANK_URL, gLocalLang];
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
     
     NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
@@ -503,6 +507,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     NSString *callUrl = @"";
 
     callUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
@@ -1467,6 +1474,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
     [self.navigationController popToRootViewControllerAnimated:YES];
     
+    [self.webView stop];
+    webViewUrl = callUrl;
+
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
     
@@ -1590,6 +1600,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
 //    [alert show];
     
+    
     NSString* gLocalLang = @"";
     NSString *callUrl = @"";
     
@@ -1632,6 +1643,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
     //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
     callUrl = SHINHAN_EVENT_URL;
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];

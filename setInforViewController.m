@@ -15,6 +15,7 @@
 #import "SBJson.h"
 #import "datePickerViewController.h"
 #import "CPLoadingView.h"
+#import "UIView+FormScroll.h"
 
 
 @interface setInforViewController () <NavigationBarViewDelegate>
@@ -408,7 +409,7 @@
 //            [self stopLoadingAnimation];
             
             completeViewController *completeController = [[completeViewController alloc] init];
-            //[completeController setDelegate:self];
+            [completeController setDelegate:self];
             [self.navigationController pushViewController:completeController animated:YES];
             
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"가입 완료" delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
@@ -715,12 +716,6 @@
     [yearText setText: [self returnYYYYValuePerLan:strYYYY ]];
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    currentEditingTextField = textField;
-    
-    
-}
 
 - (void) dateCloseBtn
 {
@@ -774,9 +769,19 @@
     [yearText setText: date];
 }
 
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.view scrollToTag:textField tag:textField.tag];
+    currentEditingTextField = textField;
+    
+    
+    
+}
+
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentEditingTextField = NULL;
+    [self.view scrollToY:-180];
     
     if(textField.tag == 3){
        [self hideView];
@@ -867,14 +872,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    if(kScreenBoundsWidth > 320){
-        if(kScreenBoundsWidth > 400){
-            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
-        }else{
-            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        }
-        
-    }
+    [self resetNavigationBarView:1];
+    [self initSetItem];
+    [self setDelegateText];
+    
+    [self.view scrollToY:-180];
     
     
     [idText setKeyboardType: UIKeyboardTypeEmailAddress ];
@@ -883,10 +885,6 @@
     canUseId = 0;
     [pwdText setKeyboardType:UIKeyboardTypeNumberPad ];
     [pwdCnfirmText setKeyboardType:UIKeyboardTypeNumberPad ];
-    
-    [self resetNavigationBarView:1];
-    [self initSetItem];
-    [self setDelegateText];
     
     idText.text = [[NSUserDefaults standardUserDefaults] stringForKey:kId] ;
     nameText.text = [[NSUserDefaults standardUserDefaults] stringForKey:kUserNm] ;
@@ -901,8 +899,56 @@
         temp = @"EN";
     }
     
-    [idText becomeFirstResponder];
-   
+    //[idText becomeFirstResponder];
+    
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+        
+    }
+    
+    //
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight > 480){
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
+    }
+
+}
+
+- (void)touchToolbar:(id)sender
+{
+    //UIButton *button = (UIButton *)sender;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
+}
+
+- (void)didTouchMainAD{
+    if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
+        [self.delegate didTouchMainAD];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -919,6 +965,7 @@
     //[self.navigationItem setHidesBackButton:YES];
     [self resetNavigationBarView:1];
     [self initSetItem];
+    [self.view scrollToY:-180];
 
     
 }

@@ -134,14 +134,14 @@ static NSString *PERSON_NOMAL_KO     = @"일반";
 
 //korea
 static NSString *MEM_OUT_TITLE_KO     = @"회원탈퇴 안내사항";
-static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n 2.멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
+static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n2.멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
 static NSString *MEM_PWD_TITLE_KO     = @"비밀번호 입력";
 static NSString *MEM_PWD_DESC_KO     = @"회원탈퇴 처리를 위해 다시한번 비밀번호를 입력하시기 바랍니다.";
 static NSString *MEM_OUT_KO = @"탈퇴하기";
 
 //vi
 static NSString *MEM_OUT_TITLE_VI     = @"Hướng dẫn về hủy thành viên";
-static NSString *MEM_OUT_DESC_VI     = @"1.Thông tin thành viên bị hủy, không thể phục hồi \n 2.Thứ hạng và điểm của thành viên bị hủy, không thể phục hồi";
+static NSString *MEM_OUT_DESC_VI     = @"1.Thông tin thành viên bị hủy, không thể phục hồi \n2.Thứ hạng và điểm của thành viên bị hủy, không thể phục hồi";
 static NSString *MEM_PWD_TITLE_VI     = @"Nhập mật khẩu";
 static NSString *MEM_PWD_DESC_VI     = @"Vui lòng nhập mật khẩu lại để hủy thành viên";
 static NSString *MEM_OUT_VI = @"Hủy thành viên";

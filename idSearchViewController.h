@@ -19,4 +19,5 @@
 @protocol idSearchViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end

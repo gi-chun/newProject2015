@@ -20,4 +20,5 @@
 @protocol idResultViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end

@@ -29,4 +29,5 @@ typedef enum {
 @optional
 - (void)didTouchBackButton;
 - (void)didLoginAfter;
+- (void)didTouchMainAD;
 @end

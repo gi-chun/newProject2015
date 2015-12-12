@@ -24,5 +24,6 @@
 - (void)didTouchHelpButton;
 - (void)didTouchNewButton;
 - (void)didLoginAfter;
+- (void)didTouchMainAD;
 @end
 

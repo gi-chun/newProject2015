@@ -19,4 +19,5 @@
 @protocol memberOutViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end
