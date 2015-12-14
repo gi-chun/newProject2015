@@ -176,15 +176,17 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    CGFloat marginX = 0;
+    
     if(kScreenBoundsWidth > 320){
         if(kScreenBoundsWidth > 400){
-            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, -30, self.view.bounds.size.width, self.view.bounds.size.height)];
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            marginX = kPopWindowMarginW*2;
         }else{
             [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            marginX = kPopWindowMarginW;
         }
-        
     }
-    
 //    for (UIView *subView in [self.view subviews]) {
 //        [subView setBackgroundColor:UIColorFromRGB(0xffffff)];
 //    }
@@ -242,13 +244,13 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
         [backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
         //[adButton setTag:2];
