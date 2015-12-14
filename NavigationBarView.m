@@ -186,7 +186,7 @@
                 //[menuButton setAccessibilityLabel:@"백버튼" Hint:@"뒤로 이동합니다"];
                 [self addSubview:menuButton];
                 
-                // sunny bank
+                // sunny club
                 UIButton *myInfoButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 [myInfoButton setFrame:CGRectMake(screenWidth-72+marginX, 13, 46, 20)];
                 [myInfoButton setBackgroundImage:[UIImage imageNamed:@"bank_top_tap_logo.png"] forState:UIControlStateNormal];
@@ -195,14 +195,14 @@
                 //[myInfoButton setAccessibilityLabel:@"내정보" Hint:@"내정보로 이동합니다"];
                 [self addSubview:myInfoButton];
                 
-                //            //location
-                //            UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                //            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 13, 31, 28)];
-                //            [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon.png"] forState:UIControlStateNormal];
-                //            [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon_press.png"] forState:UIControlStateHighlighted];
-                //            [searchButton addTarget:self action:@selector(touchLocationButton) forControlEvents:UIControlEventTouchUpInside];
-                //            //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
-                //            [self addSubview:searchButton];
+                //location
+                UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+                [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon.png"] forState:UIControlStateNormal];
+                [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon_press.png"] forState:UIControlStateHighlighted];
+                [searchButton addTarget:self action:@selector(touchLocationButton) forControlEvents:UIControlEventTouchUpInside];
+                //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
+                [self addSubview:searchButton];
 
                 
             }else{
@@ -233,6 +233,15 @@
                 [myInfoButton addTarget:self action:@selector(touchSunnyButton) forControlEvents:UIControlEventTouchUpInside];
                 //[myInfoButton setAccessibilityLabel:@"내정보" Hint:@"내정보로 이동합니다"];
                 [self addSubview:myInfoButton];
+                
+                //search
+                UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+                [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon.png"] forState:UIControlStateNormal];
+                [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon_press.png"] forState:UIControlStateHighlighted];
+                [searchButton addTarget:self action:@selector(touchLocationButton) forControlEvents:UIControlEventTouchUpInside];
+                //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
+                [self addSubview:searchButton];
 
                 
             }
@@ -274,14 +283,15 @@
             //[myInfoButton setAccessibilityLabel:@"내정보" Hint:@"내정보로 이동합니다"];
             [self addSubview:myInfoButton];
             
-            //        //search
-            //        UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            //        [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 13, 31, 28)];
-            //        [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon.png"] forState:UIControlStateNormal];
-            //        [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon_press.png"] forState:UIControlStateHighlighted];
-            //        [searchButton addTarget:self action:@selector(touchSearchButton) forControlEvents:UIControlEventTouchUpInside];
-            //        //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
-            //        [self addSubview:searchButton];
+            //search
+            UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+            [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon.png"] forState:UIControlStateNormal];
+            [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon_press.png"] forState:UIControlStateHighlighted];
+            [searchButton addTarget:self action:@selector(touchSearchButton) forControlEvents:UIControlEventTouchUpInside];
+            //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
+            [self addSubview:searchButton];
+            
         }else{
             [self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
             
@@ -310,6 +320,15 @@
             [myInfoButton addTarget:self action:@selector(touchBankButton) forControlEvents:UIControlEventTouchUpInside];
             //[myInfoButton setAccessibilityLabel:@"내정보" Hint:@"내정보로 이동합니다"];
             [self addSubview:myInfoButton];
+            
+            //search
+            UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+            [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon.png"] forState:UIControlStateNormal];
+            [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon_press.png"] forState:UIControlStateHighlighted];
+            [searchButton addTarget:self action:@selector(touchSearchButton) forControlEvents:UIControlEventTouchUpInside];
+            //[basketButton setAccessibilityLabel:@"장바구니" Hint:@"장바구니로 이동합니다"];
+            [self addSubview:searchButton];
 
         }
         
@@ -389,6 +408,10 @@
 //    }
 }
 
+- (void)touchLocationButton
+{
+    
+}
 
 #pragma mark - UITextFieldDelegate
 

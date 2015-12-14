@@ -32,6 +32,11 @@ const static CGFloat MENU_HEIGHT   =      45;
     leftLoginView *loginView;
     UIView *loginResultView;
     UIView *aDView;
+    
+    UIView *letterLineView;
+    UIImageView *letterUpImageView;
+    UILabel* labelLetter;
+    UIButton* letterBtn;
 }
 @end
 
@@ -158,6 +163,43 @@ const static CGFloat MENU_HEIGHT   =      45;
     [closeBtn addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
     [logoView addSubview:closeBtn];
     
+    //letterLineView
+    letterLineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+13, 10, 1, 25)];
+    [letterLineView setBackgroundColor:UIColorFromRGB(0xcd4011)];
+    [logoView addSubview:letterLineView];
+    
+    //letter button
+    letterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [letterBtn setFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+20, 5, 33, 30)];
+    //[letterBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
+    [letterBtn setImage:[UIImage imageNamed:@"news_icon.png"] forState:UIControlStateNormal];
+    [letterBtn setImage:[UIImage imageNamed:@"news_icon_press.png"] forState:UIControlStateHighlighted];
+    [letterBtn addTarget:self action:@selector(didTouchLetterBtn) forControlEvents:UIControlEventTouchUpInside];
+    [logoView addSubview:letterBtn];
+    
+    //letter empty button
+    //    letterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [letterBtn setFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+20, 5, 33, 30)];
+    //    [letterBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
+    //    [letterBtn addTarget:self action:@selector(didTouchLetterBtn) forControlEvents:UIControlEventTouchUpInside];
+    //    [logoView addSubview:letterBtn];
+    
+    letterUpImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+35, 5, 16, 14)];
+    letterUpImageView.contentMode = UIViewContentModeScaleToFill;
+    [letterUpImageView setImage:[UIImage imageNamed:@"news_icon_nbback.png"]];
+    [logoView addSubview:letterUpImageView];
+    
+    labelLetter = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+35, 5, 16, 14)];
+    [labelLetter setBackgroundColor:[UIColor clearColor]];
+    [labelLetter setTextColor:UIColorFromRGB(0xb03e01)];
+    [labelLetter setFont:[UIFont systemFontOfSize:13]];
+    //[labelMenu setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
+    [labelLetter setTextAlignment:NSTextAlignmentCenter];
+    //[labelMenu setNumberOfLines:0];
+    //[labelMenu sizeToFit];
+    [labelLetter setText:@"N"];
+    [logoView addSubview:labelLetter];
+    
     [self addSubview:logoView];
     
     NSString* strLoginTitle;
@@ -169,7 +211,19 @@ const static CGFloat MENU_HEIGHT   =      45;
     }else if([temp isEqualToString:@"vi"]){
         strLoginTitle = LEFT_DES_VI;
     }
-
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        [letterLineView setHidden:FALSE];
+        [letterBtn setHidden:FALSE];
+        [letterUpImageView setHidden:FALSE];
+        [labelLetter setHidden:FALSE];
+    }else{
+        [letterLineView setHidden:TRUE];
+        [letterBtn setHidden:TRUE];
+        [letterUpImageView setHidden:TRUE];
+        [labelLetter setHidden:TRUE];
+    }
     
     //login view
     loginView = [[leftLoginView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(logoView.frame), meWidth, LOGIN_HEIGHT) title:@"로그인을 하시면 Sunny Club의 다양한 서비스를 이용하실 수 있습니다."];
@@ -631,6 +685,14 @@ const static CGFloat MENU_HEIGHT   =      45;
     }
     
 }
+- (void)didTouchLetterBtn
+{
+    if ([self.delegate respondsToSelector:@selector(didTouchCloseBtn)]) {
+        [self.delegate didTouchCloseBtn];
+    }
+    
+}
+
 - (void)didTouchLogOutBtn
 {
     if ([self.delegate respondsToSelector:@selector(didTouchLogOutBtn)]) {
@@ -651,6 +713,22 @@ const static CGFloat MENU_HEIGHT   =      45;
         [self.delegate didTouchAD];
     }
     
+}
+
+- (void) didLogOutShowContents{
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        [letterLineView setHidden:FALSE];
+        [letterBtn setHidden:FALSE];
+        [letterUpImageView setHidden:FALSE];
+        [labelLetter setHidden:FALSE];
+    }else{
+        [letterLineView setHidden:TRUE];
+        [letterBtn setHidden:TRUE];
+        [letterUpImageView setHidden:TRUE];
+        [labelLetter setHidden:TRUE];
+    }
 }
 
 

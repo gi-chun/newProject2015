@@ -495,7 +495,7 @@
             
             [self setDataAfterlogout];
             [self showContents];
-            
+            [self didLogOutShowContents];
             
             //web view refresh
              WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
@@ -852,6 +852,13 @@
         [self.delegate didTouchLogInBtn];
     }
     
+}
+
+- (void)didLogOutShowContents
+{
+    if ([self.delegate respondsToSelector:@selector(didLogOutShowContents)]) {
+        [self.delegate didLogOutShowContents];
+    }
 }
 
 #pragma mark -initScreenView
