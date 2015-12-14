@@ -13,6 +13,7 @@
 @interface pwdChangeViewController : UIViewController
 
 @property (nonatomic, weak) id<pwdChangeViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
 
 @end
 

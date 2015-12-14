@@ -23,6 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
+                                                     initWithTarget:self action:@selector(handlePanGesture:)];
+        [self.view addGestureRecognizer:gestureRecognizer];
+        self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
+    }
+
     CGFloat marginX = 0;
     
     if(kScreenBoundsWidth > 320){
@@ -46,7 +54,7 @@
     [self resetNavigationBarView:1];
     
     //
-    float meHeight = kScreenBoundsHeight;
+    meHeight = kScreenBoundsHeight;
     if(meHeight > 480){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -63,6 +71,26 @@
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
+    }else{
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
         //[adButton setTag:2];

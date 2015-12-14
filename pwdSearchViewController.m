@@ -286,7 +286,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
+                                                     initWithTarget:self action:@selector(handlePanGesture:)];
+        [self.view addGestureRecognizer:gestureRecognizer];
+        self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
+    }
+
     CGFloat marginX = 0;
     
     if(kScreenBoundsWidth > 320){
@@ -321,7 +329,7 @@
     
     //[mailTxt becomeFirstResponder];
     //
-    float meHeight = kScreenBoundsHeight;
+    meHeight = kScreenBoundsHeight;
     if(meHeight > 480){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -342,9 +350,51 @@
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
         //[adButton setTag:2];
         [self.view addSubview:adButton];
+    }else{
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
     }
 
+
 }
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    CGRect bounds = self.view.bounds;
+    
+    // Translate the view's bounds, but do not permit values that would violate contentSize
+    CGFloat newBoundsOriginX = bounds.origin.x - translation.x;
+    CGFloat minBoundsOriginX = 0.0;
+    CGFloat maxBoundsOriginX = self.contentSize.width - bounds.size.width;
+    bounds.origin.x = fmax(minBoundsOriginX, fmin(newBoundsOriginX, maxBoundsOriginX));
+    
+    CGFloat newBoundsOriginY = bounds.origin.y - translation.y;
+    CGFloat minBoundsOriginY = 0.0;
+    CGFloat maxBoundsOriginY = self.contentSize.height - bounds.size.height;
+    bounds.origin.y = fmax(minBoundsOriginY, fmin(newBoundsOriginY, maxBoundsOriginY));
+    
+    self.view.bounds = bounds;
+    [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+}
+
 
 - (void)touchToolbar:(id)sender
 {

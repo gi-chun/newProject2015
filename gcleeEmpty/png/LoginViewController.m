@@ -58,6 +58,28 @@
     
     //txtPwd set
     
+//    if(kScreenBoundsHeight <= 480){
+//        
+//        NSString* strImage;
+//        NSString* temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//        if([temp isEqualToString:@"ko"]){
+//            strImage = BOTTOM_BANNER_KO;
+//        }else{
+//            strImage = BOTTOM_BANNER_VI;
+//        }
+//        
+//        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenBoundsHeight+10, kScreenBoundsWidth, kToolBarHeight)];
+//        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+//        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+//        [self.view addSubview:backgroundImageView];
+//        
+//        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [adButton setFrame:CGRectMake(0, kScreenBoundsHeight, kScreenBoundsWidth, kToolBarHeight)];
+//        [adButton setBackgroundColor:[UIColor clearColor]];
+//        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+//        //[adButton setTag:2];
+//        [self.view addSubview:adButton];
+//    }
     
     [self resetNavigationBarView:1];
     
@@ -66,6 +88,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
+                                                     initWithTarget:self action:@selector(handlePanGesture:)];
+        [self.view addGestureRecognizer:gestureRecognizer];
+        self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
+    }
     
     CGFloat marginX = 0;
     
@@ -146,7 +176,6 @@
     //[txtID becomeFirstResponder];
     
     //
-    float meHeight = kScreenBoundsHeight;
     if(meHeight > 480){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -168,9 +197,50 @@
         //[adButton setTag:2];
         [self.view addSubview:adButton];
 
+    }else{
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
     }
     
 }
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    CGRect bounds = self.view.bounds;
+    
+    // Translate the view's bounds, but do not permit values that would violate contentSize
+    CGFloat newBoundsOriginX = bounds.origin.x - translation.x;
+    CGFloat minBoundsOriginX = 0.0;
+    CGFloat maxBoundsOriginX = self.contentSize.width - bounds.size.width;
+    bounds.origin.x = fmax(minBoundsOriginX, fmin(newBoundsOriginX, maxBoundsOriginX));
+    
+    CGFloat newBoundsOriginY = bounds.origin.y - translation.y;
+    CGFloat minBoundsOriginY = 0.0;
+    CGFloat maxBoundsOriginY = self.contentSize.height - bounds.size.height;
+    bounds.origin.y = fmax(minBoundsOriginY, fmin(newBoundsOriginY, maxBoundsOriginY));
+    
+    self.view.bounds = bounds;
+    [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+}
+
 
 - (void)touchToolbar:(id)sender
 {
@@ -196,6 +266,11 @@
 
 - (IBAction)pwdSearchClick:(id)sender {
     
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    }
+    
     pwdSearchViewController *pwdSearchCtl = [[pwdSearchViewController alloc] init];
     [pwdSearchCtl setDelegate:self];
     [self.navigationController pushViewController:pwdSearchCtl animated:YES];
@@ -203,6 +278,11 @@
     
 }
 - (IBAction)setInforClick:(id)sender {
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    }
     
     setInforViewController *setInforCtl = [[setInforViewController alloc] init];
     [setInforCtl setDelegate:self];
@@ -222,6 +302,11 @@
 }
 
 - (IBAction)idSearchClick:(id)sender {
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    }
     
     idSearchViewController *idSearchController = [[idSearchViewController alloc] init];
     [idSearchController setDelegate:self];
@@ -878,6 +963,7 @@
 {
     
     if(textField.tag == 1){
+        
         if (textField.text.length >= PWD_MAX_LENGTH && range.length == 0)
         {
             [self endEdit];

@@ -13,6 +13,8 @@
 @interface idSearchViewController : UIViewController
 
 @property (nonatomic, weak) id<idSearchViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
+
 
 @end
 

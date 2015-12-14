@@ -13,6 +13,7 @@
 @interface completeViewController : UIViewController
 
 @property (nonatomic, weak) id<completeViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
 
 @end
 
