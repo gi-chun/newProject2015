@@ -15,6 +15,8 @@
 @interface pwdSearchViewController : UIViewController
 
 @property (nonatomic, weak) id<pwdSearchViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
+
 
 @end
 

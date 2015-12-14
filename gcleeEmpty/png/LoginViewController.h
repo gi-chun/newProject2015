@@ -19,6 +19,8 @@ typedef enum {
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) id<LoginViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
+
 - (id)appDelegate;
 - (void)autoLogin;
 - (void)setLoginType;

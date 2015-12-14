@@ -15,6 +15,7 @@
 @property (nonatomic) NavigationBarView *navigationBarView;
 @property (nonatomic, weak) id<configViewControllerDelegate> delegate;
 @property (nonatomic) NSString *preLang;
+@property (nonatomic) CGSize contentSize;
 
 @end
 

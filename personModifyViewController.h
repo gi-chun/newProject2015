@@ -13,6 +13,7 @@
 @interface personModifyViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) id<personModifyViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
 
 -(BOOL)textFieldValueIsValid:(UITextField*)textField;
 -(void)endEdit;

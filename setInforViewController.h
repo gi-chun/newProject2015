@@ -15,6 +15,7 @@
 //@property (nonatomic,retain) UIPopoverController *popoverController;
 @property (nonatomic,retain) UIDatePicker *datepicker;
 @property (nonatomic, weak) id<setInforViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
 
 -(BOOL)textFieldValueIsValid:(UITextField*)textField;
 -(void)endEdit;

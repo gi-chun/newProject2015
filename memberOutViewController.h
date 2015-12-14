@@ -13,6 +13,7 @@
 @interface memberOutViewController : UIViewController
 
 @property (nonatomic, weak) id<memberOutViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
 
 @end
 
