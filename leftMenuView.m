@@ -216,8 +216,8 @@ const static CGFloat MENU_HEIGHT   =      45;
     if(isLogin == YES){
         [letterLineView setHidden:FALSE];
         [letterBtn setHidden:FALSE];
-        [letterUpImageView setHidden:FALSE];
-        [labelLetter setHidden:FALSE];
+        [letterUpImageView setHidden:TRUE];
+        [labelLetter setHidden:TRUE];
     }else{
         [letterLineView setHidden:TRUE];
         [letterBtn setHidden:TRUE];

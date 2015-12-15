@@ -132,11 +132,17 @@
     if (self) {
         
         CGFloat screenWidth  = [[UIScreen mainScreen] bounds].size.width;
-        CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+        CGFloat marginX = 0;
+        CGFloat marginY = 0;
         
-        CGFloat marginX = (screenWidth > 320)?0:10;
-        CGFloat marginPlusX = (screenWidth > 400)?50:0;
-        CGFloat marginPlusY = (screenWidth > 400)?0:0;
+        if(screenWidth > 320){
+            if(screenWidth > 400){
+                marginX = -20;
+                marginY = 5;
+            }else{
+                marginX = 10;
+            }
+        }
         
         if(type == 1){ //back
             
@@ -197,7 +203,7 @@
                 
                 //location
                 UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+                [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10+marginY, 31, 28)];
                 [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon.png"] forState:UIControlStateNormal];
                 [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon_press.png"] forState:UIControlStateHighlighted];
                 [searchButton addTarget:self action:@selector(touchLocationButton) forControlEvents:UIControlEventTouchUpInside];
@@ -227,7 +233,7 @@
                 
                 // sunny bank
                 UIButton *myInfoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                [myInfoButton setFrame:CGRectMake(screenWidth-72+marginX, 13, 46, 20)];
+                [myInfoButton setFrame:CGRectMake(screenWidth-62+marginX, 13, 46, 20)];
                 [myInfoButton setBackgroundImage:[UIImage imageNamed:@"bank_top_tap_logo.png"] forState:UIControlStateNormal];
                 [myInfoButton setBackgroundImage:[UIImage imageNamed:@"bank_top_tap_logo_press.png"] forState:UIControlStateHighlighted];
                 [myInfoButton addTarget:self action:@selector(touchSunnyButton) forControlEvents:UIControlEventTouchUpInside];
@@ -236,7 +242,7 @@
                 
                 //search
                 UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+                [searchButton setFrame:CGRectMake(screenWidth-(72+31+21)+marginX, 10+marginY, 31, 28)];
                 [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon.png"] forState:UIControlStateNormal];
                 [searchButton setBackgroundImage:[UIImage imageNamed:@"location_icon_press.png"] forState:UIControlStateHighlighted];
                 [searchButton addTarget:self action:@selector(touchLocationButton) forControlEvents:UIControlEventTouchUpInside];
@@ -285,7 +291,7 @@
             
             //search
             UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10+marginY, 31, 28)];
             [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon.png"] forState:UIControlStateNormal];
             [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon_press.png"] forState:UIControlStateHighlighted];
             [searchButton addTarget:self action:@selector(touchSearchButton) forControlEvents:UIControlEventTouchUpInside];
@@ -314,7 +320,7 @@
             
             // sunny bank
             UIButton *myInfoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [myInfoButton setFrame:CGRectMake(screenWidth-72+marginX, 13, 46, 20)];
+            [myInfoButton setFrame:CGRectMake(screenWidth-62+marginX, 13, 46, 20)];
             [myInfoButton setBackgroundImage:[UIImage imageNamed:@"top_tap_logo.png"] forState:UIControlStateNormal];
             [myInfoButton setBackgroundImage:[UIImage imageNamed:@"top_tap_logo_press.png"] forState:UIControlStateHighlighted];
             [myInfoButton addTarget:self action:@selector(touchBankButton) forControlEvents:UIControlEventTouchUpInside];
@@ -323,7 +329,7 @@
             
             //search
             UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [searchButton setFrame:CGRectMake(screenWidth-(72+31+31)+marginX, 10, 31, 28)];
+            [searchButton setFrame:CGRectMake(screenWidth-(72+31+21)+marginX, 10+marginY, 31, 28)];
             [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon.png"] forState:UIControlStateNormal];
             [searchButton setBackgroundImage:[UIImage imageNamed:@"Search_icon_press.png"] forState:UIControlStateHighlighted];
             [searchButton addTarget:self action:@selector(touchSearchButton) forControlEvents:UIControlEventTouchUpInside];
@@ -381,36 +387,18 @@
 
 - (void)touchSearchButton
 {
-//    NSMutableDictionary *searchKeyWordInfo = [[CPCommonInfo sharedInfo] searchKeyWordInfo];
-//    
-//    //keyword 광고
-//    if (searchKeyWordInfo) {
-//        
-//        NSString *keywordTrim = [searchKeyWordInfo[@"name"] trim];
-//        
-//        if([[searchTextField.text trim] length] > 0 && [searchTextField.text isEqualToString:keywordTrim]) {
-//            NSString *keywordUrl = [searchKeyWordInfo objectForKey:@"link"];
-//            
-//            if ([self.delegate respondsToSelector:@selector(didTouchSearchButton:)]) {
-//                [self.delegate didTouchSearchButton:keywordUrl];
-//            }
-//        }
-//        else {
-//            if ([self.delegate respondsToSelector:@selector(didTouchSearchButtonWithKeyword:)] && searchTextField.text) {
-//                [self.delegate didTouchSearchButtonWithKeyword:searchTextField.text];
-//            }
-//        }
-//    }
-//    else {
-//        if ([self.delegate respondsToSelector:@selector(didTouchSearchButtonWithKeyword:)] && searchTextField.text) {
-//            [self.delegate didTouchSearchButtonWithKeyword:searchTextField.text];
-//        }
-//    }
+    if ([self.delegate respondsToSelector:@selector(touchSearchButton)]) {
+        [self.delegate touchSearchButton];
+    }
+
 }
 
 - (void)touchLocationButton
 {
-    
+    if ([self.delegate respondsToSelector:@selector(touchLocationButton)]) {
+        [self.delegate touchLocationButton];
+    }
+
 }
 
 #pragma mark - UITextFieldDelegate

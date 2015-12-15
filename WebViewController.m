@@ -531,6 +531,74 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
 }
 
+- (void)touchSearchButton
+{
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
+    
+    callUrl = [NSString stringWithFormat:SHINHAN_SEARCH_URL, gLocalLang];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+    
+}
+
+
+- (void)touchLocationButton
+{
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
+    
+    callUrl = [NSString stringWithFormat:SHINHAN_LOCATION_URL, gLocalLang];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+    
+}
+
+
 
 - (void)didTouchMenuButton
 {

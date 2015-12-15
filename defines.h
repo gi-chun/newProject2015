@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#define TEST_SERVER_DEFINE
+#define TEST_SERVER_DEFINE
 
 
 
@@ -38,6 +38,9 @@ static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/se
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/help_list.jsp?locale=%@";    //도움말
 static NSString *SHINHAN_ZONE_URL   = @"https://vntst.shinhanglobal.com/sunny/bank/shinhanzone.jsp";    //신한존
 static NSString *SHINHAN_EVENT_URL   = @"https://vntst.shinhanglobal.com/sunny/set/event_view.jsp?seqno=1&board_d=1";
+static NSString *SHINHAN_LOCATION_URL   = @"https://vntst.shinhanglobal.com/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
+static NSString *SHINHAN_SEARCH_URL   = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/search.jsp";
+
 static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
@@ -60,6 +63,9 @@ static NSString *NEW_NEWS_URL       = @"https://online.shinhan.com.vn/sunny/set/
 static NSString *HELP_LIST_URL      = @"https://online.shinhan.com.vn/sunny/set/help_list.jsp?locale=%@";    //도움말
 static NSString *SHINHAN_ZONE_URL   = @"https://online.shinhan.com.vn/sunny/bank/shinhanzone.jsp";    //신한존
 static NSString *SHINHAN_EVENT_URL   = @"https://online.shinhan.com.vn/sunny/set/event_view.jsp?seqno=1&board_d=1";    //신한존
+static NSString *SHINHAN_LOCATION_URL   = @"https://online.shinhan.com.vn/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
+static NSString *SHINHAN_SEARCH_URL   = @"https://online.shinhan.com.vn/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
+
 static NSString *API_URL            = @"https://online.shinhan.com.vn/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
