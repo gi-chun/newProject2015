@@ -630,7 +630,13 @@
     NSLog(@"device token : %@", [deviceToken description]);
     [[SafeOnPushClient sharedInstance] setDeviceToken:deviceToken];
     
-    [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:kUserDeviceToken];
+    NSCharacterSet *angleBrackets = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:angleBrackets];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:receivedDataString delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//    [alert show];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:kUserDeviceToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
     //[[SettingManager sharedInstance] setDeviceToken:[NSString stringWithFormat:@"%@", deviceToken]];
 }
