@@ -18,11 +18,9 @@
 #include <netdb.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import "SBJson.h"
+#import "SafeOnPushClient.h"
 
-
-
-
-@interface AppDelegate ()
+@interface AppDelegate () <SafeOnPushClientDelegate>
 {
     UINavigationController  *_navigation;
     BOOL isTutoShow;
@@ -79,6 +77,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    if([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    }
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    if (userInfo != nil) {
+        NSLog(@"%@", userInfo);
+        
+        [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+    }
+
     
     //lang
     
@@ -611,18 +626,31 @@
 #pragma mark - APNS Notification Regist Results
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    NSLog(@"APNS 디바이스 토큰 등록 성공 : %@", deviceToken);
+    NSLog(@"apns device token register success : %@", deviceToken);
+    NSLog(@"device token : %@", [deviceToken description]);
+    [[SafeOnPushClient sharedInstance] setDeviceToken:deviceToken];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:kUserDeviceToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     //[[SettingManager sharedInstance] setDeviceToken:[NSString stringWithFormat:@"%@", deviceToken]];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    NSLog(@"APNS 디바이스 토큰 등록 실패 : %@", error);
+    NSLog(@"apns device token register fail  : %@", error);
 }
 
 #pragma mark - Recieve Push Notifications
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+    NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
+    
+    NSDictionary *dic = [userInfo objectForKey:@"aps"];
+    
+    NSString *message = [dic objectForKey:kSOAlert];
+    NSString *messageId = [dic objectForKey:kSOMessageId];
+    
     // 포그라운드에서의 푸쉬 처리
     [self receiveRemoteNotification:userInfo withAppState:YES];
 }
@@ -634,55 +662,62 @@
     if (!info)
         return;
     
-//    _pushOpenUrl = @"";
-//    
-//    // 앱 실행중일 떄
-//    if (onForeground) {
-//        
-//        _pushOpenUrl = [info objectForKey:@"linkUrl"];
-//        
-//        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
-//            
-//            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
-//                                                                   withString:@"mmail."];
-//            
-//        }
-//        
-//        // url이 없는 경우
-//        if ([_pushOpenUrl isEqualToString:@""] || !_pushOpenUrl) {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
-//                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-//            [alert show];
-//        }
-//        
-//        // url이 있는 경우
-//        else
-//        {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
-//                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:@"열기", nil];
-//            [alert show];
-//            
-//            //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:_pushOpenUrl
-//            //                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:@"열기", nil];
-//            //            [alert show];
-//            
-//            
-//        }
-//    }
-//    
-//    // 앱 실행중이 아닐 때
-//    else {
-//        _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
-//        
-//        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
-//            
-//            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
-//                                                                   withString:@"mmail."];
-//            
-//        }
-//        
-//        [self pushAction];
-//    }
+    NSString* _pushOpenUrl = @"";
+    
+    // 앱 실행중일 떄
+    if (onForeground) {
+        
+        _pushOpenUrl = [info objectForKey:@"linkUrl"];
+        
+        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
+            
+            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
+                                                                   withString:@"mmail."];
+            
+        }
+        
+        // url이 없는 경우
+        if ([_pushOpenUrl isEqualToString:@""] || !_pushOpenUrl) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
+                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+        // url이 있는 경우
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
+                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:@"열기", nil];
+            [alert show];
+            
+        }
+    }
+    
+    // 앱 실행중이 아닐 때
+    else {
+        _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
+        
+        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
+            
+            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
+                                                                   withString:@"mmail."];
+            
+        }
+        
+        //[self pushAction];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1){
+        //[self pushAction];
+    }
+}
+
+- (void)pushAction
+{
+    
 }
 
 #pragma mark - Intro
