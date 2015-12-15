@@ -102,7 +102,7 @@
 {
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"loding_char.png"]];
+    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self addSubview:likeImageView];
     [self bringSubviewToFront:likeImageView];
     
@@ -352,7 +352,7 @@
 {
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"loding_char.png"]];
+    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self addSubview:likeImageView];
     [self bringSubviewToFront:likeImageView];
     
