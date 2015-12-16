@@ -13,6 +13,7 @@
 #import "LoginViewController.h"
 #import "leftViewController.h"
 #import "Appdelegate.h"
+#import "setAlramViewController.h"
 
 @interface configViewController () <NavigationBarViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -40,10 +41,26 @@
 @property (weak, nonatomic) IBOutlet UISwitch *tutoBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *pushBtn;
 @property (weak, nonatomic) IBOutlet UILabel *sunnyDescLabel;
+@property (weak, nonatomic) IBOutlet UIButton *btnAlam;
 
 @end
 
 @implementation configViewController
+
+- (IBAction)btnAlramClick:(id)sender {
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        setAlramViewController *setAlramController = [[setAlramViewController alloc] init];
+        [setAlramController setDelegate:self];
+        [self.navigationController pushViewController:setAlramController animated:YES];
+    }else{
+        LoginViewController *loginController = [[LoginViewController alloc] init];
+        [loginController setLoginType];
+        [loginController setDelegate:self];
+        [self.navigationController pushViewController:loginController animated:YES];
+    }
+}
 
 - (IBAction)personalChange:(id)sender {
     
