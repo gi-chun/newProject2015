@@ -316,7 +316,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     //_webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 6, CGRectGetWidth(frame),
     
     CGRect webViewFrame;
-    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2);
+//    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2);
+    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-kToolBarHeight);
     [self.webView setFrame:webViewFrame];
     
     CGRect toolViewFrame;
@@ -820,16 +821,16 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    if (![snapshotPopOverView isHidden]) {
 //        [snapshotPopOverView setHidden:YES];
 //    }
-    [toolBarView setHiddenPopover:YES];
+    //[toolBarView setHiddenPopover:YES];
 	
-	//푸쉬 허용 동의 팝업
-	CGFloat currentOffsetY = scrollView.contentOffset.y + _webView.frame.size.height;
-	if (currentOffsetY >= scrollView.contentSize.height-50.f) {
-		[self showRefusedPushAgreeView];
-	}
-	else {
-		[self hideRefusedPushAgreeView];
-	}
+	//
+//	CGFloat currentOffsetY = scrollView.contentOffset.y + _webView.frame.size.height;
+//	if (currentOffsetY >= scrollView.contentSize.height-50.f) {
+//		[self showRefusedPushAgreeView];
+//	}
+//	else {
+//		[self hideRefusedPushAgreeView];
+//	}
 
     // 탑 버튼 처리
     static NSInteger lastContentOffset = 0;

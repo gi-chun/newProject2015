@@ -28,12 +28,20 @@
 @implementation setAlramViewController
 
 - (IBAction)totalSwitchClick:(id)sender {
-    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
-    if(isTuto == YES){
-        [switchTotal setOn:false];
+
+    if ( [switchTotal isOn]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [contentsButton setEnabled:true];
+        [eventButton setEnabled:true];
+        
     }else{
-        [switchTotal setOn:true];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [contentsButton setEnabled:false];
+        [eventButton setEnabled:false];
     }
+
 }
 
 - (IBAction)contentsBtnClick:(id)sender {
@@ -43,14 +51,13 @@
         //set no
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kContentsPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        //contentsButton setImage:<#(UIImage *)#> forState:<#(UIControlState)#>
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
         
     }else{
         //set yes
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kContentsPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
-
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -61,11 +68,13 @@
         //set no
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kEventPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [eventButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
         
     }else{
         //set yes
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kEventPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [eventButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
         
     }
 }
@@ -115,17 +124,20 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
-        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
                 backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
             });
         });
         
@@ -146,17 +158,20 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
-        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
                 backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
             });
         });
         
@@ -172,10 +187,11 @@
 - (void)touchToolbar:(id)sender
 {
     //UIButton *button = (UIButton *)sender;
-    [self.navigationController popViewControllerAnimated:YES];
     if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
         [self.delegate didTouchMainAD];
     }
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -236,6 +252,26 @@
     [contentsLabel setText:SET_PUSH_CONTENTS_KO];
     [eventLabel setText:SET_PUSH_EVENT_KO];
     
+    BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
+    if(isAlram == YES){
+        [switchTotal setOn:true];
+        [contentsButton setEnabled:true];
+        [eventButton setEnabled:true];
+    }else{
+        [switchTotal setOn:false];
+        [contentsButton setEnabled:false];
+        [eventButton setEnabled:false];
+    }
+    
+    isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+    if(isAlram == YES){
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+    }
+    
+    isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+    if(isAlram == YES){
+        [eventButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+    }
 }
 
 -(void)initScreenView_vi{
@@ -247,6 +283,27 @@
     [titleLabel setText:SET_PUSH_SET_TITLE_VI];
     [contentsLabel setText:SET_PUSH_CONTENTS_VI];
     [eventLabel setText:SET_PUSH_EVENT_VI];
+    
+    BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
+    if(isAlram == YES){
+        [switchTotal setOn:true];
+        [contentsButton setEnabled:true];
+        [eventButton setEnabled:true];
+    }else{
+        [switchTotal setOn:false];
+        [contentsButton setEnabled:false];
+        [eventButton setEnabled:false];
+    }
+    
+    isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+    if(isAlram == YES){
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+    }
+    
+    isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+    if(isAlram == YES){
+        [eventButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+    }
 }
 
 

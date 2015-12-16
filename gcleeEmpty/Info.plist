@@ -22,23 +22,15 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>vntst.shinhanglobal.com</string>
+			<string>com.shinhan.global.vn.sclub</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app</string>
-				<string>App</string>
-				<string>APP</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string></string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string></string>
+				<string>sunnyClub</string>
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string></string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>LSApplicationCategoryType</key>

@@ -65,17 +65,20 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
-        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
                 backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
             });
         });
         
@@ -95,17 +98,20 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
-        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
                 backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
             });
         });
         

@@ -297,19 +297,23 @@ const static CGFloat MENU_HEIGHT   =      45;
         UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenBoundsHeight-kAD_HEIGHT-25, kScreenBoundsWidth-kAD_MarginW-37, kAD_HEIGHT+25)];
         
         UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
-        [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
         adImageView.contentMode = UIViewContentModeScaleToFill;
         [ADView addSubview:adImageView];
         
         NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
                 adImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
+                }
             });
         });
+        
         
         //AD emptybutton
         UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -326,7 +330,6 @@ const static CGFloat MENU_HEIGHT   =      45;
         //[ADView setBackgroundColor:UIColorFromRGB(0x2881C0)]; //[self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
         
         UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
-        [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
         adImageView.contentMode = UIViewContentModeScaleAspectFill;
         [ADView addSubview:adImageView];
         
@@ -337,6 +340,9 @@ const static CGFloat MENU_HEIGHT   =      45;
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
                 adImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
+                }
             });
         });
         
