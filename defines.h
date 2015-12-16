@@ -43,6 +43,7 @@ static NSString *SHINHAN_SEARCH_URL   = @"https://vntst.shinhanglobal.com/sunny/
 
 static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
+static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 
 #else     //REAL SERVER
 
@@ -68,12 +69,15 @@ static NSString *SHINHAN_SEARCH_URL   = @"https://online.shinhan.com.vn/sunny/in
 
 static NSString *API_URL            = @"https://online.shinhan.com.vn/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
+static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 
 #endif
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static NSString * const kUUID              = @"currentUUID";        // UUID
 static NSString * const kUserDeviceToken   = @"userDeviceToken";    // 디바이스 토큰
+static NSString * const kLeftMainBannerUrl   = @"kLeftMainBannerUrl";
+static NSString * const kMainBannerUrl   = @"kMainBannerUrl";
 static NSString * const klang       = @"currentLang";         // language
 static NSString * const kAutoLogin       = @"autoLogin";
 static NSString * const kId       = @"kId";
@@ -83,6 +87,7 @@ static NSString * const kEmail       = @"kEmail";//
 static NSString * const kEmail_id       = @"kEmail_id";//
 static NSString * const kLoginY       = @"loginY";         //로그인성공여부
 static NSString * const kCardCode       = @"cardCode";         //
+static NSString * const kosVer       = @"osVer";
 static NSString * const kAgreeOk       = @"agreeOk";
 static NSString * const kPushY       = @"pushY";         // language
 static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         // language

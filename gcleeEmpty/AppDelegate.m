@@ -26,6 +26,8 @@
     BOOL isTutoShow;
     NSTimer         *netSessionTimer;
     
+    NSMutableData           *_receiveData;
+    NSInteger bannerType; //0:left main, 1:main
 }
 @end
 
@@ -95,7 +97,10 @@
     }
 
     
-    //lang
+    //
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    [[NSUserDefaults standardUserDefaults] setObject:currSysVer forKey:kosVer];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //loginY init
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
@@ -344,75 +349,19 @@
 //        NSString* getProxyInfo(void);
     }
     
-    ////////////////////////////////////////////////
+    //dowload banner file
+    [self getListBanner];
     
+    //left main
+    bannerType = 0;
+    //NSString *url = [fileUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = @"";
+    request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     
+    [downloadConnection start];
+    // main
 
-//    NSUInteger encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingEUC_KR);
-//    const char * eucKRString = [XMLString cStringUsingEncoding:encoding];
-
-//    NSString* strTemp = [XMLString stringByAddingPercentEscapesUsingEncoding:-2147482590];
-//    //    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    //manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    
-////    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
-////    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
-////    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
-//    
-//    //NSLog(@"request date: %@", strTemp);
-//    
-//    //NSDictionary *parameters = @{@"plainXML": XMLString};
-//    NSDictionary *parameters = XMLString;
-//    
-//    
-//    [manager POST:API_VERSION_INOF_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSLog(@"RESULT: %@", responseObject);
-//        
-//        
-//        NSString *responseData = (NSString*) responseObject;
-//        //NSString *strResponse = [NSString stringWithUTF8String:responseData];
-//        //NSXMLParser* parser = null;
-//        //NSString *yourXMLString = [[GDataXMLDocument rootElement] xmlString];
-//        NSString * YOURSTRING = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",YOURSTRING);
-//
-//        
-//        NSLog(@"RESULT: %@", responseObject);
-////        NSArray *jsonArray = (NSArray *)responseData;
-////        NSDictionary * dicResponse = (NSDictionary *)responseData;
-////        
-////        //warning
-////        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
-////        
-////        if(dicItems){
-////            NSString* sError = dicItems[@"msg"];
-////            NSLog(@"ERR ==> %@", sError );
-////             NSLog(@"ERR ==> %@", sError );
-////            
-////        }else{
-////            
-////            dicItems = nil;
-////            dicItems = [dicResponse objectForKey:@"indiv_info"];
-////            NSString* sCardNm = dicItems[@"user_seq"];
-////            
-////            
-////            
-////            NSLog(@"getCookie end ==>" );
-////        }
-////        
-//        
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        NSLog(@"Error: %@", error);
-//        NSLog(@"Error: %@", error);
-//        
-//    }];
-
-    
     
     //ko  set language
     //[languages insertObject:@"de" atIndex:0]; // ISO639-1
@@ -445,6 +394,148 @@
     
     return YES;
 }
+
+- (void) getListBanner{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    //
+    [rootDic setObject:COMMON_TASK_USR forKey:@"task"];
+    [rootDic setObject:@"getListBanner" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    [indiv_infoDic setObject:@"2" forKey:@"d_1"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    NSHTTPCookie *cookie;
+    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+    [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
+    [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
+    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+    }
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            
+            
+        }else{
+            
+//            dicItems = nil;
+//            dicItems = [dicResponse objectForKey:@"indiv_info"];
+//            NSString* sCardNm = dicItems[@"user_seq"];
+//            
+//            //set kCardCode
+//            [[NSUserDefaults standardUserDefaults] setObject:sCardNm forKey:kLeftMainBannerUrl];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            
+//            //set id, pwd
+//            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerUrl];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            
+            NSLog(@"Response ==> %@", responseData);
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+    
+}
+
+#pragma mark -  NSURLConnection Delegate
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [_receiveData appendData:data];
+    
+    NSLog(@"banner file download:%lu", (unsigned long)[_receiveData length]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    
+    // 파일쓰기
+    NSError *error = nil;
+    NSString *fileName  = @"";
+    if(bannerType == 0){ //left main
+        fileName  = @"sunny_banner_left.png";
+    }else{               //main
+        fileName  = @"sunny_banner_main.png";
+    }
+    
+    NSString *docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+    [_receiveData writeToFile:[NSString stringWithFormat:@"%@/%@", docsDir, fileName] options:NSDataWritingAtomic error:&error];
+    
+    if (!error) {
+        
+        NSString *path = [docsDir stringByAppendingPathComponent:fileName];
+        NSLog(@"file save path:%@", path);
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath: path])
+        {
+            NSLog(@"file write success %@", error);
+        }
+        
+    } else {
+        NSLog(@"file write error %@", error);
+    }
+    
+    _receiveData = nil;
+    
+    [self anotherBanner];
+}
+
+- (void)anotherBanner{
+    
+    bannerType = 1;
+    //left main
+    //NSString *url = [fileUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = @"";
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    [downloadConnection start];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -623,6 +714,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+
 #pragma mark - APNS Notification Regist Results
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
@@ -630,13 +723,22 @@
     NSLog(@"device token : %@", [deviceToken description]);
     [[SafeOnPushClient sharedInstance] setDeviceToken:deviceToken];
     
-    NSCharacterSet *angleBrackets = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
-    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:angleBrackets];
+    NSString *oriToken = [NSString stringWithFormat:@"%@", deviceToken];
+    
+    NSString *deviceTokens = [[[[oriToken description]
+                                stringByReplacingOccurrencesOfString:@"<" withString:@""]
+                               stringByReplacingOccurrencesOfString:@">" withString:@""]
+                              stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    
+    
+//    NSCharacterSet *angleBrackets = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
+//    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:angleBrackets];
     
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:receivedDataString delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
 //    [alert show];
     
-    [[NSUserDefaults standardUserDefaults] setObject:token forKey:kUserDeviceToken];
+    [[NSUserDefaults standardUserDefaults] setObject:deviceTokens forKey:kUserDeviceToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
     //[[SettingManager sharedInstance] setDeviceToken:[NSString stringWithFormat:@"%@", deviceToken]];
 }
@@ -651,6 +753,10 @@
 {
     [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
     NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"push test" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    [alert show];
+
     
     NSDictionary *dic = [userInfo objectForKey:@"aps"];
     

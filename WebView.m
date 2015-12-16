@@ -809,9 +809,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
     NSInteger contentOffset = scrollView.contentOffset.y;
     // 스크롤뷰가 바운스되는 경우는 상황에서 제외
-    if (contentOffset < 0 || contentOffset > scrollView.contentSize.height - scrollView.frame.size.height) {
-        return;
-    }
+//    if (contentOffset < 0 || contentOffset > scrollView.contentSize.height - scrollView.frame.size.height) {
+//        return;
+//    }
     
 //    if (![popOverView isHidden]) {
 //        [popOverView setHidden:YES];

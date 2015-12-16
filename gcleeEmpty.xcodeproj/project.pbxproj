@@ -467,7 +467,6 @@
 		2831481D1BFB0AE70083DA3F /* success_img@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_img@1x.png"; sourceTree = "<group>"; };
 		2831481E1BFB0AE70083DA3F /* success_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_img@2x.png"; sourceTree = "<group>"; };
 		2831481F1BFB0AE70083DA3F /* success_img@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_img@3x.png"; sourceTree = "<group>"; };
-		2832D1B01C1ABA4200B34851 /* total.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = total.p12; sourceTree = "<group>"; };
 		283363C01C0F1980000CA558 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2834C1F31BFC3B5C002379E6 /* dataPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataPickerViewController.h; sourceTree = "<group>"; };
 		2834C1F41BFC3B5C002379E6 /* dataPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataPickerViewController.m; sourceTree = "<group>"; };
@@ -675,6 +674,7 @@
 		28D39F181C1C4CE400D566E9 /* UIView+FormScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+FormScroll.h"; sourceTree = "<group>"; };
 		28D39F191C1C4D4600D566E9 /* UIView+FormScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FormScroll.m"; sourceTree = "<group>"; };
 		28D3D06A1C1ABC37007817C3 /* provision_total.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = provision_total.zip; sourceTree = "<group>"; };
+		28D4277D1C2127FC00147735 /* total_cert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = total_cert.p12; sourceTree = "<group>"; };
 		28D517971C194A6D00CE489C /* bottom_banner_viet@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@1x.png"; sourceTree = "<group>"; };
 		28D517981C194A6D00CE489C /* bottom_banner_viet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@2x.png"; sourceTree = "<group>"; };
 		28D517991C194A6D00CE489C /* bottom_banner_viet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom_banner_viet@3x.png"; sourceTree = "<group>"; };
@@ -1510,7 +1510,7 @@
 				28D72FA91C1FF01400F45755 /* libSafeOnPushClient.a */,
 				28D72FAA1C1FF01400F45755 /* SafeOnPushClient.h */,
 				28D6F7F61C0BDE53009B697D /* libamsLibrary.a */,
-				2832D1B01C1ABA4200B34851 /* total.p12 */,
+				28D4277D1C2127FC00147735 /* total_cert.p12 */,
 				28D0B72B1C1E952700DDE526 /* global_vn_sunnyclub_development_2015.mobileprovision */,
 				28D0B72C1C1E952F00DDE526 /* sclubEnz_201611.mobileprovision */,
 				28D3D06A1C1ABC37007817C3 /* provision_total.zip */,

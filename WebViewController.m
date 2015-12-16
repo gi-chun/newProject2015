@@ -38,6 +38,7 @@
     BOOL isProduct;
     
     NSInteger gShowNavigation;
+
 }
 
 //@property (nonatomic, strong) CPNavigationBarView *navigationBarView;
@@ -99,11 +100,12 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
+    /////////////////////
     BOOL isForceMember = [[NSUserDefaults standardUserDefaults] boolForKey:kForceMemberViewY];
     if(isForceMember == YES){
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kForceMemberViewY];

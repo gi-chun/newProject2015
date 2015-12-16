@@ -521,6 +521,90 @@
     return [emailTest evaluateWithObject:checkString];
 }
 
+- (void) setPush{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    //
+    [rootDic setObject:TASK_USR forKey:@"task"];
+    [rootDic setObject:@"setPush" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kCardCode]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] forKey:@"user_seq"];
+    }
+    [indiv_infoDic setObject:@"I" forKey:@"os_d"];
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kosVer]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kosVer] forKey:@"os_ver"];
+    }
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUUID]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kUUID] forKey:@"tmn_unq_no"];
+    }
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUserDeviceToken]){
+        
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey: kUserDeviceToken] forKey:@"push_tmn_refno"];
+    }else{
+        [indiv_infoDic setObject:@"" forKey:@"push_tmn_refno"];
+    }
+
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];//////
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            
+        }else{
+            
+            dicItems = nil;
+            dicItems = [dicResponse objectForKey:@"indiv_info"];
+            NSString* sCardNm = dicItems[@"user_seq"];
+            
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+//        if([temp isEqualToString:@"ko"]){
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_KO, error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }else{
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_VI, error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+        
+    }];
+ 
+}
+
 - (IBAction)loginBtnClick:(id)sender {
     
 //    [spinner setHidden:false];
@@ -646,7 +730,7 @@
     NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
     NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
     
-    //회원가입
+    //
     [rootDic setObject:@"" forKey:@"task"];
     [rootDic setObject:@"" forKey:@"action"];
     [rootDic setObject:@"M2010N" forKey:@"serviceCode"];
@@ -825,6 +909,8 @@
         }
         
         [loginBtn setEnabled:true];
+        
+        [self setPush];
 
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

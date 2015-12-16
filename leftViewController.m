@@ -101,11 +101,11 @@
 
 - (void) setDataAfterlogout
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUUID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUUID];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDeviceToken];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDeviceToken];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:klang];
     //    [[NSUserDefaults standardUserDefaults] synchronize];
