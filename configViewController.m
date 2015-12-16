@@ -14,6 +14,9 @@
 #import "leftViewController.h"
 #import "Appdelegate.h"
 #import "setAlramViewController.h"
+#import "AFHTTPRequestOperation.h"
+#import "SBJson.h"
+#import "AFHTTPRequestOperationManager.h"
 
 @interface configViewController () <NavigationBarViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -280,6 +283,16 @@
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
+        
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15+marginY), kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
@@ -299,6 +312,16 @@
         [backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
@@ -675,6 +698,8 @@
     
     [_langLabel setText:temp];
     
+    [self getListBanner];
+    
     if(![_preLang isEqualToString:temp]){
         if( nKind == 0){
              [self initScreenView_ko];
@@ -692,6 +717,109 @@
     
     
 }
+
+- (void) getListBanner{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    //
+    [rootDic setObject:COMMON_TASK_USR forKey:@"task"];
+    [rootDic setObject:@"getListBanner" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    [indiv_infoDic setObject:@"2" forKey:@"d_1"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    NSHTTPCookie *cookie;
+    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+    [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
+    [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+    }
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            NSLog(@"error ==> %@", sError);
+            
+        }else{
+            
+            NSMutableArray *_arrItems;
+            _arrItems = nil;
+            _arrItems = [dicResponse objectForKey:@"indiv_info"];
+            NSDictionary *dicChildOne = _arrItems[0];
+            NSDictionary *dicChildTwo = _arrItems[1];
+            
+            NSString *temp;
+            temp = [dicChildOne objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildOne objectForKey:@"url"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"url"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSLog(@"Response ==> %@", responseData);
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+    
+    
+}
+
 
 
 /*

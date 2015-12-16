@@ -11,6 +11,9 @@
                 <outlet property="contentsLabel" destination="CPc-vP-wFa" id="1kc-3l-NEr"/>
                 <outlet property="eventButton" destination="Ulb-of-dHb" id="TL2-DX-pbd"/>
                 <outlet property="eventLabel" destination="ftD-27-9d5" id="sej-Q0-YQj"/>
+                <outlet property="labelDesc" destination="mg0-q3-zBH" id="i48-Gs-D5z"/>
+                <outlet property="labelTotalAlram" destination="Jc4-Y2-yiI" id="Efi-VZ-YTC"/>
+                <outlet property="switchTotal" destination="e2F-4a-RPu" id="orC-Ba-76w"/>
                 <outlet property="titleLabel" destination="cnh-2X-B64" id="5XT-ps-7ak"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -78,6 +81,9 @@
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e2F-4a-RPu">
                     <rect key="frame" x="255" y="115" width="51" height="31"/>
+                    <connections>
+                        <action selector="totalSwitchClick:" destination="-1" eventType="valueChanged" id="fAU-hn-jEz"/>
+                    </connections>
                 </switch>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

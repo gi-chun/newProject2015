@@ -301,6 +301,16 @@ const static CGFloat MENU_HEIGHT   =      45;
         adImageView.contentMode = UIViewContentModeScaleToFill;
         [ADView addSubview:adImageView];
         
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                adImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
+        
         //AD emptybutton
         UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [emptyButton setFrame:ADView.bounds];
@@ -319,6 +329,16 @@ const static CGFloat MENU_HEIGHT   =      45;
         [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
         adImageView.contentMode = UIViewContentModeScaleAspectFill;
         [ADView addSubview:adImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                adImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
         
         //AD emptybutton
         UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -96,7 +96,15 @@
         [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
     }
 
-    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kPushY]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kContentsPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kEventPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
     //
     NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
     [[NSUserDefaults standardUserDefaults] setObject:currSysVer forKey:kosVer];
@@ -421,11 +429,15 @@
     
     NSDictionary *parameters = @{@"plainJSON": jsonString};
     
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     NSHTTPCookie *cookie;
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
     [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
-    [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
+    [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
     [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
     [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
     [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
@@ -452,22 +464,33 @@
         
         if(dicItems){
             NSString* sError = dicItems[@"msg"];
-            
+            NSLog(@"error ==> %@", sError);
             
         }else{
             
-//            dicItems = nil;
-//            dicItems = [dicResponse objectForKey:@"indiv_info"];
-//            NSString* sCardNm = dicItems[@"user_seq"];
-//            
-//            //set kCardCode
-//            [[NSUserDefaults standardUserDefaults] setObject:sCardNm forKey:kLeftMainBannerUrl];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-//            
-//            //set id, pwd
-//            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerUrl];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-            
+            NSMutableArray *_arrItems;
+            _arrItems = nil;
+            _arrItems = [dicResponse objectForKey:@"indiv_info"];
+            NSDictionary *dicChildOne = _arrItems[0];
+            NSDictionary *dicChildTwo = _arrItems[1];
+
+            NSString *temp;
+            temp = [dicChildOne objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildOne objectForKey:@"url"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"url"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             NSLog(@"Response ==> %@", responseData);
             

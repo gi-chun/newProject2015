@@ -11,21 +11,63 @@
 
 @interface setAlramViewController ()
 {
-    __weak IBOutlet UIButton *contentsButton;
-    
-    __weak IBOutlet UIButton *eventButton;
-    __weak IBOutlet UILabel *eventLabel;
+    __weak IBOutlet UILabel *labelTotalAlram;
+    __weak IBOutlet UILabel *labelDesc;
     __weak IBOutlet UILabel *titleLabel;
-    
     __weak IBOutlet UILabel *contentsLabel;
+    __weak IBOutlet UILabel *eventLabel;
+    
+    __weak IBOutlet UISwitch *switchTotal;
+    __weak IBOutlet UIButton *contentsButton;
+    __weak IBOutlet UIButton *eventButton;
+    
      NavigationBarView *navigationBarView;
 }
 @end
 
 @implementation setAlramViewController
-- (IBAction)contentsBtnClick:(id)sender {
+
+- (IBAction)totalSwitchClick:(id)sender {
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
+    if(isTuto == YES){
+        [switchTotal setOn:false];
+    }else{
+        [switchTotal setOn:true];
+    }
 }
+
+- (IBAction)contentsBtnClick:(id)sender {
+    
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+    if(isTuto == YES){
+        //set no
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kContentsPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        //contentsButton setImage:<#(UIImage *)#> forState:<#(UIControlState)#>
+        
+    }else{
+        //set yes
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kContentsPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
+    }
+}
+
 - (IBAction)eventBtnClick:(id)sender {
+    
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+    if(isTuto == YES){
+        //set no
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kEventPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+    }else{
+        //set yes
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kEventPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+    }
 }
 
 - (void)viewDidLoad {
@@ -52,10 +94,17 @@
         }
     }
     
+    NSString* temp;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        [self initScreenView_ko];
+    }else{
+        [self initScreenView_vi];
+    }
+    
     [self resetNavigationBarView:1];
     
     //
-    NSString *temp;
     if(meHeight > 480){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -69,6 +118,16 @@
         [backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
@@ -90,6 +149,16 @@
         [backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
@@ -133,7 +202,15 @@
 
 - (NavigationBarView *)navigationBarView:(NSInteger)navigationType
 {
-    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:@"아이디 찾기"];
+    NSString* temp;
+    NSString* title;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        title = SET_PUSH_SET_TITLE_KO;
+    }else{
+        title = SET_PUSH_SET_TITLE_VI;
+    }
+    navigationBarView = [[NavigationBarView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kNavigationHeight) type:navigationType title:title];
     [navigationBarView setDelegate:self];
     
     return navigationBarView;
@@ -146,6 +223,30 @@
     //    if ([self.delegate respondsToSelector:@selector(didTouchBackButton)]) {
     //        [self.delegate didTouchBackButton];
     //    }
+}
+
+#pragma mark -initScreenView
+-(void)initScreenView_ko{
+    
+    [self resetNavigationBarView:1];
+    
+    [labelTotalAlram setText:SET_PUSH_TOTAL_KO];
+    [labelDesc setText:SET_PUSH_DESC_KO];
+    [titleLabel setText:SET_PUSH_SET_TITLE_KO];
+    [contentsLabel setText:SET_PUSH_CONTENTS_KO];
+    [eventLabel setText:SET_PUSH_EVENT_KO];
+    
+}
+
+-(void)initScreenView_vi{
+    
+    [self resetNavigationBarView:1];
+    
+    [labelTotalAlram setText:SET_PUSH_TOTAL_VI];
+    [labelDesc setText:SET_PUSH_DESC_VI];
+    [titleLabel setText:SET_PUSH_SET_TITLE_VI];
+    [contentsLabel setText:SET_PUSH_CONTENTS_VI];
+    [eventLabel setText:SET_PUSH_EVENT_VI];
 }
 
 

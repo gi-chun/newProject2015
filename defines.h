@@ -32,6 +32,7 @@
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+static NSString *SUNNY_DOMAIN = @"https://vntst.shinhanglobal.com";
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
@@ -58,6 +59,7 @@ static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://sbk.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+static NSString *SUNNY_DOMAIN = @"https://vntst.shinhanglobal.com";
 static NSString *SUNNY_CLUB_URL     = @"https://online.shinhan.com.vn/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://online.shinhan.com.vn/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://online.shinhan.com.vn/sunny/set/newstory_list.jsp?locale=%@";//새소식
@@ -78,6 +80,9 @@ static NSString * const kUUID              = @"currentUUID";        // UUID
 static NSString * const kUserDeviceToken   = @"userDeviceToken";    // 디바이스 토큰
 static NSString * const kLeftMainBannerUrl   = @"kLeftMainBannerUrl";
 static NSString * const kMainBannerUrl   = @"kMainBannerUrl";
+static NSString * const kLeftMainBannerImgUrl   = @"kLeftMainBannerImgUrl";
+static NSString * const kMainBannerImgUrl   = @"kMainBannerImgUrl";
+
 static NSString * const klang       = @"currentLang";         // language
 static NSString * const kAutoLogin       = @"autoLogin";
 static NSString * const kId       = @"kId";
@@ -89,8 +94,10 @@ static NSString * const kLoginY       = @"loginY";         //로그인성공여�
 static NSString * const kCardCode       = @"cardCode";         //
 static NSString * const kosVer       = @"osVer";
 static NSString * const kAgreeOk       = @"agreeOk";
-static NSString * const kPushY       = @"pushY";         // language
-static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         // language
+static NSString * const kPushY       = @"kPushY";
+static NSString * const kContentsPushY       = @"kContentsPushY";
+static NSString * const kEventPushY       = @"kEventPushY";
+static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         //
 static NSString * const kGNBHide       = @"kGNBHide";
 static NSString * const kCurrentVersion       = @"kCurrentVersion";
 static NSString * const kUpdateVersion       = @"kUpdateVersion";
@@ -433,10 +440,18 @@ static NSString *NET_WORK_CHECK_VI = @"Chúng tôi không thể kết nối mạ
 static NSString *NET_WORK_RELOAD_KO = @"재시도";
 static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 
+//push noti
+static NSString *SET_PUSH_TOTAL_KO = @"서비스 알림 수신 허용";
+static NSString *SET_PUSH_DESC_KO = @"Push 알림을 ON으로 설정하시면, Sunny Club에서 제공하는 다양한 정보 및 알림을 받으실 수 있습니다.";
+static NSString *SET_PUSH_SET_TITLE_KO = @"서비스 알림 수신 설정";
+static NSString *SET_PUSH_CONTENTS_KO = @"콘텐츠 알림 허용";
+static NSString *SET_PUSH_EVENT_KO = @"이벤트 알림 허용";
 
-
-
-
+static NSString *SET_PUSH_TOTAL_VI = @"Dịch vụ cho phép nhận thông báo";
+static NSString *SET_PUSH_DESC_VI = @"Nếu bạn cài đặt thông báo sang chế độ \"ON\", bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
+static NSString *SET_PUSH_SET_TITLE_VI = @"Cài đặt thông báo";
+static NSString *SET_PUSH_CONTENTS_VI = @"Cho phép các thông báo nội dung";
+static NSString *SET_PUSH_EVENT_VI = @"Cho phép các thông báo sự kiện";
 
 #define PWD_MAX_LENGTH             4
 #define ID_MAX_LENGTH             50

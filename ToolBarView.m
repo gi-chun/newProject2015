@@ -66,6 +66,16 @@
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self addSubview:backgroundImageView];
         
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+            });
+        });
+        
 //        UIButton *prevButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //        [prevButton setFrame:CGRectMake(13, 20-marginBY, 41, 41)];
 //        [prevButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateNormal];
