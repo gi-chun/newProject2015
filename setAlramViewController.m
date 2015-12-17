@@ -14,10 +14,12 @@
     __weak IBOutlet UILabel *labelTotalAlram;
     __weak IBOutlet UILabel *labelDesc;
     __weak IBOutlet UILabel *titleLabel;
+    __weak IBOutlet UILabel *nomalLabel;
     __weak IBOutlet UILabel *contentsLabel;
     __weak IBOutlet UILabel *eventLabel;
     
     __weak IBOutlet UISwitch *switchTotal;
+    __weak IBOutlet UIButton *nomalButton;
     __weak IBOutlet UIButton *contentsButton;
     __weak IBOutlet UIButton *eventButton;
     
@@ -26,6 +28,25 @@
 @end
 
 @implementation setAlramViewController
+
+- (IBAction)nomalButtonClick:(id)sender {
+    
+    BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+    if(isTuto == YES){
+        //set no
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kNomalPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        
+    }else{
+        //set yes
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kNomalPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+    }
+
+}
+
 
 - (IBAction)totalSwitchClick:(id)sender {
 
@@ -249,6 +270,7 @@
     [labelTotalAlram setText:SET_PUSH_TOTAL_KO];
     [labelDesc setText:SET_PUSH_DESC_KO];
     [titleLabel setText:SET_PUSH_SET_TITLE_KO];
+    [nomalLabel setText:SET_PUSH_NOMAL_KO];
     [contentsLabel setText:SET_PUSH_CONTENTS_KO];
     [eventLabel setText:SET_PUSH_EVENT_KO];
     
@@ -281,6 +303,7 @@
     [labelTotalAlram setText:SET_PUSH_TOTAL_VI];
     [labelDesc setText:SET_PUSH_DESC_VI];
     [titleLabel setText:SET_PUSH_SET_TITLE_VI];
+    [nomalLabel setText:SET_PUSH_NOMAL_VI];
     [contentsLabel setText:SET_PUSH_CONTENTS_VI];
     [eventLabel setText:SET_PUSH_EVENT_VI];
     

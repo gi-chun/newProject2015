@@ -98,6 +98,7 @@ static NSString * const kCardCode       = @"cardCode";         //
 static NSString * const kosVer       = @"osVer";
 static NSString * const kAgreeOk       = @"agreeOk";
 static NSString * const kPushY       = @"kPushY";
+static NSString * const kNomalPushY       = @"kNomalPushY";
 static NSString * const kContentsPushY       = @"kContentsPushY";
 static NSString * const kEventPushY       = @"kEventPushY";
 static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         //
@@ -450,12 +451,14 @@ static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 static NSString *SET_PUSH_TOTAL_KO = @"서비스 알림 수신 허용";
 static NSString *SET_PUSH_DESC_KO = @"Push 알림을 ON으로 설정하시면, Sunny Club에서 제공하는 다양한 정보 및 알림을 받으실 수 있습니다.";
 static NSString *SET_PUSH_SET_TITLE_KO = @"서비스 알림 수신 설정";
+static NSString *SET_PUSH_NOMAL_KO = @"공지/일반 알림 허용";
 static NSString *SET_PUSH_CONTENTS_KO = @"콘텐츠 알림 허용";
 static NSString *SET_PUSH_EVENT_KO = @"이벤트 알림 허용";
 
 static NSString *SET_PUSH_TOTAL_VI = @"Dịch vụ cho phép nhận thông báo";
 static NSString *SET_PUSH_DESC_VI = @"Nếu bạn cài đặt thông báo sang chế độ \"ON\", bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
 static NSString *SET_PUSH_SET_TITLE_VI = @"Cài đặt thông báo";
+static NSString *SET_PUSH_NOMAL_VI = @"공지/일반 알림 허용";
 static NSString *SET_PUSH_CONTENTS_VI = @"Cho phép các thông báo nội dung";
 static NSString *SET_PUSH_EVENT_VI = @"Cho phép các thông báo sự kiện";
 
