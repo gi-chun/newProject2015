@@ -29,6 +29,7 @@
 
 #define    SESSION_CONTINUE_SEND 60 //second
 
+static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
@@ -56,6 +57,7 @@ static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 
 #define    SESSION_CONTINUE_SEND 60*9 //second - 9 minutes
 
+static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://sbk.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";

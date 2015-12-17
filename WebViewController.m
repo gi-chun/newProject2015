@@ -746,10 +746,12 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         return false;
     }
     
+    //vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?
+    
 #ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -757,7 +759,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -782,7 +784,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 #else
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -790,7 +792,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -1747,6 +1749,41 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 
 - (void)webViewReload{
     [self.webView reload];
+}
+
+- (void)gotoPushUrl:(NSString *)url{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    NSString* gLocalLang = @"";
+    NSString *callUrl = @"";
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    
+    callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
 }
 
 @end

@@ -34,10 +34,22 @@
     }
     
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kToolBarHeight)];
-    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
-    
+    //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
     [self addSubview:backgroundImageView];
+    
+    NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI
+            backgroundImageView.image = [UIImage imageWithData:imageData];
+            if([imageData length] < 1){
+                [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+            }
+        });
+    });
 }
 
 - (id)initWithFrame:(CGRect)frame toolbarType:(NSInteger)toolbarType

@@ -30,6 +30,7 @@ typedef enum {
 - (void)setUrl:(NSString *)url;
 - (void)resetADImage;
 - (void)webViewReload;
+- (void)gotoPushUrl:(NSString *)url;
 
 
 @end

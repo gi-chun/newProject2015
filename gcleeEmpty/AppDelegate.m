@@ -28,6 +28,7 @@
     
     NSMutableData           *_receiveData;
     NSInteger bannerType; //0:left main, 1:main
+    NSInteger pushGo; //0: no push go, 1: push go
 }
 @end
 
@@ -52,20 +53,16 @@
 //        [self.window setRootViewController:self.introductionView];
 //        ///////////////////////////////////////////////////////////////////////////////////////////
 //    }else{
-        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-        if(isTuto == NO){
-            isTutoShow = YES;
-            self.introductionView = [[MYViewController alloc] init];
-            self.introductionView.delegate = self;
-            [self.window setRootViewController:self.introductionView];
-            
-        }else{
-           isTutoShow = NO;
+//        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+//        if(isTuto == NO){
+//            isTutoShow = YES;
 //            self.introductionView = [[MYViewController alloc] init];
 //            self.introductionView.delegate = self;
-//            
 //            [self.window setRootViewController:self.introductionView];
-        }
+//            
+//        }else{
+//           isTutoShow = NO;
+//        }
     //}
     
     return YES;
@@ -400,6 +397,23 @@
         
     }
     
+    if (launchOptions){
+        [self receiveRemoteNotification:launchOptions withAppState:NO];
+    }
+    
+    if(isTutoShow){
+        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+        if(isTuto == NO){
+            isTutoShow = YES;
+            self.introductionView = [[MYViewController alloc] init];
+            self.introductionView.delegate = self;
+            [self.window setRootViewController:self.introductionView];
+            
+        }else{
+            isTutoShow = NO;
+        }
+    }
+    
     if(isTutoShow == NO){
         [self didFinishIntro];
     }
@@ -407,8 +421,7 @@
     //session continue
     [self startSessionTimer];
     
-    if (launchOptions)
-        [self receiveRemoteNotification:launchOptions withAppState:NO];
+    
     
     return YES;
 }
@@ -820,20 +833,18 @@
             tclose = BTN_CONFIRM_VI;
         }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageDic
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
                                                        delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
         [alert show];
         
     }else{
         
-        
         NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
         
-        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
-        
-        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
-                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert2 show];
+//        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
+//                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert2 show];
 
         if(!dic){
             return;
@@ -852,6 +863,11 @@
         
         [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        if([messageWebUrl length] > 1){
+            isTutoShow = NO;
+            pushGo = 1;
+        }
         
         NSString* temp;
         NSString* tclose;
@@ -874,14 +890,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-    
     if (buttonIndex == 0){
-        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"button test"
-//                                                       delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-//        [alert show];
-//        
-//        [self pushAction];
+        NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+    
+        [_homeWebViewController gotoPushUrl:callUrl];
     }
 }
 
@@ -907,7 +919,20 @@
     _homeWebViewController = (WebViewController*)centerViewController;
     [_homeWebViewController setDelegate:_gLeftViewController];
     [_gLeftViewController setDelegate:_homeWebViewController];
-    [_homeWebViewController setUrl:SUNNY_CLUB_URL];
+    
+    if(pushGo){
+        NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+        NSString* callUrlLast = [NSString stringWithFormat:@"%@?locale=ko", callUrl];
+        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:callUrlLast delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//        [alert show];
+        
+        [_homeWebViewController setUrl:callUrlLast];
+        pushGo = 0;
+        
+    }else{
+        [_homeWebViewController setUrl:SUNNY_CLUB_URL];
+    }
     
     //    UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
     
