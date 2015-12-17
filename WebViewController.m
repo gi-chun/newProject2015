@@ -335,13 +335,13 @@
 NSInteger showNavigation = 1; //1: show, 2: hidden
     
 #ifdef TEST_SERVER_DEFINE
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 3;
@@ -352,13 +352,13 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [self initNavigation:4];
     }
 #else
-    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 3;
@@ -751,7 +751,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 #ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub"].location == NSNotFound)){
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -759,7 +759,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -784,7 +784,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 #else
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -792,7 +792,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
