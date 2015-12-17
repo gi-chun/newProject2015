@@ -879,9 +879,9 @@
             tclose = BTN_CONFIRM_VI;
         }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
-                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
+//                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
+//        [alert show];
 
         
     }

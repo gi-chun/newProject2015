@@ -27,7 +27,7 @@
 			<string>com.shinhan.global.vn.sclub</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sunnyClub</string>
+				<string>sunnyapp</string>
 			</array>
 		</dict>
 	</array>
