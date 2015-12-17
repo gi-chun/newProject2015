@@ -211,7 +211,7 @@
     
     [self resetNavigationBarView:1];
     [labelWelcom setText:WELCOM_DESC_VI];
-    [goBtn setTitle:SERVICE_GO_KO forState:UIControlStateNormal];
+    [goBtn setTitle:SERVICE_GO_VI forState:UIControlStateNormal];
 
 }
 

@@ -82,6 +82,7 @@ static NSString * const kLeftMainBannerUrl   = @"kLeftMainBannerUrl";
 static NSString * const kMainBannerUrl   = @"kMainBannerUrl";
 static NSString * const kLeftMainBannerImgUrl   = @"kLeftMainBannerImgUrl";
 static NSString * const kMainBannerImgUrl   = @"kMainBannerImgUrl";
+static NSString * const kPushUrl   = @"kPushUrl";
 
 static NSString * const klang       = @"currentLang";         // language
 static NSString * const kAutoLogin       = @"autoLogin";
@@ -113,6 +114,9 @@ static NSString * const kForceMemberViewY       = @"kForceMemberViewY"; //member
 
 
 
+
+static NSString *BTN_CONFIRM_KO = @"확인";
+static NSString *BTN_CONFIRM_VI = @"Xác nhận";
 
 //korea
 static NSString * SEND_PWD_MAIL_KO = @"회원님의 등록된 메일 주소로\n임시 비밀번호 메일을 전송 하였습니다.";

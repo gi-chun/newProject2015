@@ -407,6 +407,9 @@
     //session continue
     [self startSessionTimer];
     
+    if (launchOptions)
+        [self receiveRemoteNotification:launchOptions withAppState:NO];
+    
     return YES;
 }
 
@@ -781,85 +784,113 @@
 #pragma mark - Recieve Push Notifications
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
-    NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"push test" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-    [alert show];
-
-    
-    NSDictionary *dic = [userInfo objectForKey:@"aps"];
-    
-    NSString *message = [dic objectForKey:kSOAlert];
-    NSString *messageId = [dic objectForKey:kSOMessageId];
-    
-    // 포그라운드에서의 푸쉬 처리
     [self receiveRemoteNotification:userInfo withAppState:YES];
 }
 
-- (void)receiveRemoteNotification:(NSDictionary *)info withAppState:(BOOL)onForeground
+- (void)receiveRemoteNotification:(NSDictionary *)userInfo withAppState:(BOOL)onForeground
 {
-    NSLog(@"푸쉬 들어옴 %@", info);
-    // 데이터가 없는 경우는 처리하지 않는다
-    if (!info)
-        return;
+    // _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
     
-    NSString* _pushOpenUrl = @"";
-    
-    // 앱 실행중일 떄
-    if (onForeground) {
+    if(onForeground){
         
-        _pushOpenUrl = [info objectForKey:@"linkUrl"];
+        [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+        NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
         
-        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
-            
-            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
-                                                                   withString:@"mmail."];
-            
+        NSDictionary *dic = [userInfo objectForKey:@"aps"];
+        
+        //kSOAlert, kSOMessageId
+        NSString *title = [dic objectForKey:@"title"];
+        NSString *message = [dic objectForKey:@"alert"];
+        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSString* temp;
+        NSString* tclose;
+        
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            tclose = BTN_CONFIRM_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            tclose = BTN_CONFIRM_VI;
         }
         
-        // url이 없는 경우
-        if ([_pushOpenUrl isEqualToString:@""] || !_pushOpenUrl) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
-                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-            [alert show];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageDic
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }else{
+        
+        
+        NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+        
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        
+        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
+                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        [alert2 show];
+
+        if(!dic){
+            return;
         }
         
-        // url이 있는 경우
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
-                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:@"열기", nil];
-            [alert show];
-            
-        }
-    }
-    
-    // 앱 실행중이 아닐 때
-    else {
-        _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
+        //[[SafeOnPushClient sharedInstance] receiveNotification:dic delegate:self];
+        NSLog(@"didReceiveRemoteNotification : \n%@", dic);
         
-        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
-            
-            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
-                                                                   withString:@"mmail."];
-            
+        //kSOAlert, kSOMessageId
+        NSString *title = [dic objectForKey:@"title"];
+        NSString *message = [dic objectForKey:@"alert"];
+        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSString* temp;
+        NSString* tclose;
+        
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            tclose = BTN_CONFIRM_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            tclose = BTN_CONFIRM_VI;
         }
         
-        //[self pushAction];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
+        [alert show];
+
+        
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1){
-        //[self pushAction];
+    
+    
+    if (buttonIndex == 0){
+        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"button test"
+//                                                       delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert show];
+//        
+//        [self pushAction];
     }
 }
 
 - (void)pushAction
 {
-    
+    NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+    if([callUrl length] > 0){
+        // go to URL
+    }
 }
 
 #pragma mark - Intro
