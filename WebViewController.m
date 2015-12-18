@@ -335,13 +335,13 @@
 NSInteger showNavigation = 1; //1: show, 2: hidden
     
 #ifdef TEST_SERVER_DEFINE
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/"].location == NSNotFound)){
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 3;
@@ -352,13 +352,13 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [self initNavigation:4];
     }
 #else
-    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 3;
@@ -746,12 +746,10 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         return false;
     }
     
-    //vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?
-    
 #ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/"].location == NSNotFound)){
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -759,7 +757,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -768,6 +766,13 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [self initNavigation:3];
     }else{
         
+        
+        //
+        if (([url rangeOfString:@"facebook"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
+            
         //sunny없는 URL은 외부 사파리 호출
         if (([url rangeOfString:@"sunny"].location == NSNotFound)){
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
@@ -784,7 +789,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 #else
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -792,7 +797,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -800,6 +805,12 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 3;
         [self initNavigation:3];
     }else{
+        
+        //
+        if (([url rangeOfString:@"facebook"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
         
         //sunny없는 URL은 외부 사파리 호출
         if (([url rangeOfString:@"sunny"].location == NSNotFound)){
@@ -1641,8 +1652,39 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 //    [alert show];
     
     [self.mm_drawerController closeDrawerAnimated:true completion:nil];
+}
+
+- (void)didTouchLetterBtn
+{
+    [self setUrl:@""];
     
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
     
+    callUrl = [NSString stringWithFormat:LETTER_URL, gLocalLang];
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+
+    [self.mm_drawerController closeDrawerAnimated:true completion:nil];
     
 }
 

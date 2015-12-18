@@ -26,4 +26,5 @@
 - (void)didTouchLogOutBtn;
 - (void)didTouchLogInBtn;
 - (void)didTouchAD;
+- (void)didTouchLetterBtn;
 @end

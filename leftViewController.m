@@ -18,7 +18,9 @@
 //#import "KTBiOS.h"
 #import "XMLDictionary.h"
 
-@interface leftViewController ()
+@interface leftViewController (){
+    leftMenuView* menuView;
+}
 
 @end
 
@@ -157,7 +159,10 @@
     
 }
 
-
+- (void)getMembership
+{
+    
+}
 
 - (void)loadContentsView
 {
@@ -172,7 +177,7 @@
     
     //[self.view setBackgroundColor:[UIColor blueColor]];
     
-    leftMenuView* menuView = nil;
+    menuView = nil;
     
     if(kScreenBoundsWidth > 400){
         menuView = [[leftMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth-130.0, kScreenBoundsHeight)];
@@ -248,6 +253,14 @@
     
     if ([self.delegate respondsToSelector:@selector(didTouchCloseBtn)]) {
         [self.delegate didTouchCloseBtn];
+    }
+    
+}
+
+- (void)didTouchLetterBtn
+{
+   if ([self.delegate respondsToSelector:@selector(didTouchLetterBtn)]) {
+        [self.delegate didTouchLetterBtn];
     }
     
 }

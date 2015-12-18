@@ -10,10 +10,7 @@
 
 #define PushClient          [SafeOnPushClient shraredInstance]
 
-//#define kSOServerUrl        @"http://192.168.1.24:31000/spns"
-//enz
-#define kSOServerUrl        @"http://192.168.1.24:31000/spns"
-
+#define kSOServerUrl        @"http://pushdev.shinhanglobal.com:8897/spns"
 #define kSOAppNo            @"22"
 
 #define kSOMessageId        @"messageId"        /*메시지 고유번호*/

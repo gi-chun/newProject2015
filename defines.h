@@ -38,6 +38,8 @@ static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/su
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/help_list.jsp?locale=%@";    //도움말
+static NSString *LETTER_URL      = @"https://vntst.shinhanglobal.com/sunny/set/allim_list.jsp?locale=%@";    //메세지
+
 static NSString *SHINHAN_ZONE_URL   = @"https://vntst.shinhanglobal.com/sunny/bank/shinhanzone.jsp";    //신한존
 static NSString *SHINHAN_EVENT_URL   = @"https://vntst.shinhanglobal.com/sunny/set/event_view.jsp?seqno=1&board_d=1";
 static NSString *SHINHAN_LOCATION_URL   = @"https://vntst.shinhanglobal.com/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
@@ -66,6 +68,7 @@ static NSString *SUNNY_CLUB_URL     = @"https://online.shinhan.com.vn/sunny/sunn
 static NSString *SUNNY_BANK_URL     = @"https://online.shinhan.com.vn/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://online.shinhan.com.vn/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://online.shinhan.com.vn/sunny/set/help_list.jsp?locale=%@";    //도움말
+static NSString *LETTER_URL      = @"https://online.shinhan.com.vn/sunny/set/allim_list.jsp?locale=%@";    //메세지
 static NSString *SHINHAN_ZONE_URL   = @"https://online.shinhan.com.vn/sunny/bank/shinhanzone.jsp";    //신한존
 static NSString *SHINHAN_EVENT_URL   = @"https://online.shinhan.com.vn/sunny/set/event_view.jsp?seqno=1&board_d=1";    //신한존
 static NSString *SHINHAN_LOCATION_URL   = @"https://online.shinhan.com.vn/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";

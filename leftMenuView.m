@@ -713,8 +713,8 @@ const static CGFloat MENU_HEIGHT   =      45;
 }
 - (void)didTouchLetterBtn
 {
-    if ([self.delegate respondsToSelector:@selector(didTouchCloseBtn)]) {
-        [self.delegate didTouchCloseBtn];
+    if ([self.delegate respondsToSelector:@selector(didTouchLetterBtn)]) {
+        [self.delegate didTouchLetterBtn];
     }
     
 }

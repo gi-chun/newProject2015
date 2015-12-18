@@ -68,8 +68,13 @@
     return YES;
 }
 
+#pragma mark - SNS communication
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     // handler code here
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"twit test 1" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    [alert show];
     
     return YES;
 }
@@ -77,6 +82,26 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     NSLog(@"openURL : total url string : %@ ", url);
     NSLog(@"openURL : url query : %@", [url query]);
+    
+    NSString *strUrl = url.absoluteString;
+    
+    //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3
+    NSString* strLastUrl = [strUrl substringFromIndex:30];
+    
+    if([strLastUrl length] > 1){
+        isTutoShow = NO;
+        pushGo = 1;
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"SNS contents view"
+                                                   delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alert show];
+
+    [[NSUserDefaults standardUserDefaults] setObject:strLastUrl forKey:kPushUrl];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //[self performSelector:@selector(delayWebopen) withObject:nil afterDelay:20];
+    
     
     return YES;
 }
@@ -92,14 +117,6 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     }
     
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    
-    if (userInfo != nil) {
-        NSLog(@"%@", userInfo);
-        
-        [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
-    }
-
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kPushY]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -396,9 +413,28 @@
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         
     }
+
+#ifdef TEST_SERVER_DEFINE
+    NSString* serverUrl = @"http://pushdev.shinhanglobal.com:8897/spns";
+#else
+    NSString* serverUrl = @"http://push.shinhan.com.vn:8897/spns";
+#endif
+    
+    [[SafeOnPushClient sharedInstance] setServerUrl:serverUrl];
+    [[SafeOnPushClient sharedInstance] setAppNo:strVerion];
+    [[SafeOnPushClient sharedInstance] setBundleIdentifier:strBundle];
     
     if (launchOptions){
+        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        
+        if (userInfo != nil) {
+            NSLog(@"%@", userInfo);
+            
+            [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+        }
+        
         [self receiveRemoteNotification:launchOptions withAppState:NO];
+        
     }
     
     if(isTutoShow){
@@ -805,9 +841,26 @@
 {
     // _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
     
+    NSString* totalDic;
+    totalDic = [NSString stringWithFormat:@"faceBook %@", userInfo];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test" message:totalDic
+//                                                   delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//    [alert show];
+    
+    //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3
+    
+    if(!([totalDic rangeOfString:@"facebook"].location == NSNotFound)){
+        return;
+    }
+    
+//     NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+//
+    
     if(onForeground){
         
         [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+        
         NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
         
         NSDictionary *dic = [userInfo objectForKey:@"aps"];
@@ -1026,6 +1079,11 @@
         [netSessionTimer invalidate];
         netSessionTimer = nil;
     }
+    
+}
+
+- (void)delayWebopen
+{
     
 }
 
