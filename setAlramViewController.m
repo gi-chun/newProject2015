@@ -471,9 +471,11 @@
     NSString *contentSet;
     NSString *eventSet;
     NSString *totalSet;
+    NSString *BIGSet;
     
     BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
     if(isAlram == YES){
+        BIGSet = @"Y";
         
         BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
         if(isAlram == YES){
@@ -497,6 +499,7 @@
         }
         
     }else{
+         BIGSet = @"N";
         nomalSet = @"N";
         contentSet = @"N";
         eventSet = @"N";
@@ -513,6 +516,8 @@
     if([[NSUserDefaults standardUserDefaults] stringForKey:kCardCode]){
         [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] forKey:@"user_seq"];
     }
+    
+    [indiv_infoDic setObject:BIGSet forKey:@"push_rec_yn"];
     [indiv_infoDic setObject:totalSet forKey:@"push_alarm"];
     
     [sendDic setObject:rootDic forKey:@"root_info"];

@@ -228,7 +228,15 @@
             
             dicItems = [dicResponse objectForKey:@"indiv_info"];
             NSString* sEmail = dicItems[@"email_id"];
-            
+            NSArray *sEmailArray = dicItems[@"email_id"];
+           
+//            NSMutableString *sEmailM = [[NSMutableString alloc] init];
+//            
+//            for (NSString *sEmailItem in sEmailArray) {
+//                
+//                //[sEmailM appendFormat:@"%@=%@;",cookie.name, cookie.value];
+//                
+//            }
             
             //to json
             SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
