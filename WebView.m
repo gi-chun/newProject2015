@@ -50,6 +50,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     NSTimer         *netCheckTimer;
     NSInteger               netTimeOutSecond;
     UIView *checkNetTimoutView;
+    
+    CGFloat fZoomInCurrent;
 }
 
 @end
@@ -84,7 +86,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         //_webView = [[UIWebView alloc] initWithFrame:frame];
         [_webView setDelegate:self];
         [_webView setScalesPageToFit:YES];
-        [_webView setContentMode:UIViewContentModeScaleAspectFit]; //UIViewContentModeScaleAspectFit
+        [_webView setContentMode:UIViewContentModeScaleToFill]; //UIViewContentModeScaleAspectFit
         
         [_webView setClipsToBounds:YES];
         [_webView setAllowsInlineMediaPlayback:YES];
@@ -93,6 +95,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_webView.scrollView setDelegate:self];
         [_webView.scrollView setDecelerationRate:UIScrollViewDecelerationRateNormal];
         [_webView.scrollView setBounces:NO];
+        [_webView.scrollView setShowsHorizontalScrollIndicator:true];
+        [_webView.scrollView setShowsVerticalScrollIndicator:true];
         
 //        [_webView.scrollView zoomToRect:CGRectMake(0,0,_webView.scrollView.contentSize.width+300, _webView.scrollView.contentSize.height+300) animated:YES];
         
@@ -161,6 +165,24 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_preButton addTarget:self action:@selector(touchpreButton) forControlEvents:UIControlEventTouchUpInside];
         [_preButton setHidden:YES];
         [self addSubview:_preButton];
+        
+        // zoom in
+        _zoomInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
+        [_zoomInButton setImage:[UIImage imageNamed:@"bottom_top_btn.png"] forState:UIControlStateNormal];
+        [_zoomInButton setImage:[UIImage imageNamed:@"bottom_top_btn.png"] forState:UIControlStateHighlighted];
+        [_zoomInButton addTarget:self action:@selector(touchZoomInButton) forControlEvents:UIControlEventTouchUpInside];
+        [_zoomInButton setHidden:NO];
+        [self addSubview:_zoomInButton];
+        
+        // zoom out
+        _zoomOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
+        [_zoomOutButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateNormal];
+        [_zoomOutButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateHighlighted];
+        [_zoomOutButton addTarget:self action:@selector(touchZoomOutButton) forControlEvents:UIControlEventTouchUpInside];
+        [_zoomOutButton setHidden:NO];
+        [self addSubview:_zoomOutButton];
         
 //        // 토글버튼
 //        toggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -306,13 +328,24 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-kToolBarHeight);
     [self.webView setFrame:webViewFrame];
     
+    CGSize contentSize = self.webView.scrollView.contentSize;
+    CGSize viewSize = webViewFrame.size;
+    
+    float sfactor = viewSize.width / contentSize.width;
+    
+    self.webView.scrollView.minimumZoomScale = sfactor;
+    self.webView.scrollView.maximumZoomScale = sfactor;
+    self.webView.scrollView.zoomScale = sfactor;
+    
     CGRect toolViewFrame;
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2), CGRectGetWidth([self frame]), kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
     
     [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight/2-5), buttonWidth, buttonHeight)];
     [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight/2-5), buttonWidth, buttonHeight)];
-
+    
+    [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) - (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
 }
 
 - (void)updateFrameSunnyForStatusHide
@@ -323,6 +356,15 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2);
     [self.webView setFrame:webViewFrame];
     
+    CGSize contentSize = self.webView.scrollView.contentSize;
+    CGSize viewSize = webViewFrame.size;
+    
+    float sfactor = viewSize.width / contentSize.width;
+    
+    self.webView.scrollView.minimumZoomScale = sfactor;
+    self.webView.scrollView.maximumZoomScale = sfactor;
+    self.webView.scrollView.zoomScale = sfactor;
+    
     CGRect toolViewFrame;
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2, CGRectGetWidth([self frame]), kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
@@ -331,6 +373,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
     [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
 
+    [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
     
 //    [self bringSubviewToFront:_topButton];
 }
@@ -488,6 +532,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     self.webView.scrollView.minimumZoomScale = sfactor;
     self.webView.scrollView.maximumZoomScale = sfactor;
     self.webView.scrollView.zoomScale = sfactor;
+    
+//    self.webView.scrollView.minimumZoomScale = 10;
+//    self.webView.scrollView.maximumZoomScale = 10;
+//    self.webView.scrollView.zoomScale = 10;
     
     if ([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.delegate webViewDidFinishLoad:self];
@@ -773,6 +821,46 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    if (mapScript) {
 //        [self execute:[mapScript objectForKey:@"script"]];
 //    }
+}
+
+- (void)touchZoomInButton{
+    
+//    CGSize c_contentSize = self.webView.scrollView.contentSize;
+//    c_contentSize.height += 10;
+//    c_contentSize.width += 10;
+//    self.webView.scrollView.contentSize = c_contentSize;
+//    CGSize viewSize = _webView.frame.size;
+//    
+//    float sfactor = viewSize.width / c_contentSize.width;
+//
+    fZoomInCurrent += 0.2f;
+    
+    if(fZoomInCurrent > ZOOMIN_MAX_LENGTH){
+        fZoomInCurrent = ZOOMIN_MAX_LENGTH;
+    }
+    
+    self.webView.scrollView.minimumZoomScale = fZoomInCurrent;
+    self.webView.scrollView.maximumZoomScale = fZoomInCurrent;
+    self.webView.scrollView.zoomScale = fZoomInCurrent;
+    
+}
+
+- (void)touchZoomOutButton{
+//    CGSize c_contentSize = self.webView.scrollView.contentSize;
+//    c_contentSize.height -= 10;
+//    c_contentSize.width -= 10;
+//    self.webView.scrollView.contentSize = c_contentSize;
+//    CGSize viewSize = _webView.frame.size;
+//    
+//    float sfactor = viewSize.width / c_contentSize.width;
+    fZoomInCurrent -= 0.2f;
+    if(fZoomInCurrent < ZOOMOUT_MAX_LENGTH){
+        fZoomInCurrent = 1.0f;
+    }
+    self.webView.scrollView.minimumZoomScale = fZoomInCurrent;
+    self.webView.scrollView.maximumZoomScale = fZoomInCurrent;
+    self.webView.scrollView.zoomScale = fZoomInCurrent;
+    
 }
 
 //- (void)touchToggleButton

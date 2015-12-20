@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIButton *topButton;
 @property (nonatomic, strong) UIButton *preButton;
+@property (nonatomic, strong) UIButton *zoomInButton;
+@property (nonatomic, strong) UIButton *zoomOutButton;
 @property (nonatomic, strong) UIButton *zoomViewerButton;
 @property (nonatomic) BOOL isProductDidLoad;
 @property (nonatomic) BOOL isExistsSubWebView;

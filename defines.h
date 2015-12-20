@@ -479,6 +479,8 @@ static NSString *SET_PUSH_EVENT_VI = @"Cho phép các thông báo sự kiện";
 #define PWD_MAX_LENGTH             4
 #define ID_MAX_LENGTH             50
 #define NAME_MAX_LENGTH           100
+#define ZOOMIN_MAX_LENGTH         2.0f
+#define ZOOMOUT_MAX_LENGTH        1.0f
 
 
 
