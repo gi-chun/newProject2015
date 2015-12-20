@@ -93,12 +93,14 @@
         pushGo = 1;
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"SNS contents view"
-                                                   delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"SNS contents view"
+//                                                   delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//    [alert show];
 
     [[NSUserDefaults standardUserDefaults] setObject:strLastUrl forKey:kPushUrl];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [_homeWebViewController gotoPushUrl:strLastUrl];
     
     //[self performSelector:@selector(delayWebopen) withObject:nil afterDelay:20];
     
@@ -973,15 +975,26 @@
     [_homeWebViewController setDelegate:_gLeftViewController];
     [_gLeftViewController setDelegate:_homeWebViewController];
     
+    //pushGo = 1;
     if(pushGo){
         NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
-        NSString* callUrlLast = [NSString stringWithFormat:@"%@?locale=ko", callUrl];
+        //callUrl =  @"https://localhost/test.jsp?";
+        NSString* temp = @"%@";
+        NSString* callUrlLast = @"";
+        NSRange range = [callUrl rangeOfString:@"?"];
+        if (range.location != NSNotFound){
+            callUrlLast = [NSString stringWithFormat:@"%@&locale=%@", callUrl, temp]; //locale=%@
+        }else{
+            callUrlLast = [NSString stringWithFormat:@"%@?locale=%@", callUrl, temp]; //locale=%@
+        }
         
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:callUrlLast delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
 //        [alert show];
         
         [_homeWebViewController setUrl:callUrlLast];
         pushGo = 0;
+        
+        //[_homeWebViewController gotoPushUrl:callUrl];
         
     }else{
         [_homeWebViewController setUrl:SUNNY_CLUB_URL];

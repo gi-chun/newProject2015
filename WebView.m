@@ -133,10 +133,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         
         // 탑버튼
         _topButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        
-        
-        [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
+//        [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
+        [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
         [_topButton setImage:[UIImage imageNamed:@"bottom_top_btn.png"] forState:UIControlStateNormal];
         [_topButton addTarget:self action:@selector(touchTopButton) forControlEvents:UIControlEventTouchUpInside];
         [_topButton setHidden:YES];
@@ -155,7 +153,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         
         // pre버튼
         _preButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
+//        [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
+        [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
+
         [_preButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateNormal];
         [_preButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateHighlighted];
         [_preButton addTarget:self action:@selector(touchpreButton) forControlEvents:UIControlEventTouchUpInside];
@@ -310,9 +310,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2), CGRectGetWidth([self frame]), kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
     
-    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
-    
-    [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) - (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight/2-5), buttonWidth, buttonHeight)];
+    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight/2-5), buttonWidth, buttonHeight)];
+
 }
 
 - (void)updateFrameSunnyForStatusHide
@@ -328,9 +328,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [toolBarView setFrame:toolViewFrame];
     
     
-    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
-    
-    [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
+    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
+
     
 //    [self bringSubviewToFront:_topButton];
 }
