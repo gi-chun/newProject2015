@@ -579,6 +579,8 @@
     CGFloat labelMarginX = 0.f;
     CGFloat logoutMarginX = 0.f;
     CGFloat cardMarginX = 0.f;
+    CGFloat cardNumberX = 0.0f;
+    CGFloat pointX = 0.0f;
     
 //    if(kScreenBoundsWidth > 400){
 //        titleLabelMarginX = 80;
@@ -603,6 +605,8 @@
             labelMarginX = 2;
             logoutMarginX =10;
             cardMarginX = 0;
+            cardNumberX = 35;
+            pointX = 30;
     
         }else{
             titleLabelMarginX = (kScreenBoundsWidth > 320)?10:0;
@@ -610,6 +614,8 @@
             labelMarginX = (kScreenBoundsWidth > 320)?2:0;
             logoutMarginX = (kScreenBoundsWidth > 320)?100:50;
             cardMarginX = (kScreenBoundsWidth > 320)?40:20;
+            cardNumberX = (kScreenBoundsWidth > 320)?40:35;
+            pointX = (kScreenBoundsWidth > 320)?-10:10;
             
         }
 
@@ -727,7 +733,7 @@
     
     //card number label
     _cardNumber =  [[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] ;
-    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(55+cardMarginX, 85, meWidth-65, 40) ];
+    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(55+cardNumberX, 85, meWidth-65, 40) ];
     [labelCardNumber setBackgroundColor:[UIColor clearColor]];
     [labelCardNumber setTextColor:UIColorFromRGB(0xffffff)];
     [labelCardNumber setFont:[UIFont systemFontOfSize:14]];
@@ -753,7 +759,7 @@
     NSNumber *nPoint = [NSNumber numberWithInt:[strPoint intValue]];
     
     strPoint = [NSString stringWithFormat:@"%@ P", [numberFormatter stringFromNumber:nPoint]];
-    labelPoint = [[UILabel alloc] initWithFrame:CGRectMake(-15, 113, meWidth-65, 40) ];
+    labelPoint = [[UILabel alloc] initWithFrame:CGRectMake(pointX, 113, meWidth-65, 40) ];
     [labelPoint setBackgroundColor:[UIColor clearColor]];
     [labelPoint setTextColor:UIColorFromRGB(0xffffff)];
     [labelPoint setFont:[UIFont systemFontOfSize:12]];

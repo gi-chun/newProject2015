@@ -7,22 +7,18 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1C6773C2-CC6E-454E-988A-0F885ED1A29A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>gcleeEmpty</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49</key>
 		<string>https://github.com/gi-chun/newProject2015.git</string>
-		<key>6342230F6DC956809DE1650F0B00261BC7BDB8B1</key>
-		<string>https://github.com/gi-chun/ios_empty.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>gcleeEmpty.xcodeproj</string>
+	<string>gcleeEmpty.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49</key>
 		<string>../..</string>
-		<key>6342230F6DC956809DE1650F0B00261BC7BDB8B1</key>
-		<string>../../../back_up/emptyPrj</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/gi-chun/newProject2015.git</string>
@@ -36,17 +32,9 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6342230F6DC956809DE1650F0B00261BC7BDB8B1</string>
-			<key>IDESourceControlWCCName</key>
-			<string>emptyPrj</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>2CD5F5D81AF766B6ACBBB21DDBAD61D9964CCD49</string>
 			<key>IDESourceControlWCCName</key>
-			<string>real</string>
+			<string>newProject2015</string>
 		</dict>
 	</array>
 </dict>

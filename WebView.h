@@ -31,7 +31,7 @@
 
 - (void)redrawADImage;
 - (void)updateFrame;
-- (void)updateFrameSunny;
+- (void)updateFrameSunny:(NSInteger)gnbType; //0: sunny 3: bank
 - (void)updateFrameSunnyForStatusHide;
 - (void)setForwardButton:(BOOL)enable;
 - (void)open:(NSString *)url;

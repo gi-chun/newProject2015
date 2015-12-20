@@ -320,7 +320,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    [self.webView setFrame:webViewFrame];
 }
 
-- (void)updateFrameSunny
+- (void)updateFrameSunny:(NSInteger)gnbType
 {
      //_webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 6, CGRectGetWidth(frame),
     
@@ -341,11 +341,28 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2), CGRectGetWidth([self frame]), kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
     
-    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight/2-5), buttonWidth, buttonHeight)];
-    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight/2-5), buttonWidth, buttonHeight)];
+    CGFloat topButtonMarginX = 0.0f;
+    if(kScreenBoundsWidth > 400){
+        topButtonMarginX = 7;
+        
+    }else{
+        topButtonMarginX = (kScreenBoundsWidth > 320)?0:0;
+    }
+    
+    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight-12)+topButtonMarginX, buttonWidth, buttonHeight)];
+    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight-12)+topButtonMarginX, buttonWidth, buttonHeight)];
     
     [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) - (buttonHeight+10) , buttonWidth, buttonHeight)];
     [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
+    
+    if(gnbType == 0){ //sunny
+        [_zoomInButton setHidden:false];
+        [_zoomOutButton setHidden:false];
+    }else{
+        [_zoomInButton setHidden:true];
+        [_zoomOutButton setHidden:true];
+
+    }
 }
 
 - (void)updateFrameSunnyForStatusHide
@@ -375,6 +392,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
     [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
     [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
+    
+    [_zoomInButton setHidden:false];
+    [_zoomOutButton setHidden:false];
     
 //    [self bringSubviewToFront:_topButton];
 }
@@ -524,6 +544,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //        return;
 //    }
     
+    fZoomInCurrent = 1.0f;
     CGSize contentSize = self.webView.scrollView.contentSize;
     CGSize viewSize = self.frame.size;
     

@@ -835,7 +835,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     CGRect webViewFrame;
     CGRect toolViewFrame;
     
-    if (showNavigation == 4) {
+    if (showNavigation == 4) {   // hide navigation
         
 //        if ([SYSTEM_VERSION intValue] > 6) {
 //            webViewFrame = CGRectMake(0, -(kNavigationHeight-kNavigationHeightHide+kWebViewTopMarginY), kScreenBoundsWidth, kScreenBoundsHeight-(kToolBarHeight+kNavigationHeight)/2);
@@ -862,7 +862,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [statusBarView setBackgroundColor:UIColorFromRGB(0xe0e0e0)];
         
     }
-    else {
+    else {                      // show navigation
         [statusBarView removeFromSuperview];
         
         naviViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kNavigationHeight);
@@ -878,7 +878,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         
         if (self.webView) {
             [self.webView setFrame:webViewFrame];
-            [self.webView updateFrameSunny];
+            [self.webView updateFrameSunny:showNavigation];
         }
     }
     

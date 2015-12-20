@@ -137,7 +137,7 @@
         
         if(screenWidth > 320){
             if(screenWidth > 400){
-                marginX = -20;
+                marginX = -10;
                 marginY = 5;
             }else{
                 marginX = -10;
