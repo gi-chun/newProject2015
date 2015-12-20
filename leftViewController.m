@@ -74,6 +74,10 @@
 //    if (self.navigationController.navigationBar.isHidden) {
 //        [self.navigationController setNavigationBarHidden:YES];
 //    }
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        [self setViewLogin];
+    }
     [self.navigationController setNavigationBarHidden:YES];
     
 }
@@ -95,7 +99,11 @@
 
 - (void)setViewLogin
 {
-    [self getMembership];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        [self getMembership];
+    }
+    
     [self loadContentsView];
 }
 

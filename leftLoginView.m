@@ -23,6 +23,7 @@
     UILabel* labelMailId;
     UILabel* labelId;
     UILabel* labelCardNumber;
+    UILabel* labelPoint;
     UIImageView *cardImageView;
     UIImageView *idImageView;
     UIButton* loginButton;
@@ -701,22 +702,65 @@
     [self addSubview:logoutButton];
     
     // card image
-    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20-cardMarginX, 36, meWidth-40, 135)];
+    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10-cardMarginX, 36, meWidth-40, 135)];
     //[cardImageView setBackgroundColor:UIColorFromRGB(0x105921)];
     cardImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [cardImageView setImage:[UIImage imageNamed:@"total_menu_card_img.png"]];
+    NSString *cardImageName;
+    NSString *grade;
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade]){
+        grade = [[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade];
+    }
+    
+    if([grade isEqualToString:@"0"]){
+        cardImageName =  @"card_img_b.png";
+    }else if([grade isEqualToString:@"1"]){
+        cardImageName =  @"card_img_s.png";
+    }else if([grade isEqualToString:@"2"]){
+        cardImageName =  @"card_img_g.png";
+    }else if([grade isEqualToString:@"3"]){
+        cardImageName =  @"card_img_v.png";
+    }
+    
+    [cardImageView setImage:[UIImage imageNamed:cardImageName]];
     [self addSubview:cardImageView];
     
     //card number label
     _cardNumber =  [[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] ;
-    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(100+cardMarginX, 100+10, meWidth-65, 40) ];
+    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(55+cardMarginX, 85, meWidth-65, 40) ];
     [labelCardNumber setBackgroundColor:[UIColor clearColor]];
     [labelCardNumber setTextColor:UIColorFromRGB(0xffffff)];
-    [labelCardNumber setFont:[UIFont systemFontOfSize:15]];
+    [labelCardNumber setFont:[UIFont systemFontOfSize:14]];
     [labelCardNumber setTextAlignment:NSTextAlignmentLeft];
     [labelCardNumber setNumberOfLines:0];
     [labelCardNumber setText:_cardNumber];
     [self addSubview:labelCardNumber];
+    
+    NSString* strPoint;
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_point]){
+        strPoint = [[NSUserDefaults standardUserDefaults] stringForKey:kMb_point];
+    }
+    
+    //strPoint = @"9999999";
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    [numberFormatter setGroupingSeparator:@","];
+    [numberFormatter setGroupingSize:3];
+    [numberFormatter setUsesGroupingSeparator:YES];
+    [numberFormatter setDecimalSeparator:@"."];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [numberFormatter setMaximumFractionDigits:2];
+    
+    NSNumber *nPoint = [NSNumber numberWithInt:[strPoint intValue]];
+    
+    strPoint = [NSString stringWithFormat:@"%@ P", [numberFormatter stringFromNumber:nPoint]];
+    labelPoint = [[UILabel alloc] initWithFrame:CGRectMake(-15, 113, meWidth-65, 40) ];
+    [labelPoint setBackgroundColor:[UIColor clearColor]];
+    [labelPoint setTextColor:UIColorFromRGB(0xffffff)];
+    [labelPoint setFont:[UIFont systemFontOfSize:12]];
+    [labelPoint setTextAlignment:NSTextAlignmentCenter];
+    [labelPoint setNumberOfLines:0];
+    [labelPoint setText:strPoint];
+    [self addSubview:labelPoint];
     
     [self setVisableItem];
     
@@ -795,6 +839,7 @@
         [cardImageView setHidden:false];
         [logoutButton setHidden:false];
         [labelCardNumber setHidden:false];
+        [labelPoint setHidden:false];
         
         [labelMenu setHidden:true];
         [loginButton setHidden:true];
@@ -812,6 +857,7 @@
         [logoutButton setHidden:true];
         [cardImageView setHidden:true];
         [labelCardNumber setHidden:true];
+        [labelPoint setHidden:true];
         
         [labelMenu setHidden:false];
         [loginButton setHidden:false];

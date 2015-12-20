@@ -216,8 +216,20 @@ const static CGFloat MENU_HEIGHT   =      45;
     if(isLogin == YES){
         [letterLineView setHidden:FALSE];
         [letterBtn setHidden:FALSE];
-        [letterUpImageView setHidden:TRUE];
-        [labelLetter setHidden:TRUE];
+        
+        NSString* strBadge;
+        if([[NSUserDefaults standardUserDefaults] stringForKey:kBadge]){
+            strBadge = [[NSUserDefaults standardUserDefaults] stringForKey:kBadge];
+            //strBadge = @"99";
+            if([strBadge isEqualToString:@"0"]){
+                [letterUpImageView setHidden:TRUE];
+                [labelLetter setHidden:TRUE];
+            }else{
+                [letterUpImageView setHidden:false];
+                [labelLetter setHidden:false];
+            }
+        }
+        
     }else{
         [letterLineView setHidden:TRUE];
         [letterBtn setHidden:TRUE];
@@ -267,13 +279,13 @@ const static CGFloat MENU_HEIGHT   =      45;
         
         strNotiTitle = NEWS_KO;
         strConfigTitle = LEFT_CONFIG_KO;
-        strImage = LEFT_CONFIG_KO;
+        strImage = @"banner_kr.png";
         
     }else if([temp isEqualToString:@"vi"]){
         
         strNotiTitle = NEWS_VI;
         strConfigTitle = LEFT_CONFIG_VI;
-        strImage = LEFT_CONFIG_KO;
+        strImage = @"banner_viet.png";
     }
     
     leftMenuItemView *menuItemView1 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginView.frame)+5, itemWidth, MENU_HEIGHT) title:@"Sunny CLUB" viewType:1];
@@ -309,7 +321,7 @@ const static CGFloat MENU_HEIGHT   =      45;
                 // Update the UI
                 adImageView.image = [UIImage imageWithData:imageData];
                 if([imageData length] < 1){
-                    [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
+                    [adImageView setImage:[UIImage imageNamed:strImage]];
                 }
             });
         });
@@ -341,7 +353,7 @@ const static CGFloat MENU_HEIGHT   =      45;
                 // Update the UI
                 adImageView.image = [UIImage imageWithData:imageData];
                 if([imageData length] < 1){
-                    [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
+                    [adImageView setImage:[UIImage imageNamed:strImage]];
                 }
             });
         });

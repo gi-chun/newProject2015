@@ -197,7 +197,7 @@ static NSString *LEFT_LOGIN_KO     = @"로그인";
 static NSString *LEFT_LOGIN_NOTI_KO     = @"Event / 공지";
 static NSString *LEFT_CONFIG_KO     = @"설정";
 
-static NSString *BOTTOM_BANNER_KO = @"bottom_banner.png";
+static NSString *BOTTOM_BANNER_KO = @"banner_kr.png";
 
 //vi
 static NSString *LEFT_DES_VI     = @"Vui lòng đăng nhập để sử dụng\ncác dịch vụ của Sunny Club.";
@@ -205,7 +205,7 @@ static NSString *LEFT_LOGIN_VI     = @"Đăng nhập";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
 
-static NSString *BOTTOM_BANNER_VI = @"bottom_banner_viet.png";
+static NSString *BOTTOM_BANNER_VI = @"banner_viet.png";
 
 //korea
 static NSString *PW_SEARCH_TITLE_KO     = @"비밀번호 찾기";
@@ -215,6 +215,8 @@ static NSString *PW_SEARCH_YYYY_KO     = @"생년월일";
 static NSString *PW_SEARCH_KO     = @"조회하기";
 static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는";
 static NSString *ID_RESULT_TAIL_KO     = @"입니다.";
+static NSString *ID_RETRY_LABEL_KO     = @"계정정보가 존재하지 않습니다.";
+static NSString *ID_RETRY_BTN_KO     = @"다시 조회하기";
 
 //vi
 static NSString *PW_SEARCH_TITLE_VI     = @"Tìm mật khẩu";
@@ -224,6 +226,9 @@ static NSString *PW_SEARCH_YYYY_VI     = @"Sinh nhật";
 static NSString *PW_SEARCH_VI     = @"truy vấn";
 static NSString *ID_RESULT_HEAD_VI     = @"ID bạn đang truy vấn là:";
 static NSString *ID_RESULT_TAIL_VI     = @"này.";
+static NSString *ID_RETRY_LABEL_VI     = @"Thông tin tài khoản này không tồn tại";
+static NSString *ID_RETRY_BTN_VI     = @"Truy vấn";
+
 
 //korea
 static NSString *IDSEARCH_TITLE_KO     = @"아이디 찾기";

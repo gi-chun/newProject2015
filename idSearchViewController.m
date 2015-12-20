@@ -205,38 +205,60 @@
             //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
-            dicItems = [dicResponse objectForKey:@"root_info"];
-            NSString* sCount = dicItems[@"result"];
-            
-            if([sCount isEqualToString:@"0"]){
-                [btnSearh setEnabled:true];
-                
-                NSString* temp;
-                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-                if([temp isEqualToString:@"ko"]){
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                    [alert show];
-                }else{
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                    [alert show];
-                }
-                
-                [idTxt becomeFirstResponder];
-                
-                return;
-            }
-            
-            dicItems = [dicResponse objectForKey:@"indiv_info"];
-            NSString* sEmail = dicItems[@"email_id"];
-            NSArray *sEmailArray = dicItems[@"email_id"];
-           
-//            NSMutableString *sEmailM = [[NSMutableString alloc] init];
+//            dicItems = [dicResponse objectForKey:@"root_info"];
+//            NSString* sCount = dicItems[@"result"];
 //            
-//            for (NSString *sEmailItem in sEmailArray) {
+//            if([sCount isEqualToString:@"0"]){
+//                [btnSearh setEnabled:true];
 //                
-//                //[sEmailM appendFormat:@"%@=%@;",cookie.name, cookie.value];
+//                NSString* temp;
+//                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//                if([temp isEqualToString:@"ko"]){
+//                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                    [alert show];
+//                }else{
+//                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                    [alert show];
+//                }
 //                
+//                [idTxt becomeFirstResponder];
+//                
+//                return;
 //            }
+            
+            NSArray *sEmailArray = [dicResponse objectForKey:@"indiv_info"];
+            NSString* sEmail = @"";
+            NSString* strTemp = @"";
+            NSString* strFullEmail = @"";
+            NSString* strHeadEmail = @"";
+            NSString* strTailEmail = @"";
+           
+            NSMutableString *sEmailM = [[NSMutableString alloc] init];
+            
+            for (NSDictionary *sEmailItem in sEmailArray) {
+                
+                strFullEmail = sEmailItem[@"email_id"];
+                NSRange range = [strFullEmail rangeOfString:@"@"];
+                if (range.location != NSNotFound)
+                {
+                    strHeadEmail = [strFullEmail substringToIndex:range.location];
+                    strTailEmail = [strFullEmail substringFromIndex:range.location];
+                    
+                    if([strHeadEmail length] > 2){
+                        for (int i = 0; i < strHeadEmail.length; i++) {
+                            
+                            if(i != 0 && i != (strHeadEmail.length -1)){
+                                
+                                NSRange rangeSub = NSMakeRange(i, 1);
+                                strHeadEmail = [strHeadEmail stringByReplacingCharactersInRange:rangeSub withString:@"*"];
+                            }
+                        }
+                        strFullEmail = [NSString stringWithFormat:@"%@%@", strHeadEmail, strTailEmail];
+                    }
+                    [sEmailM appendFormat:@"%@\n",strFullEmail];
+                }
+            }
+            sEmail = sEmailM;
             
             //to json
             SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];

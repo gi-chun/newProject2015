@@ -25,13 +25,21 @@
     
     __weak IBOutlet UIButton *btnLogin;
     __weak IBOutlet UIButton *btnPwdSearch;
+    __weak IBOutlet UITextView *textViewEmail;
+    __weak IBOutlet UIButton *btnRetry;
+    __weak IBOutlet UILabel *labelRetry;
     
     NSString* emailResult;
+    __weak IBOutlet UILabel *verticalRetry;
     
 }
 @end
 
 @implementation idResultViewController
+
+- (IBAction)btnRetryClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)setId:(NSString*)email{
     
@@ -88,6 +96,18 @@
         }else{
             temp = @"EN";
         }
+    
+    if([emailResult length] > 0){
+        [resultDesc setHidden:false];
+        [verticalRetry setHidden:false];
+        [btnRetry setHidden:true];
+        [labelRetry setHidden:true];
+    }else{
+        [resultDesc setHidden:true];
+        [verticalRetry setHidden:true];
+        [btnRetry setHidden:false];
+        [labelRetry setHidden:false];
+    }
     
     //
     meHeight = kScreenBoundsHeight;
@@ -247,8 +267,11 @@
     [self resetNavigationBarView:1];
     [resultDesc setText:ID_RESULT_HEAD_KO];
     [emailLabel setText:emailResult];
+    [textViewEmail setText:emailResult];
     [resultTailLabel setText:ID_RESULT_TAIL_KO];
+    [labelRetry setText:ID_RETRY_LABEL_KO];
     
+    [btnRetry setTitle:ID_RETRY_BTN_KO forState:UIControlStateNormal];
     [btnLogin setTitle:LOGIN_TITLE_KO forState:UIControlStateNormal];
     [btnPwdSearch setTitle:PW_SEARCH_TITLE_KO forState:UIControlStateNormal];
 }
@@ -258,8 +281,11 @@
     [self resetNavigationBarView:1];
     [resultDesc setText:ID_RESULT_HEAD_VI];
     [emailLabel setText:emailResult];
+    [textViewEmail setText:emailResult];
     [resultTailLabel setText:ID_RESULT_TAIL_VI];
+    [labelRetry setText:ID_RETRY_LABEL_VI];
     
+    [btnRetry setTitle:ID_RETRY_BTN_VI forState:UIControlStateNormal];
     [btnLogin setTitle:LOGIN_TITLE_VI forState:UIControlStateNormal];
     [btnPwdSearch setTitle:PW_SEARCH_TITLE_VI forState:UIControlStateNormal];
 

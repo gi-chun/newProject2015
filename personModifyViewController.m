@@ -29,6 +29,9 @@
     __weak IBOutlet UILabel *label_nomal;
     __weak IBOutlet UILabel *cardNmLabel;
     __weak IBOutlet UIButton *btn_change;
+    __weak IBOutlet UILabel *labelPoint;
+    __weak IBOutlet UIImageView *imgCard;
+    
 }
 @end
 
@@ -86,6 +89,45 @@
         [self initScreenView_vi];
     }else{
         temp = @"EN";
+    }
+    
+    NSString* grade;
+    NSString* cardImageName;
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade]){
+        grade = [[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade];
+    }
+    
+    if([grade isEqualToString:@"0"]){
+        cardImageName =  @"setting_card_b.png";
+    }else if([grade isEqualToString:@"1"]){
+        cardImageName =  @"setting_card_s.png";
+    }else if([grade isEqualToString:@"2"]){
+        cardImageName =  @"setting_card_g.png";
+    }else if([grade isEqualToString:@"3"]){
+        cardImageName =  @"setting_card_v.png";
+    }
+    [imgCard setImage:[UIImage imageNamed:cardImageName]];
+    
+    NSString* strPoint;
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_point]){
+        strPoint = [[NSUserDefaults standardUserDefaults] stringForKey:kMb_point];
+    }
+    
+    //strPoint = @"9999999";
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    [numberFormatter setGroupingSeparator:@","];
+    [numberFormatter setGroupingSize:3];
+    [numberFormatter setUsesGroupingSeparator:YES];
+    [numberFormatter setDecimalSeparator:@"."];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [numberFormatter setMaximumFractionDigits:2];
+    
+    NSNumber *nPoint = [NSNumber numberWithInt:[strPoint intValue]];
+    strPoint = [NSString stringWithFormat:@"%@ P", [numberFormatter stringFromNumber:nPoint]];
+    [labelPoint setText:strPoint];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade_nm]){
+        [label_nomal setText:[[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade_nm]];
     }
     
     //[emailTxt becomeFirstResponder];

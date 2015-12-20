@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         //_webView = [[UIWebView alloc] initWithFrame:frame];
         [_webView setDelegate:self];
         [_webView setScalesPageToFit:YES];
-        [_webView setContentMode:UIViewContentModeScaleAspectFit];
+        [_webView setContentMode:UIViewContentModeScaleAspectFit]; //UIViewContentModeScaleAspectFit
         
         [_webView setClipsToBounds:YES];
         [_webView setAllowsInlineMediaPlayback:YES];
@@ -93,6 +93,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_webView.scrollView setDelegate:self];
         [_webView.scrollView setDecelerationRate:UIScrollViewDecelerationRateNormal];
         [_webView.scrollView setBounces:NO];
+        
+//        [_webView.scrollView zoomToRect:CGRectMake(0,0,_webView.scrollView.contentSize.width+300, _webView.scrollView.contentSize.height+300) animated:YES];
+        
+        
         [self addSubview:_webView];
         
         if ([SYSTEM_VERSION intValue] >= 5) {

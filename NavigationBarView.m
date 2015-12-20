@@ -140,7 +140,8 @@
                 marginX = -20;
                 marginY = 5;
             }else{
-                marginX = 10;
+                marginX = -10;
+                marginY = 0;
             }
         }
         

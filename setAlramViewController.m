@@ -38,13 +38,25 @@
         //set no
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kNomalPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        [nomalButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        
+        BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+        if(isAlram == NO){
+            isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+            if(isAlram == NO){
+                [switchTotal setOn:false];
+                [nomalButton setEnabled:false];
+                [contentsButton setEnabled:false];
+                [eventButton setEnabled:false];
+            }
+        }
+        
         
     }else{
         //set yes
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kNomalPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+        [nomalButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
     }
 
 }
@@ -55,14 +67,35 @@
     if ( [switchTotal isOn]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kNomalPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kContentsPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kEventPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [nomalButton setEnabled:true];
         [contentsButton setEnabled:true];
         [eventButton setEnabled:true];
+        [nomalButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
+        [eventButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
         
     }else{
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kNomalPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kContentsPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kEventPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [nomalButton setEnabled:false];
         [contentsButton setEnabled:false];
         [eventButton setEnabled:false];
+        [nomalButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        [contentsButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        [eventButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+
     }
 
 }
@@ -75,6 +108,17 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kContentsPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [contentsButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        
+        BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+        if(isAlram == NO){
+            isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+            if(isAlram == NO){
+                [switchTotal setOn:false];
+                [nomalButton setEnabled:false];
+                [contentsButton setEnabled:false];
+                [eventButton setEnabled:false];
+            }
+        }
         
     }else{
         //set yes
@@ -92,6 +136,17 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kEventPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [eventButton setImage:[UIImage imageNamed:@"check_box_btn.png"] forState:UIControlStateNormal];
+        
+        BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+        if(isAlram == NO){
+            isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+            if(isAlram == NO){
+                [switchTotal setOn:false];
+                [nomalButton setEnabled:false];
+                [contentsButton setEnabled:false];
+                [eventButton setEnabled:false];
+            }
+        }
         
     }else{
         //set yes
@@ -599,12 +654,19 @@
     BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
     if(isAlram == YES){
         [switchTotal setOn:true];
+        [nomalButton setEnabled:true];
         [contentsButton setEnabled:true];
         [eventButton setEnabled:true];
     }else{
         [switchTotal setOn:false];
+        [nomalButton setEnabled:true];
         [contentsButton setEnabled:false];
         [eventButton setEnabled:false];
+    }
+    
+    isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+    if(isAlram == YES){
+        [nomalButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
     }
     
     isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
@@ -632,12 +694,19 @@
     BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
     if(isAlram == YES){
         [switchTotal setOn:true];
+        [nomalButton setEnabled:true];
         [contentsButton setEnabled:true];
         [eventButton setEnabled:true];
     }else{
         [switchTotal setOn:false];
+        [nomalButton setEnabled:true];
         [contentsButton setEnabled:false];
         [eventButton setEnabled:false];
+    }
+    
+    isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+    if(isAlram == YES){
+        [nomalButton setImage:[UIImage imageNamed:@"check_box_btn_checked.png"] forState:UIControlStateNormal];
     }
     
     isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
