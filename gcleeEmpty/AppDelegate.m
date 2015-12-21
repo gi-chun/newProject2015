@@ -819,7 +819,7 @@
 //    NSCharacterSet *angleBrackets = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
 //    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:angleBrackets];
     
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:receivedDataString delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:deviceTokens delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
 //    [alert show];
     
     [[NSUserDefaults standardUserDefaults] setObject:deviceTokens forKey:kUserDeviceToken];
@@ -875,6 +875,10 @@
         //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
         
+//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:title message:messageDic
+//                                                       delegate:self cancelButtonTitle:@"test" otherButtonTitles:nil, nil];
+//        [alert2 show];
+        
         [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -896,7 +900,8 @@
         
         NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
         
-//        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        
 //        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
 //                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
 //        [alert2 show];

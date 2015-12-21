@@ -35,6 +35,7 @@ static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
 static NSString *SUNNY_DOMAIN = @"https://vntst.shinhanglobal.com";
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
+//static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index_2nd.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/help_list.jsp?locale=%@";    //도움말
@@ -168,7 +169,7 @@ static NSString *PERSON_NOMAL_KO     = @"일반";
 
 //korea
 static NSString *MEM_OUT_TITLE_KO     = @"회원탈퇴 안내사항";
-static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n2.멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
+static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n2. 멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
 static NSString *MEM_PWD_TITLE_KO     = @"비밀번호 입력";
 static NSString *MEM_PWD_DESC_KO     = @"회원탈퇴 처리를 위해 다시한번 비밀번호를 입력하시기 바랍니다.";
 static NSString *MEM_OUT_KO = @"탈퇴하기";
@@ -270,7 +271,7 @@ static NSString *ID_CHECK_KO         = @"아이디를 입력하세요.";
 static NSString *PWD_CHECK_KO = @"비밀번호를 입력하세요.";
 static NSString *NEW_PWD_CHECK_KO = @"새 비밀번호를 입력하세요.";
 static NSString *PWD_LENGTH_CHECK_KO = @"비밀번호가 너무 짧습니다.";
-static NSString *LOGIN_SUCCESS_KO = @"로그인 성공";
+static NSString *LOGIN_SUCCESS_KO = @"OK"; //로그인 성공
 static NSString *LOGIN_FAIL_KO = @"로그인 실패";
 static NSString *LOGIN_OUT_SUCCESS_KO = @"로그아웃 성공";
 static NSString *LOGIN_OUT_ASK_KO = @"로그아웃 하시겠습니까?";
@@ -294,7 +295,7 @@ static NSString *EMAIL_CHECK_VI      = @"Đăng nhập ID  theo hình thức ema
 static NSString *ID_CHECK_VI         = @"Xin vui lòng nhập ID";
 static NSString *PWD_CHECK_VI = @"Vui lòng nhập mật khẩu";
 static NSString *PWD_LENGTH_CHECK_VI = @"Mật khẩu quá ngắn";
-static NSString *LOGIN_SUCCESS_VI = @"Đăng nhập";
+static NSString *LOGIN_SUCCESS_VI = @"OK"; //Đăng nhập
 static NSString *LOGIN_FAIL_VI = @"Đăng nhập FAIL";
 static NSString *LOGIN_OUT_SUCCESS_VI = @"Đăng nhập Success";
 static NSString *LOGIN_OUT_ASK_VI = @"Bạn có muốn thoát?";
@@ -456,8 +457,8 @@ Chúc mừng bạn là thành viên của Sunny Club. Hãy trải nghiệm ngay 
 static NSString *SERVICE_GO_KO = @"서비스 이용하러 가기";
 static NSString *SERVICE_GO_VI = @"Sử dụng dịch vụ";
 
-static NSString *NET_WORK_CHECK_KO = @"네트워크에 접속할 수 없습니다. \n 연결상태를 확인해 주세요.";
-static NSString *NET_WORK_CHECK_VI = @"Chúng tôi không thể kết nối mạng. \n Vui lòng kiểm tra lại trạng thái kết nối.";
+static NSString *NET_WORK_CHECK_KO = @"이용에 불편을 드려 대단히 죄송합니다.\n\n네트워크에 접속할 수 없습니다. \n 연결상태를 확인해 주세요.";
+static NSString *NET_WORK_CHECK_VI = @"Xin lỗi vì sự bất tiện này.\n\nChúng tôi không thể kết nối mạng. \n Vui lòng kiểm tra lại trạng thái kết nối.";
 static NSString *NET_WORK_RELOAD_KO = @"재시도";
 static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 
