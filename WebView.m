@@ -169,8 +169,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         // zoom in
         _zoomInButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
-        [_zoomInButton setImage:[UIImage imageNamed:@"bottom_top_btn.png"] forState:UIControlStateNormal];
-        [_zoomInButton setImage:[UIImage imageNamed:@"bottom_top_btn.png"] forState:UIControlStateHighlighted];
+        [_zoomInButton setImage:[UIImage imageNamed:@"zoom_in.png"] forState:UIControlStateNormal];
+        [_zoomInButton setImage:[UIImage imageNamed:@"zoom_in_press.png"] forState:UIControlStateHighlighted];
         [_zoomInButton addTarget:self action:@selector(touchZoomInButton) forControlEvents:UIControlEventTouchUpInside];
         [_zoomInButton setHidden:NO];
         [self addSubview:_zoomInButton];
@@ -178,8 +178,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         // zoom out
         _zoomOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
-        [_zoomOutButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateNormal];
-        [_zoomOutButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateHighlighted];
+        [_zoomOutButton setImage:[UIImage imageNamed:@"zoom_out.png"] forState:UIControlStateNormal];
+        [_zoomOutButton setImage:[UIImage imageNamed:@"zoom_out_press.png"] forState:UIControlStateHighlighted];
         [_zoomOutButton addTarget:self action:@selector(touchZoomOutButton) forControlEvents:UIControlEventTouchUpInside];
         [_zoomOutButton setHidden:NO];
         [self addSubview:_zoomOutButton];
