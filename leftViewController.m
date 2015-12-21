@@ -102,9 +102,9 @@
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
     if(isLogin == YES){
         [self getMembership];
+    }else{
+        [self loadContentsView];
     }
-    
-    [self loadContentsView];
 }
 
 - (void)setViewLogout
@@ -254,6 +254,7 @@
             NSString* sGrade = dicItems[@"mb_grade"];
             NSString* sGradeNm = dicItems[@"mb_grade_nm"];
             NSString* sPoint = dicItems[@"mb_point"];
+            NSLog(@"sPoint: ===============> %@", sPoint);
             NSString* sBadge = dicItems[@"badge"];
             
             //set kCardCode
@@ -300,6 +301,7 @@
                 NSLog(@"%@=%@", cookie.name, cookie.value);
             }
             
+            [self loadContentsView];
             ////////////////////////////////////////////////////////////////////////////
             
             NSLog(@"getCookie end ==>" );
