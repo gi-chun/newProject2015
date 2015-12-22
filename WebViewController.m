@@ -118,7 +118,7 @@
     
     [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
 
-    // iOS7 Layout gclee
+    // iOS7 Layout
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }

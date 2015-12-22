@@ -95,6 +95,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_webView.scrollView setDelegate:self];
         [_webView.scrollView setDecelerationRate:UIScrollViewDecelerationRateNormal];
         [_webView.scrollView setBounces:NO];
+        [_webView setOpaque:NO];
         [_webView.scrollView setShowsHorizontalScrollIndicator:true];
         [_webView.scrollView setShowsVerticalScrollIndicator:true];
         
@@ -333,9 +334,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     float sfactor = viewSize.width / contentSize.width;
     
-    self.webView.scrollView.minimumZoomScale = sfactor;
-    self.webView.scrollView.maximumZoomScale = sfactor;
-    self.webView.scrollView.zoomScale = sfactor;
+//    self.webView.scrollView.minimumZoomScale = sfactor;
+//    self.webView.scrollView.maximumZoomScale = sfactor;
+//    self.webView.scrollView.zoomScale = sfactor;
     
     CGRect toolViewFrame;
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2), CGRectGetWidth([self frame]), kToolBarHeight);
@@ -378,9 +379,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     float sfactor = viewSize.width / contentSize.width;
     
-    self.webView.scrollView.minimumZoomScale = sfactor;
-    self.webView.scrollView.maximumZoomScale = sfactor;
-    self.webView.scrollView.zoomScale = sfactor;
+//    self.webView.scrollView.minimumZoomScale = sfactor;
+//    self.webView.scrollView.maximumZoomScale = sfactor;
+//    self.webView.scrollView.zoomScale = sfactor;
     
     CGRect toolViewFrame;
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2, CGRectGetWidth([self frame]), kToolBarHeight);
@@ -550,13 +551,14 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     float sfactor = viewSize.width / contentSize.width;
     
-    self.webView.scrollView.minimumZoomScale = sfactor;
-    self.webView.scrollView.maximumZoomScale = sfactor;
-    self.webView.scrollView.zoomScale = sfactor;
+//    self.webView.scrollView.minimumZoomScale = sfactor;
+//    self.webView.scrollView.maximumZoomScale = sfactor;
+//    self.webView.scrollView.zoomScale = sfactor;
     
-//    self.webView.scrollView.minimumZoomScale = 10;
-//    self.webView.scrollView.maximumZoomScale = 10;
-//    self.webView.scrollView.zoomScale = 10;
+    self.webView.scrollView.minimumZoomScale = 1;
+    self.webView.scrollView.maximumZoomScale = 20;
+    self.webView.scrollView.zoomScale = 2;
+    self.webView.scrollView.zoomScale = 1;
     
     if ([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.delegate webViewDidFinishLoad:self];
@@ -860,8 +862,6 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         fZoomInCurrent = ZOOMIN_MAX_LENGTH;
     }
     
-    self.webView.scrollView.minimumZoomScale = fZoomInCurrent;
-    self.webView.scrollView.maximumZoomScale = fZoomInCurrent;
     self.webView.scrollView.zoomScale = fZoomInCurrent;
     
 }
@@ -878,8 +878,6 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     if(fZoomInCurrent < ZOOMOUT_MAX_LENGTH){
         fZoomInCurrent = 1.0f;
     }
-    self.webView.scrollView.minimumZoomScale = fZoomInCurrent;
-    self.webView.scrollView.maximumZoomScale = fZoomInCurrent;
     self.webView.scrollView.zoomScale = fZoomInCurrent;
     
 }
@@ -917,6 +915,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //}
 
 #pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+{
+    _webView.scrollView.maximumZoomScale = 20;
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
