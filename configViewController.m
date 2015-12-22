@@ -184,6 +184,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    for (UIView *subView in [self.view subviews]) {
+//        [subView removeFromSuperview];
+//    }
     
 //    NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:@"configViewController"
 //                                                    owner:self options:nil];
@@ -311,10 +314,10 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
         //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
-        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
-        [self.view addSubview:backgroundImageView];
+        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:_backgroundImageView];
         
         NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -322,9 +325,9 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
-                backgroundImageView.image = [UIImage imageWithData:imageData];
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
                 if([imageData length] < 1){
-                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
                 }
             });
         });
@@ -721,28 +724,62 @@
     
     NSString* temp;
     NSString* strImage;
-    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-    if([temp isEqualToString:@"ko"]){
-        strImage = BOTTOM_BANNER_KO;
-    }else{
-        strImage = BOTTOM_BANNER_VI;
-    }
     
-    NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
-    
-    NSLog(@"bannerURL: %@", imageURL);
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        //[self viewDidLoad];
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI
-            _backgroundImageView.image = [UIImage imageWithData:imageData];
-            if([imageData length] < 1){
-                [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
-            }
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        
+        NSLog(@"bannerURL: %@", imageURL);
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
         });
-    });
+        
+//        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        
+        
+        
+    }else{
+        
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        
+        NSLog(@"bannerURL: %@", imageURL);
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
+    }
     
     leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
     [leftViewController setViewLogin];

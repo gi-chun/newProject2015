@@ -22,6 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    for (UIView *subView in [self.view subviews]) {
+        [subView removeFromSuperview];
+    }
+    
     // Do any additional setup after loading the view from its nib.
     float meHeight = kScreenBoundsHeight;
     if(meHeight <= 480){
