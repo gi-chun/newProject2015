@@ -278,10 +278,10 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15+marginY), kScreenBoundsWidth, kToolBarHeight)];
+        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15+marginY), kScreenBoundsWidth, kToolBarHeight)];
         //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
-        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
-        [self.view addSubview:backgroundImageView];
+        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:_backgroundImageView];
         
         NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -289,9 +289,9 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI
-                backgroundImageView.image = [UIImage imageWithData:imageData];
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
                 if([imageData length] < 1){
-                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
                 }
             });
         });
@@ -706,7 +706,7 @@
     
     [self getListBanner];
     
-    if(![_preLang isEqualToString:temp]){
+    if(![_preLang isEqualToString:temp] || _preLang == nil){
         if( nKind == 0){
              [self initScreenView_ko];
         }else{
@@ -715,13 +715,40 @@
     }
     _preLang = temp;
     
+}
+
+- (void) resetBanner{
+    
+    NSString* temp;
+    NSString* strImage;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    if([temp isEqualToString:@"ko"]){
+        strImage = BOTTOM_BANNER_KO;
+    }else{
+        strImage = BOTTOM_BANNER_VI;
+    }
+    
+    NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+    
+    NSLog(@"bannerURL: %@", imageURL);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI
+            _backgroundImageView.image = [UIImage imageWithData:imageData];
+            if([imageData length] < 1){
+                [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+            }
+        });
+    });
+    
     leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
     [leftViewController setViewLogin];
     
     WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
     [homeViewController resetADImage];
-    
-    
 }
 
 - (void) getListBanner{
@@ -754,6 +781,18 @@
     NSString* strDesc;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
+    
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *allCookies = [cookies cookies];
+    for(NSHTTPCookie *cookie in allCookies) {
+        if([[cookie domain] rangeOfString:@"vntst.shinhanglobal.com"].location != NSNotFound) {
+            
+            if([cookie.name isEqualToString:@"locale_"]){
+                [cookies deleteCookie:cookie];
+            }
+        }
+    }
+    
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     NSHTTPCookie *cookie;
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
@@ -768,9 +807,23 @@
     cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     
+    NSMutableDictionary *cookieProperties_ = [NSMutableDictionary dictionary];
+    [cookieProperties_ setObject:@"locale_80" forKey:NSHTTPCookieName];
+    [cookieProperties_ setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties_ setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
+    [cookieProperties_ setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties_ setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties_ setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties_ setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties_];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
     for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
         NSLog(@"%@=%@", cookie.name, cookie.value);
     }
+    
+    NSLog(@"cooke end end");
     
     [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -813,6 +866,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerUrl];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            [self resetBanner];
             NSLog(@"Response ==> %@", responseData);
             
         }

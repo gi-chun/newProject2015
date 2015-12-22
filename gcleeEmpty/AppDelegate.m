@@ -386,11 +386,11 @@
     //left main
     bannerType = 0;
     //NSString *url = [fileUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *url = @"";
-    request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
-    [downloadConnection start];
+//    NSString *url = @"";
+//    request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+//    NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//    
+//    [downloadConnection start];
     // main
 
     
@@ -425,6 +425,8 @@
     [[SafeOnPushClient sharedInstance] setServerUrl:serverUrl];
     [[SafeOnPushClient sharedInstance] setAppNo:strVerion];
     [[SafeOnPushClient sharedInstance] setBundleIdentifier:strBundle];
+    
+    isTutoShow = YES;
     
     if (launchOptions){
         NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
