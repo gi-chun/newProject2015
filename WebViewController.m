@@ -780,8 +780,12 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     }else{
         
         
-        //
         if (([url rangeOfString:@"facebook"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
+        
+        if (([url rangeOfString:@"twitter"].location != NSNotFound)){
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
             return NO;
         }
