@@ -43,6 +43,7 @@ typedef enum {
 - (void)didTouchLogInBtn;
 - (void)didTouchAD;
 - (void)didTouchBackButton;
+- (void)didTouchGoSunny;
 - (void)didTouchNewButton;
 - (void)didTouchHelpButton;
 - (void)didTouchLetterBtn;

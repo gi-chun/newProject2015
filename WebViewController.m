@@ -717,9 +717,20 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         //        [alert show];
         
         if(!([url rangeOfString:@"openLoginPage"].location == NSNotFound)){
+            
             //login
             LoginViewController *loginController = [[LoginViewController alloc] init];
-            [loginController setLoginType];
+            
+            BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kCallAd];
+            if(isLogin == YES){
+                [loginController setLoginType:LoginTypeAD];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCallAd];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+            }else{
+                [loginController setLoginType:LoginTypeConfig];
+            }
+            
             [loginController setDelegate:self];
             [self.navigationController pushViewController:loginController animated:YES];
             
@@ -1715,7 +1726,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 {
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
 //    [alert show];
-    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCallAd];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     NSString* gLocalLang = @"";
     NSString *callUrl = @"";
@@ -1751,6 +1763,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
     //    [alert show];
     
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCallAd];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSString* gLocalLang = @"";
     NSString *callUrl = @"";
     
@@ -1761,6 +1776,38 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
     callUrl = SHINHAN_EVENT_URL;
     callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerUrl];
+    
+    [self.webView stop];
+    //webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+}
+
+- (void)didTouchGoSunny
+{
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
+    
+    callUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
     
     [self.webView stop];
     webViewUrl = callUrl;
@@ -1782,7 +1829,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     }
     
     [self openWebView:callUrl mutableRequest:mutableRequest];
+    
 }
+
 
 
 - (void)resetADImage{

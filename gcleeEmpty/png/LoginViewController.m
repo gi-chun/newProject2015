@@ -270,7 +270,9 @@
 - (void)touchToolbar:(id)sender
 {
     //UIButton *button = (UIButton *)sender;
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
     if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
         [self.delegate didTouchMainAD];
     }
@@ -283,9 +285,9 @@
 }
 
 
-- (void)setLoginType{
+- (void)setLoginType:(NSInteger) loginType{
     
-    myLoginType = LoginTypeConfig;
+    myLoginType = loginType;
     
 }
 
@@ -876,7 +878,7 @@
             
             [leftViewController setViewLogin];
             
-            if(myLoginType == LoginTypeConfig){
+            if(myLoginType == LoginTypeConfig || myLoginType == LoginTypeAD){
                 [self.navigationController popViewControllerAnimated:YES];
                 if ([self.delegate respondsToSelector:@selector(didLoginAfter)]) {
                     [self.delegate didLoginAfter];
@@ -982,6 +984,7 @@
 - (void)resetNavigationBarView:(NSInteger) type
 {
     [self.navigationItem setHidesBackButton:YES];
+    [self.navigationController setNavigationBarHidden:NO];
     
     for (UIView *subView in self.navigationController.navigationBar.subviews) {
         if ([subView isKindOfClass:[NavigationBarView class]]) {
@@ -1025,6 +1028,13 @@
     if(myLoginType == LoginTypeConfig){
         [self.navigationController popViewControllerAnimated:YES];
         
+    }else if(myLoginType == LoginTypeAD){
+        
+        if ([self.delegate respondsToSelector:@selector(didTouchGoSunny)]) {
+            [self.delegate didTouchGoSunny];
+        }
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
         

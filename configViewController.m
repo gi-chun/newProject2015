@@ -59,7 +59,7 @@
         [self.navigationController pushViewController:setAlramController animated:YES];
     }else{
         LoginViewController *loginController = [[LoginViewController alloc] init];
-        [loginController setLoginType];
+        [loginController setLoginType:LoginTypeConfig];
         [loginController setDelegate:self];
         [self.navigationController pushViewController:loginController animated:YES];
     }
@@ -79,7 +79,7 @@
         [self.navigationController pushViewController:personController animated:YES];
     }else{
         LoginViewController *loginController = [[LoginViewController alloc] init];
-        [loginController setLoginType];
+        [loginController setLoginType:LoginTypeConfig];
         [loginController setDelegate:self];
         [self.navigationController pushViewController:loginController animated:YES];
     }

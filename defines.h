@@ -82,6 +82,8 @@ static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 #endif
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static NSString * const kCallAd       = @"kCallAd";
+
 static NSString * const kUUID              = @"currentUUID";        // UUID
 static NSString * const kUserDeviceToken   = @"userDeviceToken";    // 디바이스 토큰
 static NSString * const kLeftMainBannerUrl   = @"kLeftMainBannerUrl";
