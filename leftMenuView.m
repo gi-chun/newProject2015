@@ -160,8 +160,15 @@ const static CGFloat MENU_HEIGHT   =      45;
     [closeBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"total_menu_close_btn.png"] forState:UIControlStateHighlighted];
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"total_menu_close_btn.png"] forState:UIControlStateNormal];
-    [closeBtn addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
+    //[closeBtn addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
     [logoView addSubview:closeBtn];
+    
+    //close empty button
+    UIButton* closeEmptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeEmptyButton setFrame:CGRectMake(meWidth-(30+marginX), 0, 30, 30)];
+    [closeEmptyButton setBackgroundColor:[UIColor clearColor]];
+    [closeEmptyButton addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
+    [logoView addSubview:closeEmptyButton];
     
     //letterLineView
     letterLineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+13, 10, 1, 25)];

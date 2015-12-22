@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leftMenuView.m"
-            timestampString = "472288840.961992"
+            timestampString = "472440747.491225"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "618"
-            endingLineNumber = "618"
+            startingLineNumber = "625"
+            endingLineNumber = "625"
             landmarkName = "-loginProcess"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leftMenuView.m"
-            timestampString = "472288832.173027"
+            timestampString = "472440747.491225"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "-showContents"
             landmarkType = "5">
          </BreakpointContent>
