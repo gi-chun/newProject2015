@@ -442,15 +442,28 @@
     }
     
     if(isTutoShow){
-        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-        if(isTuto == NO){
+        
+        //NSString *strFirst = [[NSUserDefaults standardUserDefaults] stringForKey:kFirstExecY];
+        if([[NSUserDefaults standardUserDefaults] stringForKey:kFirstExecY]){
+            isTutoShow = NO;
+            
+            BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+            if(isTuto == YES){
+                isTutoShow = YES;
+                self.introductionView = [[MYViewController alloc] init];
+                self.introductionView.delegate = self;
+                [self.window setRootViewController:self.introductionView];
+                
+            }
+        }else{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             isTutoShow = YES;
             self.introductionView = [[MYViewController alloc] init];
             self.introductionView.delegate = self;
             [self.window setRootViewController:self.introductionView];
-            
-        }else{
-            isTutoShow = NO;
         }
     }
     
@@ -460,8 +473,6 @@
     
     //session continue
     [self startSessionTimer];
-    
-    
     
     return YES;
 }

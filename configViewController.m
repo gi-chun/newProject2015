@@ -105,11 +105,11 @@
 - (IBAction)tutoBtn:(id)sender {
     
     if ([_tutoBtn isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kTutoY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }else{
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kTutoY];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }
@@ -210,8 +210,8 @@
         self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     CGFloat marginX = 0;
     CGFloat marginY = 0;
@@ -250,7 +250,7 @@
     }
     
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-    if(isTuto == NO){
+    if(isTuto == YES){
         [_tutoBtn setOn:true];
     }
     
@@ -541,9 +541,9 @@
     [_L_TUTO_KO setText:TUTO_KO];
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
     if(isTuto == YES){
-        [_tutoBtn setOn:false];
-    }else{
         [_tutoBtn setOn:true];
+    }else{
+        [_tutoBtn setOn:false];
     }
     
     [_L_NEW setText:NEWS_KO];
@@ -624,9 +624,9 @@
     [_L_TUTO_KO setText:TUTO_VI];
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
     if(isTuto == YES){
-        [_tutoBtn setOn:false];
-    }else{
         [_tutoBtn setOn:true];
+    }else{
+        [_tutoBtn setOn:false];
     }
     
     [_L_NEW setText:NEWS_VI];
