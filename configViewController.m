@@ -350,9 +350,9 @@
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     CGRect bounds = self.view.bounds;
     
-    if(_isChangeLang){
-        bounds.origin.y += 180;
-    }
+//    if(_isChangeLang){
+//        bounds.origin.y += 120; //180
+//    }
     
 //    if( translation.y > 0){
 //        translation.y = translation.y - 25;
@@ -703,6 +703,8 @@
 //        
 //    }
     
+    [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    
     _isChangeLang = 1;
     
     NSInteger nKind;
@@ -773,8 +775,7 @@
         });
         
         //[self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        
-        [_backgroundImageView setFrame:CGRectMake(0, kScreenBoundsHeight+180, kScreenBoundsWidth, kToolBarHeight)];
+        //[_backgroundImageView setFrame:CGRectMake(0, kScreenBoundsHeight+180, kScreenBoundsWidth, kToolBarHeight)];
         
         
     }else{
