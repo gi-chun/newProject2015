@@ -716,6 +716,18 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         //        [alert show];
         
+        if(!([url rangeOfString:@"alert"].location == NSNotFound)){
+        
+            NSRange range = [url rangeOfString:@"="];
+            range.location = range.location + 1;
+            NSString* alertMsg = [url substringFromIndex:range.location];
+            NSString* newString = [alertMsg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:newString delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            
+            return NO;
+        }
+        
         if(!([url rangeOfString:@"openLoginPage"].location == NSNotFound)){
             
             //login

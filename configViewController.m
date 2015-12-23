@@ -184,6 +184,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _isChangeLang = 0;
+    
 //    for (UIView *subView in [self.view subviews]) {
 //        [subView removeFromSuperview];
 //    }
@@ -348,6 +350,17 @@
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     CGRect bounds = self.view.bounds;
     
+    if(_isChangeLang){
+        bounds.origin.y += 180;
+    }
+    
+//    if( translation.y > 0){
+//        translation.y = translation.y - 25;
+//    }
+    
+    NSLog(@"pan-bounds:   x:%f, y:%f", bounds.origin.x, bounds.origin.y);
+    NSLog(@"trans-bounds: x:%f, y:%f", translation.x, translation.y);
+
     // Translate the view's bounds, but do not permit values that would violate contentSize
     CGFloat newBoundsOriginX = bounds.origin.x - translation.x;
     CGFloat minBoundsOriginX = 0.0;
@@ -690,6 +703,8 @@
 //        
 //    }
     
+    _isChangeLang = 1;
+    
     NSInteger nKind;
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -727,6 +742,12 @@
     
     float meHeight = kScreenBoundsHeight;
     if(meHeight <= 480){
+        
+//        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
+//                                                     initWithTarget:self action:@selector(handlePanGesture:)];
+//        [self.view addGestureRecognizer:gestureRecognizer];
+//        self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
+        
         //[self viewDidLoad];
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
         if([temp isEqualToString:@"ko"]){
@@ -751,8 +772,9 @@
             });
         });
         
-//        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        //[self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         
+        [_backgroundImageView setFrame:CGRectMake(0, kScreenBoundsHeight+180, kScreenBoundsWidth, kToolBarHeight)];
         
         
     }else{

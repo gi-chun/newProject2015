@@ -99,6 +99,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_webView.scrollView setShowsHorizontalScrollIndicator:true];
         [_webView.scrollView setShowsVerticalScrollIndicator:true];
         
+        [_webView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        
 //        [_webView.scrollView zoomToRect:CGRectMake(0,0,_webView.scrollView.contentSize.width+300, _webView.scrollView.contentSize.height+300) animated:YES];
         
         
@@ -555,8 +557,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    self.webView.scrollView.maximumZoomScale = sfactor;
 //    self.webView.scrollView.zoomScale = sfactor;
     
-    self.webView.scrollView.minimumZoomScale = 1;
-    self.webView.scrollView.maximumZoomScale = 20;
+//    self.webView.scrollView.minimumZoomScale = 1;
+//    self.webView.scrollView.maximumZoomScale = 20;
     self.webView.scrollView.zoomScale = 2;
     self.webView.scrollView.zoomScale = 1;
     
