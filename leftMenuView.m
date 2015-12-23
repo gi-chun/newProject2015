@@ -124,9 +124,14 @@ const static CGFloat MENU_HEIGHT   =      45;
     CGFloat meWidth = self.bounds.size.width;
     CGFloat itemWidth = 0;
     if( kScreenBoundsWidth == 320){
-        itemWidth = self.frame.size.width;
+        itemWidth = self.frame.size.width-50;
     }else{
-        itemWidth = self.bounds.size.width;
+        if(kScreenBoundsWidth > 320){
+            itemWidth = self.bounds.size.width-100;
+            if(kScreenBoundsWidth > 400){
+                itemWidth = self.bounds.size.width-15;
+            }
+        }
     }
     
     CGFloat meHeight = self.frame.size.height;
@@ -542,8 +547,19 @@ const static CGFloat MENU_HEIGHT   =      45;
 - (void) loginProcess
 {
     
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self addSubview:likeImageView];
     [self bringSubviewToFront:likeImageView];

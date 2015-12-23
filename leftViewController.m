@@ -15,6 +15,8 @@
 #import "setInforViewController.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "SBJson.h"
+#import "WebViewController.h"
+#import "Appdelegate.h"
 
 
 #import "amsLibrary.h"
@@ -67,6 +69,14 @@
     
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+    
+    WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
+    [homeViewController setViewAlpha:0];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -74,6 +84,10 @@
 //    if (self.navigationController.navigationBar.isHidden) {
 //        [self.navigationController setNavigationBarHidden:YES];
 //    }
+    
+    WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
+    [homeViewController setViewAlpha:1];
+    
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
     if(isLogin == YES){
         [self setViewLogin];
@@ -348,7 +362,7 @@
 //    [menuButton addTarget:self action:@selector(touchMenuButton) forControlEvents:UIControlEventTouchUpInside];
 //    //[menuButton setAccessibilityLabel:@"메뉴" Hint:@"왼쪽 메뉴로 이동합니다"];
 //    [self.view addSubview:menuButton];
-
+   
 }
 /*
 #pragma mark - Navigation

@@ -31,6 +31,7 @@ typedef enum {
 - (void)resetADImage;
 - (void)webViewReload;
 - (void)gotoPushUrl:(NSString *)url;
+- (void)setViewAlpha:(NSInteger)alphaValue;
 
 
 @end

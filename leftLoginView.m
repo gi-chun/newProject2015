@@ -101,8 +101,19 @@
 
 - (void) loginProcess
 {
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self addSubview:likeImageView];
     [self bringSubviewToFront:likeImageView];
