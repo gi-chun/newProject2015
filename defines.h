@@ -459,8 +459,8 @@ Chúc mừng bạn là thành viên của Sunny Club. Hãy trải nghiệm ngay 
 static NSString *SERVICE_GO_KO = @"서비스 이용하러 가기";
 static NSString *SERVICE_GO_VI = @"Sử dụng dịch vụ";
 
-static NSString *NET_WORK_CHECK_KO = @"이용에 불편을 드려 대단히 죄송합니다.\n\n네트워크에 접속할 수 없습니다. \n 연결상태를 확인해 주세요.";
-static NSString *NET_WORK_CHECK_VI = @"Xin lỗi vì sự bất tiện này.\n\nChúng tôi không thể kết nối mạng. \n Vui lòng kiểm tra lại trạng thái kết nối.";
+static NSString *NET_WORK_CHECK_KO = @"이용에 불편을 드려 대단히 죄송합니다.\n\n네트워크에 접속할 수 없습니다. \n연결상태를 확인해 주세요.";
+static NSString *NET_WORK_CHECK_VI = @"Xin lỗi vì sự bất tiện này.\n\nChúng tôi không thể kết nối mạng. \nVui lòng kiểm tra lại trạng \nthái kết nối.";
 static NSString *NET_WORK_RELOAD_KO = @"재시도";
 static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 

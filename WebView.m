@@ -1356,9 +1356,36 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
     
     [self.webView setHidden:YES];
+    [self.zoomInButton setHidden:YES];
+    [self.zoomOutButton setHidden:YES];
 
     
     CGRect viewFrame = [self frame];
+    
+    CGFloat marginX = 0;
+    CGFloat marginY = 0;
+    CGFloat marginYY = 0;
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        marginX = 0;
+        marginY = 0;
+    }else{
+        marginX = 0;
+        marginY = 15;
+        marginYY = -10;
+        if(kScreenBoundsWidth > 320){
+            if(kScreenBoundsWidth > 400){
+                marginX = 45;
+                marginY = 15;
+                marginYY = -40;
+            }else{
+                marginX = 25;
+                marginY = 15;
+                marginYY = -25;
+            }
+        }
+    }
     
     if(checkNetTimoutView)
     {
@@ -1368,11 +1395,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     checkNetTimoutView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height)];
     [self addSubview:checkNetTimoutView];
     
-//    UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
-//    bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
-//    [checkNetTimoutView addSubview:bgView];
+    UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(20+marginX, 20+marginY, 280, 220)];
+    bgView.image = [UIImage imageNamed:@"error_img.png"];
+    [checkNetTimoutView addSubview:bgView];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewFrame.size.width/4,viewFrame.size.height/3 , viewFrame.size.width/4*3, viewFrame.size.height/3)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(45+marginX, 120+marginY+marginYY , viewFrame.size.width/4*3, viewFrame.size.height/3)];
     NSString* temp;
     NSString* labelText;
     NSString* btnText;
@@ -1395,15 +1422,15 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [checkNetTimoutView addSubview:textLabel];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*2, 50);
+    btn.frame = CGRectMake(20+marginX,CGRectGetMaxY(textLabel.frame) , 280, 40);
     //[btn setBackgroundColor:[UIColor clearColor]];
     
-    [btn setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
-    [btn setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_press.png"] forState:UIControlStateHighlighted];
+    [btn setBackgroundImage:[UIImage imageNamed:@"login_btn.png"] forState:UIControlStateNormal];
     [btn setTitle:btnText forState:UIControlStateNormal];
     [btn setTitle:btnText forState:UIControlStateHighlighted];
-    [btn setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateHighlighted];
+    [btn setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateHighlighted];
     [btn addTarget:self action:@selector(onClickReloadButton) forControlEvents:UIControlEventTouchUpInside];
     [checkNetTimoutView addSubview:btn];
     
