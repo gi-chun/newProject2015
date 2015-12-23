@@ -49,6 +49,7 @@
 - (void)goTopWithAnimated:(BOOL)animated;
 - (void)goBack;
 - (void)goFoward;
+- (NSInteger)isGoBack;
 
 //scheme controls
 - (void)actionTop;

@@ -476,15 +476,15 @@
 //            [spinner setHidden:true];
 //            [spinner stopAnimating];
             
-            NSString* temp;
-            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-            if([temp isEqualToString:@"ko"]){
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                [alert show];
-            }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                [alert show];
-            }
+//            NSString* temp;
+//            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//            if([temp isEqualToString:@"ko"]){
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                [alert show];
+//            }else{
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                [alert show];
+//            }
             
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kLoginY];
@@ -895,14 +895,14 @@
                     CGFloat scale = [UIScreen mainScreen].scale;
                     result = CGSizeMake(result.width * scale, result.height * scale);
                     
-                    if(result.height== 960){
-                        
-                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
-                        
-                        NSLog(@"iphone 4, 4s retina resolution");
-                    }else{
-                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
-                    }
+//                    if(result.height== 960){
+//                        
+//                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
+//                        
+//                        NSLog(@"iphone 4, 4s retina resolution");
+//                    }else{
+//                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
+//                    }
                     
                 }else{
                     
@@ -971,13 +971,13 @@
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
-    if([temp isEqualToString:@"ko"]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-    }
+//    if([temp isEqualToString:@"ko"]){
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }else{
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
     
 }
 

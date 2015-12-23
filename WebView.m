@@ -765,6 +765,17 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [self.webView.scrollView setContentOffset:CGPointZero animated:animated];
 }
 
+- (NSInteger)isGoBack
+{
+    if ([self.webView canGoBack]) {
+        return 1;
+    }else{
+        return 0;
+    }
+    
+    return 1;
+}
+
 - (void)goBack
 {
 //    [self.webView stopLoading];

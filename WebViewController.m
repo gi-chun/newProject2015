@@ -716,6 +716,26 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         //        [alert show];
         
+        if(!([url rangeOfString:@"prev"].location == NSNotFound)){
+            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+
+            if([_webView isGoBack]){
+                [_webView goBack];
+            }else{
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+               
+                [self didTouchGoSunny];
+//                if ([self.delegate respondsToSelector:@selector(didTouchGoSunny)]) {
+//                    [self.delegate didTouchGoSunny];
+//                }
+            }
+            
+            return NO;
+        }
+
         if(!([url rangeOfString:@"alert"].location == NSNotFound)){
         
             NSRange range = [url rangeOfString:@"="];
@@ -740,7 +760,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
             }else{
-                [loginController setLoginType:LoginTypeConfig];
+                [loginController setLoginType:LoginTypeAD];
             }
             
             [loginController setDelegate:self];
