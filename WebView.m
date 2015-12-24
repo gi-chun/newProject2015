@@ -929,9 +929,30 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+//     view	UIWebBrowserView *	0x14be2400	0x14be2400
+//    _input	UIWebFormSelectPeripheral *	0x145b6200	0x145b6200
+//    _selectControl	UIWebSelectSinglePicker *	0x145cb910	0x145cb910
+    
+    //UIWebBrowserView* UIView = (UIWebBrowserView*)view;
+    
+     NSLog(@"scroll capture");
+     NSLog(@"scroll capture");
+}
+
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
 {
+    
+    //if(scale == 1.14374995f || scale == 1 || scale == 1.1440000534057617){
+    if( scale >= 1 && scale < 1.15){
+        self.webView.scrollView.zoomScale = 0.5f;
+        return;
+    }
+    
     _webView.scrollView.maximumZoomScale = 20;
+    //_webView.scrollView.minimumZoomScale = 1;
+    fZoomInCurrent = scale;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

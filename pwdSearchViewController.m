@@ -88,7 +88,7 @@
         
     }else if([temp isEqualToString:@"vi"]){
         if([mailTxt.text length] == 0){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [mailTxt becomeFirstResponder];
             [searchBtnClick setEnabled:true ];
