@@ -450,6 +450,9 @@
             BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
             if(isTuto == YES){
                 isTutoShow = YES;
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
                 self.introductionView = [[MYViewController alloc] init];
                 self.introductionView.delegate = self;
                 [self.window setRootViewController:self.introductionView];
@@ -891,22 +894,33 @@
 //        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:title message:messageDic
 //                                                       delegate:self cancelButtonTitle:@"test" otherButtonTitles:nil, nil];
 //        [alert2 show];
+        if([messageWebUrl length] < 1){
+            NSString* gLocalLang = @"";
+            if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            }
+            
+            messageWebUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+        }
         
         [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSString* temp;
         NSString* tclose;
+        NSString* tcancel;
         
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
         if([temp isEqualToString:@"ko"]){
             tclose = BTN_CONFIRM_KO;
+            tcancel = BTN_CLOSE_KO;
         }else if([temp isEqualToString:@"vi"]){
             tclose = BTN_CONFIRM_VI;
+            tcancel = BTN_CLOSE_VI;
         }
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
-                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"cancel", nil];
         [alert show];
         
     }else{

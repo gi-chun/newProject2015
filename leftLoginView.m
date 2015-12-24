@@ -28,6 +28,7 @@
     UIImageView *idImageView;
     UIButton* loginButton;
     UIButton* logoutButton;
+    UIButton* summitButton;
     CPLoadingView *loadingView;
 }
 @end
@@ -112,31 +113,31 @@
         marginX = 8;
     }
     
-    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
-    [self addSubview:likeImageView];
-    [self bringSubviewToFront:likeImageView];
-    
-    if ([SYSTEM_VERSION intValue] > 7) {
-        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-        [UIView animateWithDuration:3.0f
-                              delay:0
-             usingSpringWithDamping:0.2f
-              initialSpringVelocity:6.0f
-                            options:UIViewAnimationOptionAllowUserInteraction
-                         animations:^{
-                             likeImageView.transform = CGAffineTransformIdentity;
-                         }
-                         completion:^(BOOL finished) {
-                             [likeImageView removeFromSuperview];
-                         }];
-    }
-    else {
-        [UIView animateWithDuration:1.0f animations:^{
-            [likeImageView removeFromSuperview];
-        }];
-    }
+//    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+//    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
+//    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
+//    [self addSubview:likeImageView];
+//    [self bringSubviewToFront:likeImageView];
+//    
+//    if ([SYSTEM_VERSION intValue] > 7) {
+//        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+//        [UIView animateWithDuration:3.0f
+//                              delay:0
+//             usingSpringWithDamping:0.2f
+//              initialSpringVelocity:6.0f
+//                            options:UIViewAnimationOptionAllowUserInteraction
+//                         animations:^{
+//                             likeImageView.transform = CGAffineTransformIdentity;
+//                         }
+//                         completion:^(BOOL finished) {
+//                             [likeImageView removeFromSuperview];
+//                         }];
+//    }
+//    else {
+//        [UIView animateWithDuration:1.0f animations:^{
+//            [likeImageView removeFromSuperview];
+//        }];
+//    }
 
     
     
@@ -612,7 +613,7 @@
         if(kScreenBoundsWidth > 400){
             titleLabelMarginX = 80;
     
-            loginBtnMarginX = 40;
+            loginBtnMarginX = 40+30;
             labelMarginX = 2;
             logoutMarginX =10;
             cardMarginX = 0;
@@ -621,7 +622,7 @@
     
         }else{
             titleLabelMarginX = (kScreenBoundsWidth > 320)?10:0;
-            loginBtnMarginX = (kScreenBoundsWidth > 320)?140:80;
+            loginBtnMarginX = (kScreenBoundsWidth > 320)?140+90:80+60;
             labelMarginX = (kScreenBoundsWidth > 320)?2:0;
             logoutMarginX = (kScreenBoundsWidth > 320)?100:50;
             cardMarginX = (kScreenBoundsWidth > 320)?40:20;
@@ -657,7 +658,7 @@
     
     //login button
     loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginButton setFrame:CGRectMake(20, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
+    [loginButton setFrame:CGRectMake(10, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
     [loginButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
@@ -678,6 +679,30 @@
     loginButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     
     [self addSubview:loginButton];
+    
+    //summit button
+    summitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [summitButton setFrame:CGRectMake(CGRectGetMaxX(loginButton.frame)+10, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
+    [summitButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
+    [summitButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
+    [summitButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
+    [summitButton addTarget:self action:@selector(didTouchSummitBtn) forControlEvents:UIControlEventTouchUpInside];
+    
+    btnString = nil;
+    if([temp isEqualToString:@"ko"]){
+        btnString = LOGIN_SUMMIT_KO;
+    }else{
+        btnString = LOGIN_SUMMIT_VI;
+    }
+    [summitButton setTitle:btnString forState:UIControlStateNormal];
+    [summitButton.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+    [summitButton setTitleColor:UIColorFromRGB(0xf05921) forState:UIControlStateNormal];
+    [summitButton setTitleColor:UIColorFromRGB(0xf05921) forState:UIControlStateHighlighted];
+    
+    summitButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    
+    [self addSubview:summitButton];
+
     
     //////////////////////////////////////////////////////////////////////////////////////////
     // id image
@@ -921,6 +946,13 @@
 {
     if ([self.delegate respondsToSelector:@selector(didLogOutShowContents)]) {
         [self.delegate didLogOutShowContents];
+    }
+}
+
+- (void)didTouchSummitBtn
+{
+    if ([self.delegate respondsToSelector:@selector(didTouchSummitBtn)]) {
+        [self.delegate didTouchSummitBtn];
     }
 }
 

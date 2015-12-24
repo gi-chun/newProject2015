@@ -166,7 +166,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_preButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateNormal];
         [_preButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateHighlighted];
         [_preButton addTarget:self action:@selector(touchpreButton) forControlEvents:UIControlEventTouchUpInside];
-        [_preButton setHidden:YES];
+        [_preButton setHidden:true];
         [self addSubview:_preButton];
         
         // zoom in
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_zoomInButton setImage:[UIImage imageNamed:@"zoom_in.png"] forState:UIControlStateNormal];
         [_zoomInButton setImage:[UIImage imageNamed:@"zoom_in_press.png"] forState:UIControlStateHighlighted];
         [_zoomInButton addTarget:self action:@selector(touchZoomInButton) forControlEvents:UIControlEventTouchUpInside];
-        [_zoomInButton setHidden:NO];
+        [_zoomInButton setHidden:false];
         [self addSubview:_zoomInButton];
         
         // zoom out
@@ -184,7 +184,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_zoomOutButton setImage:[UIImage imageNamed:@"zoom_out.png"] forState:UIControlStateNormal];
         [_zoomOutButton setImage:[UIImage imageNamed:@"zoom_out_press.png"] forState:UIControlStateHighlighted];
         [_zoomOutButton addTarget:self action:@selector(touchZoomOutButton) forControlEvents:UIControlEventTouchUpInside];
-        [_zoomOutButton setHidden:NO];
+        [_zoomOutButton setHidden:false];
         [self addSubview:_zoomOutButton];
         
 //        // 토글버튼
@@ -358,13 +358,25 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) - (buttonHeight+10) , buttonWidth, buttonHeight)];
     [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
     
-    if(gnbType == 0){ //sunny
-        [_zoomInButton setHidden:false];
-        [_zoomOutButton setHidden:false];
-    }else{
+//    if(gnbType == 0){ //sunny
+//        [_zoomInButton setHidden:false];
+//        [_zoomOutButton setHidden:false];
+//    }else{
+//        [_zoomInButton setHidden:true];
+//        [_zoomOutButton setHidden:true];
+//
+//    }
+}
+
+- (void)setZoomBtnVisible:(NSInteger)isShow
+{
+    if(isShow == 0){ //hide
         [_zoomInButton setHidden:true];
         [_zoomOutButton setHidden:true];
-
+    }else{
+        [_zoomInButton setHidden:false];
+        [_zoomOutButton setHidden:false];
+        
     }
 }
 
@@ -396,8 +408,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
     [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
     
-    [_zoomInButton setHidden:false];
-    [_zoomOutButton setHidden:false];
+//    [_zoomInButton setHidden:false];
+//    [_zoomOutButton setHidden:false];
     
 //    [self bringSubviewToFront:_topButton];
 }

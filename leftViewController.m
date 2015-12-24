@@ -448,6 +448,14 @@
     
 }
 
+- (void)didTouchSummitBtn
+{
+    if ([self.delegate respondsToSelector:@selector(didTouchSummitBtn)]) {
+        [self.delegate didTouchSummitBtn];
+    }
+    
+}
+
 - (void)didTouchAD
 {
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];

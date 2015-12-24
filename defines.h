@@ -132,6 +132,8 @@ static NSString * const kForceMemberViewY       = @"kForceMemberViewY"; //member
 
 static NSString *BTN_CONFIRM_KO = @"확인";
 static NSString *BTN_CONFIRM_VI = @"Xác nhận";
+static NSString *BTN_CLOSE_KO = @"닫기";
+static NSString *BTN_CLOSE_VI = @"close";
 
 //korea
 static NSString * SEND_PWD_MAIL_KO = @"회원님의 등록된 메일 주소로\n임시 비밀번호 메일을 전송 하였습니다.";

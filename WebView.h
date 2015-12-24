@@ -38,6 +38,7 @@
 - (NSString *)execute:(NSString *)script;
 - (void)loadRequest:(NSURLRequest *)request;
 - (void)loadMutableRequest:(NSMutableURLRequest *)request;
+- (void)setZoomBtnVisible:(NSInteger)isShow; //0: hide, 1: show
 
 //- (BOOL)toggleButtonHiddenStatus;
 - (void)setHiddenToolBarView:(BOOL)isHidden;

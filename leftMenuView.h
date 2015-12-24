@@ -31,6 +31,7 @@
 - (void)didTouchCloseBtn;
 - (void)didTouchLogOutBtn;
 - (void)didTouchLogInBtn;
+- (void)didTouchSummitBtn;
 - (void)didTouchAD;
 - (void)didLogOutShowContents;
 - (void)didTouchLetterBtn;

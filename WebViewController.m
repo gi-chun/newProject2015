@@ -794,6 +794,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 #ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
+    //https://vntst.shinhanglobal.com/sunny/index.jsp?w2xPath=/sunny/card/000S1710M00.xml
+    
     if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp"].location == NSNotFound)){
     //if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index_2nd.jsp"].location == NSNotFound)){
         //TODO
@@ -829,6 +831,12 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
             return NO;
         }else{
             
+            //sunny/sunnyclub
+            if (([url rangeOfString:@"sunny/sunnyclub"].location != NSNotFound)){
+                [webView setZoomBtnVisible:1];
+            }else{
+                [webView setZoomBtnVisible:0];
+            }
             [self.navigationController setNavigationBarHidden:YES];
             showNavigation = 4;
             gShowNavigation = 4;
@@ -1751,9 +1759,20 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
     [self.mm_drawerController closeDrawerAnimated:true completion:nil];
     
-    LoginViewController *loginController = [[LoginViewController alloc] init];
+    setInforViewController *loginController = [[LoginViewController alloc] init];
     [loginController setDelegate:self];
     [self.navigationController pushViewController:loginController animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
+    
+}
+
+- (void)didTouchSummitBtn
+{
+    [self.mm_drawerController closeDrawerAnimated:true completion:nil];
+    
+    setInforViewController *SetInforViewController = [[setInforViewController alloc] init];
+    [SetInforViewController setDelegate:self];
+    [self.navigationController pushViewController:SetInforViewController animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
     
 }
