@@ -10,6 +10,7 @@
 //#import "UIImage+ImageWithColor.h"
 #import "CPLoadingView.h"
 //#import "HttpRequest.h"
+#import "NSMutableArray+Stack.h"
 
 typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
@@ -52,6 +53,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     UIView *checkNetTimoutView;
     
     CGFloat fZoomInCurrent;
+    NSMutableArray *myStack;
 }
 
 @end
@@ -80,6 +82,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         {
             [self destroyWebView];
         }
+        
+        myStack = [[NSMutableArray alloc] init];
+        
         //CGFloat marginY = (kScreenBoundsWidth > 320)?0:10;
         
         _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)-kToolBarHeight)];
@@ -240,6 +245,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     
+    [myStack delAll];
+    
+    
+    
 //    // Deleting all the cookies
 //    for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
 //        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
@@ -267,6 +276,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+    
+    [myStack delAll];
     
 //    // Deleting all the cookies
 //    for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
@@ -385,7 +396,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     //_webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 6, CGRectGetWidth(frame),
     
     CGRect webViewFrame;
-    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2);
+    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight));
+    //webViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-kToolBarHeight);
     [self.webView setFrame:webViewFrame];
     
     CGSize contentSize = self.webView.scrollView.contentSize;
@@ -398,12 +410,13 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    self.webView.scrollView.zoomScale = sfactor;
     
     CGRect toolViewFrame;
-    toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2, CGRectGetWidth([self frame]), kToolBarHeight);
+    toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight), CGRectGetWidth([self frame]), kToolBarHeight);
+//    toolViewFrame = CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+kStatusBarY), kScreenBoundsWidth, kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
     
     
-    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
-    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
+    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+((kToolBarHeight-buttonHeight)/2)), buttonWidth, buttonHeight)];
+    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+((kToolBarHeight-buttonHeight)/2)), buttonWidth, buttonHeight)];
 
     [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
     [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
@@ -433,6 +446,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+//    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+//    [NSURLCache setSharedURLCache:sharedCache];
     
     [self.webView setHidden:false];
     
@@ -463,6 +478,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //            //[self.delegate initNavigation:[Modules isMatchedGNBUrl:url]];
 //            //[self.delegate initNavigation:0];
 //        }
+        
+        if (![url hasPrefix:@"app"]) {
+            [myStack push:url];
+        }
         
         if ([self.delegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:)]) {
             
@@ -649,8 +668,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         if (request) {
             [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
             [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            
         }
     }
+    
+    //[myStack delAll];
     
     request = [NSURLRequest requestWithURL:[NSURL URLWithString:request.URL.absoluteString]
                                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -667,8 +689,12 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         if (request) {
             [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
             [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            
         }
     }
+    
+    
+    [myStack delAll];
     
     [self.webView loadRequest:request];
 
@@ -795,7 +821,20 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     
     if ([self.webView canGoBack]) {
-        [self.webView goBack];
+//        if ([SYSTEM_VERSION intValue] > 6.5) {
+//                [[NSURLCache sharedURLCache] removeAllCachedResponses];
+//        }
+//        [self.webView goBack];
+
+        if ([SYSTEM_VERSION intValue] > 7.0) {
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            [self.webView goBack];
+        }else{
+            if ([self.delegate respondsToSelector:@selector(gotoPrev:)]) {
+                NSString* strDummy = [myStack pop];
+                [self.delegate gotoPrev:[myStack pop]];
+            }
+        }
     }
     else {
         if ([self.delegate respondsToSelector:@selector(webViewGoBack)]) {

@@ -91,6 +91,7 @@ static NSString * const kMainBannerUrl   = @"kMainBannerUrl";
 static NSString * const kLeftMainBannerImgUrl   = @"kLeftMainBannerImgUrl";
 static NSString * const kMainBannerImgUrl   = @"kMainBannerImgUrl";
 static NSString * const kPushUrl   = @"kPushUrl";
+static NSString * const kPrevUrl   = @"kPrevUrl";
 
 static NSString * const klang       = @"currentLang";         // language
 static NSString * const kAutoLogin       = @"autoLogin";

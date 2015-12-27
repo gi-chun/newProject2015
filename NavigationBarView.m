@@ -191,7 +191,7 @@
                 
                 // left button
                 UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                [menuButton setFrame:CGRectMake(10, 6, 31, 31)];
+                [menuButton setFrame:CGRectMake(10, 10, 31, 31)];
                 [menuButton setBackgroundImage:[UIImage imageNamed:@"bank_total_menu_btn.png"] forState:UIControlStateNormal];
                 [menuButton setBackgroundImage:[UIImage imageNamed:@"bank_total_menu_btn_press.png"] forState:UIControlStateHighlighted];
                 [menuButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];
@@ -305,7 +305,7 @@
             
             // left button
             UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [menuButton setFrame:CGRectMake(10, 6, 31, 31)];
+            [menuButton setFrame:CGRectMake(10, 10, 31, 31)];
             [menuButton setBackgroundImage:[UIImage imageNamed:@"total_menu_btn.png"] forState:UIControlStateNormal];
             [menuButton setBackgroundImage:[UIImage imageNamed:@"total_menu_btn_press.png"] forState:UIControlStateHighlighted];
             [menuButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];

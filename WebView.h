@@ -97,4 +97,6 @@
 //Navigation Bar
 - (void)initNavigation:(NSInteger)navigationType;
 
+- (void)gotoPrev:(NSString*)callUrl;
+
 @end
