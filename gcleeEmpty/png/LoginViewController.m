@@ -109,42 +109,7 @@
         }
     }
     
-    //////////////////////////////////////////////////////
-//    mainScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-//    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    mainScrollView.pagingEnabled = NO;
-//    mainScrollView.delegate = self;
-//    mainScrollView.showsHorizontalScrollIndicator = YES;
-//    mainScrollView.showsVerticalScrollIndicator = YES;
-//    //[mainScrollView addSubview:mainView];
-//    //[self.view addSubview:mainScrollView];
-//
-//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 1000);
-
-    
-    /////////////////////////////////////////////////////
-    
-//    CGRect viewFrame;
-//    viewFrame = CGRectMake(kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-
-//    for (UIView *subView in mainScrollView.subviews) {
-//        [subView setFrame:CGRectMake(subView.frame.origin.x+kPopWindowMarginW, subView.frame.origin.y, subView.frame.size.width, subView.frame.size.height)];
-//        
-//    }
-
-    
-//    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    mainScrollView.pagingEnabled = NO;
-//    //mainScrollView.delegate = self;
-//    mainScrollView.showsHorizontalScrollIndicator = NO;
-//    mainScrollView.showsVerticalScrollIndicator = YES;
-//    
-//    [mainScrollView setFrame:self.view.bounds];
-//    
-//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 500);
-    
-    
-    //myLoginType = LoginTypeDefault;
+    [btnSummit.titleLabel setNumberOfLines:0];
     
     [txtPwd setKeyboardType:UIKeyboardTypeNumberPad ];
     [txtID setKeyboardType:UIKeyboardTypeEmailAddress ];

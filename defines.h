@@ -197,7 +197,7 @@ static NSString *PERSON_MEMBER_LEVEL_VI     = @"Thứ hạng hội viên";
 static NSString *PERSON_NOMAL_VI      = @"Chung";
 
 //korea
-static NSString *LEFT_DES_KO     = @"로그인을 하시면 Sunny Club의 다양한\n서비스를 이용하실 수 있습니다.";
+static NSString *LEFT_DES_KO     = @"    로그인을 하시면\n    Sunny Club의 다양한 서비스를\n    이용하실 수 있습니다.";
 static NSString *LEFT_LOGIN_KO     = @"로그인";
 static NSString *LEFT_LOGIN_NOTI_KO     = @"Event / 공지";
 static NSString *LEFT_CONFIG_KO     = @"설정";
@@ -205,7 +205,7 @@ static NSString *LEFT_CONFIG_KO     = @"설정";
 static NSString *BOTTOM_BANNER_KO = @"banner_kr.png";
 
 //vi
-static NSString *LEFT_DES_VI     = @"Vui lòng đăng nhập để sử dụng\ncác dịch vụ của Sunny Club.";
+static NSString *LEFT_DES_VI     = @"    Vui lòng đăng\n    nhập để sử dụng các\n    dịch vụ của Sunny Club.";
 static NSString *LEFT_LOGIN_VI     = @"Đăng nhập";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
@@ -268,7 +268,7 @@ static NSString *LOGIN_AUTO_KO     = @"자동로그인";
 static NSString *LOGIN_ID_FIND_KO     = @"아이디 찾기";
 static NSString *LOGIN_PWD_FIND_KO     = @"비밀번호 찾기";
 static NSString *LOGIN_BTN_KO     = @"로그인";
-static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요?\n지금 가입하고 다양한\n서비스를 자유롭게\n이용하세요.";
+static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요?\n지금 가입하고 다양한 서비스를\n자유롭게 이용하세요.";
 static NSString *LOGIN_SUMMIT_KO     = @"회원가입";
 static NSString *EMAIL_CHECK_KO      = @"이메일 형식의 아이디를 입력하세요.";
 static NSString *ID_CHECK_KO         = @"아이디를 입력하세요.";
@@ -293,8 +293,8 @@ static NSString *LOGIN_AUTO_VI     = @"Tự động đăng nhập";
 static NSString *LOGIN_ID_FIND_VI     = @"Tìm ID";
 static NSString *LOGIN_PWD_FIND_VI     = @"Tìm mật khẩu";
 static NSString *LOGIN_BTN_VI     = @"Đăng nhập";
-static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên?\nHãy đăng nhập\nvà sử dụng dịch vụ\ncủa chúng tôi.";
-static NSString *LOGIN_SUMMIT_VI     = @"đăng ký thành viên";
+static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên?\nHãy đăng nhập và sử\ndụng dịch vụ của chúng tôi.";
+static NSString *LOGIN_SUMMIT_VI     = @"đăng ký\nthành viên";
 static NSString *EMAIL_CHECK_VI      = @"Đăng nhập ID  theo hình thức email.";
 static NSString *ID_CHECK_VI         = @"Xin vui lòng nhập ID";
 static NSString *PWD_CHECK_VI = @"Vui lòng nhập mật khẩu";

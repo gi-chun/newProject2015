@@ -59,7 +59,7 @@ const static CGFloat LABEL_WIDTH     =    100;
 {
     [self removeContents];
     
-    CGFloat marginX = (kScreenBoundsWidth > 320)?15:0;
+    CGFloat marginX = (kScreenBoundsWidth > 320)?15:15;
     
 //    if(_viewType == 5){
 //        
@@ -223,7 +223,7 @@ const static CGFloat LABEL_WIDTH     =    100;
     
     //UIImage *buttonImage = emptyButton.imageView.image;
     //[emptyButton setImageEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
-    [emptyButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 70+marginX, 0, 0)];
+    [emptyButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 45+marginX, 0, 0)];
     
 }
 

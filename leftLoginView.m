@@ -613,7 +613,7 @@
         if(kScreenBoundsWidth > 400){
             titleLabelMarginX = 80;
     
-            loginBtnMarginX = 40+30;
+            loginBtnMarginX = 155;
             labelMarginX = 2;
             logoutMarginX =10;
             cardMarginX = 0;
@@ -622,7 +622,7 @@
     
         }else{
             titleLabelMarginX = (kScreenBoundsWidth > 320)?10:0;
-            loginBtnMarginX = (kScreenBoundsWidth > 320)?140+90:80+60;
+            loginBtnMarginX = (kScreenBoundsWidth > 320)?140+110:80+115;
             labelMarginX = (kScreenBoundsWidth > 320)?2:0;
             logoutMarginX = (kScreenBoundsWidth > 320)?100:50;
             cardMarginX = (kScreenBoundsWidth > 320)?40:20;
@@ -682,7 +682,7 @@
     
     //summit button
     summitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [summitButton setFrame:CGRectMake(CGRectGetMaxX(loginButton.frame)+10, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
+    [summitButton setFrame:CGRectMake(CGRectGetMaxX(loginButton.frame)+5, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
     [summitButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [summitButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
     [summitButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
@@ -694,12 +694,14 @@
     }else{
         btnString = LOGIN_SUMMIT_VI;
     }
-    [summitButton setTitle:btnString forState:UIControlStateNormal];
     [summitButton.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+    [summitButton.titleLabel setNumberOfLines:0];
+    [summitButton setTitle:btnString forState:UIControlStateNormal];
     [summitButton setTitleColor:UIColorFromRGB(0xf05921) forState:UIControlStateNormal];
     [summitButton setTitleColor:UIColorFromRGB(0xf05921) forState:UIControlStateHighlighted];
     
     summitButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    
     
     [self addSubview:summitButton];
 
@@ -848,6 +850,14 @@
         [logoutButton removeFromSuperview];
         logoutButton = nil;
     }
+    if(summitButton){
+        [summitButton removeFromSuperview];
+        summitButton = nil;
+    }
+    if(labelPoint){
+        [labelPoint removeFromSuperview];
+        labelPoint = nil;
+    }
 }
 
 - (void)onClickButton
@@ -885,6 +895,7 @@
         
         [labelMenu setHidden:true];
         [loginButton setHidden:true];
+        [summitButton setHidden:true];
         
         
     }else{            //log off
@@ -903,6 +914,7 @@
         
         [labelMenu setHidden:false];
         [loginButton setHidden:false];
+        [summitButton setHidden:false];
     }
 }
 
@@ -961,6 +973,7 @@
     
     [labelMenu setText:LEFT_DES_KO];
     [loginButton setTitle:LEFT_LOGIN_KO forState:UIControlStateNormal];
+    [summitButton setTitle:LOGIN_SUMMIT_KO forState:UIControlStateNormal];
     
 }
 
@@ -968,6 +981,7 @@
     
     [labelMenu setText:LEFT_DES_VI];
     [loginButton setTitle:LEFT_LOGIN_VI forState:UIControlStateNormal];
+    [summitButton setTitle:LOGIN_SUMMIT_VI forState:UIControlStateNormal];
     
 }
 
