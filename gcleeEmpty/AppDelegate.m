@@ -29,6 +29,7 @@
     NSMutableData           *_receiveData;
     NSInteger bannerType; //0:left main, 1:main
     NSInteger pushGo; //0: no push go, 1: push go
+    NSInteger badge_value;
 }
 @end
 
@@ -110,6 +111,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    badge_value = 0;
     
     if([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:nil]];
@@ -645,6 +648,8 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    badge_value = 0;
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -851,6 +856,21 @@
 #pragma mark - Recieve Push Notifications
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    //UIApplicationState state = [application applicationState];
+//    {
+//        "aps" :
+//        {
+//            "alert" : "Your notification message",
+//            "badge" : badgecount ,
+//            "sound" : "bingbong.aiff"
+//        }
+//    }
+    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:1];
+    
+    if([[userInfo objectForKey:@"aps"] objectForKey:@"badge"]){
+        badge_value+=[[[userInfo objectForKey:@"aps"] objectForKey:@"badge"]intValue];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = badge_value;
+    }
     
     [self receiveRemoteNotification:userInfo withAppState:YES];
 }
@@ -936,6 +956,12 @@
         if(!dic){
             return;
         }
+        
+        if([[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"]){
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"] intValue];
+        }
+        
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
         
         //[[SafeOnPushClient sharedInstance] receiveNotification:dic delegate:self];
         NSLog(@"didReceiveRemoteNotification : \n%@", dic);
