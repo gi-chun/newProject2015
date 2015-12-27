@@ -8,7 +8,6 @@
 
 #import "UIViewController+MMDrawerController.h"
 #import "leftViewController.h"
-#import "secondViewController.h"
 #import "leftMenuView.h"
 #import "LoginViewController.h"
 #import "configViewController.h"
@@ -100,15 +99,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)touchMenuButton
-{
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"ok ^^"                                             delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-//    [alert show];
-    
-    secondViewController *seconViewCtl = [[secondViewController alloc] init];
-    [self.navigationController pushViewController:seconViewCtl animated:YES];
 }
 
 - (void)setViewLogin

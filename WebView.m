@@ -7,9 +7,9 @@
 
 #import "WebView.h"
 #import "ToolBarView.h"
-#import "UIImage+ImageWithColor.h"
+//#import "UIImage+ImageWithColor.h"
 #import "CPLoadingView.h"
-#import "HttpRequest.h"
+//#import "HttpRequest.h"
 
 typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
@@ -288,30 +288,30 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (void)initRefusedPushAgreeView:(CGRect)frame
 {
-	_refusedPushAgreeView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(frame)-31, 91, 21)];
-	[self addSubview:_refusedPushAgreeView];
-	
-	UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
-	bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
-	[_refusedPushAgreeView addSubview:bgView];
-	
-	UILabel *textLabel = [[UILabel alloc] initWithFrame:_refusedPushAgreeView.bounds];
-	//textLabel.text = @"  알리미수신거부(무료)";
-	textLabel.backgroundColor = [UIColor clearColor];
-	textLabel.textColor = UIColorFromRGB(0xffffff);
-	textLabel.font = [UIFont systemFontOfSize:9.f];
-	textLabel.textAlignment = NSTextAlignmentLeft;
-	[_refusedPushAgreeView addSubview:textLabel];
-	
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = _refusedPushAgreeView.bounds;
-    //    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) width:btn.frame.size.width height:btn.frame.size.height] forState:UIControlStateHighlighted];
-    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) size:btn.frame.size] forState:UIControlStateHighlighted];
-    [btn addTarget:self action:@selector(onClickRefusedPushAgreeButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_refusedPushAgreeView addSubview:btn];
-    
-    [_refusedPushAgreeView setHidden:YES];
-    [_refusedPushAgreeView setAlpha:0.f];
+//	_refusedPushAgreeView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(frame)-31, 91, 21)];
+//	[self addSubview:_refusedPushAgreeView];
+//	
+//	UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
+//	bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
+//	[_refusedPushAgreeView addSubview:bgView];
+//	
+//	UILabel *textLabel = [[UILabel alloc] initWithFrame:_refusedPushAgreeView.bounds];
+//	//textLabel.text = @"  알리미수신거부(무료)";
+//	textLabel.backgroundColor = [UIColor clearColor];
+//	textLabel.textColor = UIColorFromRGB(0xffffff);
+//	textLabel.font = [UIFont systemFontOfSize:9.f];
+//	textLabel.textAlignment = NSTextAlignmentLeft;
+//	[_refusedPushAgreeView addSubview:textLabel];
+//	
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = _refusedPushAgreeView.bounds;
+//    //    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) width:btn.frame.size.width height:btn.frame.size.height] forState:UIControlStateHighlighted];
+//    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) size:btn.frame.size] forState:UIControlStateHighlighted];
+//    [btn addTarget:self action:@selector(onClickRefusedPushAgreeButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [_refusedPushAgreeView addSubview:btn];
+//    
+//    [_refusedPushAgreeView setHidden:YES];
+//    [_refusedPushAgreeView setAlpha:0.f];
 }
 
 - (void)updateFrame
@@ -1242,80 +1242,6 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 	} completion:^(BOOL isComplete){
 		[_refusedPushAgreeView setHidden:YES];
 	}];
-}
-
-- (void)onClickRefusedPushAgreeButton:(id)sender
-{
-//	AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//	[app disableRefusedPushAgreeView];
-//	
-//	[self hideRefusedPushAgreeView];
-//	
-//	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//	NSString *pushKey = [userDefaults objectForKey:@"pushKey"];
-//	NSString *pushKeyEncoded = pushKey ? [pushKey stringByAddingPercentEscapesUsingEncoding:DEFAULT_ENCODING] : @"";
-//	
-//	NSMutableDictionary *postData = [[NSMutableDictionary alloc] init];
-//	postData[@"osName"] = @"iOS";
-//	postData[@"mode"] = @"update";
-//	postData[@"osTypCd"] = @"01";
-//	postData[@"appId"] = APP_KIND_CD;
-//	postData[@"pushKey"] = pushKeyEncoded;
-//	postData[@"osVersion"] = SYSTEM_VERSION;
-//	postData[@"deviceId"] = DEVICE_ID;
-//	postData[@"appVersion"] = [APP_VERSION stringByReplacingOccurrencesOfString:@"." withString:@""];
-//	postData[@"groups"] = @"{\"groups\":[{\"groupId\":\"02\",\"items\":[{\"itemId\":\"0201\",\"value\":\"false\",\"dataType\":\"bool\",\"name\":\"NOTI_SHP_EVT_BNFT_INST_YN\"}]}]}";
-//	
-//	
-//	_requestType = RequestNotifyTypeRefusedPushAgree;
-//	
-//	HttpRequest *request = [[HttpRequest alloc] initWithSynchronous:NO];
-//	[request setDelegate:self];
-//	[request setTimeout:10];
-//	[request setEncoding:DEFAULT_ENCODING];
-//	[request sendPost:ALARM_PREFERENCE_URL body:postData];
-}
-
-- (void)request:(HttpRequest *)request didSuccessWithReceiveData:(NSString *)data
-{
-//	SBJSON *json = [[SBJSON alloc] init];
-//	NSDictionary *jsonData = data ? [json objectWithString:data] : nil;
-//	if (jsonData == nil)
-//	{
-//		[self showAlertRequestError:NSLocalizedString(@"BadReceivedDataError", nil)];
-//		return;
-//	}
-//	
-//	NSInteger errorCode = [jsonData[@"errCode"] intValue];
-//	if (errorCode != 0)
-//	{
-//		[self showAlertRequestError:jsonData[@"errMsg"]];
-//		return;
-//	}
-//	
-//	if (_requestType == RequestNotifyTypeRefusedPushAgree)
-//	{
-//		NSDictionary *pushAgreeInfoDict = jsonData[@"pushAgreeInfo"];
-//		
-//		if (pushAgreeInfoDict) {
-//			NSString *strTitle	= [pushAgreeInfoDict objectForKey:@"title"];
-//			NSString *strSender = [pushAgreeInfoDict objectForKey:@"sender"];
-//			NSString *strDate	= [pushAgreeInfoDict objectForKey:@"date"];
-//			NSString *strText	= [pushAgreeInfoDict objectForKey:@"text"];
-//			NSString *strDesc	= [pushAgreeInfoDict objectForKey:@"desc1"];
-//			
-//			strDate = [strDate stringByReplacingOccurrencesOfString:@"2. 수신 일시: 수신일시 :" withString:@"2. 수신일시 :"];
-//			strText = [strText stringByReplacingOccurrencesOfString:@"{{result}}" withString:([self parsePushEnable:jsonData] ? @"허용" : @"거부")];
-//			
-//			NSString *alertMsg = [NSString stringWithFormat:@"%@\n%@\n%@\n\n%@", strSender, strDate, strText, strDesc];
-//			
-//			[UIAlertView showWithTitle:strTitle
-//							   message:alertMsg
-//					 cancelButtonTitle:nil
-//					 otherButtonTitles:@[ NSLocalizedString(@"Confirm", nil) ]
-//							  tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {}];
-//		}
-//	}
 }
 
 - (void)showAlertRequestError:(NSString *)errorMessage
