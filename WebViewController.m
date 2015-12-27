@@ -1628,17 +1628,32 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 - (void)setViewAlpha:(NSInteger)alphaValue{
     //[self.view setAlpha:alphaValue];
     if(alphaValue){
-        [dummyView removeFromSuperview];
-        dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kScreenBoundsHeight)];
-        [self.view addSubview:dummyView];
-        [dummyView setBackgroundColor:UIColorFromRGB(0x000000)];
-        [dummyView setAlpha:0.8f];
+//        [dummyView removeFromSuperview];
+//        dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kScreenBoundsHeight)];
+//        [self.view addSubview:dummyView];
+//        [dummyView setBackgroundColor:UIColorFromRGB(0x000000)];
+//        [dummyView setAlpha:0.8f];
         
         [self.navigationController.navigationBar setAlpha:0.1f];
+        [self.view setAlpha:0.1f];
+        NSArray* tempVCA = [self.navigationController viewControllers];
+        for(UIViewController *tempVC in tempVCA)
+        {
+            [tempVC.view setAlpha:0.1f];
+        }
     }else{
-        [dummyView removeFromSuperview];
+        //[dummyView removeFromSuperview];
         [self.navigationController.navigationBar setAlpha:1.0f];
+        [self.view setAlpha:1.0f];
+        NSArray* tempVCA = [self.navigationController viewControllers];
+        for(UIViewController *tempVC in tempVCA)
+        {
+            [tempVC.view setAlpha:1.0f];
+        }
+
     }
+    
+    
     
 }
 
