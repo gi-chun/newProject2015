@@ -23,10 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    for (UIView *subView in [self.view subviews]) {
-        [subView removeFromSuperview];
-    }
-    
     // Do any additional setup after loading the view from its nib.
     float meHeight = kScreenBoundsHeight;
     if(meHeight <= 480){
@@ -219,6 +215,27 @@
     [goBtn setTitle:SERVICE_GO_VI forState:UIControlStateNormal];
 
 }
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    CGRect bounds = self.view.bounds;
+    
+    // Translate the view's bounds, but do not permit values that would violate contentSize
+    CGFloat newBoundsOriginX = bounds.origin.x - translation.x;
+    CGFloat minBoundsOriginX = 0.0;
+    CGFloat maxBoundsOriginX = self.contentSize.width - bounds.size.width;
+    bounds.origin.x = fmax(minBoundsOriginX, fmin(newBoundsOriginX, maxBoundsOriginX));
+    
+    CGFloat newBoundsOriginY = bounds.origin.y - translation.y;
+    CGFloat minBoundsOriginY = 0.0;
+    CGFloat maxBoundsOriginY = self.contentSize.height - bounds.size.height;
+    bounds.origin.y = fmax(minBoundsOriginY, fmin(newBoundsOriginY, maxBoundsOriginY));
+    
+    self.view.bounds = bounds;
+    [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+}
+
 
 /*
 #pragma mark - Navigation

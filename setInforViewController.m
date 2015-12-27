@@ -815,6 +815,9 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentEditingTextField = NULL;
+    
+    [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    
     [self.view scrollToY:-180];
     
     if(textField.tag == 3){
