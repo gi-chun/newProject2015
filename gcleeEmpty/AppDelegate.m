@@ -550,7 +550,21 @@
             
             NSMutableArray *_arrItems;
             _arrItems = nil;
+            if(![dicResponse objectForKey:@"indiv_info"]){
+                return ;
+            }
             _arrItems = [dicResponse objectForKey:@"indiv_info"];
+            if([_arrItems count] == 0){
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerImgUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerImgUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                return;
+            }
             NSDictionary *dicChildOne = _arrItems[0];
             NSDictionary *dicChildTwo = _arrItems[1];
 
