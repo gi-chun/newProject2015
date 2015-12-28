@@ -1105,7 +1105,7 @@
         //[_homeWebViewController gotoPushUrl:callUrl];
         
     }else{
-        [_homeWebViewController setUrl:SUNNY_CLUB_URL];
+        [_homeWebViewController setUrl:SUNNY_CLUB_URL_FIRST];
     }
     
     //    UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
