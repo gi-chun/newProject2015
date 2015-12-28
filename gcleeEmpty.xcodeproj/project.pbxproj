@@ -148,7 +148,7 @@
 		28351DB11BF47F6B009145E6 /* total_menu_btn_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28351D781BF47F6B009145E6 /* total_menu_btn_press@2x.png */; };
 		28351DB21BF47F6B009145E6 /* total_menu_btn_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28351D791BF47F6B009145E6 /* total_menu_btn_press@3x.png */; };
 		28379D071C312AFA009C15A4 /* 번역_7.java in Sources */ = {isa = PBXBuildFile; fileRef = 28379D061C312AFA009C15A4 /* 번역_7.java */; };
-		28379D091C312DC8009C15A4 /* 번역_5.java in Sources */ = {isa = PBXBuildFile; fileRef = 28379D081C312DC8009C15A4 /* 번역_5.java */; };
+		28379D0B1C312E61009C15A4 /* 번역_5.java in Sources */ = {isa = PBXBuildFile; fileRef = 28379D0A1C312E61009C15A4 /* 번역_5.java */; };
 		284B741F1C05B391006D9295 /* menu00_back_press@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B74131C05B391006D9295 /* menu00_back_press@1x.png */; };
 		284B74201C05B391006D9295 /* menu00_back_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B74141C05B391006D9295 /* menu00_back_press@2x.png */; };
 		284B74211C05B391006D9295 /* menu00_back_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B74151C05B391006D9295 /* menu00_back_press@3x.png */; };
@@ -549,7 +549,7 @@
 		28351D781BF47F6B009145E6 /* total_menu_btn_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_btn_press@2x.png"; sourceTree = "<group>"; };
 		28351D791BF47F6B009145E6 /* total_menu_btn_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_btn_press@3x.png"; sourceTree = "<group>"; };
 		28379D061C312AFA009C15A4 /* 번역_7.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_7.java"; sourceTree = "<group>"; };
-		28379D081C312DC8009C15A4 /* 번역_5.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_5.java"; sourceTree = "<group>"; };
+		28379D0A1C312E61009C15A4 /* 번역_5.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_5.java"; sourceTree = "<group>"; };
 		284B74131C05B391006D9295 /* menu00_back_press@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu00_back_press@1x.png"; sourceTree = "<group>"; };
 		284B74141C05B391006D9295 /* menu00_back_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu00_back_press@2x.png"; sourceTree = "<group>"; };
 		284B74151C05B391006D9295 /* menu00_back_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu00_back_press@3x.png"; sourceTree = "<group>"; };
@@ -1386,8 +1386,8 @@
 				28D0B72B1C1E952700DDE526 /* global_vn_sunnyclub_development_2015.mobileprovision */,
 				28D0B72C1C1E952F00DDE526 /* sclubEnz_201611.mobileprovision */,
 				28D3D06A1C1ABC37007817C3 /* provision_total.zip */,
+				28379D0A1C312E61009C15A4 /* 번역_5.java */,
 				28379D061C312AFA009C15A4 /* 번역_7.java */,
-				28379D081C312DC8009C15A4 /* 번역_5.java */,
 				28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */,
 				28D6F7F81C0BDE53009B697D /* libCodeguard.a */,
 			);
@@ -1806,7 +1806,7 @@
 				28D8EA491BF310B0002E98C0 /* AFURLResponseSerialization.m in Sources */,
 				28E576581C3069DB00675CD5 /* NSMutableArray+Stack.m in Sources */,
 				28351D271BF43096009145E6 /* SBJsonParser.m in Sources */,
-				28379D091C312DC8009C15A4 /* 번역_5.java in Sources */,
+				28379D0B1C312E61009C15A4 /* 번역_5.java in Sources */,
 				28D8EA441BF310B0002E98C0 /* AFHTTPSessionManager.m in Sources */,
 				289327F91C174F3E0087294D /* UIView+NibInitializer.m in Sources */,
 				28351D291BF43096009145E6 /* SBJsonStreamParserAccumulator.m in Sources */,
