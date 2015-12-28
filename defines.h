@@ -121,6 +121,7 @@ static NSString * const kMb_grade       = @"kMb_grade";
 static NSString * const kMb_grade_nm       = @"kMb_grade_nm";
 static NSString * const kMb_point       = @"kMb_point";
 static NSString * const kBadge       = @"kBadge";
+static NSString * const kPushBadge       = @"kPushBadge";
 
 static NSString * const kLoginData       = @"kLoginData";
 static NSString * const kForceUpdateY       = @"kForceUpdateY"; //강제업데이트 여부

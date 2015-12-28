@@ -648,8 +648,26 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    badge_value = 0;
-    application.applicationIconBadgeNumber = 0;
+    
+    NSString* strPushBadeg;
+    NSInteger nTemp=0;
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+        strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
+        nTemp = [strPushBadeg integerValue];
+        nTemp--;
+        if(nTemp < 0){
+            nTemp = 0;
+        }
+        strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    //badge_value = 0;
+    application.applicationIconBadgeNumber = nTemp;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kPushBadge];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -865,11 +883,29 @@
 //            "sound" : "bingbong.aiff"
 //        }
 //    }
-    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:1];
+    //[[UIApplication sharedApplication]setApplicationIconBadgeNumber:1];
     
     if([[userInfo objectForKey:@"aps"] objectForKey:@"badge"]){
-        badge_value+=[[[userInfo objectForKey:@"aps"] objectForKey:@"badge"]intValue];
-        [UIApplication sharedApplication].applicationIconBadgeNumber = badge_value;
+        NSInteger nTemp = 0;
+        badge_value =[[[userInfo objectForKey:@"aps"] objectForKey:@"badge"]intValue];
+        NSString* strPushBadeg;
+        if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+            strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
+            nTemp = [strPushBadeg integerValue];
+            nTemp++;
+            strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
+        }
+        
+        [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
+        
+        
+        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"last badge" message:strPushBadeg
+                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        [alert2 show];
     }
     
     [self receiveRemoteNotification:userInfo withAppState:YES];
@@ -949,9 +985,9 @@
         
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
         
-//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
-//                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-//        [alert2 show];
+        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
+                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+        [alert2 show];
 
         if(!dic){
             return;
