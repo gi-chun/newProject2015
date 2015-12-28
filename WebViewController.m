@@ -1456,8 +1456,12 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     }
     
-    callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+    //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
     callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerUrl];
+    
+    if([callUrl length] < 1){
+        return;
+    }
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];

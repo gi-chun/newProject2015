@@ -334,6 +334,8 @@ const static CGFloat MENU_HEIGHT   =      45;
                 adImageView.image = [UIImage imageWithData:imageData];
                 if([imageData length] < 1){
                     [adImageView setImage:[UIImage imageNamed:strImage]];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                 }
             });
         });
@@ -366,6 +368,9 @@ const static CGFloat MENU_HEIGHT   =      45;
                 adImageView.image = [UIImage imageWithData:imageData];
                 if([imageData length] < 1){
                     [adImageView setImage:[UIImage imageNamed:strImage]];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+
                 }
             });
         });
