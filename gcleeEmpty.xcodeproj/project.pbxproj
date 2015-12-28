@@ -147,6 +147,7 @@
 		28351DB01BF47F6B009145E6 /* total_menu_btn_press@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28351D771BF47F6B009145E6 /* total_menu_btn_press@1x.png */; };
 		28351DB11BF47F6B009145E6 /* total_menu_btn_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28351D781BF47F6B009145E6 /* total_menu_btn_press@2x.png */; };
 		28351DB21BF47F6B009145E6 /* total_menu_btn_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28351D791BF47F6B009145E6 /* total_menu_btn_press@3x.png */; };
+		28379D071C312AFA009C15A4 /* 번역_7.java in Sources */ = {isa = PBXBuildFile; fileRef = 28379D061C312AFA009C15A4 /* 번역_7.java */; };
 		284B741F1C05B391006D9295 /* menu00_back_press@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B74131C05B391006D9295 /* menu00_back_press@1x.png */; };
 		284B74201C05B391006D9295 /* menu00_back_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B74141C05B391006D9295 /* menu00_back_press@2x.png */; };
 		284B74211C05B391006D9295 /* menu00_back_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B74151C05B391006D9295 /* menu00_back_press@3x.png */; };
@@ -314,7 +315,6 @@
 		28D6F7F91C0BDE53009B697D /* libamsLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F61C0BDE53009B697D /* libamsLibrary.a */; };
 		28D6F7FA1C0BDE53009B697D /* libBTWCryptoLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */; };
 		28D6F7FB1C0BDE53009B697D /* libCodeguard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F7F81C0BDE53009B697D /* libCodeguard.a */; };
-		28D6F8031C0C6979009B697D /* 번역_5.java in Sources */ = {isa = PBXBuildFile; fileRef = 28D6F8021C0C6979009B697D /* 번역_5.java */; };
 		28D72FA21C1FAF7200F45755 /* loding_cha_01@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D72F9C1C1FAF7200F45755 /* loding_cha_01@1x.png */; };
 		28D72FA31C1FAF7200F45755 /* loding_cha_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D72F9D1C1FAF7200F45755 /* loding_cha_01@2x.png */; };
 		28D72FA41C1FAF7200F45755 /* loding_cha_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D72F9E1C1FAF7200F45755 /* loding_cha_01@3x.png */; };
@@ -547,6 +547,7 @@
 		28351D771BF47F6B009145E6 /* total_menu_btn_press@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_btn_press@1x.png"; sourceTree = "<group>"; };
 		28351D781BF47F6B009145E6 /* total_menu_btn_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_btn_press@2x.png"; sourceTree = "<group>"; };
 		28351D791BF47F6B009145E6 /* total_menu_btn_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "total_menu_btn_press@3x.png"; sourceTree = "<group>"; };
+		28379D061C312AFA009C15A4 /* 번역_7.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_7.java"; sourceTree = "<group>"; };
 		284B74131C05B391006D9295 /* menu00_back_press@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu00_back_press@1x.png"; sourceTree = "<group>"; };
 		284B74141C05B391006D9295 /* menu00_back_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu00_back_press@2x.png"; sourceTree = "<group>"; };
 		284B74151C05B391006D9295 /* menu00_back_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu00_back_press@3x.png"; sourceTree = "<group>"; };
@@ -745,7 +746,6 @@
 		28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBTWCryptoLib.a; sourceTree = "<group>"; };
 		28D6F7F81C0BDE53009B697D /* libCodeguard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCodeguard.a; sourceTree = "<group>"; };
 		28D6F7FF1C0C643E009B697D /* KTBiOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTBiOS.h; sourceTree = "<group>"; };
-		28D6F8021C0C6979009B697D /* 번역_5.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_5.java"; sourceTree = "<group>"; };
 		28D72F9C1C1FAF7200F45755 /* loding_cha_01@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loding_cha_01@1x.png"; sourceTree = "<group>"; };
 		28D72F9D1C1FAF7200F45755 /* loding_cha_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loding_cha_01@2x.png"; sourceTree = "<group>"; };
 		28D72F9E1C1FAF7200F45755 /* loding_cha_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loding_cha_01@3x.png"; sourceTree = "<group>"; };
@@ -1375,7 +1375,6 @@
 			children = (
 				28D6F7F41C0BDE53009B697D /* amsLibrary.h */,
 				28D6F7FF1C0C643E009B697D /* KTBiOS.h */,
-				28D6F8021C0C6979009B697D /* 번역_5.java */,
 				28D6F7F51C0BDE53009B697D /* BTWCodeguard.h */,
 				28D86D141C0FC88F004C9521 /* libKTBiOS_v1_17.a */,
 				2892809C1C23D21B00F2A5B9 /* libSafeOnPushClient.a */,
@@ -1385,6 +1384,7 @@
 				28D0B72B1C1E952700DDE526 /* global_vn_sunnyclub_development_2015.mobileprovision */,
 				28D0B72C1C1E952F00DDE526 /* sclubEnz_201611.mobileprovision */,
 				28D3D06A1C1ABC37007817C3 /* provision_total.zip */,
+				28379D061C312AFA009C15A4 /* 번역_7.java */,
 				28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */,
 				28D6F7F81C0BDE53009B697D /* libCodeguard.a */,
 			);
@@ -1784,6 +1784,7 @@
 				28D8EA471BF310B0002E98C0 /* AFURLConnectionOperation.m in Sources */,
 				28D11E991BE86B3A005B3024 /* MYIntroductionPanel.m in Sources */,
 				28D8EA4A1BF310B0002E98C0 /* AFURLSessionManager.m in Sources */,
+				28379D071C312AFA009C15A4 /* 번역_7.java in Sources */,
 				28351D2C1BF43096009145E6 /* SBJsonStreamWriter.m in Sources */,
 				283147D61BFAB1B60083DA3F /* LoginViewController.m in Sources */,
 				280B23F51C00A926004F80FB /* pwdChangeViewController.m in Sources */,
@@ -1824,7 +1825,6 @@
 				287F92E61BE748EF007E82AD /* UIViewController+MMDrawerController.m in Sources */,
 				28351D2E1BF43096009145E6 /* SBJsonStreamWriterState.m in Sources */,
 				287F92F31BE76166007E82AD /* MMExampleDrawerVisualStateManager.m in Sources */,
-				28D6F8031C0C6979009B697D /* 번역_5.java in Sources */,
 				28351D261BF43096009145E6 /* NSObject+SBJson.m in Sources */,
 				287F92E41BE748EF007E82AD /* MMDrawerController.m in Sources */,
 				28D11E981BE86B3A005B3024 /* MYBlurIntroductionView.m in Sources */,
