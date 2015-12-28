@@ -903,9 +903,9 @@
         [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
         
         
-        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"last badge" message:strPushBadeg
-                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert2 show];
+//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"last badge" message:strPushBadeg
+//                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert2 show];
     }
     
     [self receiveRemoteNotification:userInfo withAppState:YES];
@@ -985,9 +985,9 @@
         
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
         
-        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
-                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert2 show];
+//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
+//                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert2 show];
 
         if(!dic){
             return;
