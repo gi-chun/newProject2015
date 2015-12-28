@@ -159,11 +159,11 @@ static NSString *COMPLETE_TITLE_VI     = @"Hoàn tất đăng ký thành viên";
 
 //korea
 static NSString *JAILBREAK_CHK_KO  = @"루팅된 단말입니다. 개인정보 유출의 위험성이 있으므로 써니클럽을 종료합니다.";
-static NSString *JAILBREAK_CHK_VI  = @"Jsơ đồ Liên kết  tới hệ thống. Sunny club  sẽ ngừng ngay lập tức khi thấy  nguy hiểm là bị  mất thông tin cá nhân của quý khách .";
+static NSString *JAILBREAK_CHK_VI  = @"Ngừng kết nối. Vì có rủi ro mất thông tin cá nhân nên Sunny Club sẽ ngừng kết nối.";
 static NSString *NOT_NOMAL_APP_KO = @"정식등록된 앱이 아닙니다. 앱을 새로 다운로드 받아 설치하신 후 다시 이용해주십시요.";
-static NSString *NOT_NOMAL_APP_VI = @"Không phải là app chính . Chỉ cần tải app về là sử dụng đựợc.";
+static NSString *NOT_NOMAL_APP_VI = @"Không phải là app chính thức. Vui lòng download app và sử dụng.";
 static NSString *USE_PROXY_KO = @"비정상적인 접속(프록시)으로 인해 서비스를 종료합니다. 고객센터로 문의하여 주시기 바랍니다. (문의:고객센터 1800-1560)";
-static NSString *USE_PROXY_VI = @"Dừng sử dụng dịch vụ khi thấy đăng nhập có vấn đề bất thường . Hãy gọi điện ngay đến trung tâm  chăm sóc khách hàng để được hỗ trợ.(  trung tâm chăm sóc khách hàng 1800-1560)";
+static NSString *USE_PROXY_VI = @"Dịch vụ tạm dừng do có đăng nhập bất thường (proxy). Vui lòng liên hệ Trung tâm chăm sóc khách hàng để được hỗ trợ (1800-1560)";
 
 //korea
 static NSString *PERSON_TITLE_KO     = @"개인정보 변경";
@@ -198,7 +198,7 @@ static NSString *PERSON_CHANGE_VI     = @"Áp dụng";
 static NSString *PERSON_PWD_CHANGE_VI     = @"Thay đổi mật khẩu";
 static NSString *PERSON_MEMBER_OUT_VI     = @"Hủy thành viên";
 static NSString *PERSON_MEMBER_LEVEL_VI     = @"Thứ hạng hội viên";
-static NSString *PERSON_NOMAL_VI      = @"Chung";
+static NSString *PERSON_NOMAL_VI      = @"Phổ thông";
 
 //korea
 static NSString *LEFT_DES_KO     = @"    로그인을 하시면\n    Sunny Club의 다양한 서비스를\n    이용하실 수 있습니다.";
@@ -222,7 +222,7 @@ static NSString *PW_SEARCH_ID_KO     = @"아이디";
 static NSString *PW_SEARCH_NAME_KO     = @"이름";
 static NSString *PW_SEARCH_YYYY_KO     = @"생년월일";
 static NSString *PW_SEARCH_KO     = @"조회하기";
-static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는";
+static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는 아래와 같습니다.";
 static NSString *ID_RESULT_TAIL_KO     = @"입니다.";
 static NSString *ID_RETRY_LABEL_KO     = @"계정정보가 존재하지 않습니다.";
 static NSString *ID_RETRY_BTN_KO     = @"다시 조회하기";
@@ -233,7 +233,7 @@ static NSString *PW_SEARCH_ID_VI     = @"ID";
 static NSString *PW_SEARCH_NAME_VI     = @"Tên";
 static NSString *PW_SEARCH_YYYY_VI     = @"Sinh nhật";
 static NSString *PW_SEARCH_VI     = @"truy vấn";
-static NSString *ID_RESULT_HEAD_VI     = @"ID bạn đang truy vấn là:";
+static NSString *ID_RESULT_HEAD_VI     = @"ID mà bạn truy vấn như sau:";
 static NSString *ID_RESULT_TAIL_VI     = @"này.";
 static NSString *ID_RETRY_LABEL_VI     = @"Thông tin tài khoản này không tồn tại";
 static NSString *ID_RETRY_BTN_VI     = @"Truy vấn";
@@ -342,7 +342,7 @@ static NSString *NEED_VI     = @"Thay đổi thông tin cá nhân";
 static NSString *NEED_LOGIN_VI     = @"Cài đặt";
 static NSString *HELP_VI     = @"Hỗ trợ";
 static NSString *TUTO_VI     = @"Xem hướng dẫn";
-static NSString *NEWS_VI     = @"Sự kiện mới";
+static NSString *NEWS_VI     = @"News";
 static NSString *ALRAM_SET_VI     = @"Dịch vụ Cài đặt thông báo";
 static NSString *ALRAM_ALLOW_VI     = @"Dịch vụ cho phép nhận thông báo";
 static NSString *ALRAM_DES_VI     = @"Nếu bạn cài đặt Thông báo Push sang chế độ ON, bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
@@ -481,9 +481,9 @@ static NSString *SET_PUSH_EVENT_KO = @"이벤트 알림 허용";
 static NSString *SET_PUSH_TOTAL_VI = @"Dịch vụ cho phép nhận thông báo";
 static NSString *SET_PUSH_DESC_VI = @"Nếu bạn cài đặt thông báo sang chế độ \"ON\", bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
 static NSString *SET_PUSH_SET_TITLE_VI = @"Cài đặt thông báo";
-static NSString *SET_PUSH_NOMAL_VI = @"공지/일반 알림 허용";
+static NSString *SET_PUSH_NOMAL_VI = @"Cho phép các thông báo Thông báo/Phổ thông";
 static NSString *SET_PUSH_CONTENTS_VI = @"Cho phép các thông báo nội dung";
-static NSString *SET_PUSH_EVENT_VI = @"Cho phép các thông báo sự kiện";
+static NSString *SET_PUSH_EVENT_VI = @"Cho phép thông báo event";
 
 #define PWD_MAX_LENGTH             4
 #define ID_MAX_LENGTH             50
