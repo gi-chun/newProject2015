@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     CGFloat fZoomInCurrent;
     NSMutableArray *myStack;
+    
+    NSString *webViewUrl;
 }
 
 @end
@@ -286,6 +288,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    }
 }
 
+- (void)setUrl:(NSString *)url
+{
+    webViewUrl = url;
+}
+
 - (void)setViewId:(NSInteger)viewId
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, 50)];
@@ -465,6 +472,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         return NO;
     }
     
+    if ([url hasSuffix:@"about"]) {
+        return NO;
+    }
+    
     //URL스킴 체크
     if ([self.delegate respondsToSelector:@selector(webView:openUrlScheme:)]) {
         if ([self.delegate webView:self openUrlScheme:request.URL.absoluteString]) {
@@ -479,7 +490,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //            //[self.delegate initNavigation:0];
 //        }
         
-        if (![url hasPrefix:@"app"]) {
+        if (![url hasPrefix:@"app"] && ![url hasPrefix:@"about"]) {
             [myStack push:url];
         }
         
@@ -821,18 +832,27 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
     
     if ([self.webView canGoBack]) {
-//        if ([SYSTEM_VERSION intValue] > 6.5) {
-//                [[NSURLCache sharedURLCache] removeAllCachedResponses];
-//        }
-//        [self.webView goBack];
 
         if ([SYSTEM_VERSION intValue] > 7.0) {
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            //[[NSURLCache sharedURLCache] removeAllCachedResponses];
             [self.webView goBack];
         }else{
             if ([self.delegate respondsToSelector:@selector(gotoPrev:)]) {
                 NSString* strDummy = [myStack pop];
-                [self.delegate gotoPrev:[myStack pop]];
+                NSString* strGoUrl = [myStack pop];
+                
+//                if([strGoUrl isEqualToString:webViewUrl]){
+//                    strGoUrl = [myStack pop];
+//                }
+                
+                if (([webViewUrl rangeOfString:@"Processing"].location != NSNotFound)){
+                    strGoUrl = [myStack pop];
+                }
+                
+                if (([webViewUrl rangeOfString:@"websquare"].location != NSNotFound)){
+                    strGoUrl = [myStack pop];
+                }
+                [self.delegate gotoPrev:strGoUrl];
             }
         }
     }

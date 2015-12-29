@@ -785,17 +785,22 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         return NO;
     }
     
+    //common/message/processMsg.html?
+    if(!([url rangeOfString:@"common/message/processMsg.html?"].location == NSNotFound)){
+        return false;
+    }
     
+    if(!([url rangeOfString:@"about"].location == NSNotFound)){
+        return false;
+    }
     
     NSLog(@"url:%@", url);
     [[NSUserDefaults standardUserDefaults] setObject:webViewUrl forKey:kPrevUrl];
     [[NSUserDefaults standardUserDefaults] synchronize];
     webViewUrl = url;
+    [_webView setUrl:webViewUrl];
     
-    //common/message/processMsg.html?
-    if(!([url rangeOfString:@"common/message/processMsg.html?"].location == NSNotFound)){
-        return false;
-    }
+    
     
 #ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide

@@ -68,6 +68,7 @@
 - (void)setHiddenPopover:(BOOL)hidden;
 
 - (void)reCreateToolbar;
+- (void)setUrl:(NSString *)url;
 
 @end
 

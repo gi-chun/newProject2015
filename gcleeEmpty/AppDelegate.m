@@ -86,9 +86,10 @@
     
     NSString *strUrl = url.absoluteString;
     
-    //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3
+    //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3&view_yn=y
     NSString* strLastUrl = [strUrl substringFromIndex:30];
     
+    strLastUrl = [NSString stringWithFormat:@"%@&view_yn=Y", strLastUrl];
     if([strLastUrl length] > 1){
         isTutoShow = NO;
         pushGo = 1;
@@ -939,6 +940,10 @@
     //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3
     
     if(!([totalDic rangeOfString:@"facebook"].location == NSNotFound)){
+        return;
+    }
+    
+    if(!([totalDic rangeOfString:@"twitter"].location == NSNotFound)){
         return;
     }
     
