@@ -686,9 +686,6 @@
         temp = @"EN";
     }
     
-    
-    
-    
     //set auto login
     if ([switchAuto isOn]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAutoLogin];
@@ -786,8 +783,10 @@
             [alert show];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
             leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
             [leftViewController setViewLogin];
+            
             //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
         
@@ -920,12 +919,12 @@
             //        
             
             NSLog(@"getCookie end ==>" );
+            
+            [self setPush];
         }
         
         [loginBtn setEnabled:true];
         
-        [self setPush];
-
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

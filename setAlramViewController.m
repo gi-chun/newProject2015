@@ -161,6 +161,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [nomalLabel setNumberOfLines:0];
+    
     float meHeight = kScreenBoundsHeight;
     if(meHeight <= 480){
         UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]

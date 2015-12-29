@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define TEST_SERVER_DEFINE
+//#define TEST_SERVER_DEFINE
 
 
 
@@ -481,7 +481,7 @@ static NSString *SET_PUSH_EVENT_KO = @"이벤트 알림 허용";
 static NSString *SET_PUSH_TOTAL_VI = @"Dịch vụ cho phép nhận thông báo";
 static NSString *SET_PUSH_DESC_VI = @"Nếu bạn cài đặt thông báo sang chế độ \"ON\", bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
 static NSString *SET_PUSH_SET_TITLE_VI = @"Cài đặt thông báo";
-static NSString *SET_PUSH_NOMAL_VI = @"Cho phép các thông báo Thông báo/Phổ thông";
+static NSString *SET_PUSH_NOMAL_VI = @"Cho phép các thông báo Thông\nbáo/Phổ thông";
 static NSString *SET_PUSH_CONTENTS_VI = @"Cho phép các thông báo nội dung";
 static NSString *SET_PUSH_EVENT_VI = @"Cho phép thông báo event";
 

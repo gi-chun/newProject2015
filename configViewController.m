@@ -908,7 +908,7 @@
                 return ;
             }
             _arrItems = [dicResponse objectForKey:@"indiv_info"];
-            if([_arrItems count] == 0){
+            if([_arrItems count] < 2){
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerImgUrl];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
