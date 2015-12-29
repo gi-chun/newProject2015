@@ -123,6 +123,11 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     }
     
+    if(![[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:kPushBadge];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kPushY]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -675,8 +680,8 @@
         }
         strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
         
-        [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+//        [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     //badge_value = 0;
     application.applicationIconBadgeNumber = nTemp;
@@ -949,7 +954,7 @@
     
 //     NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber--;
+//    [UIApplication sharedApplication].applicationIconBadgeNumber--;
 //
     if(onForeground){
         
@@ -1017,7 +1022,25 @@
             [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"] intValue];
         }
         
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+        //////////////////////////////////////////////////////////////////////////////////////////
+        NSString* strPushBadeg;
+        NSInteger nTemp=0;
+        if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+            strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
+            nTemp = [strPushBadeg integerValue];
+            nTemp++;
+            strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
+            
+//            [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kPushBadge];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        //////////////////////////////////////////////////////////////////////////////////////////
+        
+        //[UIApplication sharedApplication].applicationIconBadgeNumber = 1;
         
         //[[SafeOnPushClient sharedInstance] receiveNotification:dic delegate:self];
         NSLog(@"didReceiveRemoteNotification : \n%@", dic);
