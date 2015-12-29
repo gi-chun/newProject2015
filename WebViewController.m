@@ -727,7 +727,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 //            [alert show];
 
             if([_webView isGoBack]){
-                [_webView goBack];
+                [_webView myGoBack];
             }else{
                 
                 [self.navigationController popToRootViewControllerAnimated:YES];
@@ -742,13 +742,25 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         }
 
         if(!([url rangeOfString:@"alert"].location == NSNotFound)){
-        
+            //app://alert?msg=메세지&url=/sunny/mmlll.jsp?aaaaaa
             NSRange range = [url rangeOfString:@"="];
             range.location = range.location + 1;
-            NSString* alertMsg = [url substringFromIndex:range.location];
+            //메세지&url=...
+            NSString* subString = [url substringFromIndex:range.location];
+            range = [subString rangeOfString:@"&"];
+            range.location = range.location - 1;
+            NSString* alertMsg = [subString substringToIndex:range.location];
+            //url
+            range = [subString rangeOfString:@"="];
+            range.location = range.location + 1;
+            NSString* strUrl = [subString substringFromIndex:range.location];
+            strUrl = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, strUrl];
+            
             NSString* newString = [alertMsg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:newString delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
+            
+            [self gotoPushUrl:strUrl];
             
             return NO;
         }
@@ -929,6 +941,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     }
     else {                      // show navigation
         [statusBarView removeFromSuperview];
+        //[_webView stackAllDel];
         
         naviViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kNavigationHeight);
         webViewFrame = CGRectMake(0, kWebViewTopMarginY, kScreenBoundsWidth, kScreenBoundsHeight-kNavigationHeight-kToolBarHeight-kWebViewTopMarginY*2);
@@ -982,7 +995,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 - (BOOL)webView:(WebView *)webView openUrlScheme:(NSString *)urlScheme
 {
 //    return [[CPSchemeManager sharedManager] openUrlScheme:urlScheme sender:nil changeAnimated:YES];
-    NSLog(@"test test test");
+//    NSLog(@"test test test");
     return false;
 }
 

@@ -28,6 +28,7 @@
     __weak IBOutlet UILabel *label_name;
     __weak IBOutlet UILabel *label_yyyy;
     __weak IBOutlet UIButton *btnSearh;
+    __weak IBOutlet UILabel *labelComment;
 }
 @end
 
@@ -622,6 +623,7 @@
     [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_KO];
+    [labelComment setText:CLASSIFY_CAPITAL_KO];
     [label_yyyy setText:IDSEARCH_YYYY_KO];
     [btnSearh setTitle:IDSEARCH_SEARCH_KO forState:UIControlStateNormal];
     
@@ -633,6 +635,7 @@
     [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_VI];
+    [labelComment setText:CLASSIFY_CAPITAL_KO];
     [label_yyyy setText:IDSEARCH_YYYY_VI];
     [btnSearh setTitle:IDSEARCH_SEARCH_VI forState:UIControlStateNormal];
 }

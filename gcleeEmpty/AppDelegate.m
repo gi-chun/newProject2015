@@ -900,28 +900,28 @@
 //    }
     //[[UIApplication sharedApplication]setApplicationIconBadgeNumber:1];
     
-    if([[userInfo objectForKey:@"aps"] objectForKey:@"badge"]){
-        NSInteger nTemp = 0;
-        badge_value =[[[userInfo objectForKey:@"aps"] objectForKey:@"badge"]intValue];
-        NSString* strPushBadeg;
-        if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
-            strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
-            nTemp = [strPushBadeg integerValue];
-            nTemp++;
-            strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-
-        }
-        
-        [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
-        
-        
-//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"last badge" message:strPushBadeg
-//                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-//        [alert2 show];
-    }
+//    if([[userInfo objectForKey:@"aps"] objectForKey:@"badge"]){
+//        NSInteger nTemp = 0;
+//        badge_value =[[[userInfo objectForKey:@"aps"] objectForKey:@"badge"]intValue];
+//        NSString* strPushBadeg;
+//        if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+//            strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
+//            nTemp = [strPushBadeg integerValue];
+//            nTemp++;
+//            strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
+//            
+//            [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//
+//        }
+//        
+//        [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
+//        
+//        
+////        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"last badge" message:strPushBadeg
+////                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+////        [alert2 show];
+//    }
     
     [self receiveRemoteNotification:userInfo withAppState:YES];
 }
@@ -948,8 +948,9 @@
     }
     
 //     NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
-//
     
+    [UIApplication sharedApplication].applicationIconBadgeNumber--;
+//
     if(onForeground){
         
         [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];

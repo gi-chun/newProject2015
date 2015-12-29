@@ -29,6 +29,9 @@
     __weak IBOutlet UILabel *label_id;
     __weak IBOutlet UILabel *label_name;
     __weak IBOutlet UILabel *labelView_yyyymmdd;
+    
+    __weak IBOutlet UILabel *label_IDDesc;
+    __weak IBOutlet UILabel *label_NameDesc;
 }
 
 @end
@@ -597,6 +600,8 @@
     
     [label_id setText:PW_SEARCH_ID_KO];
     [label_name setText:PW_SEARCH_NAME_KO];
+    [label_IDDesc setText:ID_EMAIL_SAME_KO];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_KO];
     [labelView_yyyymmdd setText:PW_SEARCH_YYYY_KO];
     [searchBtnClick setTitle:PW_SEARCH_KO forState:UIControlStateNormal];
     
@@ -611,6 +616,8 @@
     
     [label_id setText:PW_SEARCH_ID_VI];
     [label_name setText:PW_SEARCH_NAME_VI];
+    [label_IDDesc setText:ID_EMAIL_SAME_VI];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_VI];
     [labelView_yyyymmdd setText:PW_SEARCH_YYYY_VI];
     [searchBtnClick setTitle:PW_SEARCH_VI forState:UIControlStateNormal];
 }

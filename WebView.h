@@ -48,7 +48,8 @@
 - (void)reload;
 - (void)stop;
 - (void)goTopWithAnimated:(BOOL)animated;
-- (void)goBack;
+- (void)myGoBack;
+- (void)stackAllDel;
 - (void)goFoward;
 - (NSInteger)isGoBack;
 

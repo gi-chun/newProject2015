@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="btn_save" destination="C07-pg-UGt" id="dSu-Gg-rba"/>
                 <outlet property="confirmTxt" destination="J6u-BC-bHk" id="i9A-e9-hzx"/>
+                <outlet property="label_PWDDesc" destination="rv4-Gd-vJR" id="62d-fs-9si"/>
                 <outlet property="label_confirmPwd" destination="ULA-MN-dVH" id="Dnw-Is-OVo"/>
                 <outlet property="label_newPwd" destination="UxJ-Je-xeJ" id="Tgz-A7-WzP"/>
                 <outlet property="label_oldPwd" destination="Jqo-Mq-OoS" id="yo7-Ug-DKk"/>
@@ -26,16 +27,16 @@
                     <rect key="frame" x="0.0" y="78" width="320" height="490"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UAN-fn-8dM">
-                            <rect key="frame" x="0.0" y="8" width="320" height="51"/>
+                            <rect key="frame" x="0.0" y="8" width="320" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="현재 비밀번호 입력" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jqo-Mq-OoS">
-                                    <rect key="frame" x="8" y="17" width="163" height="21"/>
+                                    <rect key="frame" x="8" y="4" width="163" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="a four-digit number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="MxF-Pi-KyX">
-                                    <rect key="frame" x="174" y="13" width="139" height="30"/>
+                                    <rect key="frame" x="174" y="0.0" width="139" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
@@ -43,16 +44,16 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBc-9b-cfh">
-                            <rect key="frame" x="0.0" y="66" width="320" height="46"/>
+                            <rect key="frame" x="0.0" y="86" width="320" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="새 비밀번호 입력" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxJ-Je-xeJ">
-                                    <rect key="frame" x="8" y="12" width="160" height="21"/>
+                                    <rect key="frame" x="8" y="4" width="160" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="a four-digit number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="8JN-F8-T5y">
-                                    <rect key="frame" x="173" y="8" width="141" height="30"/>
+                                    <rect key="frame" x="173" y="0.0" width="141" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                 </textField>
@@ -60,16 +61,16 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5PU-Vg-Xsr">
-                            <rect key="frame" x="0.0" y="118" width="320" height="47"/>
+                            <rect key="frame" x="0.0" y="127" width="320" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="새 비밀번호 확인" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULA-MN-dVH">
-                                    <rect key="frame" x="8" y="13" width="159" height="21"/>
+                                    <rect key="frame" x="8" y="4" width="159" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="a four-digit number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="J6u-BC-bHk">
-                                    <rect key="frame" x="172" y="9" width="142" height="30"/>
+                                    <rect key="frame" x="172" y="0.0" width="142" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                 </textField>
@@ -77,10 +78,10 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82w-k9-hvE">
-                            <rect key="frame" x="0.0" y="178" width="320" height="71"/>
+                            <rect key="frame" x="0.0" y="220" width="320" height="56"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C07-pg-UGt">
-                                    <rect key="frame" x="8" y="13" width="304" height="46"/>
+                                    <rect key="frame" x="8" y="5" width="304" height="46"/>
                                     <accessibility key="accessibilityConfiguration" label="아이디 찾기"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="24"/>
                                     <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -92,6 +93,13 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="* 4자리 숫자만 사용가능   생년월일/ 동일한 / 연속된 숫자 3자리 이상    사용불가" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rv4-Gd-vJR">
+                            <rect key="frame" x="24" y="37" width="288" height="45"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <size key="shadowOffset" width="-1" height="-1"/>
+                        </label>
                     </subviews>
                 </view>
             </subviews>

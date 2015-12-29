@@ -36,7 +36,9 @@
     __weak IBOutlet UILabel *labelInfor;
     __weak IBOutlet UILabel *labelID;
     __weak IBOutlet UILabel *labelName;
-    
+    __weak IBOutlet UILabel *label_IDDesc;
+    __weak IBOutlet UILabel *label_NameDesc;
+    __weak IBOutlet UILabel *label_PWDDesc;
     __weak IBOutlet UILabel *labelYear;
     __weak IBOutlet UILabel *labelPwd;
     __weak IBOutlet UILabel *labelPwdCheck;
@@ -48,6 +50,8 @@
     
     CPLoadingView *loadingView;
     
+    UIImageView *backgroundImageView;
+    UIButton *adButton;
 }
 
 @end
@@ -806,6 +810,10 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.view scrollToTag:textField tag:textField.tag];
+    if(textField.tag == 5){
+        [backgroundImageView setHidden:true];
+        [adButton setHidden:true];
+    }
     currentEditingTextField = textField;
     
     
@@ -843,6 +851,8 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self endEdit];
+    [backgroundImageView setHidden:false];
+    [adButton setHidden:false];
     
 }
 
@@ -918,7 +928,7 @@
     // Do any additional setup after loading the view from its nib.
     
     float meHeight = kScreenBoundsHeight;
-    if(meHeight <= 480){
+    if(meHeight <= 568){
         UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
                                                      initWithTarget:self action:@selector(handlePanGesture:)];
         [self.view addGestureRecognizer:gestureRecognizer];
@@ -969,7 +979,7 @@
     
     //
     meHeight = kScreenBoundsHeight;
-    if(meHeight > 480){
+    if(meHeight > 568){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
         if([temp isEqualToString:@"ko"]){
@@ -978,7 +988,7 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
         //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
@@ -996,7 +1006,7 @@
             });
         });
         
-        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
@@ -1011,7 +1021,7 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
         //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
@@ -1029,7 +1039,7 @@
             });
         });
         
-        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
@@ -1160,6 +1170,11 @@
     [labelInfor setText:SETINFO_AGREE_KO];
     [labelID setText:SETINFO_ID_KO];
     [labelName setText:SETINFO_NAME_KO];
+    
+    [label_IDDesc setText:ID_EMAIL_SAME_KO];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_KO];
+    [label_PWDDesc setText:PWD_DESC_KO];
+    
     [labelYear setText:SETINFO_YEAR_KO];
     [labelPwd setText:SETINFO_PWD_KO];
     [labelPwdCheck setText:SETINFO_PWDCON_KO];
@@ -1176,6 +1191,11 @@
     [labelInfor setText:SETINFO_AGREE_VI];
     [labelID setText:SETINFO_ID_VI];
     [labelName setText:SETINFO_NAME_VI];
+    
+    [label_IDDesc setText:ID_EMAIL_SAME_VI];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_VI];
+    [label_PWDDesc setText:PWD_DESC_VI];
+
     [labelYear setText:SETINFO_YEAR_VI];
     [labelPwd setText:SETINFO_PWD_VI];
     [labelPwdCheck setText:SETINFO_PWDCON_VI];

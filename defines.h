@@ -65,7 +65,7 @@ static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://sbk.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
-static NSString *SUNNY_DOMAIN = @"https://vntst.shinhanglobal.com";
+static NSString *SUNNY_DOMAIN = @"https://online.shinhan.com.vn";
 static NSString *SUNNY_CLUB_URL     = @"https://online.shinhan.com.vn/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_CLUB_URL_FIRST     = @"https://online.shinhan.com.vn/sunny/sunnyclub/index.jsp?club_page=1&locale=%@";
 static NSString *SUNNY_BANK_URL     = @"https://online.shinhan.com.vn/sunny/bank/main.jsp?locale=%@";        //뱅크메인
@@ -244,6 +244,13 @@ static NSString *IDSEARCH_TITLE_KO     = @"아이디 찾기";
 static NSString *IDSEARCH_NAME_KO     = @"이름";
 static NSString *IDSEARCH_YYYY_KO     = @"생년월일";
 static NSString *IDSEARCH_SEARCH_KO     = @"조회하기";
+
+static NSString *CLASSIFY_CAPITAL_KO     = @"* 대소문자, 띄어쓰기 구분";
+static NSString *CLASSIFY_CAPITAL_VI     = @"* 대소문자, 띄어쓰기 구분";
+static NSString *ID_EMAIL_SAME_KO     = @"* ID와 E-Mail은 동일하게 사용";
+static NSString *ID_EMAIL_SAME_VI     = @"* ID와 E-Mail은 동일하게 사용";
+static NSString *PWD_DESC_KO     = @"* 4자리 숫자만 사용가능\n  생년월일/ 동일한/ 연속된 숫자 3자리 이상\n  사용불가";
+static NSString *PWD_DESC_VI     = @"* 4자리 숫자만 사용가능\n   생년월일/ 동일한/ 연속된 숫자 3자리 이상\n  사용불가";
 
 //korea
 static NSString *PW_CURRENT_KO = @"현재 비밀번호 입력";

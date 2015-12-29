@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="pwdSearchViewController">
             <connections>
                 <outlet property="labelView_yyyymmdd" destination="hkc-gK-K5A" id="9N0-53-LPO"/>
+                <outlet property="label_IDDesc" destination="0au-XZ-7TA" id="unf-EZ-dgB"/>
+                <outlet property="label_NameDesc" destination="Iqn-Fi-rTA" id="EXc-XJ-IAJ"/>
                 <outlet property="label_id" destination="bVF-R4-c8e" id="cSp-Og-bZS"/>
                 <outlet property="label_name" destination="hMZ-hP-Uyd" id="ueP-xl-o0D"/>
                 <outlet property="mailTxt" destination="kO5-ft-YPS" id="Cx8-Og-mls"/>
@@ -27,16 +29,16 @@
                     <rect key="frame" x="0.0" y="92" width="320" height="490"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYy-DS-wzI">
-                            <rect key="frame" x="0.0" y="75" width="320" height="38"/>
+                            <rect key="frame" x="0.0" y="98" width="320" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMZ-hP-Uyd">
-                                    <rect key="frame" x="8" y="12" width="132" height="21"/>
+                                    <rect key="frame" x="8" y="4" width="132" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="s9T-GI-jRU">
-                                    <rect key="frame" x="132" y="8" width="182" height="30"/>
+                                    <rect key="frame" x="107" y="0.0" width="207" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
@@ -44,10 +46,10 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bjs-pR-Dd3">
-                            <rect key="frame" x="0.0" y="185" width="320" height="71"/>
+                            <rect key="frame" x="0.0" y="228" width="320" height="56"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vnZ-Mu-5p2">
-                                    <rect key="frame" x="8" y="13" width="304" height="46"/>
+                                    <rect key="frame" x="8" y="5" width="304" height="46"/>
                                     <accessibility key="accessibilityConfiguration" label="아이디 찾기"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="24"/>
                                     <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -60,28 +62,28 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vCp-GQ-YNL">
-                            <rect key="frame" x="0.0" y="128" width="320" height="57"/>
+                            <rect key="frame" x="0.0" y="158" width="320" height="38"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-DO-bP5">
-                                    <rect key="frame" x="0.0" y="3" width="320" height="38"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="38"/>
                                     <state key="normal" backgroundImage="menu00_back.png"/>
                                     <connections>
                                         <action selector="dayButtonClick:" destination="-1" eventType="touchUpInside" id="nG9-et-1gs"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="생년월일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkc-gK-K5A">
-                                    <rect key="frame" x="8" y="11" width="107" height="21"/>
+                                    <rect key="frame" x="8" y="8" width="107" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kim-3h-Ki0">
-                                    <rect key="frame" x="132" y="8" width="180" height="30"/>
+                                    <rect key="frame" x="132" y="5" width="180" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="yyyymmdd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uch-Jt-ZdI">
-                                    <rect key="frame" x="132" y="8" width="180" height="30"/>
+                                    <rect key="frame" x="108" y="5" width="204" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -90,22 +92,36 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aq6-3L-n5g">
-                            <rect key="frame" x="0.0" y="29" width="320" height="38"/>
+                            <rect key="frame" x="0.0" y="37" width="320" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="아이디" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVF-R4-c8e">
-                                    <rect key="frame" x="8" y="12" width="138" height="21"/>
+                                    <rect key="frame" x="8" y="4" width="138" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="kO5-ft-YPS">
-                                    <rect key="frame" x="131" y="8" width="183" height="30"/>
+                                    <rect key="frame" x="107" y="0.0" width="207" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="* 대소문자, 띄어쓰기 구분" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iqn-Fi-rTA">
+                            <rect key="frame" x="110" y="128" width="202" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <size key="shadowOffset" width="-1" height="-1"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="* ID와 E-Mail은 동일하게 사용" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0au-XZ-7TA">
+                            <rect key="frame" x="110" y="66" width="202" height="31"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <size key="shadowOffset" width="-1" height="-1"/>
+                        </label>
                     </subviews>
                 </view>
             </subviews>

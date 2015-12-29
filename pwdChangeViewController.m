@@ -26,6 +26,7 @@
     __weak IBOutlet UILabel *label_confirmPwd;
     
     __weak IBOutlet UIButton *btn_save;
+    __weak IBOutlet UILabel *label_PWDDesc;
     
 }
 @end
@@ -566,6 +567,7 @@
     [label_oldPwd setText:PW_CURRENT_KO];
     [label_newPwd setText:PW_NEW_KO];
     [label_confirmPwd setText:PW_CONFIRM_KO];
+    [label_PWDDesc setText:PWD_DESC_KO];
     [btn_save setTitle:SAVE_KO forState:UIControlStateNormal];
 }
 
@@ -575,6 +577,7 @@
     [label_oldPwd setText:PW_CURRENT_VI];
     [label_newPwd setText:PW_NEW_VI];
     [label_confirmPwd setText:PW_CONFIRM_VI];
+    [label_PWDDesc setText:PWD_DESC_VI];
     [btn_save setTitle:SAVE_VI forState:UIControlStateNormal];
 
 }

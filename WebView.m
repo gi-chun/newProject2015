@@ -491,7 +491,9 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //        }
         
         if (![url hasPrefix:@"app"] && ![url hasPrefix:@"about"]) {
-            [myStack push:url];
+            if (([url rangeOfString:@"Processing"].location == NSNotFound) && ([url rangeOfString:@"xml"].location == NSNotFound)){
+                [myStack push:url];
+            }
         }
         
         if ([self.delegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:)]) {
@@ -618,8 +620,13 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
 //    UIButton *backButton = (UIButton *)[toolBarView viewWithTag:CPToolBarButtonTypeBack];
 //    [toolBarView setButtonProperties:backButton enable:[self.webView canGoBack]];
-    [_preButton setHidden:([self.webView canGoBack])?false:true];
     
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        [_preButton setHidden:true];
+    }else{
+        [_preButton setHidden:([self.webView canGoBack])?false:true];
+    }
     //
     //UIButton *forwardButton = (UIButton *)[toolBarView viewWithTag:1];
 //    if (self.currentSubWebViewIndx == self.maxSubWebViewIndx) {
@@ -825,7 +832,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     return 1;
 }
 
-- (void)goBack
+- (void)myGoBack
 {
 //    [self.webView stopLoading];
 //    [self.webView reload];
@@ -839,20 +846,15 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         }else{
             if ([self.delegate respondsToSelector:@selector(gotoPrev:)]) {
                 NSString* strDummy = [myStack pop];
-                NSString* strGoUrl = [myStack pop];
-                
-//                if([strGoUrl isEqualToString:webViewUrl]){
-//                    strGoUrl = [myStack pop];
-//                }
-                
-                if (([webViewUrl rangeOfString:@"Processing"].location != NSNotFound)){
-                    strGoUrl = [myStack pop];
+                if (([strDummy rangeOfString:@"bank"].location != NSNotFound)){
+                    if([strDummy isEqualToString:webViewUrl]){
+                        strDummy = [myStack pop];
+                    }
+                    [self.delegate gotoPrev:strDummy];
+                }else{
+                    NSString* strGoUrl = [myStack pop];
+                    [self.delegate gotoPrev:strGoUrl];
                 }
-                
-                if (([webViewUrl rangeOfString:@"websquare"].location != NSNotFound)){
-                    strGoUrl = [myStack pop];
-                }
-                [self.delegate gotoPrev:strGoUrl];
             }
         }
     }
@@ -877,7 +879,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (void)actionBackWord
 {
-	[self goBack];
+	[self myGoBack];
 }
 
 - (void)actionForward
@@ -917,7 +919,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 - (void)touchpreButton
 {
     if ([self.webView canGoBack]) {
-      [self.webView goBack];
+        [self myGoBack];
+        //[self.webView goBack];
     }
 //    SBJSON *parser = [[SBJSON alloc] init];
 //    
@@ -1522,6 +1525,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         }
     }
     
+}
+
+- (void)stackAllDel{
+    [myStack delAll];
 }
 
 
