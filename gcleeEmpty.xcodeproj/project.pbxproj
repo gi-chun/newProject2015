@@ -157,6 +157,7 @@
 		284B74281C05B391006D9295 /* menu01_back@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B741C1C05B391006D9295 /* menu01_back@1x.png */; };
 		284B74291C05B391006D9295 /* menu01_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B741D1C05B391006D9295 /* menu01_back@2x.png */; };
 		284B742A1C05B391006D9295 /* menu01_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B741E1C05B391006D9295 /* menu01_back@3x.png */; };
+		2852ACB41C33AD13006DB001 /* 번역_8.java in Sources */ = {isa = PBXBuildFile; fileRef = 2852ACB31C33AD13006DB001 /* 번역_8.java */; };
 		2852D0EC1BF9E72700C1B1B5 /* ad_press_test@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2852D0E91BF9E72700C1B1B5 /* ad_press_test@1x.png */; };
 		2852D0ED1BF9E72700C1B1B5 /* ad_press_test@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2852D0EA1BF9E72700C1B1B5 /* ad_press_test@2x.png */; };
 		2852D0EE1BF9E72700C1B1B5 /* ad_press_test@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2852D0EB1BF9E72700C1B1B5 /* ad_press_test@3x.png */; };
@@ -558,6 +559,7 @@
 		284B741C1C05B391006D9295 /* menu01_back@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu01_back@1x.png"; sourceTree = "<group>"; };
 		284B741D1C05B391006D9295 /* menu01_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu01_back@2x.png"; sourceTree = "<group>"; };
 		284B741E1C05B391006D9295 /* menu01_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu01_back@3x.png"; sourceTree = "<group>"; };
+		2852ACB31C33AD13006DB001 /* 번역_8.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = "번역_8.java"; sourceTree = "<group>"; };
 		2852D0E91BF9E72700C1B1B5 /* ad_press_test@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ad_press_test@1x.png"; sourceTree = "<group>"; };
 		2852D0EA1BF9E72700C1B1B5 /* ad_press_test@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ad_press_test@2x.png"; sourceTree = "<group>"; };
 		2852D0EB1BF9E72700C1B1B5 /* ad_press_test@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ad_press_test@3x.png"; sourceTree = "<group>"; };
@@ -1387,6 +1389,7 @@
 				28D0B72C1C1E952F00DDE526 /* sclubEnz_201611.mobileprovision */,
 				28D3D06A1C1ABC37007817C3 /* provision_total.zip */,
 				28379D0A1C312E61009C15A4 /* 번역_5.java */,
+				2852ACB31C33AD13006DB001 /* 번역_8.java */,
 				28379D061C312AFA009C15A4 /* 번역_7.java */,
 				28D6F7F71C0BDE53009B697D /* libBTWCryptoLib.a */,
 				28D6F7F81C0BDE53009B697D /* libCodeguard.a */,
@@ -1792,6 +1795,7 @@
 				283147D61BFAB1B60083DA3F /* LoginViewController.m in Sources */,
 				280B23F51C00A926004F80FB /* pwdChangeViewController.m in Sources */,
 				28351D401BF45555009145E6 /* leftViewController.m in Sources */,
+				2852ACB41C33AD13006DB001 /* 번역_8.java in Sources */,
 				28D8EA481BF310B0002E98C0 /* AFURLRequestSerialization.m in Sources */,
 				2886A8D91BE09E8C001B7657 /* CPLoadingView.m in Sources */,
 				28D8EA461BF310B0002E98C0 /* AFSecurityPolicy.m in Sources */,
@@ -1950,8 +1954,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinhan Bank CO.,LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinhan Bank CO.,LTD";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1981,7 +1985,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3774de07-2a53-4a33-bfb6-5e1fee16d01e";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1995,8 +1999,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SOOJIN CHOI (D3YCM8QVFH)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinhan Bank CO.,LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinhan Bank CO.,LTD";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2025,7 +2029,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shinhan.global.vn.sclub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3774de07-2a53-4a33-bfb6-5e1fee16d01e";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = 1;

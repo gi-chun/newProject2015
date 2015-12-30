@@ -754,13 +754,39 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
             range = [subString rangeOfString:@"="];
             range.location = range.location + 1;
             NSString* strUrl = [subString substringFromIndex:range.location];
-            strUrl = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, strUrl];
+            //NSString* gLocalLang = @"";
+            NSString* localLang;
+            if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                localLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            }
+            
+            strUrl = [NSString stringWithFormat:@"%@%@?locale=%@", SUNNY_DOMAIN, strUrl, localLang];
+            if([strUrl length] < 1){
+                NSString* gLocalLang = @"";
+                if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                    gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                }
+                
+                strUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+            }
+            
+            [self gotoDirectUrl:strUrl];
+            
+            // Clearing cache Memory
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            [[NSURLCache sharedURLCache] setDiskCapacity:0];
+            [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+            
+            [_webView execute:@"document.body.innerHTML = \"\";"];
+            
+            [_webView setHiddenpreButton:true];
+            
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kViewLevelY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             NSString* newString = [alertMsg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:newString delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
-            
-            [self gotoPushUrl:strUrl];
             
             return NO;
         }
@@ -1478,7 +1504,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerUrl];
     
     if([callUrl length] < 1){
-        return;
+        callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+        //return;
     }
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
@@ -1647,6 +1674,32 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     }
     
     [self openWebView:callUrl mutableRequest:mutableRequest];
+}
+
+- (void)gotoDirectUrl:(NSString *)url{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    [self.webView stop];
+    webViewUrl = url;
+    
+    NSURL *Nurl = [NSURL URLWithString:url];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:url mutableRequest:mutableRequest];
 }
 
 - (void)setViewAlpha:(NSInteger)alphaValue{

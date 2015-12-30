@@ -635,7 +635,7 @@
     [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_VI];
-    [labelComment setText:CLASSIFY_CAPITAL_KO];
+    [labelComment setText:CLASSIFY_CAPITAL_VI];
     [label_yyyy setText:IDSEARCH_YYYY_VI];
     [btnSearh setTitle:IDSEARCH_SEARCH_VI forState:UIControlStateNormal];
 }

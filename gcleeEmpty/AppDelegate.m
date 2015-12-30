@@ -668,26 +668,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
-    NSString* strPushBadeg;
-    NSInteger nTemp=0;
-    if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
-        strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
-        nTemp = [strPushBadeg integerValue];
-        nTemp--;
-        if(nTemp < 0){
-            nTemp = 0;
-        }
-        strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
-        
-//        [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    //badge_value = 0;
-    application.applicationIconBadgeNumber = nTemp;
-    
-    [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kPushBadge];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+   
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -954,8 +935,6 @@
     
 //     NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
     
-//    [UIApplication sharedApplication].applicationIconBadgeNumber--;
-//
     if(onForeground){
         
         [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
@@ -1018,29 +997,9 @@
             return;
         }
         
-        if([[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"]){
-            [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"] intValue];
-        }
-        
-        //////////////////////////////////////////////////////////////////////////////////////////
-        NSString* strPushBadeg;
-        NSInteger nTemp=0;
-        if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
-            strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
-            nTemp = [strPushBadeg integerValue];
-            nTemp++;
-            strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
-            
-//            [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-        [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
-        
-        [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kPushBadge];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        //////////////////////////////////////////////////////////////////////////////////////////
-        
-        //[UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+//        if([[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"]){
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"] intValue];
+//        }
         
         //[[SafeOnPushClient sharedInstance] receiveNotification:dic delegate:self];
         NSLog(@"didReceiveRemoteNotification : \n%@", dic);

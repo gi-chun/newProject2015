@@ -625,7 +625,14 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     if(meHeight <= 480){
         [_preButton setHidden:true];
     }else{
-        [_preButton setHidden:([self.webView canGoBack])?false:true];
+        BOOL isViewLevel = [[NSUserDefaults standardUserDefaults] boolForKey:kViewLevelY];
+        if(isViewLevel == NO){
+            [_preButton setHidden:true];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kViewLevelY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }else{
+            [_preButton setHidden:([self.webView canGoBack])?false:true];
+        }
     }
     //
     //UIButton *forwardButton = (UIButton *)[toolBarView viewWithTag:1];
@@ -793,12 +800,12 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
     [self.preButton setHidden:isHidden];
     
-    if (isHidden) {
-        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*2), buttonWidth, buttonHeight)];
-    }
-    else {
-        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*3), buttonWidth, buttonHeight)];
-    }
+//    if (isHidden) {
+//        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*2), buttonWidth, buttonHeight)];
+//    }
+//    else {
+//        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*3), buttonWidth, buttonHeight)];
+//    }
 }
 
 - (NSString *)url
