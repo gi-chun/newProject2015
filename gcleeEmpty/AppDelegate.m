@@ -519,18 +519,42 @@
     NSString* strDesc;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
+    
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *allCookies = [cookies cookies];
+    for(NSHTTPCookie *cookie in allCookies) {
+        if([[cookie domain] rangeOfString:COOKIE_SAVE_DOMAIN].location != NSNotFound) {
+            
+            if([cookie.name isEqualToString:@"locale_"]){
+                [cookies deleteCookie:cookie];
+            }
+        }
+    }
+    
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     NSHTTPCookie *cookie;
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
     [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
     [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
-    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
     [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
     [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
     // set expiration to one month from now
     [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
     cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    NSMutableDictionary *cookieProperties_ = [NSMutableDictionary dictionary];
+    [cookieProperties_ setObject:@"locale_80" forKey:NSHTTPCookieName];
+    [cookieProperties_ setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
+    [cookieProperties_ setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties_ setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties_ setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties_];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     
     for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
@@ -798,8 +822,8 @@
                 //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
                 //////////////////////////////////////
                 [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
                 [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
                 [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
                 // set expiration to one month from now
@@ -1258,8 +1282,8 @@
                 //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
                 //////////////////////////////////////
                 [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
                 [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
                 [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
                 // set expiration to one month from now

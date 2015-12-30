@@ -282,8 +282,8 @@
             NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
             [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now

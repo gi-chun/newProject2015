@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define TEST_SERVER_DEFINE
+//#define TEST_SERVER_DEFINE
 
 
 
@@ -29,6 +29,7 @@
 
 #define    SESSION_CONTINUE_SEND 60 //second
 
+static NSString* COOKIE_SAVE_DOMAIN = @"vntst.shinhanglobal.com";
 static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
@@ -61,6 +62,7 @@ static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 
 #define    SESSION_CONTINUE_SEND 60*9 //second - 9 minutes
 
+static NSString* COOKIE_SAVE_DOMAIN = @"online.shinhan.com.vin";
 static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
@@ -75,7 +77,7 @@ static NSString *LETTER_URL      = @"https://online.shinhan.com.vn/sunny/set/all
 static NSString *SHINHAN_ZONE_URL   = @"https://online.shinhan.com.vn/sunny/bank/shinhanzone.jsp";    //신한존
 static NSString *SHINHAN_EVENT_URL   = @"https://online.shinhan.com.vn/sunny/set/event_view.jsp?seqno=1&board_d=1";    //신한존
 static NSString *SHINHAN_LOCATION_URL   = @"https://online.shinhan.com.vn/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
-static NSString *SHINHAN_SEARCH_URL   = @"https://online.shinhan.com.vn/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
+static NSString *SHINHAN_SEARCH_URL   = @"https://online.shinhan.com.vn/sunny/sunnyclub/search.jsp";
 
 static NSString *API_URL            = @"https://online.shinhan.com.vn/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";

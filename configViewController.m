@@ -845,7 +845,7 @@
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *allCookies = [cookies cookies];
     for(NSHTTPCookie *cookie in allCookies) {
-        if([[cookie domain] rangeOfString:@"vntst.shinhanglobal.com"].location != NSNotFound) {
+        if([[cookie domain] rangeOfString:COOKIE_SAVE_DOMAIN].location != NSNotFound) {
             
             if([cookie.name isEqualToString:@"locale_"]){
                 [cookies deleteCookie:cookie];
@@ -858,8 +858,8 @@
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
     [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
     [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
-    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-    [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
     [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
     [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
     // set expiration to one month from now
@@ -870,8 +870,8 @@
     NSMutableDictionary *cookieProperties_ = [NSMutableDictionary dictionary];
     [cookieProperties_ setObject:@"locale_80" forKey:NSHTTPCookieName];
     [cookieProperties_ setObject:temp forKey:NSHTTPCookieValue];
-    [cookieProperties_ setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-    [cookieProperties_ setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
     [cookieProperties_ setObject:@"/" forKey:NSHTTPCookiePath];
     [cookieProperties_ setObject:@"0" forKey:NSHTTPCookieVersion];
     // set expiration to one month from now
