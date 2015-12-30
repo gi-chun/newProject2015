@@ -53,7 +53,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enr-me-sji">
-                            <rect key="frame" x="7" y="199.5" width="292" height="39.5"/>
+                            <rect key="frame" x="7" y="200" width="292" height="40"/>
                             <state key="normal" title="다시 조회하기" backgroundImage="home_btn.png">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>

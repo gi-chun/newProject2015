@@ -754,13 +754,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
             range = [subString rangeOfString:@"="];
             range.location = range.location + 1;
             NSString* strUrl = [subString substringFromIndex:range.location];
-            //NSString* gLocalLang = @"";
-            NSString* localLang;
-            if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
-                localLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-            }
             
-            strUrl = [NSString stringWithFormat:@"%@%@?locale=%@", SUNNY_DOMAIN, strUrl, localLang];
             if([strUrl length] < 1){
                 NSString* gLocalLang = @"";
                 if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
@@ -768,6 +762,35 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
                 }
                 
                 strUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+                
+                [self gotoDirectUrl:webViewUrl];
+                // Clearing cache Memory
+                [[NSURLCache sharedURLCache] removeAllCachedResponses];
+                [[NSURLCache sharedURLCache] setDiskCapacity:0];
+                [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+                
+                [_webView execute:@"document.body.innerHTML = \"\";"];
+                
+                [_webView setHiddenpreButton:true];
+                
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kViewLevelY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                NSString* newString = [alertMsg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:newString delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+
+                
+                return NO;
+                
+            }else{
+                //NSString* gLocalLang = @"";
+                NSString* localLang;
+                if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                    localLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                }
+                
+                strUrl = [NSString stringWithFormat:@"%@%@?locale=%@", SUNNY_DOMAIN, strUrl, localLang];
             }
             
             [self gotoDirectUrl:strUrl];
