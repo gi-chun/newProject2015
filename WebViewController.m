@@ -1565,8 +1565,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     }
     
-    callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
-    callUrl = SHINHAN_EVENT_URL;
+    //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+    callUrl = [NSString stringWithFormat:SHINHAN_EVENT_URL, gLocalLang];
     //callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerUrl];
     if([callUrl length] < 1){
         return;
