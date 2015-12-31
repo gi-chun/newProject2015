@@ -819,6 +819,9 @@
     NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
     NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
     
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     //
     [rootDic setObject:COMMON_TASK_USR forKey:@"task"];
     [rootDic setObject:@"getListBanner" forKey:@"action"];
@@ -827,6 +830,7 @@
     [rootDic setObject:@"" forKey:@"responseMessage"];
     
     [indiv_infoDic setObject:@"2" forKey:@"d_1"];
+    [indiv_infoDic setObject:temp forKey:@"language"];
     
     [sendDic setObject:rootDic forKey:@"root_info"];
     [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];
@@ -837,20 +841,20 @@
     
     NSDictionary *parameters = @{@"plainJSON": jsonString};
     
-    NSString* temp;
-    NSString* strDesc;
-    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
     
     
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *allCookies = [cookies cookies];
     for(NSHTTPCookie *cookie in allCookies) {
-        if([[cookie domain] rangeOfString:COOKIE_SAVE_DOMAIN].location != NSNotFound) {
-            
-            if([cookie.name isEqualToString:@"locale_"]){
-                [cookies deleteCookie:cookie];
-            }
+        if([cookie.name isEqualToString:@"locale_"]){
+            [cookies deleteCookie:cookie];
         }
+        
+        if([cookie.name isEqualToString:@"locale_80"]){
+            [cookies deleteCookie:cookie];
+        }
+        
     }
     
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];

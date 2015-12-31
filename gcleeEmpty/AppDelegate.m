@@ -131,6 +131,8 @@
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kPushY]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kNomalPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kContentsPushY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kEventPushY];
@@ -391,6 +393,7 @@
     
     //dowload banner file
     [self getListBanner];
+    //[self setDefaultSetPush];
     
     //left main
     bannerType = 0;
@@ -497,6 +500,9 @@
     NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
     NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
     
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     //
     [rootDic setObject:COMMON_TASK_USR forKey:@"task"];
     [rootDic setObject:@"getListBanner" forKey:@"action"];
@@ -505,6 +511,7 @@
     [rootDic setObject:@"" forKey:@"responseMessage"];
     
     [indiv_infoDic setObject:@"2" forKey:@"d_1"];
+    [indiv_infoDic setObject:temp forKey:@"language"];
     
     [sendDic setObject:rootDic forKey:@"root_info"];
     [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];
@@ -515,24 +522,32 @@
     
     NSDictionary *parameters = @{@"plainJSON": jsonString};
     
-    NSString* temp;
-    NSString* strDesc;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
     
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *allCookies = [cookies cookies];
     for(NSHTTPCookie *cookie in allCookies) {
-        if([[cookie domain] rangeOfString:COOKIE_SAVE_DOMAIN].location != NSNotFound) {
-            
-            if([cookie.name isEqualToString:@"locale_"]){
-                [cookies deleteCookie:cookie];
-            }
+//        if([[cookie domain] rangeOfString:COOKIE_SAVE_DOMAIN].location != NSNotFound) {
+//            
+//            if([cookie.name isEqualToString:@"locale_"]){
+//                [cookies deleteCookie:cookie];
+//            }
+//        }
+        
+        if([cookie.name isEqualToString:@"locale_"]){
+            [cookies deleteCookie:cookie];
         }
+        
+        if([cookie.name isEqualToString:@"locale_80"]){
+            [cookies deleteCookie:cookie];
+        }
+        
     }
     
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     NSHTTPCookie *cookie;
+    
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
     [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
     [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
@@ -617,6 +632,126 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             NSLog(@"Response ==> %@", responseData);
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+    
+}
+
+- (void) setDefaultSetPush{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    NSString *nomalSet;
+    NSString *contentSet;
+    NSString *eventSet;
+    NSString *totalSet;
+    NSString *BIGSet;
+    
+    BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
+    if(isAlram == YES){
+        BIGSet = @"Y";
+        
+        BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+        if(isAlram == YES){
+            nomalSet = @"Y";
+        }else{
+            nomalSet = @"N";
+        }
+        
+        isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+        if(isAlram == YES){
+            contentSet = @"Y";
+        }else{
+            contentSet = @"N";
+        }
+        
+        isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+        if(isAlram == YES){
+            eventSet = @"Y";
+        }else{
+            eventSet = @"N";
+        }
+        
+    }else{
+        BIGSet = @"N";
+        nomalSet = @"N";
+        contentSet = @"N";
+        eventSet = @"N";
+    }
+    
+    totalSet = [NSString stringWithFormat:@"1|%@,2|%@,3|%@", nomalSet, contentSet, eventSet];
+    //
+    [rootDic setObject:@"sfg.sunny.task.user.AlarmTask" forKey:@"task"];
+    [rootDic setObject:@"setAlarm" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kCardCode]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] forKey:@"user_seq"];
+    }
+    
+    [indiv_infoDic setObject:BIGSet forKey:@"push_rec_yn"];
+    [indiv_infoDic setObject:totalSet forKey:@"push_alarm"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];//////
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        NSLog(@"Response ==> %@", responseData);
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        }else{
+            
+            //to json
+            SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+            
+            NSString *jsonString = [jsonWriter stringWithObject:jsonArray];
+            NSLog(@"jsonString ==> %@", jsonString);
+            ///////////////////////////////
+            
+            for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+            {
+                NSLog(@"name: '%@'\n",   [cookie name]);
+                NSLog(@"value: '%@'\n",  [cookie value]);
+                NSLog(@"domain: '%@'\n", [cookie domain]);
+                NSLog(@"path: '%@'\n",   [cookie path]);
+            }
+            
+            NSLog(@"getCookie end ==>" );
             
         }
         
