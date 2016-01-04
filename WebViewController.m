@@ -1565,13 +1565,11 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     }
     
-    callUrl = [NSString stringWithFormat:SHINHAN_EVENT_URL, gLocalLang];
     callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerUrl];
     if([callUrl length] < 1){
-        return;
+        callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+        //return;
     }
-    [self.webView stop];
-    //webViewUrl = callUrl;
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];

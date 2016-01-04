@@ -934,7 +934,9 @@
             [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerImgUrl];
             [[NSUserDefaults standardUserDefaults] synchronize];
             temp = [dicChildOne objectForKey:@"url"];
-            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            if(([temp rangeOfString:@"http"].location == NSNotFound)){
+                temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            }
             [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerUrl];
             [[NSUserDefaults standardUserDefaults] synchronize];
             temp = [dicChildTwo objectForKey:@"image"];
@@ -942,7 +944,9 @@
             [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerImgUrl];
             [[NSUserDefaults standardUserDefaults] synchronize];
             temp = [dicChildTwo objectForKey:@"url"];
-            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            if(([temp rangeOfString:@"http"].location == NSNotFound)){
+                temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            }
             [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerUrl];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
