@@ -374,6 +374,7 @@
     [indiv_infoDic setObject:strParma forKey:@"lang_c"];
     
     if([[NSUserDefaults standardUserDefaults] stringForKey:kUserDeviceToken]){
+        NSString *strTemp = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDeviceToken];
         
         [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey: kUserDeviceToken] forKey:@"push_tmn_refno"];
     }else{
