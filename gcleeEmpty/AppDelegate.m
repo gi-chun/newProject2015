@@ -167,13 +167,15 @@
     localLang = [localLang substringWithRange:range];
     
     if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
-        if([localLang isEqualToString:@"en"] && [localLang isEqualToString:@"EN"]){
-            [[NSUserDefaults standardUserDefaults] setObject:@"vi" forKey:klang];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
+        
+//        if([localLang isEqualToString:@"en"] && [localLang isEqualToString:@"EN"]){
+//            [[NSUserDefaults standardUserDefaults] setObject:@"vi" forKey:klang];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//        }
         NSLog(@"klang:: %@", currentLang);
     }else{
-        if([localLang isEqualToString:@"ko"] && [localLang isEqualToString:@"KO"] && [localLang isEqualToString:@"vi"] && [localLang isEqualToString:@"VI"]){
+        
+        if([localLang isEqualToString:@"ko"] || [localLang isEqualToString:@"KO"] || [localLang isEqualToString:@"vi"] || [localLang isEqualToString:@"VI"]){
             [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }else{
