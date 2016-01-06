@@ -30,6 +30,8 @@ typedef enum {
 - (void)setUrl:(NSString *)url;
 - (void)resetADImage;
 - (void)webViewReload;
+- (void)gotoPushUrl:(NSString *)url;
+- (void)setViewAlpha:(NSInteger)alphaValue;
 
 
 @end
@@ -40,10 +42,14 @@ typedef enum {
 - (void)didTouchCloseBtn;
 - (void)didTouchLogOutBtn;
 - (void)didTouchLogInBtn;
+- (void)didTouchSummitBtn;
 - (void)didTouchAD;
 - (void)didTouchBackButton;
+- (void)didTouchGoSunny;
 - (void)didTouchNewButton;
 - (void)didTouchHelpButton;
+- (void)didTouchLetterBtn;
+- (void)gotoPrev:(NSString*)callUrl;
 //ToolBar
 - (void)didTouchToolBarButton:(UIButton *)button;
 @end

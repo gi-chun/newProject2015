@@ -10,7 +10,8 @@
 
 typedef enum {
     LoginTypeDefault = 0,
-    LoginTypeConfig
+    LoginTypeConfig,
+    LoginTypeAD
 }MYLoginType;
 
 
@@ -23,7 +24,7 @@ typedef enum {
 
 - (id)appDelegate;
 - (void)autoLogin;
-- (void)setLoginType;
+- (void)setLoginType:(NSInteger) loginType;
 
 @end
 
@@ -32,4 +33,5 @@ typedef enum {
 - (void)didTouchBackButton;
 - (void)didLoginAfter;
 - (void)didTouchMainAD;
+- (void)didTouchGoSunny;
 @end

@@ -13,10 +13,13 @@
 @interface setAlramViewController : UIViewController
 
 @property (nonatomic, weak) id<setAlramViewControllerDelegate> delegate;
+@property (nonatomic) CGSize contentSize;
+
 
 @end
 
 @protocol setAlramViewControllerDelegate <NSObject>
 @optional
 - (void)didTouchBackButton;
+- (void)didTouchMainAD;
 @end

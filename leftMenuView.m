@@ -32,6 +32,11 @@ const static CGFloat MENU_HEIGHT   =      45;
     leftLoginView *loginView;
     UIView *loginResultView;
     UIView *aDView;
+    
+    UIView *letterLineView;
+    UIImageView *letterUpImageView;
+    UILabel* labelLetter;
+    UIButton* letterBtn;
 }
 @end
 
@@ -119,9 +124,14 @@ const static CGFloat MENU_HEIGHT   =      45;
     CGFloat meWidth = self.bounds.size.width;
     CGFloat itemWidth = 0;
     if( kScreenBoundsWidth == 320){
-        itemWidth = self.frame.size.width;
+        itemWidth = self.frame.size.width-50;
     }else{
-        itemWidth = self.bounds.size.width;
+        if(kScreenBoundsWidth > 320){
+            itemWidth = self.bounds.size.width-100;
+            if(kScreenBoundsWidth > 400){
+                itemWidth = self.bounds.size.width-15;
+            }
+        }
     }
     
     CGFloat meHeight = self.frame.size.height;
@@ -155,8 +165,52 @@ const static CGFloat MENU_HEIGHT   =      45;
     [closeBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"total_menu_close_btn.png"] forState:UIControlStateHighlighted];
     [closeBtn setBackgroundImage:[UIImage imageNamed:@"total_menu_close_btn.png"] forState:UIControlStateNormal];
-    [closeBtn addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
+    //[closeBtn addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
     [logoView addSubview:closeBtn];
+    
+    //close empty button
+    UIButton* closeEmptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeEmptyButton setFrame:CGRectMake(meWidth-(30+marginX), 0, 30, 30)];
+    [closeEmptyButton setBackgroundColor:[UIColor clearColor]];
+    [closeEmptyButton addTarget:self action:@selector(didTouchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
+    [logoView addSubview:closeEmptyButton];
+    
+    //letterLineView
+    letterLineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+13, 10, 1, 25)];
+    [letterLineView setBackgroundColor:UIColorFromRGB(0xcd4011)];
+    [logoView addSubview:letterLineView];
+    
+    //letter button
+    letterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [letterBtn setFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+20, 5, 33, 30)];
+    //[letterBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
+    [letterBtn setImage:[UIImage imageNamed:@"news_icon.png"] forState:UIControlStateNormal];
+    [letterBtn setImage:[UIImage imageNamed:@"news_icon_press.png"] forState:UIControlStateHighlighted];
+    [letterBtn addTarget:self action:@selector(didTouchLetterBtn) forControlEvents:UIControlEventTouchUpInside];
+    [logoView addSubview:letterBtn];
+    
+    //letter empty button
+    //    letterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [letterBtn setFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+20, 5, 33, 30)];
+    //    [letterBtn setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
+    //    [letterBtn addTarget:self action:@selector(didTouchLetterBtn) forControlEvents:UIControlEventTouchUpInside];
+    //    [logoView addSubview:letterBtn];
+    
+    letterUpImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+35, 5, 16, 14)];
+    letterUpImageView.contentMode = UIViewContentModeScaleToFill;
+    [letterUpImageView setImage:[UIImage imageNamed:@"news_icon_nbback.png"]];
+    [logoView addSubview:letterUpImageView];
+    
+    labelLetter = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoImageView.frame)+35, 5, 16, 14)];
+    [labelLetter setBackgroundColor:[UIColor clearColor]];
+    [labelLetter setTextColor:UIColorFromRGB(0xb03e01)];
+    [labelLetter setFont:[UIFont systemFontOfSize:13]];
+    //[labelMenu setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
+    [labelLetter setTextAlignment:NSTextAlignmentCenter];
+    //[labelMenu setNumberOfLines:0];
+    //[labelMenu sizeToFit];
+    [labelLetter setText:@"N"];
+    [logoView addSubview:labelLetter];
     
     [self addSubview:logoView];
     
@@ -169,7 +223,31 @@ const static CGFloat MENU_HEIGHT   =      45;
     }else if([temp isEqualToString:@"vi"]){
         strLoginTitle = LEFT_DES_VI;
     }
-
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        [letterLineView setHidden:FALSE];
+        [letterBtn setHidden:FALSE];
+        
+        NSString* strBadge;
+        if([[NSUserDefaults standardUserDefaults] stringForKey:kBadge]){
+            strBadge = [[NSUserDefaults standardUserDefaults] stringForKey:kBadge];
+            //strBadge = @"99";
+            if([strBadge isEqualToString:@"0"]){
+                [letterUpImageView setHidden:TRUE];
+                [labelLetter setHidden:TRUE];
+            }else{
+                [letterUpImageView setHidden:false];
+                [labelLetter setHidden:false];
+            }
+        }
+        
+    }else{
+        [letterLineView setHidden:TRUE];
+        [letterBtn setHidden:TRUE];
+        [letterUpImageView setHidden:TRUE];
+        [labelLetter setHidden:TRUE];
+    }
     
     //login view
     loginView = [[leftLoginView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(logoView.frame), meWidth, LOGIN_HEIGHT) title:@"로그인을 하시면 Sunny Club의 다양한 서비스를 이용하실 수 있습니다."];
@@ -213,13 +291,13 @@ const static CGFloat MENU_HEIGHT   =      45;
         
         strNotiTitle = NEWS_KO;
         strConfigTitle = LEFT_CONFIG_KO;
-        strImage = LEFT_CONFIG_KO;
+        strImage = @"banner_kr.png";
         
     }else if([temp isEqualToString:@"vi"]){
         
         strNotiTitle = NEWS_VI;
         strConfigTitle = LEFT_CONFIG_VI;
-        strImage = LEFT_CONFIG_KO;
+        strImage = @"banner_viet.png";
     }
     
     leftMenuItemView *menuItemView1 = [[leftMenuItemView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginView.frame)+5, itemWidth, MENU_HEIGHT) title:@"Sunny CLUB" viewType:1];
@@ -243,9 +321,25 @@ const static CGFloat MENU_HEIGHT   =      45;
         UIView* ADView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenBoundsHeight-kAD_HEIGHT-25, kScreenBoundsWidth-kAD_MarginW-37, kAD_HEIGHT+25)];
         
         UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
-        [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
         adImageView.contentMode = UIViewContentModeScaleToFill;
         [ADView addSubview:adImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                adImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [adImageView setImage:[UIImage imageNamed:strImage]];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+            });
+        });
+        
         
         //AD emptybutton
         UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -262,9 +356,24 @@ const static CGFloat MENU_HEIGHT   =      45;
         //[ADView setBackgroundColor:UIColorFromRGB(0x2881C0)]; //[self setBackgroundColor:UIColorFromRGB(0xffffff)]; //0x2881C0
         
         UIImageView *adImageView = [[UIImageView alloc] initWithFrame:ADView.bounds];
-        [adImageView setImage:[UIImage imageNamed:@"total_menu_banner.png"]];
         adImageView.contentMode = UIViewContentModeScaleAspectFill;
         [ADView addSubview:adImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                adImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [adImageView setImage:[UIImage imageNamed:strImage]];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+
+                }
+            });
+        });
         
         //AD emptybutton
         UIButton* emptyButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -443,31 +552,42 @@ const static CGFloat MENU_HEIGHT   =      45;
 - (void) loginProcess
 {
     
-    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
-    [self addSubview:likeImageView];
-    [self bringSubviewToFront:likeImageView];
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
     
-    if ([SYSTEM_VERSION intValue] > 7) {
-        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-        [UIView animateWithDuration:3.0f
-                              delay:0
-             usingSpringWithDamping:0.2f
-              initialSpringVelocity:6.0f
-                            options:UIViewAnimationOptionAllowUserInteraction
-                         animations:^{
-                             likeImageView.transform = CGAffineTransformIdentity;
-                         }
-                         completion:^(BOOL finished) {
-                             [likeImageView removeFromSuperview];
-                         }];
-    }
-    else {
-        [UIView animateWithDuration:1.0f animations:^{
-            [likeImageView removeFromSuperview];
-        }];
-    }
+//    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+//    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
+//    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
+//    [self addSubview:likeImageView];
+//    [self bringSubviewToFront:likeImageView];
+    
+//    if ([SYSTEM_VERSION intValue] > 7) {
+//        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+//        [UIView animateWithDuration:3.0f
+//                              delay:0
+//             usingSpringWithDamping:0.2f
+//              initialSpringVelocity:6.0f
+//                            options:UIViewAnimationOptionAllowUserInteraction
+//                         animations:^{
+//                             likeImageView.transform = CGAffineTransformIdentity;
+//                         }
+//                         completion:^(BOOL finished) {
+//                             [likeImageView removeFromSuperview];
+//                         }];
+//    }
+//    else {
+//        [UIView animateWithDuration:1.0f animations:^{
+//            [likeImageView removeFromSuperview];
+//        }];
+//    }
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -554,8 +674,8 @@ const static CGFloat MENU_HEIGHT   =      45;
             //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
             //////////////////////////////////////
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -631,6 +751,14 @@ const static CGFloat MENU_HEIGHT   =      45;
     }
     
 }
+- (void)didTouchLetterBtn
+{
+    if ([self.delegate respondsToSelector:@selector(didTouchLetterBtn)]) {
+        [self.delegate didTouchLetterBtn];
+    }
+    
+}
+
 - (void)didTouchLogOutBtn
 {
     if ([self.delegate respondsToSelector:@selector(didTouchLogOutBtn)]) {
@@ -645,12 +773,37 @@ const static CGFloat MENU_HEIGHT   =      45;
     }
     
 }
+
+- (void)didTouchSummitBtn
+{
+    if ([self.delegate respondsToSelector:@selector(didTouchSummitBtn)]) {
+        [self.delegate didTouchSummitBtn];
+    }
+    
+}
+
 - (void)didTouchAD
 {
     if ([self.delegate respondsToSelector:@selector(didTouchAD)]) {
         [self.delegate didTouchAD];
     }
     
+}
+
+- (void) didLogOutShowContents{
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        [letterLineView setHidden:FALSE];
+        [letterBtn setHidden:FALSE];
+        [letterUpImageView setHidden:FALSE];
+        [labelLetter setHidden:FALSE];
+    }else{
+        [letterLineView setHidden:TRUE];
+        [letterBtn setHidden:TRUE];
+        [letterUpImageView setHidden:TRUE];
+        [labelLetter setHidden:TRUE];
+    }
 }
 
 

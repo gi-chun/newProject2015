@@ -14,6 +14,7 @@
 #import "ToolBarView.h"
 #import "setInforViewController.h"
 
+
 @interface WebViewController () <WebViewDelegate, ToolBarViewDelegate>
 {
     NSString *webViewUrl;
@@ -32,12 +33,14 @@
     //CPWebviewControllerFullScreenMode fullScreenMode;
     
     UIView *statusBarView;
+    UIView *dummyView;
     
     BOOL isSkipParent;
     BOOL isIgnore;
     BOOL isProduct;
     
     NSInteger gShowNavigation;
+    
 }
 
 //@property (nonatomic, strong) CPNavigationBarView *navigationBarView;
@@ -99,11 +102,12 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
+    /////////////////////
     BOOL isForceMember = [[NSUserDefaults standardUserDefaults] boolForKey:kForceMemberViewY];
     if(isForceMember == YES){
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kForceMemberViewY];
@@ -116,7 +120,7 @@
     
     [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
 
-    // iOS7 Layout gclee
+    // iOS7 Layout
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
@@ -333,13 +337,14 @@
 NSInteger showNavigation = 1; //1: show, 2: hidden
     
 #ifdef TEST_SERVER_DEFINE
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp"].location == NSNotFound)){
+    //if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index_2nd.jsp"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 3;
@@ -350,13 +355,13 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [self initNavigation:4];
     }
 #else
-    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"online.shinhan.com.vn/sunny/bank/main.jsp"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         gShowNavigation = 3;
@@ -376,16 +381,19 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         
         //16
         if ([SYSTEM_VERSION intValue] > 6) {
-            webViewFrame = CGRectMake(0, 15, kScreenBoundsWidth, kScreenBoundsHeight-250);
+            //webViewFrame = CGRectMake(0, 15, kScreenBoundsWidth, kScreenBoundsHeight-250);
+            webViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-(kToolBarHeight+kStatusBarY));
         }
         else {
-            webViewFrame = CGRectMake(0, 15, kScreenBoundsWidth, kScreenBoundsHeight-250);
+            //webViewFrame = CGRectMake(0, 15, kScreenBoundsWidth, kScreenBoundsHeight-250);
+            webViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-(kToolBarHeight+kStatusBarY));
         }
-        [self.webView reCreateToolbar];
+        //[self.webView reCreateToolbar];
     }
     else {
         [self.navigationController setNavigationBarHidden:NO];
-        webViewFrame = CGRectMake(0, 0, kScreenBoundsWidth, kScreenBoundsHeight-kNavigationHeight);
+        //webViewFrame = CGRectMake(0, 0, kScreenBoundsWidth, kScreenBoundsHeight-kNavigationHeight);
+        webViewFrame = CGRectMake(0, kNavigationHeight+kToolBarHeight+kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-(kNavigationHeight+kToolBarHeight+kStatusBarY));
     }
     
     if (self.webView) {
@@ -531,6 +539,74 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
 }
 
+- (void)touchSearchButton
+{
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
+    
+    callUrl = [NSString stringWithFormat:SHINHAN_SEARCH_URL, gLocalLang];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+    
+}
+
+
+- (void)touchLocationButton
+{
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
+    
+    callUrl = [NSString stringWithFormat:SHINHAN_LOCATION_URL, gLocalLang];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+    
+}
+
+
 
 - (void)didTouchMenuButton
 {
@@ -645,10 +721,114 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         //        [alert show];
         
+        if(!([url rangeOfString:@"prev"].location == NSNotFound)){
+            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+
+            if([_webView isGoBack]){
+                [_webView myGoBack];
+            }else{
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+               
+                [self didTouchGoSunny];
+//                if ([self.delegate respondsToSelector:@selector(didTouchGoSunny)]) {
+//                    [self.delegate didTouchGoSunny];
+//                }
+            }
+            
+            return NO;
+        }
+
+        if(!([url rangeOfString:@"alert"].location == NSNotFound)){
+            //app://alert?msg=메세지&url=/sunny/mmlll.jsp?aaaaaa
+            NSRange range = [url rangeOfString:@"="];
+            range.location = range.location + 1;
+            //메세지&url=...
+            NSString* subString = [url substringFromIndex:range.location];
+            range = [subString rangeOfString:@"&"];
+            range.location = range.location - 1;
+            NSString* alertMsg = [subString substringToIndex:range.location];
+            //url
+            range = [subString rangeOfString:@"="];
+            range.location = range.location + 1;
+            NSString* strUrl = [subString substringFromIndex:range.location];
+            
+            if([strUrl length] < 1){
+                NSString* gLocalLang = @"";
+                if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                    gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                }
+                
+                strUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+                
+                [self gotoDirectUrl:webViewUrl];
+                // Clearing cache Memory
+                [[NSURLCache sharedURLCache] removeAllCachedResponses];
+                [[NSURLCache sharedURLCache] setDiskCapacity:0];
+                [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+                
+                [_webView execute:@"document.body.innerHTML = \"\";"];
+                
+                [_webView setHiddenpreButton:true];
+                
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kViewLevelY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                NSString* newString = [alertMsg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:newString delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+                [alert show];
+
+                
+                return NO;
+                
+            }else{
+                //NSString* gLocalLang = @"";
+                NSString* localLang;
+                if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                    localLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+                }
+                
+                strUrl = [NSString stringWithFormat:@"%@%@?locale=%@", SUNNY_DOMAIN, strUrl, localLang];
+            }
+            
+            [self gotoDirectUrl:strUrl];
+            
+            // Clearing cache Memory
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            [[NSURLCache sharedURLCache] setDiskCapacity:0];
+            [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+            
+            [_webView execute:@"document.body.innerHTML = \"\";"];
+            
+            [_webView setHiddenpreButton:true];
+            
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kViewLevelY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSString* newString = [alertMsg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:newString delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            
+            return NO;
+        }
+        
         if(!([url rangeOfString:@"openLoginPage"].location == NSNotFound)){
+            
             //login
             LoginViewController *loginController = [[LoginViewController alloc] init];
-            [loginController setLoginType];
+            
+            BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kCallAd];
+            if(isLogin == YES){
+                [loginController setLoginType:LoginTypeAD];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCallAd];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+            }else{
+                [loginController setLoginType:LoginTypeAD];
+            }
+            
             [loginController setDelegate:self];
             [self.navigationController pushViewController:loginController animated:YES];
             
@@ -666,20 +846,30 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         return NO;
     }
     
-    
-    
-    NSLog(@"url:%@", url);
-    webViewUrl = url;
-    
     //common/message/processMsg.html?
     if(!([url rangeOfString:@"common/message/processMsg.html?"].location == NSNotFound)){
         return false;
     }
     
+    if(!([url rangeOfString:@"about"].location == NSNotFound)){
+        return false;
+    }
+    
+    NSLog(@"url:%@", url);
+    [[NSUserDefaults standardUserDefaults] setObject:webViewUrl forKey:kPrevUrl];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    webViewUrl = url;
+    [_webView setUrl:webViewUrl];
+    
+    
+    
 #ifdef TEST_SERVER_DEFINE
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
-    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
+    //https://vntst.shinhanglobal.com/sunny/index.jsp?w2xPath=/sunny/card/000S1710M00.xml
+    
+    if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp"].location == NSNotFound)){
+    //if(!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/sunnyclub/index_2nd.jsp"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -687,7 +877,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gShowNavigation = 0;
         [self initNavigation:0];
         
-    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp?"].location == NSNotFound)){
+    }else if (!([url rangeOfString:@"vntst.shinhanglobal.com/sunny/bank/main.jsp"].location == NSNotFound)){
         //TODO
         NSLog(@"문자열이 포함됨");
         [self.navigationController setNavigationBarHidden:NO];
@@ -696,6 +886,17 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [self initNavigation:3];
     }else{
         
+        
+        if (([url rangeOfString:@"facebook"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
+        
+        if (([url rangeOfString:@"twitter"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
+            
         //sunny없는 URL은 외부 사파리 호출
         if (([url rangeOfString:@"sunny"].location == NSNotFound)){
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
@@ -709,7 +910,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         }
     }
     
-#else
+#else // real server
+    
     //0: club 1:previous 2:   3:bank 4:hide
     NSInteger showNavigation = 1; //1: show, 2: hidden
     if(!([url rangeOfString:@"online.shinhan.com.vn/sunny/sunnyclub/index.jsp?"].location == NSNotFound)){
@@ -729,6 +931,16 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [self initNavigation:3];
     }else{
         
+        if (([url rangeOfString:@"facebook"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
+        
+        if (([url rangeOfString:@"twitter"].location != NSNotFound)){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            return NO;
+        }
+        
         //sunny없는 URL은 외부 사파리 호출
         if (([url rangeOfString:@"sunny"].location == NSNotFound)){
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
@@ -741,10 +953,14 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
             [self initNavigation:4];
         }
     }
-
-    
 #endif
     
+    //sunny/sunnyclub
+    if (([url rangeOfString:@"sunny/sunnyclub"].location != NSNotFound)){
+        [webView setZoomBtnVisible:1];
+    }else{
+        [webView setZoomBtnVisible:0];
+    }
     
     [self.view setBackgroundColor:UIColorFromRGB(0xffffff)];
     
@@ -752,18 +968,11 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     CGRect webViewFrame;
     CGRect toolViewFrame;
     
-    if (showNavigation == 4) {
+    if (showNavigation == 4) {   // hide navigation
         
-//        if ([SYSTEM_VERSION intValue] > 6) {
-//            webViewFrame = CGRectMake(0, -(kNavigationHeight-kNavigationHeightHide+kWebViewTopMarginY), kScreenBoundsWidth, kScreenBoundsHeight-(kToolBarHeight+kNavigationHeight)/2);
-//        }
-//        else {
-//            webViewFrame = CGRectMake(0, -(kNavigationHeight-kNavigationHeightHide+kWebViewTopMarginY), kScreenBoundsWidth, kScreenBoundsHeight-(kToolBarHeight+kNavigationHeight)/2);
-//        }
-        //[self.webView reCreateToolbar];
         naviViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kNavigationHeightHide-kStatusBarY);
-        webViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-(kStatusBarY));
-        toolViewFrame = CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+kWebViewMarginY-13), kScreenBoundsWidth, kToolBarHeight);
+        webViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-kToolBarHeight);
+        toolViewFrame = CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+kStatusBarY), kScreenBoundsWidth, kToolBarHeight);
         
         if (navigationBarView) {
             [self.navigationController.navigationBar setFrame:naviViewFrame];
@@ -779,8 +988,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         [statusBarView setBackgroundColor:UIColorFromRGB(0xe0e0e0)];
         
     }
-    else {
+    else {                      // show navigation
         [statusBarView removeFromSuperview];
+        //[_webView stackAllDel];
         
         naviViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kNavigationHeight);
         webViewFrame = CGRectMake(0, kWebViewTopMarginY, kScreenBoundsWidth, kScreenBoundsHeight-kNavigationHeight-kToolBarHeight-kWebViewTopMarginY*2);
@@ -795,36 +1005,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         
         if (self.webView) {
             [self.webView setFrame:webViewFrame];
-            [self.webView updateFrameSunny];
+            [self.webView updateFrameSunny:showNavigation];
         }
     }
-    
-    
-//    if (toolBarView) {
-//        [toolBarView setFrame:toolViewFrame];
-//        [self.view bringSubviewToFront:toolBarView];
-//    }
-    
-//    //BOOL isHidden = [CPCommonInfo isHomeMenuUrl:url];
-//    BOOL isHidden = false;
-//    
-//    //각 상황별 히든처리를 하면 안되는 경우가 있어서 조정한다.
-//    if (!self.webView) {
-//        //메인탭의 웹뷰일 경우 툴바 안보이도록 고정
-//        //[webView setHiddenToolBarView:NO];
-//    }
-//    
-//    NSLog(@"WebView url:%@, hidden:%@, tag:%li", url, isHidden?@"Y":@"N", (long)webView.tag);
-//    
-//    //메인탭에서 서브웹뷰를 오픈할 경우에는 shouldStartLoad를 NO로 리턴
-//    if (!isHidden && !self.webView) {
-//        [webView stop];
-//        
-//        //request가 있으면 request를 다시 만들지 않고 loadRequest를 한다.
-//        [self openWebView:url request:request];
-//        
-//        return NO;
-//    }
 
     return YES;
 }
@@ -861,7 +1044,7 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 - (BOOL)webView:(WebView *)webView openUrlScheme:(NSString *)urlScheme
 {
 //    return [[CPSchemeManager sharedManager] openUrlScheme:urlScheme sender:nil changeAnimated:YES];
-    NSLog(@"test test test");
+//    NSLog(@"test test test");
     return false;
 }
 
@@ -899,7 +1082,6 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
             [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
             break;
     }
-    
 }
 
 
@@ -922,7 +1104,6 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (void)didTouchToolBarButton:(UIButton *)button
 {
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
@@ -933,78 +1114,6 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     [self didTouchMainAD];
 }
 
-- (void)didTouchSnapshotPopOverButton:(UIButton *)button buttonInfo:(NSDictionary *)buttonInfo
-{
-//    switch (button.tag) {
-//        case CPSnapshotPopOverMenuTypeHome:
-//        {
-//            CPSnapshotViewController *viewController = [[CPSnapshotViewController alloc] init];
-//            
-//            NSString *title = [self.webView execute:@"document.title"];
-//            
-//            [viewController setCaptureTargetView:self.view];
-//            [viewController setBrowserTitle:title];
-//            [viewController setBrowserUrl:[self.webView url]];
-//            
-//            [self.navigationController pushViewController:viewController animated:YES];
-//            break;
-//        }
-//        case CPSnapshotPopOverMenuTypeList:
-//        {
-//            CPSnapshotListViewController *viewController = [[CPSnapshotListViewController alloc] init];
-//            [self.navigationController pushViewController:viewController animated:YES];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-}
-
-- (void)didTouchPopOverButton:(UIButton *)button buttonInfo:(NSDictionary *)buttonInfo
-{
-//    switch (button.tag) {
-//        case CPPopOverMenuTypeRecent:
-//        {
-//            NSString *url = [[CPCommonInfo sharedInfo] urlInfo][@"todayProduct"];
-//            [self openWebView:url request:nil];
-//            break;
-//        }
-//        case CPPopOverMenuTypeFavorite:
-//        {
-//            NSString *url = [[CPCommonInfo sharedInfo] urlInfo][@"interest"];
-//            [self openWebView:url request:nil];
-//            break;
-//        }
-//        case CPPopOverMenuTypeShare:
-//        {
-//            CPShareViewController *viewController = [[CPShareViewController alloc] init];
-//            NSString *shareTitle = self.navigationItem.title;
-//            
-//            if (!shareTitle || [[shareTitle trim] isEqualToString:@""]) {
-//                shareTitle = [self.webView execute:@"document.title"];
-//            }
-//            
-//            [viewController setShareTitle:shareTitle];
-//            [viewController setShareUrl:[self.webView url]];
-//            
-//            [self.navigationController pushViewController:viewController animated:YES];
-//            break;
-//        }
-//        case CPPopOverMenuTypeSetting:
-//        {
-//            [self openSettingViewController];
-//            break;
-//        }
-//        case CPPopOverMenuTypeBrowser:
-//        {
-//            NSString *requestUrl = [self removeQueryStringWithUrl:[self.webView url]];
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:requestUrl]];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-}
 
 #pragma mark - CPMartSearchViewControllerDelegate
 
@@ -1174,145 +1283,6 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     }
 }
 
-//imageView
-//- (void)openImageView:(NSDictionary *)imageInfo
-//{
-//    CGRect mainFrame = [UIScreen mainScreen].bounds;
-//    ImageViewer *viewer = [[ImageViewer alloc] initWithFrame:CGRectMake(0, -mainFrame.size.height, mainFrame.size.width, mainFrame.size.height)];
-//    
-//    [viewer setTitle:[imageInfo objectForKey:@"title"]];
-//    [viewer setImages:[imageInfo objectForKey:@"list"]];
-//    [viewer open];
-//}
-
-//pasteBoard
-- (void)pasteClipBoard:(NSArray *)options
-{
-    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-    
-    if ([[options objectAtIndex:0] isEqualToString:@"copy"]) {
-        if ([[options objectAtIndex:1] isEqualToString:@"url"]) {
-            [pasteBoard setURL:[NSURL URLWithString:self.webView.url]];
-        }
-    }
-}
-
-//executeJavascript
-- (void)executeJavascript:(NSString *)command
-{
-    [self execute:command properties:nil sender:nil];
-}
-
-//product
-- (void)setProductOption:(BOOL)isEnable
-{
-    
-}
-
-//setting
-- (void)setSettingViewController:(NSString *)option animated:(BOOL)animated
-{
-//    if ([option isEqualToString:@"setup"] || [option isEqualToString:@"preference"]) {
-//        [self openSettingViewController];
-//    }
-//    else if ([option isEqualToString:@"notification"]) {
-//        SetupNotifyController *viewController = [[SetupNotifyController alloc] init];
-//        [self presentViewController:viewController animated:animated completion:nil];
-//    }
-//    else if ([option hasPrefix:@"appLogin"]) {
-//        /*
-//         NSString *loginUrl = [option stringByMatching:@"([^/]+)/(.*)" capture:2];
-//         
-//         SetupLoginController *viewController = [[SetupLoginController alloc] init];
-//         
-//         if ([SYSTEM_VERSION intValue] < 7) {
-//         [viewController setWantsFullScreenLayout:YES];
-//         }
-//         
-//         [self presentViewController:viewController animated:animated completion:nil];
-//         
-//         [viewController setTitle:NSLocalizedString(@"SetupLoginController", nil)];
-//         [viewController openUrl:[Modules urlWithQueryString:loginUrl]];
-//         [viewController setDelegate:sender];
-//         */
-//    }
-}
-
-
-- (void)presentOtpGeneratorController:(UIViewController *)otpController
-{
-    if (self.presentedViewController) {
-        UIViewController *controller = (UIViewController *)self.presentedViewController;
-
-        if ([controller respondsToSelector:@selector(presentViewController:animated:completion:)]) {
-            [controller presentViewController:otpController animated:YES completion:nil];
-        }
-    }
-    else {
-        if ([self respondsToSelector:@selector(presentViewController:animated:completion:)]) {
-            [self presentViewController:otpController animated:YES completion:nil];
-        }
-    }
-}
-
-//shakemotion
-- (void)shakemotion:(NSString *)option
-{
-    if ([option hasPrefix:@"start"]) {
-        [self startAccelerometerForDelay];
-    }
-    else {
-        [self stopAccelerometer];
-    }
-}
-
-//eventAlarm
-- (void)eventAlarmAddAction:(NSDictionary *)jsonData
-{
-//    NSString *eventId	= [jsonData objectForKey:@"eventid"];
-//    NSString *message	= [jsonData objectForKey:@"message"];
-//    NSString *dateStr	= [jsonData objectForKey:@"date"];
-//    NSString *eventUrl	= [jsonData objectForKey:@"eventurl"];
-//    
-//    if ([[eventId trim] length] > 0 && [[message trim] length] > 0 && [[dateStr trim] length] > 0) {
-//        BOOL bResult = [LOCAL_ALARM addLocalNotification:eventId
-//                                                 message:message
-//                                                    date:dateStr
-//                                                     url:eventUrl];
-//        
-//        if (bResult == NO) {
-//            //실패 메세지 호출
-//            NSString *javascript = @"javascript:failedAddLocalAlarm()";
-//            [self.webView execute:javascript];
-//        } else {
-//            //성공 메세지 호출
-//            NSString *javascript = @"javascript:finishedAddLocalAlarm()";
-//            [self.webView execute:javascript];
-//            
-//            [LOCAL_ALARM addInsertEventAlarmLogWithEventId:eventId];
-//        }
-//    }
-}
-
-- (void)eventAlarmRemoveAction:(NSDictionary *)jsonData
-{
-//    NSString *eventId = [jsonData objectForKey:@"eventid"];
-//    
-//    if ([[eventId trim] length] > 0) {
-//        BOOL bResult = [LOCAL_ALARM removeLocalNotification:eventId];
-//        
-//        if (bResult == NO) {
-//            //실패 메세지 호출
-//            NSString *javascript = @"javascript:failedRemoveLocalAlarm()";
-//            [self.webView execute:javascript];
-//        } else {
-//            //성공 메세지 호출
-//            NSString *javascript = @"javascript:finishedRemoveLocalAlarm()";
-//            [self.webView execute:javascript];
-//        }
-//    }
-}
-
 //moveToHome
 - (void)moveToHomeAction:(NSString *)option
 {
@@ -1325,105 +1295,6 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 //        
 //        [self reloadHomeTab];
     }
-}
-
-#pragma mark - Javascript 호출
-
-- (void)execute:(NSString *)command properties:(id)properties sender:(id)sender
-{
-//    if (!command || [[command trim] isEqualToString:@""]) {
-//        return;
-//    }
-//    
-//    if ([command isMatchedByRegex:URL_PATTERN]) {
-//        [[CPSchemeManager sharedManager] openUrlScheme:command sender:sender changeAnimated:YES];
-//    }
-//    else {
-//        SBJSON *json = [[SBJSON alloc] init];
-//        NSString *javaScript = [command stringByMatching:@"javascript:(.+)" capture:1], *fullScript;
-//        
-//        if (javaScript) {
-//            if (properties) {
-//                if ([properties isKindOfClass:[NSDictionary class]]) {
-//                    fullScript = [NSString stringWithFormat:@"%@(%@);", javaScript, [json stringWithObject:properties]];
-//                }
-//                else if ([json objectWithString:URLDecode(properties)]) {
-//                    fullScript = [NSString stringWithFormat:@"%@(%@);", javaScript, URLDecode(properties)];
-//                }
-//                else {
-//                    fullScript = [NSString stringWithFormat:@"%@(\"%@\");", javaScript, properties];
-//                }
-//            }
-//            else {
-//                if ([javaScript hasSuffix:@";"] || [javaScript hasSuffix:@")"]) {
-//                    fullScript = javaScript;
-//                }
-//                else {
-//                    fullScript = [NSString stringWithFormat:@"%@()", javaScript];
-//                }
-//            }
-//            
-//            [self.webView execute:fullScript];
-//        }
-//        else {
-//            [self.webView open:command];
-//        }
-//    }
-}
-
-#pragma mark - ShakeModuleDelegate
-
-- (void)startAccelerometerForDelay
-{
-//    if (shakeModule) {
-//        [self stopAccelerometer];
-//    }
-//    
-//    shakeModule = [[ShakeModule alloc] init];
-//    [shakeModule setDelegate:self];
-//    [shakeModule startAccelerometerUpdate];
-}
-
-- (void)stopAccelerometer
-{
-//    if (shakeModule) {
-//        [shakeModule setDelegate:nil];
-//        [shakeModule stopAccelerometerUpdate];
-//        shakeModule = nil;
-//    }
-}
-
-- (void)shakeModuleSuccCount
-{
-    //쉐이크를 GCD로 진행하기떄문에 메인스레드로 호출해줘야 함.
-    NSString *javascript = @"javascript:shakeStart()";
-    [self.webView performSelectorOnMainThread:@selector(execute:) withObject:javascript waitUntilDone:YES];
-}
-
-- (void)shakeModuleCancel
-{
-    //쉐이크를 GCD로 진행하기떄문에 메인스레드로 호출해줘야 함.
-    NSString *javascript = @"javascript:shakeStop()";
-    [self.webView performSelectorOnMainThread:@selector(execute:) withObject:javascript waitUntilDone:YES];
-    
-    [self stopAccelerometer];
-}
-
-- (void)shakeModuleError
-{
-    //쉐이크를 GCD로 진행하기떄문에 메인스레드로 호출해줘야 함.
-    NSString *javascript = @"javascript:shakeStop()";
-    [self.webView performSelectorOnMainThread:@selector(execute:) withObject:javascript waitUntilDone:YES];
-    
-    [self stopAccelerometer];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ShockingDealTitle", nil)
-                                                    message:@"지원하지않는 장비입니다."
-                                                   delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"확인", nil)
-                                          otherButtonTitles:nil, nil];
-    
-    [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
 }
 
 #pragma mark - total menu delegate
@@ -1569,8 +1440,40 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 //    [alert show];
     
     [self.mm_drawerController closeDrawerAnimated:true completion:nil];
+}
+
+- (void)didTouchLetterBtn
+{
+    [self setUrl:@""];
     
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
     
+    callUrl = [NSString stringWithFormat:LETTER_URL, gLocalLang];
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+
+    [self.mm_drawerController closeDrawerAnimated:true completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
@@ -1588,9 +1491,20 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     
     [self.mm_drawerController closeDrawerAnimated:true completion:nil];
     
-    LoginViewController *loginController = [[LoginViewController alloc] init];
+    setInforViewController *loginController = [[LoginViewController alloc] init];
     [loginController setDelegate:self];
     [self.navigationController pushViewController:loginController animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
+    
+}
+
+- (void)didTouchSummitBtn
+{
+    [self.mm_drawerController closeDrawerAnimated:true completion:nil];
+    
+    setInforViewController *SetInforViewController = [[setInforViewController alloc] init];
+    [SetInforViewController setDelegate:self];
+    [self.navigationController pushViewController:SetInforViewController animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
     
 }
@@ -1599,7 +1513,8 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
 {
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
 //    [alert show];
-    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCallAd];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     NSString* gLocalLang = @"";
     NSString *callUrl = @"";
@@ -1608,7 +1523,13 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     }
     
-    callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+    //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+    callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kLeftMainBannerUrl];
+    
+    if([callUrl length] < 1){
+        callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+        //return;
+    }
     
     NSURL *Nurl = [NSURL URLWithString:callUrl];
     NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
@@ -1634,6 +1555,9 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"didTouchAD in web" delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
     //    [alert show];
     
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCallAd];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSString* gLocalLang = @"";
     NSString *callUrl = @"";
     
@@ -1641,8 +1565,114 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
         gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     }
     
-    //callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
-    callUrl = SHINHAN_EVENT_URL;
+    callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerUrl];
+    if([callUrl length] < 1){
+        callUrl = [NSString stringWithFormat:SHINHAN_ZONE_URL, gLocalLang];
+        //return;
+    }
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+}
+
+- (void)didTouchGoSunny
+{
+    NSString* gLocalLang = @"";
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    NSString *callUrl = @"";
+    
+    callUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+    
+    [self.webView stop];
+    webViewUrl = callUrl;
+    
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+    
+}
+
+
+
+- (void)resetADImage{
+    
+    [self.webView redrawADImage];
+    
+}
+
+- (void)webViewReload{
+    [self.webView reload];
+}
+
+-(void)gotoPrev:(NSString*)callUrl
+{
+    
+    [self.webView stop];
+//    if([[NSUserDefaults standardUserDefaults] stringForKey:kPrevUrl]){
+//        callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPrevUrl];
+//    }
+    NSURL *Nurl = [NSURL URLWithString:callUrl];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+    if(cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:callUrl mutableRequest:mutableRequest];
+
+}
+
+- (void)gotoPushUrl:(NSString *)url{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    NSString* gLocalLang = @"";
+    NSString *callUrl = @"";
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    }
+    
+    callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
     
     [self.webView stop];
     webViewUrl = callUrl;
@@ -1666,15 +1696,62 @@ NSInteger showNavigation = 1; //1: show, 2: hidden
     [self openWebView:callUrl mutableRequest:mutableRequest];
 }
 
-
-- (void)resetADImage{
+- (void)gotoDirectUrl:(NSString *)url{
     
-    [self.webView redrawADImage];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
+    [self.webView stop];
+    webViewUrl = url;
+    
+    NSURL *Nurl = [NSURL URLWithString:url];
+    NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:Nurl];
+    
+    NSMutableString *cookieStringToSet = [[NSMutableString alloc] init];
+    NSHTTPCookie *cookie;
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+        [cookieStringToSet appendFormat:@"%@=%@;",cookie.name, cookie.value];
+    }
+                        
+    if (cookieStringToSet.length) {
+        [mutableRequest setValue:cookieStringToSet forHTTPHeaderField:@"Cookie"];
+        NSLog(@"Cookie : %@", cookieStringToSet);
+    }
+    
+    [self openWebView:url mutableRequest:mutableRequest];
 }
 
-- (void)webViewReload{
-    [self.webView reload];
+- (void)setViewAlpha:(NSInteger)alphaValue{
+    //[self.view setAlpha:alphaValue];
+    if(alphaValue){
+//        [dummyView removeFromSuperview];
+//        dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenBoundsWidth, kScreenBoundsHeight)];
+//        [self.view addSubview:dummyView];
+//        [dummyView setBackgroundColor:UIColorFromRGB(0x000000)];
+//        [dummyView setAlpha:0.8f];
+        
+        [self.navigationController.navigationBar setAlpha:0.1f];
+        [self.view setAlpha:0.1f];
+        NSArray* tempVCA = [self.navigationController viewControllers];
+        for(UIViewController *tempVC in tempVCA)
+        {
+            [tempVC.view setAlpha:0.1f];
+        }
+    }else{
+        //[dummyView removeFromSuperview];
+        [self.navigationController.navigationBar setAlpha:1.0f];
+        [self.view setAlpha:1.0f];
+        NSArray* tempVCA = [self.navigationController viewControllers];
+        for(UIViewController *tempVC in tempVCA)
+        {
+            [tempVC.view setAlpha:1.0f];
+        }
+
+    }
+    
+    
+    
 }
 
 @end

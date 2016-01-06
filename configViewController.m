@@ -13,6 +13,10 @@
 #import "LoginViewController.h"
 #import "leftViewController.h"
 #import "Appdelegate.h"
+#import "setAlramViewController.h"
+#import "AFHTTPRequestOperation.h"
+#import "SBJson.h"
+#import "AFHTTPRequestOperationManager.h"
 
 @interface configViewController () <NavigationBarViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -40,10 +44,26 @@
 @property (weak, nonatomic) IBOutlet UISwitch *tutoBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *pushBtn;
 @property (weak, nonatomic) IBOutlet UILabel *sunnyDescLabel;
+@property (weak, nonatomic) IBOutlet UIButton *btnAlam;
 
 @end
 
 @implementation configViewController
+
+- (IBAction)btnAlramClick:(id)sender {
+    
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kLoginY];
+    if(isLogin == YES){
+        setAlramViewController *setAlramController = [[setAlramViewController alloc] init];
+        [setAlramController setDelegate:self];
+        [self.navigationController pushViewController:setAlramController animated:YES];
+    }else{
+        LoginViewController *loginController = [[LoginViewController alloc] init];
+        [loginController setLoginType:LoginTypeConfig];
+        [loginController setDelegate:self];
+        [self.navigationController pushViewController:loginController animated:YES];
+    }
+}
 
 - (IBAction)personalChange:(id)sender {
     
@@ -59,7 +79,7 @@
         [self.navigationController pushViewController:personController animated:YES];
     }else{
         LoginViewController *loginController = [[LoginViewController alloc] init];
-        [loginController setLoginType];
+        [loginController setLoginType:LoginTypeConfig];
         [loginController setDelegate:self];
         [self.navigationController pushViewController:loginController animated:YES];
     }
@@ -85,11 +105,11 @@
 - (IBAction)tutoBtn:(id)sender {
     
     if ([_tutoBtn isOn]) {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kTutoY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }else{
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kTutoY];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }
@@ -164,6 +184,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _isChangeLang = 0;
+    
+//    for (UIView *subView in [self.view subviews]) {
+//        [subView removeFromSuperview];
+//    }
     
 //    NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:@"configViewController"
 //                                                    owner:self options:nil];
@@ -185,8 +210,8 @@
         self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     CGFloat marginX = 0;
     CGFloat marginY = 0;
@@ -225,7 +250,7 @@
     }
     
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-    if(isTuto == NO){
+    if(isTuto == YES){
         [_tutoBtn setOn:true];
     }
     
@@ -258,10 +283,23 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15+marginY), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
-        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
-        [self.view addSubview:backgroundImageView];
+        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15+marginY), kScreenBoundsWidth, kToolBarHeight)];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:_backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15+marginY), kScreenBoundsWidth, kToolBarHeight)];
@@ -278,10 +316,23 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
-        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
-        [self.view addSubview:backgroundImageView];
+        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:_backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
@@ -299,6 +350,17 @@
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     CGRect bounds = self.view.bounds;
     
+//    if(_isChangeLang){
+//        bounds.origin.y += 120; //180
+//    }
+    
+//    if( translation.y > 0){
+//        translation.y = translation.y - 25;
+//    }
+    
+    NSLog(@"pan-bounds:   x:%f, y:%f", bounds.origin.x, bounds.origin.y);
+    NSLog(@"trans-bounds: x:%f, y:%f", translation.x, translation.y);
+
     // Translate the view's bounds, but do not permit values that would violate contentSize
     CGFloat newBoundsOriginX = bounds.origin.x - translation.x;
     CGFloat minBoundsOriginX = 0.0;
@@ -479,9 +541,9 @@
     [_L_TUTO_KO setText:TUTO_KO];
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
     if(isTuto == YES){
-        [_tutoBtn setOn:false];
-    }else{
         [_tutoBtn setOn:true];
+    }else{
+        [_tutoBtn setOn:false];
     }
     
     [_L_NEW setText:NEWS_KO];
@@ -562,9 +624,9 @@
     [_L_TUTO_KO setText:TUTO_VI];
     BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
     if(isTuto == YES){
-        [_tutoBtn setOn:false];
-    }else{
         [_tutoBtn setOn:true];
+    }else{
+        [_tutoBtn setOn:false];
     }
     
     [_L_NEW setText:NEWS_VI];
@@ -641,6 +703,10 @@
 //        
 //    }
     
+    [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    
+    _isChangeLang = 1;
+    
     NSInteger nKind;
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -658,7 +724,9 @@
     
     [_langLabel setText:temp];
     
-    if(![_preLang isEqualToString:temp]){
+    [self getListBanner];
+    
+    if(![_preLang isEqualToString:temp] || _preLang == nil){
         if( nKind == 0){
              [self initScreenView_ko];
         }else{
@@ -667,14 +735,235 @@
     }
     _preLang = temp;
     
+}
+
+- (void) resetBanner{
+    
+    NSString* temp;
+    NSString* strImage;
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        
+//        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
+//                                                     initWithTarget:self action:@selector(handlePanGesture:)];
+//        [self.view addGestureRecognizer:gestureRecognizer];
+//        self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
+        
+        //[self viewDidLoad];
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        
+        NSLog(@"bannerURL: %@", imageURL);
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
+        
+        //[self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        //[_backgroundImageView setFrame:CGRectMake(0, kScreenBoundsHeight+180, kScreenBoundsWidth, kToolBarHeight)];
+        
+        
+    }else{
+        
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        
+        NSLog(@"bannerURL: %@", imageURL);
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                _backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [_backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
+    }
+    
     leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
     [leftViewController setViewLogin];
     
     WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
     [homeViewController resetADImage];
+}
+
+- (void) getListBanner{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    //
+    [rootDic setObject:COMMON_TASK_USR forKey:@"task"];
+    [rootDic setObject:@"getListBanner" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    [indiv_infoDic setObject:@"2" forKey:@"d_1"];
+    [indiv_infoDic setObject:temp forKey:@"language"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    
+    
+    
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *allCookies = [cookies cookies];
+    for(NSHTTPCookie *cookie in allCookies) {
+        if([cookie.name isEqualToString:@"locale_"]){
+            [cookies deleteCookie:cookie];
+        }
+        
+        if([cookie.name isEqualToString:@"locale_80"]){
+            [cookies deleteCookie:cookie];
+        }
+        
+    }
+    
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    NSHTTPCookie *cookie;
+    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+    [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
+    [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    NSMutableDictionary *cookieProperties_ = [NSMutableDictionary dictionary];
+    [cookieProperties_ setObject:@"locale_80" forKey:NSHTTPCookieName];
+    [cookieProperties_ setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
+    [cookieProperties_ setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties_ setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties_ setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties_];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+    }
+    
+    NSLog(@"cooke end end");
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            NSLog(@"error ==> %@", sError);
+            
+        }else{
+            
+            NSMutableArray *_arrItems;
+            _arrItems = nil;
+            if(![dicResponse objectForKey:@"indiv_info"]){
+                return ;
+            }
+            _arrItems = [dicResponse objectForKey:@"indiv_info"];
+            if([_arrItems count] < 2){
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerImgUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerImgUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [self resetBanner];
+                return;
+            }
+            NSDictionary *dicChildOne = _arrItems[0];
+            NSDictionary *dicChildTwo = _arrItems[1];
+            
+            NSString *temp;
+            temp = [dicChildOne objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildOne objectForKey:@"url"];
+            if(([temp rangeOfString:@"http"].location == NSNotFound)){
+                temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"url"];
+            if(([temp rangeOfString:@"http"].location == NSNotFound)){
+                temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [self resetBanner];
+            NSLog(@"Response ==> %@", responseData);
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
     
     
 }
+
 
 
 /*

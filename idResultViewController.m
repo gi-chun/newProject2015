@@ -25,13 +25,21 @@
     
     __weak IBOutlet UIButton *btnLogin;
     __weak IBOutlet UIButton *btnPwdSearch;
+    __weak IBOutlet UITextView *textViewEmail;
+    __weak IBOutlet UIButton *btnRetry;
+    __weak IBOutlet UILabel *labelRetry;
     
     NSString* emailResult;
+    __weak IBOutlet UILabel *verticalRetry;
     
 }
 @end
 
 @implementation idResultViewController
+
+- (IBAction)btnRetryClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)setId:(NSString*)email{
     
@@ -55,6 +63,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
+                                                     initWithTarget:self action:@selector(handlePanGesture:)];
+        [self.view addGestureRecognizer:gestureRecognizer];
+        self.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height+kToolBarHeight+10+10);
+    }
     
     CGFloat marginX = 0;
     
@@ -81,8 +97,20 @@
             temp = @"EN";
         }
     
+    if([emailResult length] > 0){
+        [resultDesc setHidden:false];
+        [verticalRetry setHidden:false];
+        [btnRetry setHidden:true];
+        [labelRetry setHidden:true];
+    }else{
+        [resultDesc setHidden:true];
+        [verticalRetry setHidden:true];
+        [btnRetry setHidden:false];
+        [labelRetry setHidden:false];
+    }
+    
     //
-    float meHeight = kScreenBoundsHeight;
+    meHeight = kScreenBoundsHeight;
     if(meHeight > 480){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
@@ -93,9 +121,22 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
@@ -103,8 +144,62 @@
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
         //[adButton setTag:2];
         [self.view addSubview:adButton];
+        
+    }else{
+        NSString* strImage;
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            strImage = BOTTOM_BANNER_KO;
+        }else{
+            strImage = BOTTOM_BANNER_VI;
+        }
+        
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
+        [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
+        
+        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        [adButton setBackgroundColor:[UIColor clearColor]];
+        [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
+        //[adButton setTag:2];
+        [self.view addSubview:adButton];
     }
 
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    CGRect bounds = self.view.bounds;
+    
+    // Translate the view's bounds, but do not permit values that would violate contentSize
+    CGFloat newBoundsOriginX = bounds.origin.x - translation.x;
+    CGFloat minBoundsOriginX = 0.0;
+    CGFloat maxBoundsOriginX = self.contentSize.width - bounds.size.width;
+    bounds.origin.x = fmax(minBoundsOriginX, fmin(newBoundsOriginX, maxBoundsOriginX));
+    
+    CGFloat newBoundsOriginY = bounds.origin.y - translation.y;
+    CGFloat minBoundsOriginY = 0.0;
+    CGFloat maxBoundsOriginY = self.contentSize.height - bounds.size.height;
+    bounds.origin.y = fmax(minBoundsOriginY, fmin(newBoundsOriginY, maxBoundsOriginY));
+    
+    self.view.bounds = bounds;
+    [gestureRecognizer setTranslation:CGPointZero inView:self.view];
 }
 
 - (void)touchToolbar:(id)sender
@@ -172,8 +267,11 @@
     [self resetNavigationBarView:1];
     [resultDesc setText:ID_RESULT_HEAD_KO];
     [emailLabel setText:emailResult];
+    [textViewEmail setText:emailResult];
     [resultTailLabel setText:ID_RESULT_TAIL_KO];
+    [labelRetry setText:ID_RETRY_LABEL_KO];
     
+    [btnRetry setTitle:ID_RETRY_BTN_KO forState:UIControlStateNormal];
     [btnLogin setTitle:LOGIN_TITLE_KO forState:UIControlStateNormal];
     [btnPwdSearch setTitle:PW_SEARCH_TITLE_KO forState:UIControlStateNormal];
 }
@@ -183,8 +281,11 @@
     [self resetNavigationBarView:1];
     [resultDesc setText:ID_RESULT_HEAD_VI];
     [emailLabel setText:emailResult];
+    [textViewEmail setText:emailResult];
     [resultTailLabel setText:ID_RESULT_TAIL_VI];
+    [labelRetry setText:ID_RETRY_LABEL_VI];
     
+    [btnRetry setTitle:ID_RETRY_BTN_VI forState:UIControlStateNormal];
     [btnLogin setTitle:LOGIN_TITLE_VI forState:UIControlStateNormal];
     [btnPwdSearch setTitle:PW_SEARCH_TITLE_VI forState:UIControlStateNormal];
 

@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIButton *topButton;
 @property (nonatomic, strong) UIButton *preButton;
+@property (nonatomic, strong) UIButton *zoomInButton;
+@property (nonatomic, strong) UIButton *zoomOutButton;
 @property (nonatomic, strong) UIButton *zoomViewerButton;
 @property (nonatomic) BOOL isProductDidLoad;
 @property (nonatomic) BOOL isExistsSubWebView;
@@ -29,13 +31,14 @@
 
 - (void)redrawADImage;
 - (void)updateFrame;
-- (void)updateFrameSunny;
+- (void)updateFrameSunny:(NSInteger)gnbType; //0: sunny 3: bank
 - (void)updateFrameSunnyForStatusHide;
 - (void)setForwardButton:(BOOL)enable;
 - (void)open:(NSString *)url;
 - (NSString *)execute:(NSString *)script;
 - (void)loadRequest:(NSURLRequest *)request;
 - (void)loadMutableRequest:(NSMutableURLRequest *)request;
+- (void)setZoomBtnVisible:(NSInteger)isShow; //0: hide, 1: show
 
 //- (BOOL)toggleButtonHiddenStatus;
 - (void)setHiddenToolBarView:(BOOL)isHidden;
@@ -45,8 +48,10 @@
 - (void)reload;
 - (void)stop;
 - (void)goTopWithAnimated:(BOOL)animated;
-- (void)goBack;
+- (void)myGoBack;
+- (void)stackAllDel;
 - (void)goFoward;
+- (NSInteger)isGoBack;
 
 //scheme controls
 - (void)actionTop;
@@ -64,6 +69,7 @@
 - (void)setHiddenPopover:(BOOL)hidden;
 
 - (void)reCreateToolbar;
+- (void)setUrl:(NSString *)url;
 
 @end
 
@@ -92,5 +98,7 @@
 
 //Navigation Bar
 - (void)initNavigation:(NSInteger)navigationType;
+
+- (void)gotoPrev:(NSString*)callUrl;
 
 @end

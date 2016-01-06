@@ -7,12 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="personModifyViewController">
             <connections>
-                <outlet property="btn_change" destination="Lno-8y-Z3s" id="oc5-nE-MK8"/>
                 <outlet property="cardNmLabel" destination="eWD-P4-oR1" id="hJJ-Xw-TRO"/>
-                <outlet property="emailTxt" destination="g1A-7W-zOm" id="YGh-Pj-Lgb"/>
                 <outlet property="idLabel" destination="800-sY-J4g" id="nG8-pY-KcK"/>
+                <outlet property="imgCard" destination="blS-vq-jTT" id="Bxe-Mg-Cv7"/>
+                <outlet property="labelPoint" destination="Luf-TC-4oI" id="YPr-jP-xOE"/>
                 <outlet property="label_id" destination="1IS-SL-7te" id="e3N-Ee-YCV"/>
-                <outlet property="label_mail" destination="jfO-Hc-vNP" id="zwG-Mg-Obu"/>
                 <outlet property="label_member" destination="3ho-nE-Aj9" id="Nlt-zh-reD"/>
                 <outlet property="label_membership" destination="nq6-13-Wpe" id="pQj-7X-qGB"/>
                 <outlet property="label_nomal" destination="ywG-ex-EeX" id="bog-ss-y23"/>
@@ -26,31 +25,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="personaldata_menu04_back_incard.png" translatesAutoresizingMaskIntoConstraints="NO" id="cT5-WF-mgy">
-                    <rect key="frame" x="0.0" y="283" width="320" height="185"/>
+                    <rect key="frame" x="0.0" y="253" width="320" height="185"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="S00000000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWD-P4-oR1">
-                    <rect key="frame" x="131" y="390" width="90" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="menu00_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="BfZ-QV-cmu">
                     <rect key="frame" x="0.0" y="71" width="320" height="38"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="menu00_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="aGN-iF-tZh">
-                    <rect key="frame" x="0.0" y="116" width="320" height="38"/>
-                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="menu00_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="9fl-3i-WJM">
-                    <rect key="frame" x="0.0" y="279" width="320" height="18"/>
+                    <rect key="frame" x="0.0" y="206" width="320" height="22"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="멤버십 등급" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nq6-13-Wpe">
-                    <rect key="frame" x="8" y="291" width="145" height="21"/>
+                    <rect key="frame" x="8" y="218" width="145" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="일반" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywG-ex-EeX">
-                    <rect key="frame" x="232" y="291" width="75" height="21"/>
+                    <rect key="frame" x="232" y="218" width="75" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -62,49 +52,27 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOe-Rl-pML" userLabel="회원탈퇴 버튼">
-                    <rect key="frame" x="0.0" y="237" width="320" height="38"/>
+                    <rect key="frame" x="0.0" y="164" width="320" height="38"/>
                     <state key="normal" backgroundImage="menu01_back.png"/>
                     <connections>
                         <action selector="memberOutClick:" destination="-1" eventType="touchUpInside" id="6k4-ue-XhE"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lno-8y-Z3s">
-                    <rect key="frame" x="201" y="148" width="106" height="30"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="적용">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="emailSummit:" destination="-1" eventType="touchUpInside" id="Gda-mK-5xg"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="이메일변경" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jfO-Hc-vNP">
-                    <rect key="frame" x="8" y="125" width="234" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="g1A-7W-zOm">
-                    <rect key="frame" x="8" y="148" width="186" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="noG-RP-Os8" userLabel="비밀번호 변경">
-                    <rect key="frame" x="0.0" y="193" width="320" height="38"/>
+                    <rect key="frame" x="0.0" y="120" width="320" height="38"/>
                     <state key="normal" backgroundImage="menu01_back.png"/>
                     <connections>
                         <action selector="pwdChange:" destination="-1" eventType="touchUpInside" id="8Bc-lZ-dC1"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="비밀번호변경" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiq-T3-Jxy">
-                    <rect key="frame" x="8" y="205" width="263" height="21"/>
+                    <rect key="frame" x="8" y="132" width="263" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="회원탈퇴" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ho-nE-Aj9">
-                    <rect key="frame" x="8" y="248" width="236" height="21"/>
+                    <rect key="frame" x="8" y="175" width="236" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -113,6 +81,21 @@
                     <rect key="frame" x="84" y="86" width="223" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="setting_card_b.png" translatesAutoresizingMaskIntoConstraints="NO" id="blS-vq-jTT">
+                    <rect key="frame" x="69" y="312" width="185" height="117"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="S00000000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWD-P4-oR1">
+                    <rect key="frame" x="131" y="350" width="90" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="999,99 P" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Luf-TC-4oI">
+                    <rect key="frame" x="134" y="372" width="60" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -124,5 +107,6 @@
         <image name="menu00_back.png" width="375" height="69"/>
         <image name="menu01_back.png" width="375" height="69"/>
         <image name="personaldata_menu04_back_incard.png" width="375" height="241"/>
+        <image name="setting_card_b.png" width="216" height="141"/>
     </resources>
 </document>

@@ -28,6 +28,7 @@
     __weak IBOutlet UILabel *label_name;
     __weak IBOutlet UILabel *label_yyyy;
     __weak IBOutlet UIButton *btnSearh;
+    __weak IBOutlet UILabel *labelComment;
 }
 @end
 
@@ -133,8 +134,19 @@
     }
 
     
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self.view addSubview:likeImageView];
     [self.view bringSubviewToFront:likeImageView];
@@ -205,30 +217,60 @@
             //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
             
-            dicItems = [dicResponse objectForKey:@"root_info"];
-            NSString* sCount = dicItems[@"result"];
+//            dicItems = [dicResponse objectForKey:@"root_info"];
+//            NSString* sCount = dicItems[@"result"];
+//            
+//            if([sCount isEqualToString:@"0"]){
+//                [btnSearh setEnabled:true];
+//                
+//                NSString* temp;
+//                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//                if([temp isEqualToString:@"ko"]){
+//                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                    [alert show];
+//                }else{
+//                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                    [alert show];
+//                }
+//                
+//                [idTxt becomeFirstResponder];
+//                
+//                return;
+//            }
             
-            if([sCount isEqualToString:@"0"]){
-                [btnSearh setEnabled:true];
+            NSArray *sEmailArray = [dicResponse objectForKey:@"indiv_info"];
+            NSString* sEmail = @"";
+            NSString* strTemp = @"";
+            NSString* strFullEmail = @"";
+            NSString* strHeadEmail = @"";
+            NSString* strTailEmail = @"";
+           
+            NSMutableString *sEmailM = [[NSMutableString alloc] init];
+            
+            for (NSDictionary *sEmailItem in sEmailArray) {
                 
-                NSString* temp;
-                temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-                if([temp isEqualToString:@"ko"]){
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                    [alert show];
-                }else{
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NOT_EXIT_ID_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                    [alert show];
+                strFullEmail = sEmailItem[@"email_id"];
+                NSRange range = [strFullEmail rangeOfString:@"@"];
+                if (range.location != NSNotFound)
+                {
+                    strHeadEmail = [strFullEmail substringToIndex:range.location];
+                    strTailEmail = [strFullEmail substringFromIndex:range.location];
+                    
+                    if([strHeadEmail length] > 2){
+                        for (int i = 0; i < strHeadEmail.length; i++) {
+                            
+                            if(i != 0 && i != (strHeadEmail.length -1)){
+                                
+                                NSRange rangeSub = NSMakeRange(i, 1);
+                                strHeadEmail = [strHeadEmail stringByReplacingCharactersInRange:rangeSub withString:@"*"];
+                            }
+                        }
+                        strFullEmail = [NSString stringWithFormat:@"%@%@", strHeadEmail, strTailEmail];
+                    }
+                    [sEmailM appendFormat:@"%@\n",strFullEmail];
                 }
-                
-                [idTxt becomeFirstResponder];
-                
-                return;
             }
-            
-            dicItems = [dicResponse objectForKey:@"indiv_info"];
-            NSString* sEmail = dicItems[@"email_id"];
-            
+            sEmail = sEmailM;
             
             //to json
             SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
@@ -240,8 +282,8 @@
             NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
             [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -349,9 +391,22 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
@@ -370,9 +425,22 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
@@ -555,6 +623,7 @@
     [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_KO];
+    [labelComment setText:CLASSIFY_CAPITAL_KO];
     [label_yyyy setText:IDSEARCH_YYYY_KO];
     [btnSearh setTitle:IDSEARCH_SEARCH_KO forState:UIControlStateNormal];
     
@@ -566,6 +635,7 @@
     [yyyyLabel setText:strInitYYY];
     [self resetNavigationBarView:1];
     [label_name setText:IDSEARCH_NAME_VI];
+    [labelComment setText:CLASSIFY_CAPITAL_VI];
     [label_yyyy setText:IDSEARCH_YYYY_VI];
     [btnSearh setTitle:IDSEARCH_SEARCH_VI forState:UIControlStateNormal];
 }

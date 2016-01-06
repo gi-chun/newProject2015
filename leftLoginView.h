@@ -28,4 +28,6 @@
 - (void)didTouchButtonWithUrl:(NSString *)productUrl;
 - (void)didTouchLogInBtn;
 - (void)didTouchLogOutBtn;
+- (void)didTouchSummitBtn;
+- (void)didLogOutShowContents;
 @end

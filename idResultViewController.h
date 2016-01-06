@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) id<idResultViewControllerDelegate> delegate;
 - (void)setId:(NSString*)email;
+@property (nonatomic) CGSize contentSize;
 
 @end
 

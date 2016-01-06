@@ -34,7 +34,7 @@
                 <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="loginView" translatesAutoresizingMaskIntoConstraints="NO" id="9F5-te-jpP">
                     <rect key="frame" x="14" y="111" width="293" height="259"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="trA-Qp-JX2">
+                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="a four-digit number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="trA-Qp-JX2">
                             <rect key="frame" x="117" y="52" width="168" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -129,7 +129,7 @@
                     <rect key="frame" x="14" y="401" width="293" height="128"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xP-G4-KaD">
-                            <rect key="frame" x="0.0" y="-8" width="115" height="83"/>
+                            <rect key="frame" x="0.0" y="-10" width="173" height="83"/>
                             <attributedString key="attributedText">
                                 <fragment content="회원이">
                                     <attributes>
@@ -154,7 +154,9 @@
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                     </attributes>
                                 </fragment>
-                                <fragment content="? ">
+                                <fragment>
+                                    <string key="content">?
+</string>
                                     <attributes>
                                         <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <font key="NSFont" size="13" name="HelveticaNeue"/>
@@ -214,10 +216,13 @@
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                     </attributes>
                                 </fragment>
-                                <fragment content=" ">
+                                <fragment>
+                                    <string key="content" base64-UTF8="YES">
+Cg
+</string>
                                     <attributes>
                                         <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="13" name="HelveticaNeue"/>
+                                        <font key="NSFont" size="17" name="HelveticaNeue"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                     </attributes>
                                 </fragment>
@@ -255,9 +260,9 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SAx-Ha-tw7">
-                            <rect key="frame" x="114" y="8" width="179" height="46"/>
+                            <rect key="frame" x="181" y="13" width="108" height="36"/>
                             <accessibility key="accessibilityConfiguration" label="아이디 찾기"/>
-                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="14"/>
                             <state key="normal" title="회원가입" backgroundImage="join_btn.png">
                                 <color key="titleColor" red="1" green="0.27671309849999998" blue="0.118526516" alpha="1" colorSpace="calibratedRGB"/>
                             </state>

@@ -109,42 +109,7 @@
         }
     }
     
-    //////////////////////////////////////////////////////
-//    mainScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-//    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    mainScrollView.pagingEnabled = NO;
-//    mainScrollView.delegate = self;
-//    mainScrollView.showsHorizontalScrollIndicator = YES;
-//    mainScrollView.showsVerticalScrollIndicator = YES;
-//    //[mainScrollView addSubview:mainView];
-//    //[self.view addSubview:mainScrollView];
-//
-//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 1000);
-
-    
-    /////////////////////////////////////////////////////
-    
-//    CGRect viewFrame;
-//    viewFrame = CGRectMake(kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-
-//    for (UIView *subView in mainScrollView.subviews) {
-//        [subView setFrame:CGRectMake(subView.frame.origin.x+kPopWindowMarginW, subView.frame.origin.y, subView.frame.size.width, subView.frame.size.height)];
-//        
-//    }
-
-    
-//    mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    mainScrollView.pagingEnabled = NO;
-//    //mainScrollView.delegate = self;
-//    mainScrollView.showsHorizontalScrollIndicator = NO;
-//    mainScrollView.showsVerticalScrollIndicator = YES;
-//    
-//    [mainScrollView setFrame:self.view.bounds];
-//    
-//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 500);
-    
-    
-    //myLoginType = LoginTypeDefault;
+    [btnSummit.titleLabel setNumberOfLines:0];
     
     [txtPwd setKeyboardType:UIKeyboardTypeNumberPad ];
     [txtID setKeyboardType:UIKeyboardTypeEmailAddress ];
@@ -186,9 +151,22 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+       
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                     [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
@@ -207,9 +185,21 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
@@ -245,7 +235,9 @@
 - (void)touchToolbar:(id)sender
 {
     //UIButton *button = (UIButton *)sender;
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
     if ([self.delegate respondsToSelector:@selector(didTouchMainAD)]) {
         [self.delegate didTouchMainAD];
     }
@@ -258,9 +250,9 @@
 }
 
 
-- (void)setLoginType{
+- (void)setLoginType:(NSInteger) loginType{
     
-    myLoginType = LoginTypeConfig;
+    myLoginType = loginType;
     
 }
 
@@ -319,8 +311,19 @@
 //    [spinner setHidden:false];
 //    [spinner startAnimating];
     
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self.view addSubview:likeImageView];
     [self.view bringSubviewToFront:likeImageView];
@@ -426,8 +429,8 @@
             //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
             //////////////////////////////////////
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -449,15 +452,15 @@
 //            [spinner setHidden:true];
 //            [spinner stopAnimating];
             
-            NSString* temp;
-            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
-            if([temp isEqualToString:@"ko"]){
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                [alert show];
-            }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-                [alert show];
-            }
+//            NSString* temp;
+//            temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+//            if([temp isEqualToString:@"ko"]){
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                [alert show];
+//            }else{
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//                [alert show];
+//            }
             
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kLoginY];
@@ -519,6 +522,90 @@
     NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:checkString];
+}
+
+- (void) setPush{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    //
+    [rootDic setObject:TASK_USR forKey:@"task"];
+    [rootDic setObject:@"setPush" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kCardCode]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] forKey:@"user_seq"];
+    }
+    [indiv_infoDic setObject:@"I" forKey:@"os_d"];
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kosVer]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kosVer] forKey:@"os_ver"];
+    }
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUUID]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kUUID] forKey:@"tmn_unq_no"];
+    }
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUserDeviceToken]){
+        
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey: kUserDeviceToken] forKey:@"push_tmn_refno"];
+    }else{
+        [indiv_infoDic setObject:@"" forKey:@"push_tmn_refno"];
+    }
+
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];//////
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            
+        }else{
+            
+            dicItems = nil;
+            dicItems = [dicResponse objectForKey:@"indiv_info"];
+            NSString* sCardNm = dicItems[@"user_seq"];
+            
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+//        if([temp isEqualToString:@"ko"]){
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_KO, error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }else{
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:LOGIN_FAIL_VI, error] delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+        
+    }];
+ 
 }
 
 - (IBAction)loginBtnClick:(id)sender {
@@ -599,9 +686,6 @@
         temp = @"EN";
     }
     
-    
-    
-    
     //set auto login
     if ([switchAuto isOn]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAutoLogin];
@@ -611,8 +695,19 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self.view addSubview:likeImageView];
     [self.view bringSubviewToFront:likeImageView];
@@ -646,7 +741,7 @@
     NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
     NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
     
-    //회원가입
+    //
     [rootDic setObject:@"" forKey:@"task"];
     [rootDic setObject:@"" forKey:@"action"];
     [rootDic setObject:@"M2010N" forKey:@"serviceCode"];
@@ -688,8 +783,10 @@
             [alert show];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
             leftViewController *leftViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).gLeftViewController;
             [leftViewController setViewLogin];
+            
             //[self.navigationController popToRootViewControllerAnimated:YES];
         }else{
         
@@ -735,8 +832,8 @@
             //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
             //////////////////////////////////////
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -767,7 +864,7 @@
             
             [leftViewController setViewLogin];
             
-            if(myLoginType == LoginTypeConfig){
+            if(myLoginType == LoginTypeConfig || myLoginType == LoginTypeAD){
                 [self.navigationController popViewControllerAnimated:YES];
                 if ([self.delegate respondsToSelector:@selector(didLoginAfter)]) {
                     [self.delegate didLoginAfter];
@@ -784,14 +881,14 @@
                     CGFloat scale = [UIScreen mainScreen].scale;
                     result = CGSizeMake(result.width * scale, result.height * scale);
                     
-                    if(result.height== 960){
-                        
-                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
-                        
-                        NSLog(@"iphone 4, 4s retina resolution");
-                    }else{
-                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
-                    }
+//                    if(result.height== 960){
+//                        
+//                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
+//                        
+//                        NSLog(@"iphone 4, 4s retina resolution");
+//                    }else{
+//                        [self performSelector:@selector(viewSuceeAlert) withObject:nil afterDelay:1];
+//                    }
                     
                 }else{
                     
@@ -822,10 +919,13 @@
             //        
             
             NSLog(@"getCookie end ==>" );
+            
+            [self setPush];
+            [self setDefaultSetPush];
         }
         
         [loginBtn setEnabled:true];
-
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -852,25 +952,145 @@
     
 }
 
+- (void) setDefaultSetPush{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    NSString *nomalSet;
+    NSString *contentSet;
+    NSString *eventSet;
+    NSString *totalSet;
+    NSString *BIGSet;
+    
+    BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
+    if(isAlram == YES){
+        BIGSet = @"Y";
+        
+        BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+        if(isAlram == YES){
+            nomalSet = @"Y";
+        }else{
+            nomalSet = @"N";
+        }
+        
+        isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+        if(isAlram == YES){
+            contentSet = @"Y";
+        }else{
+            contentSet = @"N";
+        }
+        
+        isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+        if(isAlram == YES){
+            eventSet = @"Y";
+        }else{
+            eventSet = @"N";
+        }
+        
+    }else{
+        BIGSet = @"N";
+        nomalSet = @"N";
+        contentSet = @"N";
+        eventSet = @"N";
+    }
+    
+    totalSet = [NSString stringWithFormat:@"1|%@,2|%@,3|%@", nomalSet, contentSet, eventSet];
+    //
+    [rootDic setObject:@"sfg.sunny.task.user.AlarmTask" forKey:@"task"];
+    [rootDic setObject:@"setAlarm" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kCardCode]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] forKey:@"user_seq"];
+    }
+    
+    [indiv_infoDic setObject:BIGSet forKey:@"push_rec_yn"];
+    [indiv_infoDic setObject:totalSet forKey:@"push_alarm"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];//////
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        NSLog(@"Response ==> %@", responseData);
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        }else{
+            
+            //to json
+            SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+            
+            NSString *jsonString = [jsonWriter stringWithObject:jsonArray];
+            NSLog(@"jsonString ==> %@", jsonString);
+            ///////////////////////////////
+            
+            for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+            {
+                NSLog(@"name: '%@'\n",   [cookie name]);
+                NSLog(@"value: '%@'\n",  [cookie value]);
+                NSLog(@"domain: '%@'\n", [cookie domain]);
+                NSLog(@"path: '%@'\n",   [cookie path]);
+            }
+            
+            NSLog(@"getCookie end ==>" );
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+    
+    
+}
 
 - (void)viewSuceeAlert{
     
     NSString* temp;
     temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     
-    if([temp isEqualToString:@"ko"]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
-        [alert show];
-    }
+//    if([temp isEqualToString:@"ko"]){
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_KO delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }else{
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:LOGIN_SUCCESS_VI delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
     
 }
 
 - (void)resetNavigationBarView:(NSInteger) type
 {
     [self.navigationItem setHidesBackButton:YES];
+    [self.navigationController setNavigationBarHidden:NO];
     
     for (UIView *subView in self.navigationController.navigationBar.subviews) {
         if ([subView isKindOfClass:[NavigationBarView class]]) {
@@ -914,6 +1134,13 @@
     if(myLoginType == LoginTypeConfig){
         [self.navigationController popViewControllerAnimated:YES];
         
+    }else if(myLoginType == LoginTypeAD){
+        
+        if ([self.delegate respondsToSelector:@selector(didTouchGoSunny)]) {
+            [self.delegate didTouchGoSunny];
+        }
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
         

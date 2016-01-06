@@ -29,6 +29,9 @@
     __weak IBOutlet UILabel *label_id;
     __weak IBOutlet UILabel *label_name;
     __weak IBOutlet UILabel *labelView_yyyymmdd;
+    
+    __weak IBOutlet UILabel *label_IDDesc;
+    __weak IBOutlet UILabel *label_NameDesc;
 }
 
 @end
@@ -88,7 +91,7 @@
         
     }else if([temp isEqualToString:@"vi"]){
         if([mailTxt.text length] == 0){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_KO delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:EMAIL_CHECK_VI delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
             [alert show];
             [mailTxt becomeFirstResponder];
             [searchBtnClick setEnabled:true ];
@@ -125,8 +128,19 @@
     }
     /////////
     
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self.view addSubview:likeImageView];
     [self.view bringSubviewToFront:likeImageView];
@@ -212,8 +226,8 @@
             NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
             [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -340,9 +354,22 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
@@ -360,9 +387,22 @@
         }
         
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
+        
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
         
         UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
@@ -560,6 +600,8 @@
     
     [label_id setText:PW_SEARCH_ID_KO];
     [label_name setText:PW_SEARCH_NAME_KO];
+    [label_IDDesc setText:ID_EMAIL_SAME_KO];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_KO];
     [labelView_yyyymmdd setText:PW_SEARCH_YYYY_KO];
     [searchBtnClick setTitle:PW_SEARCH_KO forState:UIControlStateNormal];
     
@@ -574,6 +616,8 @@
     
     [label_id setText:PW_SEARCH_ID_VI];
     [label_name setText:PW_SEARCH_NAME_VI];
+    [label_IDDesc setText:ID_EMAIL_SAME_VI];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_VI];
     [labelView_yyyymmdd setText:PW_SEARCH_YYYY_VI];
     [searchBtnClick setTitle:PW_SEARCH_VI forState:UIControlStateNormal];
 }

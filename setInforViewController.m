@@ -36,7 +36,9 @@
     __weak IBOutlet UILabel *labelInfor;
     __weak IBOutlet UILabel *labelID;
     __weak IBOutlet UILabel *labelName;
-    
+    __weak IBOutlet UILabel *label_IDDesc;
+    __weak IBOutlet UILabel *label_NameDesc;
+    __weak IBOutlet UILabel *label_PWDDesc;
     __weak IBOutlet UILabel *labelYear;
     __weak IBOutlet UILabel *labelPwd;
     __weak IBOutlet UILabel *labelPwdCheck;
@@ -48,6 +50,8 @@
     
     CPLoadingView *loadingView;
     
+    UIImageView *backgroundImageView;
+    UIButton *adButton;
 }
 
 @end
@@ -233,8 +237,19 @@
 //    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 //    [self startLoadingAnimation];
 
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
+    
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self.view addSubview:likeImageView];
     [self.view bringSubviewToFront:likeImageView];
@@ -346,12 +361,25 @@
     
 
     //생년월일, lang_c, push ..
+    // uuid
+    NSString* uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSLog(@"UDID:: %@", uniqueIdentifier);
+    [[NSUserDefaults standardUserDefaults] setObject:uniqueIdentifier forKey:kUUID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     if([[NSUserDefaults standardUserDefaults] stringForKey:kUUID]){
         [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kUUID] forKey:@"tmn_unq_no"];
     }
     strParma = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
     [indiv_infoDic setObject:strParma forKey:@"lang_c"];
-    [indiv_infoDic setObject:@"" forKey:@"push_tmn_refno"]; //APNS
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kUserDeviceToken]){
+        NSString *strTemp = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDeviceToken];
+        
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey: kUserDeviceToken] forKey:@"push_tmn_refno"];
+    }else{
+        [indiv_infoDic setObject:@"" forKey:@"push_tmn_refno"];
+    }
     
     strParma = ([[NSUserDefaults standardUserDefaults] stringForKey:kPushY])?[[NSUserDefaults standardUserDefaults] stringForKey:kPushY]:@"N";
     [indiv_infoDic setObject:@"N" forKey:@"push_rec_yn"];
@@ -512,8 +540,19 @@
         
     }
     
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
     [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
     [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
     [self.view addSubview:likeImageView];
@@ -772,6 +811,10 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.view scrollToTag:textField tag:textField.tag];
+    if(textField.tag == 5){
+        [backgroundImageView setHidden:true];
+        [adButton setHidden:true];
+    }
     currentEditingTextField = textField;
     
     
@@ -781,6 +824,17 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentEditingTextField = NULL;
+    
+    [self.view setBounds:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW*2, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }else{
+            [self.view setBounds:CGRectMake(-kPopWindowMarginW, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        }
+    }
+    
     [self.view scrollToY:-180];
     
     if(textField.tag == 3){
@@ -798,6 +852,8 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self endEdit];
+    [backgroundImageView setHidden:false];
+    [adButton setHidden:false];
     
 }
 
@@ -873,7 +929,7 @@
     // Do any additional setup after loading the view from its nib.
     
     float meHeight = kScreenBoundsHeight;
-    if(meHeight <= 480){
+    if(meHeight <= 568){
         UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
                                                      initWithTarget:self action:@selector(handlePanGesture:)];
         [self.view addGestureRecognizer:gestureRecognizer];
@@ -924,7 +980,7 @@
     
     //
     meHeight = kScreenBoundsHeight;
-    if(meHeight > 480){
+    if(meHeight > 568){
         NSString* strImage;
         temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
         if([temp isEqualToString:@"ko"]){
@@ -933,12 +989,25 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
-        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
+        
+        adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, kScreenBoundsHeight-(kToolBarHeight+15), kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
@@ -953,12 +1022,25 @@
             strImage = BOTTOM_BANNER_VI;
         }
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
-        [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+        backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
+        //[backgroundImageView setImage:[UIImage imageNamed:strImage]];
         backgroundImageView.contentMode = UIViewContentModeScaleAspectFill; //UIViewContentModeScaleAspectFit
         [self.view addSubview:backgroundImageView];
         
-        UIButton *adButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        NSURL *imageURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kMainBannerImgUrl]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI
+                backgroundImageView.image = [UIImage imageWithData:imageData];
+                if([imageData length] < 1){
+                    [backgroundImageView setImage:[UIImage imageNamed:strImage]];
+                }
+            });
+        });
+        
+        adButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [adButton setFrame:CGRectMake(-marginX, self.view.bounds.size.height+10, kScreenBoundsWidth, kToolBarHeight)];
         [adButton setBackgroundColor:[UIColor clearColor]];
         [adButton addTarget:self action:@selector(touchToolbar:) forControlEvents:UIControlEventTouchUpInside];
@@ -1089,6 +1171,11 @@
     [labelInfor setText:SETINFO_AGREE_KO];
     [labelID setText:SETINFO_ID_KO];
     [labelName setText:SETINFO_NAME_KO];
+    
+    [label_IDDesc setText:ID_EMAIL_SAME_KO];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_KO];
+    [label_PWDDesc setText:PWD_DESC_KO];
+    
     [labelYear setText:SETINFO_YEAR_KO];
     [labelPwd setText:SETINFO_PWD_KO];
     [labelPwdCheck setText:SETINFO_PWDCON_KO];
@@ -1105,6 +1192,11 @@
     [labelInfor setText:SETINFO_AGREE_VI];
     [labelID setText:SETINFO_ID_VI];
     [labelName setText:SETINFO_NAME_VI];
+    
+    [label_IDDesc setText:ID_EMAIL_SAME_VI];
+    [label_NameDesc setText:CLASSIFY_CAPITAL_VI];
+    [label_PWDDesc setText:PWD_DESC_VI];
+
     [labelYear setText:SETINFO_YEAR_VI];
     [labelPwd setText:SETINFO_PWD_VI];
     [labelPwdCheck setText:SETINFO_PWDCON_VI];

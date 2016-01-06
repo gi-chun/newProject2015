@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="idResultViewController">
             <connections>
                 <outlet property="btnLogin" destination="7Vf-wE-qFV" id="vON-Bx-EDY"/>
                 <outlet property="btnPwdSearch" destination="NPp-br-S8E" id="KGT-iT-Fuc"/>
-                <outlet property="emailLabel" destination="N2V-h2-FRi" id="Ntn-Cm-10u"/>
+                <outlet property="btnRetry" destination="enr-me-sji" id="4Xu-vm-0B5"/>
+                <outlet property="labelRetry" destination="4Bc-24-AGj" id="KxG-du-gG1"/>
                 <outlet property="resultDesc" destination="i5L-m6-KeM" id="RXV-f7-zcD"/>
-                <outlet property="resultTailLabel" destination="35x-XV-Skg" id="MXn-Pu-vt0"/>
+                <outlet property="textViewEmail" destination="t87-FA-6gt" id="i26-16-3Ks"/>
+                <outlet property="verticalRetry" destination="Hmd-jY-8de" id="Qvr-wY-1jR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,31 +23,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cHN-vF-eIK">
-                    <rect key="frame" x="8" y="132" width="304" height="205"/>
+                    <rect key="frame" x="8" y="100" width="304" height="260"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="login_window_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="aif-hG-5g9">
-                            <rect key="frame" x="0.0" y="0.0" width="304" height="202"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="login_window_back_noline.png" translatesAutoresizingMaskIntoConstraints="NO" id="aif-hG-5g9">
+                            <rect key="frame" x="0.0" y="0.0" width="304" height="252"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="조회하신 아이디는" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5L-m6-KeM">
-                            <rect key="frame" x="8" y="24" width="288" height="22"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <rect key="frame" x="8" y="11" width="288" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="입니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35x-XV-Skg">
-                            <rect key="frame" x="31" y="83" width="254" height="22"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2V-h2-FRi">
-                            <rect key="frame" x="31" y="53" width="254" height="22"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPp-br-S8E">
-                            <rect key="frame" x="157" y="140" width="139" height="30"/>
+                            <rect key="frame" x="157" y="203" width="139" height="30"/>
                             <state key="normal" title="비밀번호찾기" backgroundImage="search_btn.png">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -54,7 +44,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Vf-wE-qFV">
-                            <rect key="frame" x="8" y="140" width="141" height="30"/>
+                            <rect key="frame" x="8" y="203" width="141" height="30"/>
                             <state key="normal" title="로그인" backgroundImage="login_btn_small.png">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -62,6 +52,46 @@
                                 <action selector="loginClick:" destination="-1" eventType="touchUpInside" id="R8t-kq-7kJ"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enr-me-sji">
+                            <rect key="frame" x="7" y="200" width="292" height="40"/>
+                            <state key="normal" title="다시 조회하기" backgroundImage="home_btn.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="btnRetryClick:" destination="-1" eventType="touchUpInside" id="OZp-9T-mn8"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-jY-8de" userLabel="vertical_line">
+                            <rect key="frame" x="7" y="43" width="290" height="1"/>
+                            <color key="backgroundColor" red="0.82974273990000003" green="0.82974273990000003" blue="0.82974273990000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al9-ak-7sn" userLabel="vertical_line">
+                            <rect key="frame" x="7" y="184" width="290" height="1"/>
+                            <color key="backgroundColor" red="0.82974273990000003" green="0.82974273990000003" blue="0.82974273990000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" fixedFrame="YES" bounces="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t87-FA-6gt">
+                            <rect key="frame" x="23" y="52" width="259" height="111"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <string key="text">email@gg.co.kr
+email@gg.co.kr
+email@gg.co.kr
+email@gg.co.kr</string>
+                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="계정정보가 존재하지 않습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Bc-24-AGj">
+                            <rect key="frame" x="11" y="97" width="288" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -71,8 +101,9 @@
         </view>
     </objects>
     <resources>
+        <image name="home_btn.png" width="225" height="40"/>
         <image name="login_btn_small.png" width="152" height="40"/>
-        <image name="login_window_back.png" width="345" height="263"/>
+        <image name="login_window_back_noline.png" width="345" height="263"/>
         <image name="search_btn.png" width="313" height="40"/>
     </resources>
 </document>

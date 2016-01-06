@@ -23,10 +23,12 @@
     UILabel* labelMailId;
     UILabel* labelId;
     UILabel* labelCardNumber;
+    UILabel* labelPoint;
     UIImageView *cardImageView;
     UIImageView *idImageView;
     UIButton* loginButton;
     UIButton* logoutButton;
+    UIButton* summitButton;
     CPLoadingView *loadingView;
 }
 @end
@@ -100,31 +102,42 @@
 
 - (void) loginProcess
 {
-    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
-    [self addSubview:likeImageView];
-    [self bringSubviewToFront:likeImageView];
+    CGFloat marginX = 0;
+    if(kScreenBoundsWidth > 320){
+        if(kScreenBoundsWidth > 400){
+            marginX = -36;
+        }else{
+            marginX = -16;
+        }
+    }else{
+        marginX = 8;
+    }
     
-    if ([SYSTEM_VERSION intValue] > 7) {
-        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-        [UIView animateWithDuration:3.0f
-                              delay:0
-             usingSpringWithDamping:0.2f
-              initialSpringVelocity:6.0f
-                            options:UIViewAnimationOptionAllowUserInteraction
-                         animations:^{
-                             likeImageView.transform = CGAffineTransformIdentity;
-                         }
-                         completion:^(BOOL finished) {
-                             [likeImageView removeFromSuperview];
-                         }];
-    }
-    else {
-        [UIView animateWithDuration:1.0f animations:^{
-            [likeImageView removeFromSuperview];
-        }];
-    }
+//    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+//    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2+marginX, kScreenBoundsHeight/2)];
+//    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
+//    [self addSubview:likeImageView];
+//    [self bringSubviewToFront:likeImageView];
+//    
+//    if ([SYSTEM_VERSION intValue] > 7) {
+//        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+//        [UIView animateWithDuration:3.0f
+//                              delay:0
+//             usingSpringWithDamping:0.2f
+//              initialSpringVelocity:6.0f
+//                            options:UIViewAnimationOptionAllowUserInteraction
+//                         animations:^{
+//                             likeImageView.transform = CGAffineTransformIdentity;
+//                         }
+//                         completion:^(BOOL finished) {
+//                             [likeImageView removeFromSuperview];
+//                         }];
+//    }
+//    else {
+//        [UIView animateWithDuration:1.0f animations:^{
+//            [likeImageView removeFromSuperview];
+//        }];
+//    }
 
     
     
@@ -217,8 +230,8 @@
             //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
             //////////////////////////////////////
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -291,11 +304,11 @@
 
 - (void) setDataAfterlogout
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUUID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUUID];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDeviceToken];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDeviceToken];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:klang];
     //    [[NSUserDefaults standardUserDefaults] synchronize];
@@ -350,31 +363,31 @@
 
 - (void) logoutProcess
 {
-    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
-    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
-    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
-    [self addSubview:likeImageView];
-    [self bringSubviewToFront:likeImageView];
-    
-    if ([SYSTEM_VERSION intValue] > 7) {
-        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-        [UIView animateWithDuration:3.0f
-                              delay:0
-             usingSpringWithDamping:0.2f
-              initialSpringVelocity:6.0f
-                            options:UIViewAnimationOptionAllowUserInteraction
-                         animations:^{
-                             likeImageView.transform = CGAffineTransformIdentity;
-                         }
-                         completion:^(BOOL finished) {
-                             [likeImageView removeFromSuperview];
-                         }];
-    }
-    else {
-        [UIView animateWithDuration:1.0f animations:^{
-            [likeImageView removeFromSuperview];
-        }];
-    }
+//    UIImageView *likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+//    [likeImageView setCenter:CGPointMake(kScreenBoundsWidth/2, kScreenBoundsHeight/2)];
+//    [likeImageView setImage:[UIImage imageNamed:@"loding_cha_01@3x.png"]];
+//    [self addSubview:likeImageView];
+//    [self bringSubviewToFront:likeImageView];
+//    
+//    if ([SYSTEM_VERSION intValue] > 7) {
+//        likeImageView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+//        [UIView animateWithDuration:3.0f
+//                              delay:0
+//             usingSpringWithDamping:0.2f
+//              initialSpringVelocity:6.0f
+//                            options:UIViewAnimationOptionAllowUserInteraction
+//                         animations:^{
+//                             likeImageView.transform = CGAffineTransformIdentity;
+//                         }
+//                         completion:^(BOOL finished) {
+//                             [likeImageView removeFromSuperview];
+//                         }];
+//    }
+//    else {
+//        [UIView animateWithDuration:1.0f animations:^{
+//            [likeImageView removeFromSuperview];
+//        }];
+//    }
 
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -448,8 +461,8 @@
             //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
             //////////////////////////////////////
             [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-            [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
             [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
             [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
             // set expiration to one month from now
@@ -495,7 +508,7 @@
             
             [self setDataAfterlogout];
             [self showContents];
-            
+            [self didLogOutShowContents];
             
             //web view refresh
              WebViewController *homeViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).homeWebViewController;
@@ -578,6 +591,8 @@
     CGFloat labelMarginX = 0.f;
     CGFloat logoutMarginX = 0.f;
     CGFloat cardMarginX = 0.f;
+    CGFloat cardNumberX = 0.0f;
+    CGFloat pointX = 0.0f;
     
 //    if(kScreenBoundsWidth > 400){
 //        titleLabelMarginX = 80;
@@ -598,17 +613,21 @@
         if(kScreenBoundsWidth > 400){
             titleLabelMarginX = 80;
     
-            loginBtnMarginX = 40;
+            loginBtnMarginX = 155;
             labelMarginX = 2;
             logoutMarginX =10;
             cardMarginX = 0;
+            cardNumberX = 35;
+            pointX = 30;
     
         }else{
             titleLabelMarginX = (kScreenBoundsWidth > 320)?10:0;
-            loginBtnMarginX = (kScreenBoundsWidth > 320)?140:80;
+            loginBtnMarginX = (kScreenBoundsWidth > 320)?140+110:80+115;
             labelMarginX = (kScreenBoundsWidth > 320)?2:0;
             logoutMarginX = (kScreenBoundsWidth > 320)?100:50;
             cardMarginX = (kScreenBoundsWidth > 320)?40:20;
+            cardNumberX = (kScreenBoundsWidth > 320)?40:35;
+            pointX = (kScreenBoundsWidth > 320)?-10:10;
             
         }
 
@@ -639,7 +658,7 @@
     
     //login button
     loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginButton setFrame:CGRectMake(20, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
+    [loginButton setFrame:CGRectMake(10, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
     [loginButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
     [loginButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
@@ -660,6 +679,32 @@
     loginButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     
     [self addSubview:loginButton];
+    
+    //summit button
+    summitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [summitButton setFrame:CGRectMake(CGRectGetMaxX(loginButton.frame)+5, CGRectGetMaxY(labelMenu.frame)+20, meWidth-loginBtnMarginX, 50)];
+    [summitButton setBackgroundColor:[UIColor clearColor]]; //icon_main_login, btn_login_save.png
+    [summitButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
+    [summitButton setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
+    [summitButton addTarget:self action:@selector(didTouchSummitBtn) forControlEvents:UIControlEventTouchUpInside];
+    
+    btnString = nil;
+    if([temp isEqualToString:@"ko"]){
+        btnString = LOGIN_SUMMIT_KO;
+    }else{
+        btnString = LOGIN_SUMMIT_VI;
+    }
+    [summitButton.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+    [summitButton.titleLabel setNumberOfLines:0];
+    [summitButton setTitle:btnString forState:UIControlStateNormal];
+    [summitButton setTitleColor:UIColorFromRGB(0xf05921) forState:UIControlStateNormal];
+    [summitButton setTitleColor:UIColorFromRGB(0xf05921) forState:UIControlStateHighlighted];
+    
+    summitButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    
+    
+    [self addSubview:summitButton];
+
     
     //////////////////////////////////////////////////////////////////////////////////////////
     // id image
@@ -701,22 +746,65 @@
     [self addSubview:logoutButton];
     
     // card image
-    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20-cardMarginX, 36, meWidth-40, 135)];
+    cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10-cardMarginX, 36, meWidth-40, 135)];
     //[cardImageView setBackgroundColor:UIColorFromRGB(0x105921)];
     cardImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [cardImageView setImage:[UIImage imageNamed:@"total_menu_card_img.png"]];
+    NSString *cardImageName;
+    NSString *grade;
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade]){
+        grade = [[NSUserDefaults standardUserDefaults] stringForKey:kMb_grade];
+    }
+    
+    if([grade isEqualToString:@"0"]){
+        cardImageName =  @"card_img_b.png";
+    }else if([grade isEqualToString:@"1"]){
+        cardImageName =  @"card_img_s.png";
+    }else if([grade isEqualToString:@"2"]){
+        cardImageName =  @"card_img_g.png";
+    }else if([grade isEqualToString:@"3"]){
+        cardImageName =  @"card_img_v.png";
+    }
+    
+    [cardImageView setImage:[UIImage imageNamed:cardImageName]];
     [self addSubview:cardImageView];
     
     //card number label
     _cardNumber =  [[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] ;
-    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(100+cardMarginX, 100+10, meWidth-65, 40) ];
+    labelCardNumber = [[UILabel alloc] initWithFrame:CGRectMake(55+cardNumberX, 85, meWidth-65, 40) ];
     [labelCardNumber setBackgroundColor:[UIColor clearColor]];
     [labelCardNumber setTextColor:UIColorFromRGB(0xffffff)];
-    [labelCardNumber setFont:[UIFont systemFontOfSize:15]];
+    [labelCardNumber setFont:[UIFont systemFontOfSize:14]];
     [labelCardNumber setTextAlignment:NSTextAlignmentLeft];
     [labelCardNumber setNumberOfLines:0];
     [labelCardNumber setText:_cardNumber];
     [self addSubview:labelCardNumber];
+    
+    NSString* strPoint;
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kMb_point]){
+        strPoint = [[NSUserDefaults standardUserDefaults] stringForKey:kMb_point];
+    }
+    
+    //strPoint = @"9999999";
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    [numberFormatter setGroupingSeparator:@","];
+    [numberFormatter setGroupingSize:3];
+    [numberFormatter setUsesGroupingSeparator:YES];
+    [numberFormatter setDecimalSeparator:@"."];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [numberFormatter setMaximumFractionDigits:2];
+    
+    NSNumber *nPoint = [NSNumber numberWithInt:[strPoint intValue]];
+    
+    strPoint = [NSString stringWithFormat:@"%@ P", [numberFormatter stringFromNumber:nPoint]];
+    labelPoint = [[UILabel alloc] initWithFrame:CGRectMake(pointX, 113, meWidth-65, 40) ];
+    [labelPoint setBackgroundColor:[UIColor clearColor]];
+    [labelPoint setTextColor:UIColorFromRGB(0xffffff)];
+    [labelPoint setFont:[UIFont systemFontOfSize:12]];
+    [labelPoint setTextAlignment:NSTextAlignmentCenter];
+    [labelPoint setNumberOfLines:0];
+    [labelPoint setText:strPoint];
+    [self addSubview:labelPoint];
     
     [self setVisableItem];
     
@@ -762,6 +850,14 @@
         [logoutButton removeFromSuperview];
         logoutButton = nil;
     }
+    if(summitButton){
+        [summitButton removeFromSuperview];
+        summitButton = nil;
+    }
+    if(labelPoint){
+        [labelPoint removeFromSuperview];
+        labelPoint = nil;
+    }
 }
 
 - (void)onClickButton
@@ -795,9 +891,11 @@
         [cardImageView setHidden:false];
         [logoutButton setHidden:false];
         [labelCardNumber setHidden:false];
+        [labelPoint setHidden:false];
         
         [labelMenu setHidden:true];
         [loginButton setHidden:true];
+        [summitButton setHidden:true];
         
         
     }else{            //log off
@@ -812,9 +910,11 @@
         [logoutButton setHidden:true];
         [cardImageView setHidden:true];
         [labelCardNumber setHidden:true];
+        [labelPoint setHidden:true];
         
         [labelMenu setHidden:false];
         [loginButton setHidden:false];
+        [summitButton setHidden:false];
     }
 }
 
@@ -854,11 +954,26 @@
     
 }
 
+- (void)didLogOutShowContents
+{
+    if ([self.delegate respondsToSelector:@selector(didLogOutShowContents)]) {
+        [self.delegate didLogOutShowContents];
+    }
+}
+
+- (void)didTouchSummitBtn
+{
+    if ([self.delegate respondsToSelector:@selector(didTouchSummitBtn)]) {
+        [self.delegate didTouchSummitBtn];
+    }
+}
+
 #pragma mark -initScreenView
 -(void)initScreenView_ko{
     
     [labelMenu setText:LEFT_DES_KO];
     [loginButton setTitle:LEFT_LOGIN_KO forState:UIControlStateNormal];
+    [summitButton setTitle:LOGIN_SUMMIT_KO forState:UIControlStateNormal];
     
 }
 
@@ -866,6 +981,7 @@
     
     [labelMenu setText:LEFT_DES_VI];
     [loginButton setTitle:LEFT_LOGIN_VI forState:UIControlStateNormal];
+    [summitButton setTitle:LOGIN_SUMMIT_VI forState:UIControlStateNormal];
     
 }
 

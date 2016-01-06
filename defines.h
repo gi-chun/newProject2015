@@ -1,7 +1,7 @@
 //
 //  defines.h
 //  gcleeEmpty
-//
+//`
 //  Created by gclee on 2015. 11. 12..
 //  Copyright © 2015년 gclee. All rights reserved.
 //
@@ -29,17 +29,28 @@
 
 #define    SESSION_CONTINUE_SEND 60 //second
 
+static NSString* COOKIE_SAVE_DOMAIN = @"vntst.shinhanglobal.com";
+static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"vntst.shinhanglobal.com/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://dev-sbank2013.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://dev-sbank2013.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+static NSString *SUNNY_DOMAIN = @"https://vntst.shinhanglobal.com";
 static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
+static NSString *SUNNY_CLUB_URL_FIRST     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index.jsp?club_page=1&locale=%@";
+//static NSString *SUNNY_CLUB_URL     = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/index_2nd.jsp?locale=%@";  //클럽메인
 static NSString *SUNNY_BANK_URL     = @"https://vntst.shinhanglobal.com/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://vntst.shinhanglobal.com/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://vntst.shinhanglobal.com/sunny/set/help_list.jsp?locale=%@";    //도움말
+static NSString *LETTER_URL      = @"https://vntst.shinhanglobal.com/sunny/set/allim_list.jsp?locale=%@";    //메세지
+
 static NSString *SHINHAN_ZONE_URL   = @"https://vntst.shinhanglobal.com/sunny/bank/shinhanzone.jsp";    //신한존
-static NSString *SHINHAN_EVENT_URL   = @"https://vntst.shinhanglobal.com/sunny/set/event_view.jsp?seqno=1&board_d=1";
+static NSString *SHINHAN_EVENT_URL   = @"https://vntst.shinhanglobal.com/sunny/set/event_view.jsp?seqno=1&board_d=1&locale=%@";
+static NSString *SHINHAN_LOCATION_URL   = @"https://vntst.shinhanglobal.com/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
+static NSString *SHINHAN_SEARCH_URL   = @"https://vntst.shinhanglobal.com/sunny/sunnyclub/search.jsp";
+
 static NSString *API_URL            = @"https://vntst.shinhanglobal.com/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
+static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 
 #else     //REAL SERVER
 
@@ -51,23 +62,41 @@ static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
 
 #define    SESSION_CONTINUE_SEND 60*9 //second - 9 minutes
 
+static NSString* COOKIE_SAVE_DOMAIN = @"online.shinhan.com.vin";
+static NSString *ADD_PARAM = @"?locale=%@";
 static NSString *MW_DOMAIN = @"online.shinhan.com.vin/sunny";
 static NSString* CODEGUARD_SERVER_URL = @"https://sbk.shinhan.com";
 static NSString *API_VERSION_INOF_URL = @"https://sbk.shinhan.com/common/smt/jsp/callSmtStartService.jsp?";
+static NSString *SUNNY_DOMAIN = @"https://online.shinhan.com.vn";
 static NSString *SUNNY_CLUB_URL     = @"https://online.shinhan.com.vn/sunny/sunnyclub/index.jsp?locale=%@";  //클럽메인
+static NSString *SUNNY_CLUB_URL_FIRST     = @"https://online.shinhan.com.vn/sunny/sunnyclub/index.jsp?club_page=1&locale=%@";
 static NSString *SUNNY_BANK_URL     = @"https://online.shinhan.com.vn/sunny/bank/main.jsp?locale=%@";        //뱅크메인
 static NSString *NEW_NEWS_URL       = @"https://online.shinhan.com.vn/sunny/set/newstory_list.jsp?locale=%@";//새소식
 static NSString *HELP_LIST_URL      = @"https://online.shinhan.com.vn/sunny/set/help_list.jsp?locale=%@";    //도움말
+static NSString *LETTER_URL      = @"https://online.shinhan.com.vn/sunny/set/allim_list.jsp?locale=%@";    //메세지
 static NSString *SHINHAN_ZONE_URL   = @"https://online.shinhan.com.vn/sunny/bank/shinhanzone.jsp";    //신한존
-static NSString *SHINHAN_EVENT_URL   = @"https://online.shinhan.com.vn/sunny/set/event_view.jsp?seqno=1&board_d=1";    //신한존
+static NSString *SHINHAN_EVENT_URL   = @"https://online.shinhan.com.vn/sunny/set/event_view.jsp?seqno=1&board_d=1&locale=%@";    //신한존
+static NSString *SHINHAN_LOCATION_URL   = @"https://online.shinhan.com.vn/sunny/index.jsp?w2xPath=/sunny/contents/000W0016M00.xml";
+static NSString *SHINHAN_SEARCH_URL   = @"https://online.shinhan.com.vn/sunny/sunnyclub/search.jsp";
+
 static NSString *API_URL            = @"https://online.shinhan.com.vn/sunny/jsp/callSunnyJsonTaskService.jsp";
 static NSString *TASK_USR           = @"sfg.sunny.task.user.UserTask";
+static NSString *COMMON_TASK_USR           = @"sfg.sunny.task.comm.CodeTask";
 
 #endif
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static NSString * const kCallAd       = @"kCallAd";
+
 static NSString * const kUUID              = @"currentUUID";        // UUID
 static NSString * const kUserDeviceToken   = @"userDeviceToken";    // 디바이스 토큰
+static NSString * const kLeftMainBannerUrl   = @"kLeftMainBannerUrl";
+static NSString * const kMainBannerUrl   = @"kMainBannerUrl";
+static NSString * const kLeftMainBannerImgUrl   = @"kLeftMainBannerImgUrl";
+static NSString * const kMainBannerImgUrl   = @"kMainBannerImgUrl";
+static NSString * const kPushUrl   = @"kPushUrl";
+static NSString * const kPrevUrl   = @"kPrevUrl";
+
 static NSString * const klang       = @"currentLang";         // language
 static NSString * const kAutoLogin       = @"autoLogin";
 static NSString * const kId       = @"kId";
@@ -77,15 +106,27 @@ static NSString * const kEmail       = @"kEmail";//
 static NSString * const kEmail_id       = @"kEmail_id";//
 static NSString * const kLoginY       = @"loginY";         //로그인성공여부
 static NSString * const kCardCode       = @"cardCode";         //
+static NSString * const kosVer       = @"osVer";
 static NSString * const kAgreeOk       = @"agreeOk";
-static NSString * const kPushY       = @"pushY";         // language
-static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         // language
+static NSString * const kPushY       = @"kPushY";
+static NSString * const kNomalPushY       = @"kNomalPushY";
+static NSString * const kContentsPushY       = @"kContentsPushY";
+static NSString * const kEventPushY       = @"kEventPushY";
+static NSString * const kYYYYMMDD       = @"kYYYYMMDD";         //
 static NSString * const kGNBHide       = @"kGNBHide";
 static NSString * const kCurrentVersion       = @"kCurrentVersion";
 static NSString * const kUpdateVersion       = @"kUpdateVersion";
 static NSString * const kUpdateUri       = @"kUpdateUri";
 static NSString * const kTutoY       = @"kTutoY";
+static NSString * const kViewLevelY       = @"kViewLevelY";
 static NSString * const kFirstExecY       = @"kFirstExecY";
+
+//member
+static NSString * const kMb_grade       = @"kMb_grade";
+static NSString * const kMb_grade_nm       = @"kMb_grade_nm";
+static NSString * const kMb_point       = @"kMb_point";
+static NSString * const kBadge       = @"kBadge";
+static NSString * const kPushBadge       = @"kPushBadge";
 
 static NSString * const kLoginData       = @"kLoginData";
 static NSString * const kForceUpdateY       = @"kForceUpdateY"; //강제업데이트 여부
@@ -95,6 +136,11 @@ static NSString * const kForceMemberViewY       = @"kForceMemberViewY"; //member
 
 
 
+
+static NSString *BTN_CONFIRM_KO = @"확인";
+static NSString *BTN_CONFIRM_VI = @"Xác nhận";
+static NSString *BTN_CLOSE_KO = @"닫기";
+static NSString *BTN_CLOSE_VI = @"close";
 
 //korea
 static NSString * SEND_PWD_MAIL_KO = @"회원님의 등록된 메일 주소로\n임시 비밀번호 메일을 전송 하였습니다.";
@@ -116,11 +162,11 @@ static NSString *COMPLETE_TITLE_VI     = @"Hoàn tất đăng ký thành viên";
 
 //korea
 static NSString *JAILBREAK_CHK_KO  = @"루팅된 단말입니다. 개인정보 유출의 위험성이 있으므로 써니클럽을 종료합니다.";
-static NSString *JAILBREAK_CHK_VI  = @"Jsơ đồ Liên kết  tới hệ thống. Sunny club  sẽ ngừng ngay lập tức khi thấy  nguy hiểm là bị  mất thông tin cá nhân của quý khách .";
+static NSString *JAILBREAK_CHK_VI  = @"Ngừng kết nối. Vì có rủi ro mất thông tin cá nhân nên Sunny Club sẽ ngừng kết nối.";
 static NSString *NOT_NOMAL_APP_KO = @"정식등록된 앱이 아닙니다. 앱을 새로 다운로드 받아 설치하신 후 다시 이용해주십시요.";
-static NSString *NOT_NOMAL_APP_VI = @"Không phải là app chính . Chỉ cần tải app về là sử dụng đựợc.";
+static NSString *NOT_NOMAL_APP_VI = @"Không phải là app chính thức. Vui lòng download app và sử dụng.";
 static NSString *USE_PROXY_KO = @"비정상적인 접속(프록시)으로 인해 서비스를 종료합니다. 고객센터로 문의하여 주시기 바랍니다. (문의:고객센터 1800-1560)";
-static NSString *USE_PROXY_VI = @"Dừng sử dụng dịch vụ khi thấy đăng nhập có vấn đề bất thường . Hãy gọi điện ngay đến trung tâm  chăm sóc khách hàng để được hỗ trợ.(  trung tâm chăm sóc khách hàng 1800-1560)";
+static NSString *USE_PROXY_VI = @"Dịch vụ tạm dừng do có đăng nhập bất thường (proxy). Vui lòng liên hệ Trung tâm chăm sóc khách hàng để được hỗ trợ (1800-1560)";
 
 //korea
 static NSString *PERSON_TITLE_KO     = @"개인정보 변경";
@@ -134,14 +180,14 @@ static NSString *PERSON_NOMAL_KO     = @"일반";
 
 //korea
 static NSString *MEM_OUT_TITLE_KO     = @"회원탈퇴 안내사항";
-static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n2.멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
+static NSString *MEM_OUT_DESC_KO     = @"1. 회원정보가 삭제되며, 복구는 불가능합니다. \n2. 멤버십 등급 및 포인트가 삭제되며 복구는 불가능 합니다.";
 static NSString *MEM_PWD_TITLE_KO     = @"비밀번호 입력";
 static NSString *MEM_PWD_DESC_KO     = @"회원탈퇴 처리를 위해 다시한번 비밀번호를 입력하시기 바랍니다.";
 static NSString *MEM_OUT_KO = @"탈퇴하기";
 
 //vi
 static NSString *MEM_OUT_TITLE_VI     = @"Hướng dẫn về hủy thành viên";
-static NSString *MEM_OUT_DESC_VI     = @"1.Thông tin thành viên bị hủy, không thể phục hồi \n2.Thứ hạng và điểm của thành viên bị hủy, không thể phục hồi";
+static NSString *MEM_OUT_DESC_VI     = @"1.Thông tin thành viên bị hủy, không thể phục hồi \n2.Thứ hạng và điểm của thành viên bị hủy, không thể phục \n   hồi";
 static NSString *MEM_PWD_TITLE_VI     = @"Nhập mật khẩu";
 static NSString *MEM_PWD_DESC_VI     = @"Vui lòng nhập mật khẩu lại để hủy thành viên";
 static NSString *MEM_OUT_VI = @"Hủy thành viên";
@@ -155,23 +201,23 @@ static NSString *PERSON_CHANGE_VI     = @"Áp dụng";
 static NSString *PERSON_PWD_CHANGE_VI     = @"Thay đổi mật khẩu";
 static NSString *PERSON_MEMBER_OUT_VI     = @"Hủy thành viên";
 static NSString *PERSON_MEMBER_LEVEL_VI     = @"Thứ hạng hội viên";
-static NSString *PERSON_NOMAL_VI      = @"Chung";
+static NSString *PERSON_NOMAL_VI      = @"Phổ thông";
 
 //korea
-static NSString *LEFT_DES_KO     = @"로그인을 하시면 Sunny Club의 다양한\n서비스를 이용하실 수 있습니다.";
+static NSString *LEFT_DES_KO     = @"    로그인을 하시면\n    Sunny Club의 다양한 서비스를\n    이용하실 수 있습니다.";
 static NSString *LEFT_LOGIN_KO     = @"로그인";
 static NSString *LEFT_LOGIN_NOTI_KO     = @"Event / 공지";
 static NSString *LEFT_CONFIG_KO     = @"설정";
 
-static NSString *BOTTOM_BANNER_KO = @"bottom_banner.png";
+static NSString *BOTTOM_BANNER_KO = @"banner_kr.png";
 
 //vi
-static NSString *LEFT_DES_VI     = @"Vui lòng đăng nhập để sử dụng\ncác dịch vụ của Sunny Club.";
+static NSString *LEFT_DES_VI     = @"    Vui lòng đăng\n    nhập để sử dụng các\n    dịch vụ của Sunny Club.";
 static NSString *LEFT_LOGIN_VI     = @"Đăng nhập";
 static NSString *LEFT_LOGIN_NOTI_VI     = @"Event / Thông báo";
 static NSString *LEFT_CONFIG_VI     = @"Cài đặt";
 
-static NSString *BOTTOM_BANNER_VI = @"bottom_banner_viet.png";
+static NSString *BOTTOM_BANNER_VI = @"banner_viet.png";
 
 //korea
 static NSString *PW_SEARCH_TITLE_KO     = @"비밀번호 찾기";
@@ -179,8 +225,10 @@ static NSString *PW_SEARCH_ID_KO     = @"아이디";
 static NSString *PW_SEARCH_NAME_KO     = @"이름";
 static NSString *PW_SEARCH_YYYY_KO     = @"생년월일";
 static NSString *PW_SEARCH_KO     = @"조회하기";
-static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는";
+static NSString *ID_RESULT_HEAD_KO     = @"조회하신 아이디는 아래와 같습니다.";
 static NSString *ID_RESULT_TAIL_KO     = @"입니다.";
+static NSString *ID_RETRY_LABEL_KO     = @"계정정보가 존재하지 않습니다.";
+static NSString *ID_RETRY_BTN_KO     = @"다시 조회하기";
 
 //vi
 static NSString *PW_SEARCH_TITLE_VI     = @"Tìm mật khẩu";
@@ -188,14 +236,24 @@ static NSString *PW_SEARCH_ID_VI     = @"ID";
 static NSString *PW_SEARCH_NAME_VI     = @"Tên";
 static NSString *PW_SEARCH_YYYY_VI     = @"Sinh nhật";
 static NSString *PW_SEARCH_VI     = @"truy vấn";
-static NSString *ID_RESULT_HEAD_VI     = @"ID bạn đang truy vấn là:";
+static NSString *ID_RESULT_HEAD_VI     = @"ID mà bạn truy vấn như sau:";
 static NSString *ID_RESULT_TAIL_VI     = @"này.";
+static NSString *ID_RETRY_LABEL_VI     = @"Thông tin tài khoản này không tồn tại";
+static NSString *ID_RETRY_BTN_VI     = @"Truy vấn";
+
 
 //korea
 static NSString *IDSEARCH_TITLE_KO     = @"아이디 찾기";
 static NSString *IDSEARCH_NAME_KO     = @"이름";
 static NSString *IDSEARCH_YYYY_KO     = @"생년월일";
 static NSString *IDSEARCH_SEARCH_KO     = @"조회하기";
+
+static NSString *CLASSIFY_CAPITAL_KO     = @"* 대소문자, 띄어쓰기 구분";
+static NSString *CLASSIFY_CAPITAL_VI     = @"* Phân biệt chữ in hoa, chữ thường,\n  khoảng trắng";
+static NSString *ID_EMAIL_SAME_KO     = @"* ID와 E-Mail은 동일하게 사용";
+static NSString *ID_EMAIL_SAME_VI     = @"* Sử dụng Email làm ID	";
+static NSString *PWD_DESC_KO     = @"* 4자리 숫자만 사용가능\n  생년월일/ 동일한/ 연속된 숫자 3자리 이상\n  사용불가";
+static NSString *PWD_DESC_VI     = @"* Chỉ sử dụng 4 chữ số	\n   Không thể sử dụng dãy số là sinh\n   nhật/trùng nhau/liên tiếp.";
 
 //korea
 static NSString *PW_CURRENT_KO = @"현재 비밀번호 입력";
@@ -224,14 +282,14 @@ static NSString *LOGIN_AUTO_KO     = @"자동로그인";
 static NSString *LOGIN_ID_FIND_KO     = @"아이디 찾기";
 static NSString *LOGIN_PWD_FIND_KO     = @"비밀번호 찾기";
 static NSString *LOGIN_BTN_KO     = @"로그인";
-static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요?\n지금 가입하고 다양한\n서비스를 자유롭게\n이용하세요.";
+static NSString *LOGIN_NOTI_KO     = @"회원이 아니신가요?\n지금 가입하고 다양한 서비스를\n자유롭게 이용하세요.";
 static NSString *LOGIN_SUMMIT_KO     = @"회원가입";
 static NSString *EMAIL_CHECK_KO      = @"이메일 형식의 아이디를 입력하세요.";
 static NSString *ID_CHECK_KO         = @"아이디를 입력하세요.";
 static NSString *PWD_CHECK_KO = @"비밀번호를 입력하세요.";
 static NSString *NEW_PWD_CHECK_KO = @"새 비밀번호를 입력하세요.";
 static NSString *PWD_LENGTH_CHECK_KO = @"비밀번호가 너무 짧습니다.";
-static NSString *LOGIN_SUCCESS_KO = @"로그인 성공";
+static NSString *LOGIN_SUCCESS_KO = @"OK"; //로그인 성공
 static NSString *LOGIN_FAIL_KO = @"로그인 실패";
 static NSString *LOGIN_OUT_SUCCESS_KO = @"로그아웃 성공";
 static NSString *LOGIN_OUT_ASK_KO = @"로그아웃 하시겠습니까?";
@@ -249,13 +307,13 @@ static NSString *LOGIN_AUTO_VI     = @"Tự động đăng nhập";
 static NSString *LOGIN_ID_FIND_VI     = @"Tìm ID";
 static NSString *LOGIN_PWD_FIND_VI     = @"Tìm mật khẩu";
 static NSString *LOGIN_BTN_VI     = @"Đăng nhập";
-static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên?\nHãy đăng nhập\nvà sử dụng dịch vụ\ncủa chúng tôi.";
-static NSString *LOGIN_SUMMIT_VI     = @"đăng ký thành viên";
+static NSString *LOGIN_NOTI_VI     = @"Bạn có phải là hội viên?\nHãy đăng nhập và sử\ndụng dịch vụ của chúng tôi.";
+static NSString *LOGIN_SUMMIT_VI     = @"đăng ký\nthành viên";
 static NSString *EMAIL_CHECK_VI      = @"Đăng nhập ID  theo hình thức email.";
 static NSString *ID_CHECK_VI         = @"Xin vui lòng nhập ID";
 static NSString *PWD_CHECK_VI = @"Vui lòng nhập mật khẩu";
 static NSString *PWD_LENGTH_CHECK_VI = @"Mật khẩu quá ngắn";
-static NSString *LOGIN_SUCCESS_VI = @"Đăng nhập";
+static NSString *LOGIN_SUCCESS_VI = @"OK"; //Đăng nhập
 static NSString *LOGIN_FAIL_VI = @"Đăng nhập FAIL";
 static NSString *LOGIN_OUT_SUCCESS_VI = @"Đăng nhập Success";
 static NSString *LOGIN_OUT_ASK_VI = @"Bạn có muốn thoát?";
@@ -294,7 +352,7 @@ static NSString *NEED_VI     = @"Thay đổi thông tin cá nhân";
 static NSString *NEED_LOGIN_VI     = @"Cài đặt";
 static NSString *HELP_VI     = @"Hỗ trợ";
 static NSString *TUTO_VI     = @"Xem hướng dẫn";
-static NSString *NEWS_VI     = @"Sự kiện mới";
+static NSString *NEWS_VI     = @"News";
 static NSString *ALRAM_SET_VI     = @"Dịch vụ Cài đặt thông báo";
 static NSString *ALRAM_ALLOW_VI     = @"Dịch vụ cho phép nhận thông báo";
 static NSString *ALRAM_DES_VI     = @"Nếu bạn cài đặt Thông báo Push sang chế độ ON, bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
@@ -417,19 +475,31 @@ Chúc mừng bạn là thành viên của Sunny Club. Hãy trải nghiệm ngay 
 static NSString *SERVICE_GO_KO = @"서비스 이용하러 가기";
 static NSString *SERVICE_GO_VI = @"Sử dụng dịch vụ";
 
-static NSString *NET_WORK_CHECK_KO = @"네트워크에 접속할 수 없습니다. \n 연결상태를 확인해 주세요.";
-static NSString *NET_WORK_CHECK_VI = @"Chúng tôi không thể kết nối mạng. \n Vui lòng kiểm tra lại trạng thái kết nối.";
+static NSString *NET_WORK_CHECK_KO = @"이용에 불편을 드려 대단히 죄송합니다.\n\n네트워크에 접속할 수 없습니다. \n연결상태를 확인해 주세요.";
+static NSString *NET_WORK_CHECK_VI = @"Xin lỗi vì sự bất tiện này.\n\nChúng tôi không thể kết nối mạng. \nVui lòng kiểm tra lại trạng \nthái kết nối.";
 static NSString *NET_WORK_RELOAD_KO = @"재시도";
 static NSString *NET_WORK_RELOAD_VI = @"Thử lại";
 
+//push noti
+static NSString *SET_PUSH_TOTAL_KO = @"서비스 알림 수신 허용";
+static NSString *SET_PUSH_DESC_KO = @"Push 알림을 ON으로 설정하시면, Sunny Club에서 제공하는 다양한 정보 및 알림을 받으실 수 있습니다.";
+static NSString *SET_PUSH_SET_TITLE_KO = @"서비스 알림 수신 설정";
+static NSString *SET_PUSH_NOMAL_KO = @"공지/일반 알림 허용";
+static NSString *SET_PUSH_CONTENTS_KO = @"콘텐츠 알림 허용";
+static NSString *SET_PUSH_EVENT_KO = @"이벤트 알림 허용";
 
-
-
-
+static NSString *SET_PUSH_TOTAL_VI = @"Dịch vụ cho phép nhận thông báo";
+static NSString *SET_PUSH_DESC_VI = @"Nếu bạn cài đặt thông báo sang chế độ \"ON\", bạn sẽ nhận được nhiều thông tin hữu ích từ Sunny Club.";
+static NSString *SET_PUSH_SET_TITLE_VI = @"Cài đặt thông báo";
+static NSString *SET_PUSH_NOMAL_VI = @"Cho phép các thông báo Thông\nbáo/Phổ thông";
+static NSString *SET_PUSH_CONTENTS_VI = @"Cho phép các thông báo nội dung";
+static NSString *SET_PUSH_EVENT_VI = @"Cho phép thông báo event";
 
 #define PWD_MAX_LENGTH             4
 #define ID_MAX_LENGTH             50
 #define NAME_MAX_LENGTH           100
+#define ZOOMIN_MAX_LENGTH         2.0f
+#define ZOOMOUT_MAX_LENGTH        1.0f
 
 
 

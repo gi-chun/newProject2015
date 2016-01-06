@@ -7,9 +7,10 @@
 
 #import "WebView.h"
 #import "ToolBarView.h"
-#import "UIImage+ImageWithColor.h"
+//#import "UIImage+ImageWithColor.h"
 #import "CPLoadingView.h"
-#import "HttpRequest.h"
+//#import "HttpRequest.h"
+#import "NSMutableArray+Stack.h"
 
 typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
@@ -50,6 +51,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     NSTimer         *netCheckTimer;
     NSInteger               netTimeOutSecond;
     UIView *checkNetTimoutView;
+    
+    CGFloat fZoomInCurrent;
+    NSMutableArray *myStack;
+    
+    NSString *webViewUrl;
 }
 
 @end
@@ -78,13 +84,16 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         {
             [self destroyWebView];
         }
+        
+        myStack = [[NSMutableArray alloc] init];
+        
         //CGFloat marginY = (kScreenBoundsWidth > 320)?0:10;
         
         _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)-kToolBarHeight)];
         //_webView = [[UIWebView alloc] initWithFrame:frame];
         [_webView setDelegate:self];
         [_webView setScalesPageToFit:YES];
-        [_webView setContentMode:UIViewContentModeScaleAspectFit];
+        [_webView setContentMode:UIViewContentModeScaleToFill]; //UIViewContentModeScaleAspectFit
         
         [_webView setClipsToBounds:YES];
         [_webView setAllowsInlineMediaPlayback:YES];
@@ -93,6 +102,15 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         [_webView.scrollView setDelegate:self];
         [_webView.scrollView setDecelerationRate:UIScrollViewDecelerationRateNormal];
         [_webView.scrollView setBounces:NO];
+        [_webView setOpaque:NO];
+        [_webView.scrollView setShowsHorizontalScrollIndicator:true];
+        [_webView.scrollView setShowsVerticalScrollIndicator:true];
+        
+        [_webView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        
+//        [_webView.scrollView zoomToRect:CGRectMake(0,0,_webView.scrollView.contentSize.width+300, _webView.scrollView.contentSize.height+300) animated:YES];
+        
+        
         [self addSubview:_webView];
         
         if ([SYSTEM_VERSION intValue] >= 5) {
@@ -129,10 +147,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         
         // 탑버튼
         _topButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        
-        
-        [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
+//        [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
+        [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
         [_topButton setImage:[UIImage imageNamed:@"bottom_top_btn.png"] forState:UIControlStateNormal];
         [_topButton addTarget:self action:@selector(touchTopButton) forControlEvents:UIControlEventTouchUpInside];
         [_topButton setHidden:YES];
@@ -151,12 +167,32 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         
         // pre버튼
         _preButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
+//        [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
+        [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+10), buttonWidth, buttonHeight)];
+
         [_preButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateNormal];
         [_preButton setImage:[UIImage imageNamed:@"bottom_back_btn.png"] forState:UIControlStateHighlighted];
         [_preButton addTarget:self action:@selector(touchpreButton) forControlEvents:UIControlEventTouchUpInside];
-        [_preButton setHidden:YES];
+        [_preButton setHidden:true];
         [self addSubview:_preButton];
+        
+        // zoom in
+        _zoomInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-((buttonHeight+10)*2), buttonWidth, buttonHeight)];
+        [_zoomInButton setImage:[UIImage imageNamed:@"zoom_in.png"] forState:UIControlStateNormal];
+        [_zoomInButton setImage:[UIImage imageNamed:@"zoom_in_press.png"] forState:UIControlStateHighlighted];
+        [_zoomInButton addTarget:self action:@selector(touchZoomInButton) forControlEvents:UIControlEventTouchUpInside];
+        [_zoomInButton setHidden:false];
+        [self addSubview:_zoomInButton];
+        
+        // zoom out
+        _zoomOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2)-(buttonHeight), buttonWidth, buttonHeight)];
+        [_zoomOutButton setImage:[UIImage imageNamed:@"zoom_out.png"] forState:UIControlStateNormal];
+        [_zoomOutButton setImage:[UIImage imageNamed:@"zoom_out_press.png"] forState:UIControlStateHighlighted];
+        [_zoomOutButton addTarget:self action:@selector(touchZoomOutButton) forControlEvents:UIControlEventTouchUpInside];
+        [_zoomOutButton setHidden:false];
+        [self addSubview:_zoomOutButton];
         
 //        // 토글버튼
 //        toggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -211,6 +247,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     
+    [myStack delAll];
+    
+    
+    
 //    // Deleting all the cookies
 //    for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
 //        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
@@ -239,11 +279,18 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     
+    [myStack delAll];
+    
 //    // Deleting all the cookies
 //    for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
 //        NSLog(@"cookie:%@", cookie);
 //        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
 //    }
+}
+
+- (void)setUrl:(NSString *)url
+{
+    webViewUrl = url;
 }
 
 - (void)setViewId:(NSInteger)viewId
@@ -259,30 +306,30 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (void)initRefusedPushAgreeView:(CGRect)frame
 {
-	_refusedPushAgreeView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(frame)-31, 91, 21)];
-	[self addSubview:_refusedPushAgreeView];
-	
-	UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
-	bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
-	[_refusedPushAgreeView addSubview:bgView];
-	
-	UILabel *textLabel = [[UILabel alloc] initWithFrame:_refusedPushAgreeView.bounds];
-	//textLabel.text = @"  알리미수신거부(무료)";
-	textLabel.backgroundColor = [UIColor clearColor];
-	textLabel.textColor = UIColorFromRGB(0xffffff);
-	textLabel.font = [UIFont systemFontOfSize:9.f];
-	textLabel.textAlignment = NSTextAlignmentLeft;
-	[_refusedPushAgreeView addSubview:textLabel];
-	
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = _refusedPushAgreeView.bounds;
-    //    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) width:btn.frame.size.width height:btn.frame.size.height] forState:UIControlStateHighlighted];
-    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) size:btn.frame.size] forState:UIControlStateHighlighted];
-    [btn addTarget:self action:@selector(onClickRefusedPushAgreeButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_refusedPushAgreeView addSubview:btn];
-    
-    [_refusedPushAgreeView setHidden:YES];
-    [_refusedPushAgreeView setAlpha:0.f];
+//	_refusedPushAgreeView = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(frame)-31, 91, 21)];
+//	[self addSubview:_refusedPushAgreeView];
+//	
+//	UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
+//	bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
+//	[_refusedPushAgreeView addSubview:bgView];
+//	
+//	UILabel *textLabel = [[UILabel alloc] initWithFrame:_refusedPushAgreeView.bounds];
+//	//textLabel.text = @"  알리미수신거부(무료)";
+//	textLabel.backgroundColor = [UIColor clearColor];
+//	textLabel.textColor = UIColorFromRGB(0xffffff);
+//	textLabel.font = [UIFont systemFontOfSize:9.f];
+//	textLabel.textAlignment = NSTextAlignmentLeft;
+//	[_refusedPushAgreeView addSubview:textLabel];
+//	
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = _refusedPushAgreeView.bounds;
+//    //    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) width:btn.frame.size.width height:btn.frame.size.height] forState:UIControlStateHighlighted];
+//    [btn setImage:[UIImage imageWithColor:UIColorFromRGB(0x000000) size:btn.frame.size] forState:UIControlStateHighlighted];
+//    [btn addTarget:self action:@selector(onClickRefusedPushAgreeButton:) forControlEvents:UIControlEventTouchUpInside];
+//    [_refusedPushAgreeView addSubview:btn];
+//    
+//    [_refusedPushAgreeView setHidden:YES];
+//    [_refusedPushAgreeView setAlpha:0.f];
 }
 
 - (void)updateFrame
@@ -294,7 +341,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    [self.webView setFrame:webViewFrame];
 }
 
-- (void)updateFrameSunny
+- (void)updateFrameSunny:(NSInteger)gnbType
 {
      //_webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 6, CGRectGetWidth(frame),
     
@@ -302,13 +349,53 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-kToolBarHeight);
     [self.webView setFrame:webViewFrame];
     
+    CGSize contentSize = self.webView.scrollView.contentSize;
+    CGSize viewSize = webViewFrame.size;
+    
+    float sfactor = viewSize.width / contentSize.width;
+    
+//    self.webView.scrollView.minimumZoomScale = sfactor;
+//    self.webView.scrollView.maximumZoomScale = sfactor;
+//    self.webView.scrollView.zoomScale = sfactor;
+    
     CGRect toolViewFrame;
     toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2), CGRectGetWidth([self frame]), kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
     
-    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
+    CGFloat topButtonMarginX = 0.0f;
+    if(kScreenBoundsWidth > 400){
+        topButtonMarginX = 7;
+        
+    }else{
+        topButtonMarginX = (kScreenBoundsWidth > 320)?0:0;
+    }
     
-    [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) - (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight-12)+topButtonMarginX, buttonWidth, buttonHeight)];
+    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight-12)+topButtonMarginX, buttonWidth, buttonHeight)];
+    
+    [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) - (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight-kWebViewTopMarginY*2) - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
+    
+//    if(gnbType == 0){ //sunny
+//        [_zoomInButton setHidden:false];
+//        [_zoomOutButton setHidden:false];
+//    }else{
+//        [_zoomInButton setHidden:true];
+//        [_zoomOutButton setHidden:true];
+//
+//    }
+}
+
+- (void)setZoomBtnVisible:(NSInteger)isShow
+{
+    if(isShow == 0){ //hide
+        [_zoomInButton setHidden:true];
+        [_zoomOutButton setHidden:true];
+    }else{
+        [_zoomInButton setHidden:false];
+        [_zoomOutButton setHidden:false];
+        
+    }
 }
 
 - (void)updateFrameSunnyForStatusHide
@@ -316,17 +403,33 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     //_webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 6, CGRectGetWidth(frame),
     
     CGRect webViewFrame;
-    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2);
+    webViewFrame = CGRectMake(0, 0, CGRectGetWidth([self frame]), CGRectGetHeight([self frame])-(kToolBarHeight));
+    //webViewFrame = CGRectMake(0, kStatusBarY, kScreenBoundsWidth, kScreenBoundsHeight-kToolBarHeight);
     [self.webView setFrame:webViewFrame];
     
+    CGSize contentSize = self.webView.scrollView.contentSize;
+    CGSize viewSize = webViewFrame.size;
+    
+    float sfactor = viewSize.width / contentSize.width;
+    
+//    self.webView.scrollView.minimumZoomScale = sfactor;
+//    self.webView.scrollView.maximumZoomScale = sfactor;
+//    self.webView.scrollView.zoomScale = sfactor;
+    
     CGRect toolViewFrame;
-    toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2, CGRectGetWidth([self frame]), kToolBarHeight);
+    toolViewFrame = CGRectMake(0, CGRectGetHeight([self frame])-(kToolBarHeight), CGRectGetWidth([self frame]), kToolBarHeight);
+//    toolViewFrame = CGRectMake(0, kScreenBoundsHeight-(kToolBarHeight+kStatusBarY), kScreenBoundsWidth, kToolBarHeight);
     [toolBarView setFrame:toolViewFrame];
     
     
-    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
+    [_topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth+7, CGRectGetHeight([self frame])-(buttonHeight+((kToolBarHeight-buttonHeight)/2)), buttonWidth, buttonHeight)];
+    [_preButton setFrame:CGRectMake(-5, CGRectGetHeight([self frame])-(buttonHeight+((kToolBarHeight-buttonHeight)/2)), buttonWidth, buttonHeight)];
+
+    [_zoomInButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
+    [_zoomOutButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10) , buttonWidth, buttonHeight)];
     
-    [_preButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight([self frame])-(kToolBarHeight+kNavigationHeight)+kStatusBarY*2 - (buttonHeight*2+10)- (buttonHeight+10) , buttonWidth, buttonHeight)];
+//    [_zoomInButton setHidden:false];
+//    [_zoomOutButton setHidden:false];
     
 //    [self bringSubviewToFront:_topButton];
 }
@@ -350,6 +453,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+//    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+//    [NSURLCache setSharedURLCache:sharedCache];
     
     [self.webView setHidden:false];
     
@@ -367,6 +472,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         return NO;
     }
     
+    if ([url hasSuffix:@"about"]) {
+        return NO;
+    }
+    
     //URL스킴 체크
     if ([self.delegate respondsToSelector:@selector(webView:openUrlScheme:)]) {
         if ([self.delegate webView:self openUrlScheme:request.URL.absoluteString]) {
@@ -380,6 +489,12 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //            //[self.delegate initNavigation:[Modules isMatchedGNBUrl:url]];
 //            //[self.delegate initNavigation:0];
 //        }
+        
+        if (![url hasPrefix:@"app"] && ![url hasPrefix:@"about"]) {
+            if (([url rangeOfString:@"Processing"].location == NSNotFound) && ([url rangeOfString:@"xml"].location == NSNotFound)){
+                [myStack push:url];
+            }
+        }
         
         if ([self.delegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:)]) {
             
@@ -476,14 +591,20 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //        return;
 //    }
     
+    fZoomInCurrent = 1.0f;
     CGSize contentSize = self.webView.scrollView.contentSize;
     CGSize viewSize = self.frame.size;
     
     float sfactor = viewSize.width / contentSize.width;
     
-    self.webView.scrollView.minimumZoomScale = sfactor;
-    self.webView.scrollView.maximumZoomScale = sfactor;
-    self.webView.scrollView.zoomScale = sfactor;
+//    self.webView.scrollView.minimumZoomScale = sfactor;
+//    self.webView.scrollView.maximumZoomScale = sfactor;
+//    self.webView.scrollView.zoomScale = sfactor;
+    
+//    self.webView.scrollView.minimumZoomScale = 1;
+//    self.webView.scrollView.maximumZoomScale = 20;
+    self.webView.scrollView.zoomScale = 2;
+    self.webView.scrollView.zoomScale = 1;
     
     if ([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.delegate webViewDidFinishLoad:self];
@@ -499,8 +620,20 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     
 //    UIButton *backButton = (UIButton *)[toolBarView viewWithTag:CPToolBarButtonTypeBack];
 //    [toolBarView setButtonProperties:backButton enable:[self.webView canGoBack]];
-    [_preButton setHidden:([self.webView canGoBack])?false:true];
     
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        [_preButton setHidden:true];
+    }else{
+        BOOL isViewLevel = [[NSUserDefaults standardUserDefaults] boolForKey:kViewLevelY];
+        if(isViewLevel == NO){
+            [_preButton setHidden:true];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kViewLevelY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }else{
+            [_preButton setHidden:([self.webView canGoBack])?false:true];
+        }
+    }
     //
     //UIButton *forwardButton = (UIButton *)[toolBarView viewWithTag:1];
 //    if (self.currentSubWebViewIndx == self.maxSubWebViewIndx) {
@@ -560,8 +693,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         if (request) {
             [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
             [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            
         }
     }
+    
+    //[myStack delAll];
     
     request = [NSURLRequest requestWithURL:[NSURL URLWithString:request.URL.absoluteString]
                                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -578,8 +714,12 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         if (request) {
             [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
             [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            
         }
     }
+    
+    
+    [myStack delAll];
     
     [self.webView loadRequest:request];
 
@@ -660,12 +800,12 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
     [self.preButton setHidden:isHidden];
     
-    if (isHidden) {
-        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*2), buttonWidth, buttonHeight)];
-    }
-    else {
-        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*3), buttonWidth, buttonHeight)];
-    }
+//    if (isHidden) {
+//        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*2), buttonWidth, buttonHeight)];
+//    }
+//    else {
+//        [self.topButton setFrame:CGRectMake(kScreenBoundsWidth-buttonWidth, CGRectGetHeight(self.frame)-(buttonHeight*3), buttonWidth, buttonHeight)];
+//    }
 }
 
 - (NSString *)url
@@ -688,14 +828,42 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [self.webView.scrollView setContentOffset:CGPointZero animated:animated];
 }
 
-- (void)goBack
+- (NSInteger)isGoBack
+{
+    if ([self.webView canGoBack]) {
+        return 1;
+    }else{
+        return 0;
+    }
+    
+    return 1;
+}
+
+- (void)myGoBack
 {
 //    [self.webView stopLoading];
 //    [self.webView reload];
     
     
     if ([self.webView canGoBack]) {
-        [self.webView goBack];
+
+        if ([SYSTEM_VERSION intValue] > 7.0) {
+            //[[NSURLCache sharedURLCache] removeAllCachedResponses];
+            [self.webView goBack];
+        }else{
+            if ([self.delegate respondsToSelector:@selector(gotoPrev:)]) {
+                NSString* strDummy = [myStack pop];
+                if (([strDummy rangeOfString:@"bank"].location != NSNotFound)){
+                    if([strDummy isEqualToString:webViewUrl]){
+                        strDummy = [myStack pop];
+                    }
+                    [self.delegate gotoPrev:strDummy];
+                }else{
+                    NSString* strGoUrl = [myStack pop];
+                    [self.delegate gotoPrev:strGoUrl];
+                }
+            }
+        }
     }
     else {
         if ([self.delegate respondsToSelector:@selector(webViewGoBack)]) {
@@ -718,7 +886,7 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 - (void)actionBackWord
 {
-	[self goBack];
+	[self myGoBack];
 }
 
 - (void)actionForward
@@ -758,7 +926,8 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 - (void)touchpreButton
 {
     if ([self.webView canGoBack]) {
-      [self.webView goBack];
+        [self myGoBack];
+        //[self.webView goBack];
     }
 //    SBJSON *parser = [[SBJSON alloc] init];
 //    
@@ -769,6 +938,42 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 //    if (mapScript) {
 //        [self execute:[mapScript objectForKey:@"script"]];
 //    }
+}
+
+- (void)touchZoomInButton{
+    
+//    CGSize c_contentSize = self.webView.scrollView.contentSize;
+//    c_contentSize.height += 10;
+//    c_contentSize.width += 10;
+//    self.webView.scrollView.contentSize = c_contentSize;
+//    CGSize viewSize = _webView.frame.size;
+//    
+//    float sfactor = viewSize.width / c_contentSize.width;
+//
+    fZoomInCurrent += 0.2f;
+    
+    if(fZoomInCurrent > ZOOMIN_MAX_LENGTH){
+        fZoomInCurrent = ZOOMIN_MAX_LENGTH;
+    }
+    
+    self.webView.scrollView.zoomScale = fZoomInCurrent;
+    
+}
+
+- (void)touchZoomOutButton{
+//    CGSize c_contentSize = self.webView.scrollView.contentSize;
+//    c_contentSize.height -= 10;
+//    c_contentSize.width -= 10;
+//    self.webView.scrollView.contentSize = c_contentSize;
+//    CGSize viewSize = _webView.frame.size;
+//    
+//    float sfactor = viewSize.width / c_contentSize.width;
+    fZoomInCurrent -= 0.2f;
+    if(fZoomInCurrent < ZOOMOUT_MAX_LENGTH){
+        fZoomInCurrent = 1.0f;
+    }
+    self.webView.scrollView.zoomScale = fZoomInCurrent;
+    
 }
 
 //- (void)touchToggleButton
@@ -805,13 +1010,39 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+//     view	UIWebBrowserView *	0x14be2400	0x14be2400
+//    _input	UIWebFormSelectPeripheral *	0x145b6200	0x145b6200
+//    _selectControl	UIWebSelectSinglePicker *	0x145cb910	0x145cb910
+    
+    //UIWebBrowserView* UIView = (UIWebBrowserView*)view;
+    
+     NSLog(@"scroll capture");
+     NSLog(@"scroll capture");
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+{
+    
+    //if(scale == 1.14374995f || scale == 1 || scale == 1.1440000534057617){
+    if( scale >= 1 && scale < 1.15){
+        self.webView.scrollView.zoomScale = 0.5f;
+        return;
+    }
+    
+    _webView.scrollView.maximumZoomScale = 20;
+    //_webView.scrollView.minimumZoomScale = 1;
+    fZoomInCurrent = scale;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSInteger contentOffset = scrollView.contentOffset.y;
     // 스크롤뷰가 바운스되는 경우는 상황에서 제외
-    if (contentOffset < 0 || contentOffset > scrollView.contentSize.height - scrollView.frame.size.height) {
-        return;
-    }
+//    if (contentOffset < 0 || contentOffset > scrollView.contentSize.height - scrollView.frame.size.height) {
+//        return;
+//    }
     
 //    if (![popOverView isHidden]) {
 //        [popOverView setHidden:YES];
@@ -1082,80 +1313,6 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 	}];
 }
 
-- (void)onClickRefusedPushAgreeButton:(id)sender
-{
-//	AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//	[app disableRefusedPushAgreeView];
-//	
-//	[self hideRefusedPushAgreeView];
-//	
-//	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//	NSString *pushKey = [userDefaults objectForKey:@"pushKey"];
-//	NSString *pushKeyEncoded = pushKey ? [pushKey stringByAddingPercentEscapesUsingEncoding:DEFAULT_ENCODING] : @"";
-//	
-//	NSMutableDictionary *postData = [[NSMutableDictionary alloc] init];
-//	postData[@"osName"] = @"iOS";
-//	postData[@"mode"] = @"update";
-//	postData[@"osTypCd"] = @"01";
-//	postData[@"appId"] = APP_KIND_CD;
-//	postData[@"pushKey"] = pushKeyEncoded;
-//	postData[@"osVersion"] = SYSTEM_VERSION;
-//	postData[@"deviceId"] = DEVICE_ID;
-//	postData[@"appVersion"] = [APP_VERSION stringByReplacingOccurrencesOfString:@"." withString:@""];
-//	postData[@"groups"] = @"{\"groups\":[{\"groupId\":\"02\",\"items\":[{\"itemId\":\"0201\",\"value\":\"false\",\"dataType\":\"bool\",\"name\":\"NOTI_SHP_EVT_BNFT_INST_YN\"}]}]}";
-//	
-//	
-//	_requestType = RequestNotifyTypeRefusedPushAgree;
-//	
-//	HttpRequest *request = [[HttpRequest alloc] initWithSynchronous:NO];
-//	[request setDelegate:self];
-//	[request setTimeout:10];
-//	[request setEncoding:DEFAULT_ENCODING];
-//	[request sendPost:ALARM_PREFERENCE_URL body:postData];
-}
-
-- (void)request:(HttpRequest *)request didSuccessWithReceiveData:(NSString *)data
-{
-//	SBJSON *json = [[SBJSON alloc] init];
-//	NSDictionary *jsonData = data ? [json objectWithString:data] : nil;
-//	if (jsonData == nil)
-//	{
-//		[self showAlertRequestError:NSLocalizedString(@"BadReceivedDataError", nil)];
-//		return;
-//	}
-//	
-//	NSInteger errorCode = [jsonData[@"errCode"] intValue];
-//	if (errorCode != 0)
-//	{
-//		[self showAlertRequestError:jsonData[@"errMsg"]];
-//		return;
-//	}
-//	
-//	if (_requestType == RequestNotifyTypeRefusedPushAgree)
-//	{
-//		NSDictionary *pushAgreeInfoDict = jsonData[@"pushAgreeInfo"];
-//		
-//		if (pushAgreeInfoDict) {
-//			NSString *strTitle	= [pushAgreeInfoDict objectForKey:@"title"];
-//			NSString *strSender = [pushAgreeInfoDict objectForKey:@"sender"];
-//			NSString *strDate	= [pushAgreeInfoDict objectForKey:@"date"];
-//			NSString *strText	= [pushAgreeInfoDict objectForKey:@"text"];
-//			NSString *strDesc	= [pushAgreeInfoDict objectForKey:@"desc1"];
-//			
-//			strDate = [strDate stringByReplacingOccurrencesOfString:@"2. 수신 일시: 수신일시 :" withString:@"2. 수신일시 :"];
-//			strText = [strText stringByReplacingOccurrencesOfString:@"{{result}}" withString:([self parsePushEnable:jsonData] ? @"허용" : @"거부")];
-//			
-//			NSString *alertMsg = [NSString stringWithFormat:@"%@\n%@\n%@\n\n%@", strSender, strDate, strText, strDesc];
-//			
-//			[UIAlertView showWithTitle:strTitle
-//							   message:alertMsg
-//					 cancelButtonTitle:nil
-//					 otherButtonTitles:@[ NSLocalizedString(@"Confirm", nil) ]
-//							  tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {}];
-//		}
-//	}
-}
-
 - (void)showAlertRequestError:(NSString *)errorMessage
 {
 //	[UIAlertView showWithTitle:NSLocalizedString(@"AlertTitle", nil)
@@ -1227,9 +1384,36 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
 {
     
     [self.webView setHidden:YES];
+    [self.zoomInButton setHidden:YES];
+    [self.zoomOutButton setHidden:YES];
 
     
     CGRect viewFrame = [self frame];
+    
+    CGFloat marginX = 0;
+    CGFloat marginY = 0;
+    CGFloat marginYY = 0;
+    
+    float meHeight = kScreenBoundsHeight;
+    if(meHeight <= 480){
+        marginX = 0;
+        marginY = 0;
+    }else{
+        marginX = 0;
+        marginY = 15;
+        marginYY = -10;
+        if(kScreenBoundsWidth > 320){
+            if(kScreenBoundsWidth > 400){
+                marginX = 45;
+                marginY = 15;
+                marginYY = -40;
+            }else{
+                marginX = 25;
+                marginY = 15;
+                marginYY = -25;
+            }
+        }
+    }
     
     if(checkNetTimoutView)
     {
@@ -1239,11 +1423,11 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     checkNetTimoutView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height)];
     [self addSubview:checkNetTimoutView];
     
-//    UIImageView *bgView = [[UIImageView alloc] initWithFrame:_refusedPushAgreeView.bounds];
-//    bgView.image = [UIImage imageNamed:@"image_no_agree_push_bg.png"];
-//    [checkNetTimoutView addSubview:bgView];
+    UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(20+marginX, 20+marginY, 280, 220)];
+    bgView.image = [UIImage imageNamed:@"error_img.png"];
+    [checkNetTimoutView addSubview:bgView];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewFrame.size.width/4,viewFrame.size.height/3 , viewFrame.size.width/4*3, viewFrame.size.height/3)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(45+marginX, 120+marginY+marginYY , viewFrame.size.width/4*3, viewFrame.size.height/3)];
     NSString* temp;
     NSString* labelText;
     NSString* btnText;
@@ -1266,15 +1450,15 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
     [checkNetTimoutView addSubview:textLabel];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(viewFrame.size.width/4,CGRectGetMaxY(textLabel.frame) , viewFrame.size.width/4*2, 50);
+    btn.frame = CGRectMake(20+marginX,CGRectGetMaxY(textLabel.frame) , 280, 40);
     //[btn setBackgroundColor:[UIColor clearColor]];
     
-    [btn setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn_press.png"] forState:UIControlStateHighlighted];
-    [btn setBackgroundImage:[UIImage imageNamed:@"total_menu_login_btn.png"] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_press.png"] forState:UIControlStateHighlighted];
+    [btn setBackgroundImage:[UIImage imageNamed:@"login_btn.png"] forState:UIControlStateNormal];
     [btn setTitle:btnText forState:UIControlStateNormal];
     [btn setTitle:btnText forState:UIControlStateHighlighted];
-    [btn setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateHighlighted];
+    [btn setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateHighlighted];
     [btn addTarget:self action:@selector(onClickReloadButton) forControlEvents:UIControlEventTouchUpInside];
     [checkNetTimoutView addSubview:btn];
     
@@ -1348,6 +1532,10 @@ typedef NS_ENUM(NSInteger, RequestNotifyType)
         }
     }
     
+}
+
+- (void)stackAllDel{
+    [myStack delAll];
 }
 
 

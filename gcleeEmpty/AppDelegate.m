@@ -18,16 +18,18 @@
 #include <netdb.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import "SBJson.h"
+#import "SafeOnPushClient.h"
 
-
-
-
-@interface AppDelegate ()
+@interface AppDelegate () <SafeOnPushClientDelegate>
 {
     UINavigationController  *_navigation;
     BOOL isTutoShow;
     NSTimer         *netSessionTimer;
     
+    NSMutableData           *_receiveData;
+    NSInteger bannerType; //0:left main, 1:main
+    NSInteger pushGo; //0: no push go, 1: push go
+    NSInteger badge_value;
 }
 @end
 
@@ -52,27 +54,58 @@
 //        [self.window setRootViewController:self.introductionView];
 //        ///////////////////////////////////////////////////////////////////////////////////////////
 //    }else{
-        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
-        if(isTuto == NO){
-            isTutoShow = YES;
-            self.introductionView = [[MYViewController alloc] init];
-            self.introductionView.delegate = self;
-            [self.window setRootViewController:self.introductionView];
-            
-        }else{
-           isTutoShow = NO;
+//        BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+//        if(isTuto == NO){
+//            isTutoShow = YES;
 //            self.introductionView = [[MYViewController alloc] init];
 //            self.introductionView.delegate = self;
-//            
 //            [self.window setRootViewController:self.introductionView];
-        }
+//            
+//        }else{
+//           isTutoShow = NO;
+//        }
     //}
     
     return YES;
 }
 
+#pragma mark - SNS communication
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     // handler code here
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"twit test 1" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    [alert show];
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    NSLog(@"openURL : total url string : %@ ", url);
+    NSLog(@"openURL : url query : %@", [url query]);
+    
+    NSString *strUrl = url.absoluteString;
+    
+    //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3&view_yn=y
+    NSString* strLastUrl = [strUrl substringFromIndex:30];
+    
+    strLastUrl = [NSString stringWithFormat:@"%@&view_yn=Y", strLastUrl];
+    if([strLastUrl length] > 1){
+        isTutoShow = NO;
+        pushGo = 1;
+    }
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"SNS contents view"
+//                                                   delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//    [alert show];
+
+    [[NSUserDefaults standardUserDefaults] setObject:strLastUrl forKey:kPushUrl];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [_homeWebViewController gotoPushUrl:strLastUrl];
+    
+    //[self performSelector:@selector(delayWebopen) withObject:nil afterDelay:20];
+    
     
     return YES;
 }
@@ -80,7 +113,36 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    //lang
+    badge_value = 0;
+    
+    if([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    }
+    
+    if(![[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:kPushBadge];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kPushY]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kNomalPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kContentsPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kEventPushY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
+    //
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    [[NSUserDefaults standardUserDefaults] setObject:currSysVer forKey:kosVer];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //loginY init
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
@@ -105,10 +167,20 @@
     localLang = [localLang substringWithRange:range];
     
     if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+        if([localLang isEqualToString:@"en"] && [localLang isEqualToString:@"EN"]){
+            [[NSUserDefaults standardUserDefaults] setObject:@"vi" forKey:klang];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
         NSLog(@"klang:: %@", currentLang);
     }else{
-        [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        if([localLang isEqualToString:@"ko"] && [localLang isEqualToString:@"KO"] && [localLang isEqualToString:@"vi"] && [localLang isEqualToString:@"VI"]){
+            [[NSUserDefaults standardUserDefaults] setObject:localLang forKey:klang];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }else{
+            [[NSUserDefaults standardUserDefaults] setObject:@"vi" forKey:klang];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
     }
 
 
@@ -329,75 +401,20 @@
 //        NSString* getProxyInfo(void);
     }
     
-    ////////////////////////////////////////////////
+    //dowload banner file
+    [self getListBanner];
+    //[self setDefaultSetPush];
     
-    
+    //left main
+    bannerType = 0;
+    //NSString *url = [fileUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSString *url = @"";
+//    request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+//    NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//    
+//    [downloadConnection start];
+    // main
 
-//    NSUInteger encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingEUC_KR);
-//    const char * eucKRString = [XMLString cStringUsingEncoding:encoding];
-
-//    NSString* strTemp = [XMLString stringByAddingPercentEscapesUsingEncoding:-2147482590];
-//    //    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    //manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    
-////    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
-////    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
-////    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
-//    
-//    //NSLog(@"request date: %@", strTemp);
-//    
-//    //NSDictionary *parameters = @{@"plainXML": XMLString};
-//    NSDictionary *parameters = XMLString;
-//    
-//    
-//    [manager POST:API_VERSION_INOF_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSLog(@"RESULT: %@", responseObject);
-//        
-//        
-//        NSString *responseData = (NSString*) responseObject;
-//        //NSString *strResponse = [NSString stringWithUTF8String:responseData];
-//        //NSXMLParser* parser = null;
-//        //NSString *yourXMLString = [[GDataXMLDocument rootElement] xmlString];
-//        NSString * YOURSTRING = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",YOURSTRING);
-//
-//        
-//        NSLog(@"RESULT: %@", responseObject);
-////        NSArray *jsonArray = (NSArray *)responseData;
-////        NSDictionary * dicResponse = (NSDictionary *)responseData;
-////        
-////        //warning
-////        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
-////        
-////        if(dicItems){
-////            NSString* sError = dicItems[@"msg"];
-////            NSLog(@"ERR ==> %@", sError );
-////             NSLog(@"ERR ==> %@", sError );
-////            
-////        }else{
-////            
-////            dicItems = nil;
-////            dicItems = [dicResponse objectForKey:@"indiv_info"];
-////            NSString* sCardNm = dicItems[@"user_seq"];
-////            
-////            
-////            
-////            NSLog(@"getCookie end ==>" );
-////        }
-////        
-//        
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        NSLog(@"Error: %@", error);
-//        NSLog(@"Error: %@", error);
-//        
-//    }];
-
-    
     
     //ko  set language
     //[languages insertObject:@"de" atIndex:0]; // ISO639-1
@@ -420,6 +437,60 @@
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         
     }
+
+#ifdef TEST_SERVER_DEFINE
+    NSString* serverUrl = @"http://pushdev.shinhanglobal.com:8897/spns";
+#else
+    NSString* serverUrl = @"http://push.shinhan.com.vn:8897/spns";
+#endif
+    
+    [[SafeOnPushClient sharedInstance] setServerUrl:serverUrl];
+    [[SafeOnPushClient sharedInstance] setAppNo:strVerion];
+    [[SafeOnPushClient sharedInstance] setBundleIdentifier:strBundle];
+    
+    isTutoShow = YES;
+    
+    if (launchOptions){
+        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        
+        if (userInfo != nil) {
+            NSLog(@"%@", userInfo);
+            
+            [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+        }
+        
+        [self receiveRemoteNotification:launchOptions withAppState:NO];
+        
+    }
+    
+    if(isTutoShow){
+        
+        //NSString *strFirst = [[NSUserDefaults standardUserDefaults] stringForKey:kFirstExecY];
+        if([[NSUserDefaults standardUserDefaults] stringForKey:kFirstExecY]){
+            isTutoShow = NO;
+            
+            BOOL isTuto = [[NSUserDefaults standardUserDefaults] boolForKey:kTutoY];
+            if(isTuto == YES){
+                isTutoShow = YES;
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kTutoY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                self.introductionView = [[MYViewController alloc] init];
+                self.introductionView.delegate = self;
+                [self.window setRootViewController:self.introductionView];
+                
+            }
+        }else{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"Y" forKey:kFirstExecY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            isTutoShow = YES;
+            self.introductionView = [[MYViewController alloc] init];
+            self.introductionView.delegate = self;
+            [self.window setRootViewController:self.introductionView];
+        }
+    }
     
     if(isTutoShow == NO){
         [self didFinishIntro];
@@ -431,6 +502,337 @@
     return YES;
 }
 
+- (void) getListBanner{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    NSString* temp;
+    NSString* strDesc;
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    //
+    [rootDic setObject:COMMON_TASK_USR forKey:@"task"];
+    [rootDic setObject:@"getListBanner" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    [indiv_infoDic setObject:@"2" forKey:@"d_1"];
+    [indiv_infoDic setObject:temp forKey:@"language"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+    
+    
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *allCookies = [cookies cookies];
+    for(NSHTTPCookie *cookie in allCookies) {
+//        if([[cookie domain] rangeOfString:COOKIE_SAVE_DOMAIN].location != NSNotFound) {
+//            
+//            if([cookie.name isEqualToString:@"locale_"]){
+//                [cookies deleteCookie:cookie];
+//            }
+//        }
+        
+        if([cookie.name isEqualToString:@"locale_"]){
+            [cookies deleteCookie:cookie];
+        }
+        
+        if([cookie.name isEqualToString:@"locale_80"]){
+            [cookies deleteCookie:cookie];
+        }
+        
+    }
+    
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    NSHTTPCookie *cookie;
+    
+    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+    [cookieProperties setObject:@"locale_" forKey:NSHTTPCookieName];
+    [cookieProperties setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    NSMutableDictionary *cookieProperties_ = [NSMutableDictionary dictionary];
+    [cookieProperties_ setObject:@"locale_80" forKey:NSHTTPCookieName];
+    [cookieProperties_ setObject:temp forKey:NSHTTPCookieValue];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+    [cookieProperties_ setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
+    [cookieProperties_ setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookieProperties_ setObject:@"0" forKey:NSHTTPCookieVersion];
+    // set expiration to one month from now
+    [cookieProperties_ setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+    cookie = [NSHTTPCookie cookieWithProperties:cookieProperties_];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    
+    for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        NSLog(@"%@=%@", cookie.name, cookie.value);
+    }
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            NSLog(@"error ==> %@", sError);
+            
+        }else{
+            
+            NSMutableArray *_arrItems;
+            _arrItems = nil;
+            if(![dicResponse objectForKey:@"indiv_info"]){
+                return ;
+            }
+            _arrItems = [dicResponse objectForKey:@"indiv_info"];
+            if([_arrItems count] < 2){
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerImgUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kLeftMainBannerUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerImgUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMainBannerUrl];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                return;
+            }
+            NSDictionary *dicChildOne = _arrItems[0];
+            NSDictionary *dicChildTwo = _arrItems[1];
+
+            NSString *temp;
+            temp = [dicChildOne objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildOne objectForKey:@"url"];
+            if(([temp rangeOfString:@"http"].location == NSNotFound)){
+                temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kLeftMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"image"];
+            temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerImgUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            temp = [dicChildTwo objectForKey:@"url"];
+            if(([temp rangeOfString:@"http"].location == NSNotFound)){
+                temp = [NSString stringWithFormat:@"%@%@", SUNNY_DOMAIN, temp];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:temp forKey:kMainBannerUrl];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSLog(@"Response ==> %@", responseData);
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+    
+}
+
+- (void) setDefaultSetPush{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *sendDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *rootDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *indiv_infoDic = [NSMutableDictionary dictionary];
+    
+    NSString *nomalSet;
+    NSString *contentSet;
+    NSString *eventSet;
+    NSString *totalSet;
+    NSString *BIGSet;
+    
+    BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kPushY];
+    if(isAlram == YES){
+        BIGSet = @"Y";
+        
+        BOOL isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kNomalPushY];
+        if(isAlram == YES){
+            nomalSet = @"Y";
+        }else{
+            nomalSet = @"N";
+        }
+        
+        isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kContentsPushY];
+        if(isAlram == YES){
+            contentSet = @"Y";
+        }else{
+            contentSet = @"N";
+        }
+        
+        isAlram = [[NSUserDefaults standardUserDefaults] boolForKey:kEventPushY];
+        if(isAlram == YES){
+            eventSet = @"Y";
+        }else{
+            eventSet = @"N";
+        }
+        
+    }else{
+        BIGSet = @"N";
+        nomalSet = @"N";
+        contentSet = @"N";
+        eventSet = @"N";
+    }
+    
+    totalSet = [NSString stringWithFormat:@"1|%@,2|%@,3|%@", nomalSet, contentSet, eventSet];
+    //
+    [rootDic setObject:@"sfg.sunny.task.user.AlarmTask" forKey:@"task"];
+    [rootDic setObject:@"setAlarm" forKey:@"action"];
+    [rootDic setObject:@"" forKey:@"serviceCode"];
+    [rootDic setObject:@"" forKey:@"requestMessage"];
+    [rootDic setObject:@"" forKey:@"responseMessage"];
+    
+    if([[NSUserDefaults standardUserDefaults] stringForKey:kCardCode]){
+        [indiv_infoDic setObject:[[NSUserDefaults standardUserDefaults] stringForKey:kCardCode] forKey:@"user_seq"];
+    }
+    
+    [indiv_infoDic setObject:BIGSet forKey:@"push_rec_yn"];
+    [indiv_infoDic setObject:totalSet forKey:@"push_alarm"];
+    
+    [sendDic setObject:rootDic forKey:@"root_info"];
+    [sendDic setObject:indiv_infoDic forKey:@"indiv_info"];//////
+    
+    SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+    NSString *jsonString = [jsonWriter stringWithObject:sendDic];
+    NSLog(@"request json: %@", jsonString);
+    
+    NSDictionary *parameters = @{@"plainJSON": jsonString};
+    
+    [manager POST:API_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSString *responseData = (NSString*) responseObject;
+        NSArray *jsonArray = (NSArray *)responseData;
+        NSDictionary * dicResponse = (NSDictionary *)responseData;
+        NSLog(@"Response ==> %@", responseData);
+        
+        //warning
+        NSDictionary *dicItems = [dicResponse objectForKey:@"WARNING"];
+        
+        if(dicItems){
+            NSString* sError = dicItems[@"msg"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:sError delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+            [alert show];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kLoginY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        }else{
+            
+            //to json
+            SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
+            
+            NSString *jsonString = [jsonWriter stringWithObject:jsonArray];
+            NSLog(@"jsonString ==> %@", jsonString);
+            ///////////////////////////////
+            
+            for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+            {
+                NSLog(@"name: '%@'\n",   [cookie name]);
+                NSLog(@"value: '%@'\n",  [cookie value]);
+                NSLog(@"domain: '%@'\n", [cookie domain]);
+                NSLog(@"path: '%@'\n",   [cookie path]);
+            }
+            
+            NSLog(@"getCookie end ==>" );
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+    
+}
+
+#pragma mark -  NSURLConnection Delegate
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [_receiveData appendData:data];
+    
+    NSLog(@"banner file download:%lu", (unsigned long)[_receiveData length]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    
+    // 파일쓰기
+    NSError *error = nil;
+    NSString *fileName  = @"";
+    if(bannerType == 0){ //left main
+        fileName  = @"sunny_banner_left.png";
+    }else{               //main
+        fileName  = @"sunny_banner_main.png";
+    }
+    
+    NSString *docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+    [_receiveData writeToFile:[NSString stringWithFormat:@"%@/%@", docsDir, fileName] options:NSDataWritingAtomic error:&error];
+    
+    if (!error) {
+        
+        NSString *path = [docsDir stringByAppendingPathComponent:fileName];
+        NSLog(@"file save path:%@", path);
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath: path])
+        {
+            NSLog(@"file write success %@", error);
+        }
+        
+    } else {
+        NSLog(@"file write error %@", error);
+    }
+    
+    _receiveData = nil;
+    
+    [self anotherBanner];
+}
+
+- (void)anotherBanner{
+    
+    bannerType = 1;
+    //left main
+    //NSString *url = [fileUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = @"";
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    [downloadConnection start];
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -439,6 +841,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+   
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -568,8 +971,8 @@
                 //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
                 //////////////////////////////////////
                 [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
                 [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
                 [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
                 // set expiration to one month from now
@@ -608,81 +1011,222 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+
 #pragma mark - APNS Notification Regist Results
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    NSLog(@"APNS 디바이스 토큰 등록 성공 : %@", deviceToken);
+    NSLog(@"apns device token register success : %@", deviceToken);
+    NSLog(@"device token : %@", [deviceToken description]);
+    [[SafeOnPushClient sharedInstance] setDeviceToken:deviceToken];
+    
+    NSString *oriToken = [NSString stringWithFormat:@"%@", deviceToken];
+    
+    NSString *deviceTokens = [[[[oriToken description]
+                                stringByReplacingOccurrencesOfString:@"<" withString:@""]
+                               stringByReplacingOccurrencesOfString:@">" withString:@""]
+                              stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    
+    
+//    NSCharacterSet *angleBrackets = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
+//    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:angleBrackets];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:deviceTokens delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//    [alert show];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:deviceTokens forKey:kUserDeviceToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     //[[SettingManager sharedInstance] setDeviceToken:[NSString stringWithFormat:@"%@", deviceToken]];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    NSLog(@"APNS 디바이스 토큰 등록 실패 : %@", error);
+    NSLog(@"apns device token register fail  : %@", error);
 }
 
 #pragma mark - Recieve Push Notifications
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    // 포그라운드에서의 푸쉬 처리
+    //UIApplicationState state = [application applicationState];
+//    {
+//        "aps" :
+//        {
+//            "alert" : "Your notification message",
+//            "badge" : badgecount ,
+//            "sound" : "bingbong.aiff"
+//        }
+//    }
+    //[[UIApplication sharedApplication]setApplicationIconBadgeNumber:1];
+    
+//    if([[userInfo objectForKey:@"aps"] objectForKey:@"badge"]){
+//        NSInteger nTemp = 0;
+//        badge_value =[[[userInfo objectForKey:@"aps"] objectForKey:@"badge"]intValue];
+//        NSString* strPushBadeg;
+//        if([[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge]){
+//            strPushBadeg = [[NSUserDefaults standardUserDefaults] stringForKey:kPushBadge];
+//            nTemp = [strPushBadeg integerValue];
+//            nTemp++;
+//            strPushBadeg = [NSString stringWithFormat:@"%ld", (long)nTemp];
+//            
+//            [[NSUserDefaults standardUserDefaults] setObject:strPushBadeg forKey:kBadge];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//
+//        }
+//        
+//        [UIApplication sharedApplication].applicationIconBadgeNumber = nTemp;
+//        
+//        
+////        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"last badge" message:strPushBadeg
+////                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+////        [alert2 show];
+//    }
+    
     [self receiveRemoteNotification:userInfo withAppState:YES];
 }
 
-- (void)receiveRemoteNotification:(NSDictionary *)info withAppState:(BOOL)onForeground
+- (void)receiveRemoteNotification:(NSDictionary *)userInfo withAppState:(BOOL)onForeground
 {
-    NSLog(@"푸쉬 들어옴 %@", info);
-    // 데이터가 없는 경우는 처리하지 않는다
-    if (!info)
-        return;
+    // _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
     
-//    _pushOpenUrl = @"";
-//    
-//    // 앱 실행중일 떄
-//    if (onForeground) {
-//        
-//        _pushOpenUrl = [info objectForKey:@"linkUrl"];
-//        
-//        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
-//            
-//            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
-//                                                                   withString:@"mmail."];
-//            
+    NSString* totalDic;
+    totalDic = [NSString stringWithFormat:@"faceBook %@", userInfo];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test" message:totalDic
+//                                                   delegate:self cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//    [alert show];
+    
+    //sunnyapp://openurl?target_url=http://vntst.shinhanglobal.com:80/sunny/sunnyclub/view.jsp?seqno=3
+    
+    if(!([totalDic rangeOfString:@"facebook"].location == NSNotFound)){
+        return;
+    }
+    
+    if(!([totalDic rangeOfString:@"twitter"].location == NSNotFound)){
+        return;
+    }
+    
+//     NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+    
+    if(onForeground){
+        
+        [[SafeOnPushClient sharedInstance] receiveNotification:userInfo delegate:self];
+        
+        NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
+        
+        NSDictionary *dic = [userInfo objectForKey:@"aps"];
+        
+        //kSOAlert, kSOMessageId
+        NSString *title = [dic objectForKey:@"title"];
+        NSString *message = [dic objectForKey:@"alert"];
+        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
+        
+//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:title message:messageDic
+//                                                       delegate:self cancelButtonTitle:@"test" otherButtonTitles:nil, nil];
+//        [alert2 show];
+        if([messageWebUrl length] < 1){
+            NSString* gLocalLang = @"";
+            if([[NSUserDefaults standardUserDefaults] stringForKey:klang]){
+                gLocalLang = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+            }
+            
+            messageWebUrl = [NSString stringWithFormat:SUNNY_CLUB_URL, gLocalLang];
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSString* temp;
+        NSString* tclose;
+        NSString* tcancel;
+        
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            tclose = BTN_CONFIRM_KO;
+            tcancel = BTN_CLOSE_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            tclose = BTN_CONFIRM_VI;
+            tcancel = BTN_CLOSE_VI;
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"cancel", nil];
+        [alert show];
+        
+    }else{
+        
+        NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+        
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        
+//        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:@"test" message:messageDic
+//                                                        delegate:nil cancelButtonTitle:@"close" otherButtonTitles:nil, nil];
+//        [alert2 show];
+
+        if(!dic){
+            return;
+        }
+        
+//        if([[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"]){
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badgecount"] intValue];
 //        }
-//        
-//        // url이 없는 경우
-//        if ([_pushOpenUrl isEqualToString:@""] || !_pushOpenUrl) {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
-//                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-//            [alert show];
-//        }
-//        
-//        // url이 있는 경우
-//        else
-//        {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[info objectForKey:@"aps"] objectForKey:@"alert"]
-//                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:@"열기", nil];
-//            [alert show];
-//            
-//            //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:_pushOpenUrl
-//            //                                                           delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:@"열기", nil];
-//            //            [alert show];
-//            
-//            
-//        }
-//    }
-//    
-//    // 앱 실행중이 아닐 때
-//    else {
-//        _pushOpenUrl = [[info objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"linkUrl"];
-//        
-//        if ([_pushOpenUrl rangeOfString:@"mail."].location != NSNotFound) {
-//            
-//            _pushOpenUrl = [_pushOpenUrl stringByReplacingOccurrencesOfString:@"mail."
-//                                                                   withString:@"mmail."];
-//            
-//        }
-//        
-//        [self pushAction];
-//    }
+        
+        //[[SafeOnPushClient sharedInstance] receiveNotification:dic delegate:self];
+        NSLog(@"didReceiveRemoteNotification : \n%@", dic);
+        
+        //kSOAlert, kSOMessageId
+        NSString *title = [dic objectForKey:@"title"];
+        NSString *message = [dic objectForKey:@"alert"];
+        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:messageWebUrl forKey:kPushUrl];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        if([messageWebUrl length] > 1){
+            isTutoShow = NO;
+            pushGo = 1;
+        }
+        
+        NSString* temp;
+        NSString* tclose;
+        
+        temp = [[NSUserDefaults standardUserDefaults] stringForKey:klang];
+        if([temp isEqualToString:@"ko"]){
+            tclose = BTN_CONFIRM_KO;
+        }else if([temp isEqualToString:@"vi"]){
+            tclose = BTN_CONFIRM_VI;
+        }
+        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
+//                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:nil, nil];
+//        [alert show];
+
+        
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex == 0){
+        NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+    
+        [_homeWebViewController gotoPushUrl:callUrl];
+    }
+}
+
+- (void)pushAction
+{
+    NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+    if([callUrl length] > 0){
+        // go to URL
+    }
 }
 
 #pragma mark - Intro
@@ -699,7 +1243,31 @@
     _homeWebViewController = (WebViewController*)centerViewController;
     [_homeWebViewController setDelegate:_gLeftViewController];
     [_gLeftViewController setDelegate:_homeWebViewController];
-    [_homeWebViewController setUrl:SUNNY_CLUB_URL];
+    
+    //pushGo = 1;
+    if(pushGo){
+        NSString* callUrl = [[NSUserDefaults standardUserDefaults] stringForKey:kPushUrl];
+        //callUrl =  @"https://localhost/test.jsp?";
+        NSString* temp = @"%@";
+        NSString* callUrlLast = @"";
+        NSRange range = [callUrl rangeOfString:@"?"];
+        if (range.location != NSNotFound){
+            callUrlLast = [NSString stringWithFormat:@"%@&locale=%@", callUrl, temp]; //locale=%@
+        }else{
+            callUrlLast = [NSString stringWithFormat:@"%@?locale=%@", callUrl, temp]; //locale=%@
+        }
+        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:callUrlLast delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//        [alert show];
+        
+        [_homeWebViewController setUrl:callUrlLast];
+        pushGo = 0;
+        
+        //[_homeWebViewController gotoPushUrl:callUrl];
+        
+    }else{
+        [_homeWebViewController setUrl:SUNNY_CLUB_URL_FIRST];
+    }
     
     //    UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
     
@@ -796,6 +1364,11 @@
     
 }
 
+- (void)delayWebopen
+{
+    
+}
+
 - (void)onTick{
     
     NSLog(@"send session continue Tick...");
@@ -858,8 +1431,8 @@
                 //        [cookieProperties setObject:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]] forKey:NSHTTPCookieValue];
                 //////////////////////////////////////
                 [cookieProperties setObject:@"KO" forKey:NSHTTPCookieValue];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieDomain];
-                [cookieProperties setObject:@"vntst.shinhanglobal.com" forKey:NSHTTPCookieOriginURL];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieDomain];
+                [cookieProperties setObject:COOKIE_SAVE_DOMAIN forKey:NSHTTPCookieOriginURL];
                 [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
                 [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
                 // set expiration to one month from now
